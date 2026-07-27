@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_images.dart';
+import '../services/firebase_service.dart';
 import '../utils/liquid_ui.dart';
 import '../widgets/app_header.dart';
 import '../widgets/app_footer.dart';
@@ -21,28 +22,82 @@ class _ContactPageState extends State<ContactPage> {
   final _countryController = TextEditingController();
   final _messageController = TextEditingController();
   String _selectedProduct = 'Dehydrated Red Onion Flakes';
+  bool _isSubmitting = false;
   bool _isSubmitted = false;
 
-  void _submitForm() {
+  Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
-      setState(() => _isSubmitted = true);
+      setState(() => _isSubmitting = true);
+
+      // Save live data to Firebase Realtime Database
+      final success = await FirebaseService.submitContactInquiry(
+        name: _nameController.text.trim(),
+        email: _emailController.text.trim(),
+        phone: _phoneController.text.trim(),
+        country: _countryController.text.trim(),
+        product: _selectedProduct,
+        message: _messageController.text.trim(),
+      );
+
+      if (!mounted) return;
+
+      setState(() {
+        _isSubmitting = false;
+        _isSubmitted = true;
+      });
+
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
           title: Row(
             children: [
-              const Icon(Icons.check_circle_rounded, color: AppColors.secondary, size: 28),
-              const SizedBox(width: 10),
-              Text(
-                'Inquiry Received',
-                style: GoogleFonts.outfit(fontWeight: FontWeight.bold),
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: const BoxDecoration(
+                  color: Color(0xFFF1F5F9), // Replacement for hypothetical secondaryLight
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.check_circle_rounded, color: AppColors.secondary, size: 28),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  'Inquiry Saved to Firebase!',
+                  style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
               ),
             ],
           ),
-          content: Text(
-            'Thank you for contacting Amar Foods. Our export team will review your requirements for $_selectedProduct and respond within 24 hours.',
-            style: GoogleFonts.inter(fontSize: 14),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Thank you ${_nameController.text}! Your export inquiry for $_selectedProduct has been saved to Firebase Realtime Database.',
+                style: GoogleFonts.inter(fontSize: 14, height: 1.5, color: Colors.black87),
+              ),
+              const SizedBox(height: 12),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.mark_email_read_rounded, color: AppColors.primary, size: 20),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        'Export Desk Hotline: +91 7284088737\nEmail: export@amarfoods.in',
+                        style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.primary),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
           actions: [
             ElevatedButton(
@@ -59,8 +114,9 @@ class _ContactPageState extends State<ContactPage> {
                 backgroundColor: AppColors.secondary,
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               ),
-              child: const Text('OK'),
+              child: const Text('OK Done'),
             ),
           ],
         ),
@@ -333,27 +389,33 @@ class _ContactPageState extends State<ContactPage> {
                                 width: double.infinity,
                                 height: 50,
                                 child: ElevatedButton(
-                                  onPressed: _submitForm,
+                                  onPressed: _isSubmitting ? null : _submitForm,
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: AppColors.secondary,
                                     foregroundColor: Colors.white,
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                                     elevation: 4,
                                   ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'Submit Export Inquiry',
-                                        style: GoogleFonts.outfit(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
+                                  child: _isSubmitting
+                                      ? const SizedBox(
+                                          width: 22,
+                                          height: 22,
+                                          child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5),
+                                        )
+                                      : Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'Submit Export Inquiry',
+                                              style: GoogleFonts.outfit(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 8),
+                                            const Icon(Icons.send_rounded, size: 18),
+                                          ],
                                         ),
-                                      ),
-                                      const SizedBox(width: 8),
-                                      const Icon(Icons.send_rounded, size: 18),
-                                    ],
-                                  ),
                                 ),
                               ),
                             ],

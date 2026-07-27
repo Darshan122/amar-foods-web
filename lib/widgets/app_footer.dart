@@ -81,11 +81,29 @@ class AppFooter extends StatelessWidget {
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      _buildSocialIcon(Icons.facebook),
-                      const SizedBox(width: 12),
-                      _buildSocialIcon(Icons.business_outlined),
-                      const SizedBox(width: 12),
-                      _buildSocialIcon(Icons.email_outlined),
+                      _buildSocialIcon(
+                        assetPath: AppImages.socialWhatsapp,
+                        url: 'https://wa.me/917284088737?text=Hello%20Amar%20Foods%20Export%20Desk',
+                        tooltip: 'WhatsApp Hotline: +91 7284088737',
+                      ),
+                      const SizedBox(width: 14),
+                      _buildSocialIcon(
+                        assetPath: AppImages.socialInstagram,
+                        url: 'https://www.instagram.com/amarfoodsmahuva?igsh=MTR4NHF3bXh4ZW1pcg==',
+                        tooltip: 'Instagram: @amarfoodsmahuva',
+                      ),
+                      const SizedBox(width: 14),
+                      _buildSocialIcon(
+                        assetPath: AppImages.socialLinkedin,
+                        url: 'https://www.linkedin.com/in/amar-foods-247236425',
+                        tooltip: 'LinkedIn: Amar Foods',
+                      ),
+                      const SizedBox(width: 14),
+                      _buildSocialIcon(
+                        assetPath: AppImages.socialFacebook,
+                        url: 'https://www.facebook.com/amarfoodsmahuva',
+                        tooltip: 'Facebook: Amar Foods Mahuva',
+                      ),
                     ],
                   ),
                 ],
@@ -347,20 +365,47 @@ class AppFooter extends StatelessWidget {
     );
   }
 
-  Widget _buildSocialIcon(IconData icon) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: Container(
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.08),
-          shape: BoxShape.circle,
-          border: Border.all(color: Colors.white.withOpacity(0.1)),
-        ),
-        child: Icon(
-          icon,
-          color: Colors.white,
-          size: 16,
+  Widget _buildSocialIcon({
+    required String assetPath,
+    required String url,
+    required String tooltip,
+  }) {
+    return Tooltip(
+      message: tooltip,
+      child: InkWell(
+        onTap: () async {
+          final Uri uri = Uri.parse(url);
+          if (await canLaunchUrl(uri)) {
+            await launchUrl(uri, mode: LaunchMode.externalApplication);
+          }
+        },
+        borderRadius: BorderRadius.circular(22),
+        child: Container(
+          width: 40,
+          height: 40,
+          padding: const EdgeInsets.all(7),
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.08),
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.white.withOpacity(0.18), width: 1.2),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black26,
+                blurRadius: 8,
+                offset: Offset(0, 3),
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: Image.asset(
+              assetPath,
+              fit: BoxFit.contain,
+              errorBuilder: (context, error, stackTrace) {
+                return const Icon(Icons.link_rounded, color: Colors.white, size: 18);
+              },
+            ),
+          ),
         ),
       ),
     );

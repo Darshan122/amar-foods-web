@@ -417,10 +417,100 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // 2. "About Amar Foods" Section
+  // 2. "About Amar Foods" Section (Stretched Image Matching Section Height on Desktop)
   Widget _buildAboutAmarSection(BuildContext context, bool isMobile) {
     final double paddingV = LiquidUI.fluid(context, minVal: 60, maxVal: 100);
     final double headingSize = LiquidUI.fluid(context, minVal: 28, maxVal: 40);
+
+    Widget buildImageCard() {
+      return Stack(
+        clipBehavior: Clip.none,
+        fit: isMobile ? StackFit.loose : StackFit.expand,
+        children: [
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(24),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.primary.withOpacity(0.12),
+                    blurRadius: 30,
+                    offset: const Offset(0, 12),
+                  ),
+                ],
+              ),
+              clipBehavior: Clip.antiAlias,
+              child: Image.asset(
+                AppImages.aboutProducts,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    color: AppColors.primaryLight,
+                    child: const Center(
+                      child: Icon(Icons.eco_rounded, size: 64, color: AppColors.primary),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+
+          Positioned(
+            bottom: isMobile ? 12 : 20,
+            right: isMobile ? 12 : 20,
+            left: isMobile ? 12 : null,
+            child: LiquidUI.glassCard(
+              borderRadius: 16,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+              backgroundColor: Colors.white.withOpacity(0.95),
+              borderColor: AppColors.secondary.withOpacity(0.3),
+              shadows: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.12),
+                  blurRadius: 20,
+                  offset: const Offset(0, 8),
+                ),
+              ],
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: const BoxDecoration(
+                      color: AppColors.secondaryLight,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(Icons.verified_user_rounded, color: AppColors.secondary, size: 24),
+                  ),
+                  const SizedBox(width: 12),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        '100% Pure & Natural',
+                        style: GoogleFonts.outfit(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
+                      Text(
+                        'Direct from Mahuva, India',
+                        style: GoogleFonts.inter(
+                          fontSize: 12,
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      );
+    }
 
     return Container(
       padding: EdgeInsets.only(
@@ -436,93 +526,6 @@ class _HomePageState extends State<HomePage> {
           constraints: LiquidUI.pageConstraints(),
           child: LayoutBuilder(
             builder: (context, constraints) {
-              final imageCard = Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(24),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.primary.withOpacity(0.12),
-                          blurRadius: 30,
-                          offset: const Offset(0, 12),
-                        ),
-                      ],
-                    ),
-                    clipBehavior: Clip.antiAlias,
-                    child: AspectRatio(
-                      aspectRatio: 4 / 3,
-                      child: Image.asset(
-                        AppImages.aboutProducts,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Container(
-                            color: AppColors.primaryLight,
-                            child: const Center(
-                              child: Icon(Icons.eco_rounded, size: 64, color: AppColors.primary),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-
-                  Positioned(
-                    bottom: -20,
-                    right: isMobile ? 12 : -16,
-                    child: LiquidUI.glassCard(
-                      borderRadius: 16,
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-                      backgroundColor: Colors.white.withOpacity(0.95),
-                      borderColor: AppColors.secondary.withOpacity(0.3),
-                      shadows: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.12),
-                          blurRadius: 20,
-                          offset: const Offset(0, 8),
-                        ),
-                      ],
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(10),
-                            decoration: const BoxDecoration(
-                              color: AppColors.secondaryLight,
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(Icons.verified_user_rounded, color: AppColors.secondary, size: 24),
-                          ),
-                          const SizedBox(width: 12),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                '100% Pure & Natural',
-                                style: GoogleFonts.outfit(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                  color: AppColors.textPrimary,
-                                ),
-                              ),
-                              Text(
-                                'Direct from Mahuva, India',
-                                style: GoogleFonts.inter(
-                                  fontSize: 12,
-                                  color: AppColors.textSecondary,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              );
-
               final textContent = Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -621,7 +624,10 @@ class _HomePageState extends State<HomePage> {
               if (isMobile) {
                 return Column(
                   children: [
-                    imageCard,
+                    AspectRatio(
+                      aspectRatio: 16 / 10,
+                      child: buildImageCard(),
+                    ),
                     const SizedBox(height: 52),
                     textContent,
                   ],
@@ -630,9 +636,18 @@ class _HomePageState extends State<HomePage> {
                 return Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Expanded(flex: 5, child: imageCard),
+                    Expanded(
+                      flex: 5,
+                      child: AspectRatio(
+                        aspectRatio: 4 / 3.4,
+                        child: buildImageCard(),
+                      ),
+                    ),
                     const SizedBox(width: 54),
-                    Expanded(flex: 6, child: textContent),
+                    Expanded(
+                      flex: 6,
+                      child: textContent,
+                    ),
                   ],
                 );
               }
@@ -1790,10 +1805,28 @@ class _HomePageState extends State<HomePage> {
 
     final List<_CertItem> certs = const [
       _CertItem(
-        title: 'FSSAI License',
-        tag: 'FOOD SAFETY AUTHORITY',
-        image: AppImages.certFssaiLogo,
-        desc: 'Official licence from Food Safety and Standards Authority of India for hygienic food processing & export.',
+        title: 'US FDA Registered',
+        tag: 'U.S. FOOD & DRUG ADMIN',
+        image: AppImages.certFdaLogo,
+        desc: 'Official US FDA facility registration for exporting dehydrated products into North American markets.',
+      ),
+      _CertItem(
+        title: 'BRCGS Food Safety',
+        tag: 'GLOBAL FOOD SAFETY',
+        image: AppImages.certBrcgsLogo,
+        desc: 'BRCGS (QCAS) Global Standard for Food Safety accredited manufacturing and packaging facility.',
+      ),
+      _CertItem(
+        title: 'FSSC 22000 Certified',
+        tag: 'FOOD SAFETY SYSTEM',
+        image: AppImages.certFssc22000Logo,
+        desc: 'FSSC 22000 (QVA) international food safety certification covering farm-to-fork hazard prevention.',
+      ),
+      _CertItem(
+        title: 'Kosher Certified',
+        tag: 'KOSHER COMPLIANCE',
+        image: AppImages.certKosherLogo,
+        desc: 'Kosher certified (QVA) processing line compliant with international Jewish dietary food requirements.',
       ),
       _CertItem(
         title: 'APEDA Registered',
@@ -1802,22 +1835,40 @@ class _HomePageState extends State<HomePage> {
         desc: 'Government of India APEDA registration guaranteeing authentic agricultural commodity origin and quality.',
       ),
       _CertItem(
-        title: 'Spices Board India',
-        tag: 'SPICES BOARD MINISTRY',
-        image: AppImages.certSpicesBoardLogo,
-        desc: 'Ministry of Commerce & Industry Spices Board certification for premium Indian dehydrated spices export.',
+        title: 'FSSAI License',
+        tag: 'FOOD SAFETY AUTHORITY',
+        image: AppImages.certFssaiLogo,
+        desc: 'Official licence from Food Safety and Standards Authority of India for hygienic processing & export.',
       ),
       _CertItem(
-        title: 'HACCP Certified',
-        tag: 'HAZARD CONTROL',
-        image: AppImages.certHaccpLogo,
-        desc: 'Systematic hazard analysis and critical control points protocol eliminating physical and biological risks.',
+        title: 'GST Registered',
+        tag: 'GOVT TAX REGISTRATION',
+        image: AppImages.certGstLogo,
+        desc: 'Official Government of India Goods & Services Tax (GST) registered legal commercial exporter.',
       ),
       _CertItem(
-        title: 'ISO Standard Certified',
-        tag: 'GLOBAL QUALITY SYSTEM',
-        image: AppImages.certIsoLogo,
-        desc: 'International Organization for Standardization certification covering farm-to-fork hazard management.',
+        title: 'HALAL Certified',
+        tag: 'ISLAMIC DIETARY LAW',
+        image: AppImages.certHalalLogo,
+        desc: '100% Halal certified (QVA) processing line compliant with Islamic dietary laws for global trade.',
+      ),
+      _CertItem(
+        title: 'IEC Export License',
+        tag: 'IMPORT EXPORT CODE',
+        image: AppImages.certIecLogo,
+        desc: 'Directorate General of Foreign Trade (DGFT) Import Export Code certification for international commerce.',
+      ),
+      _CertItem(
+        title: 'MSME Registered',
+        tag: 'MINISTRY OF MSME',
+        image: AppImages.certMsmeLogo,
+        desc: 'Ministry of Micro, Small & Medium Enterprises (Udyam) government recognized enterprise.',
+      ),
+      _CertItem(
+        title: 'APMC License',
+        tag: 'MARKET COMMITTEE',
+        image: AppImages.certApmcLogo,
+        desc: 'Agricultural Produce Market Committee (APMC Mahuva) licensed primary agricultural processor.',
       ),
     ];
 
@@ -1904,27 +1955,31 @@ class _HomePageState extends State<HomePage> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Real Emblem Image Header
+              // Real Emblem Image Header (Large & Zoomed)
               Container(
-                width: 64,
-                height: 64,
-                padding: const EdgeInsets.all(6),
+                width: 72,
+                height: 72,
+                padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: AppColors.primary.withOpacity(0.15)),
+                  borderRadius: BorderRadius.circular(18),
+                  border: Border.all(color: AppColors.primary.withOpacity(0.18), width: 1.5),
                   boxShadow: const [
-                    BoxShadow(color: Colors.black12, blurRadius: 8, offset: Offset(0, 3)),
+                    BoxShadow(color: Colors.black12, blurRadius: 10, offset: Offset(0, 4)),
                   ],
                 ),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(
-                    c.image,
-                    fit: BoxFit.contain,
-                    errorBuilder: (context, error, stackTrace) {
-                      return const Icon(Icons.verified_rounded, color: AppColors.primary, size: 28);
-                    },
+                  borderRadius: BorderRadius.circular(14),
+                  child: Container(
+                    color: Colors.white,
+                    alignment: Alignment.center,
+                    child: Image.asset(
+                      c.image,
+                      fit: BoxFit.contain,
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Icon(Icons.verified_rounded, color: AppColors.primary, size: 32);
+                      },
+                    ),
                   ),
                 ),
               ),

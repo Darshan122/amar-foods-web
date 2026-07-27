@@ -218,10 +218,74 @@ class AboutPage extends StatelessWidget {
     );
   }
 
-  // 2. Company Story & Facility Showcase
+  // 2. Company Story & Facility Showcase (Our Heritage & Mission Section)
   Widget _buildCompanyStorySection(BuildContext context, bool isMobile) {
     final double paddingV = LiquidUI.fluid(context, minVal: 70, maxVal: 100);
     final double headingSize = LiquidUI.fluid(context, minVal: 26, maxVal: 36);
+
+    Widget buildImageCard() {
+      return LiquidUI.interactiveGlassCard(
+        onTap: () => _showQuoteDialog(context),
+        padding: EdgeInsets.zero,
+        backgroundColor: AppColors.background,
+        borderRadius: 22,
+        child: Stack(
+          fit: isMobile ? StackFit.loose : StackFit.expand,
+          children: [
+            Positioned.fill(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(22),
+                child: Image.asset(
+                  AppImages.aboutHeritageMission,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      color: AppColors.primaryLight,
+                      child: const Center(
+                        child: Icon(Icons.inventory_2_outlined, size: 64, color: AppColors.primary),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 16,
+              left: 16,
+              right: 16,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                decoration: BoxDecoration(
+                  color: AppColors.secondary,
+                  borderRadius: BorderRadius.circular(30),
+                  boxShadow: const [
+                    BoxShadow(color: Colors.black26, blurRadius: 10),
+                  ],
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.workspace_premium_rounded, color: Colors.white, size: 16),
+                    const SizedBox(width: 6),
+                    Flexible(
+                      child: Text(
+                        '100% Pure & Natural • Mahuva Hub',
+                        style: GoogleFonts.outfit(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: paddingV),
@@ -232,64 +296,6 @@ class AboutPage extends StatelessWidget {
           constraints: LiquidUI.pageConstraints(),
           child: LayoutBuilder(
             builder: (context, constraints) {
-              final imageCard = LiquidUI.interactiveGlassCard(
-                onTap: () => _showQuoteDialog(context),
-                padding: EdgeInsets.zero,
-                backgroundColor: AppColors.background,
-                borderRadius: 22,
-                child: Stack(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(22),
-                      child: AspectRatio(
-                        aspectRatio: isMobile ? 16 / 10 : 4 / 3,
-                        child: Image.asset(
-                          AppImages.aboutProducts,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Container(
-                              color: AppColors.primaryLight,
-                              child: const Center(
-                                child: Icon(Icons.inventory_2_outlined, size: 64, color: AppColors.primary),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 16,
-                      left: 16,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                        decoration: BoxDecoration(
-                          color: AppColors.secondary,
-                          borderRadius: BorderRadius.circular(30),
-                          boxShadow: const [
-                            BoxShadow(color: Colors.black26, blurRadius: 10),
-                          ],
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(Icons.workspace_premium_rounded, color: Colors.white, size: 16),
-                            const SizedBox(width: 6),
-                            Text(
-                              '100% Pure & Natural • Mahuva Hub',
-                              style: GoogleFonts.outfit(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-
               final textContent = Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -344,7 +350,10 @@ class AboutPage extends StatelessWidget {
               if (isMobile) {
                 return Column(
                   children: [
-                    imageCard,
+                    AspectRatio(
+                      aspectRatio: 16 / 10,
+                      child: buildImageCard(),
+                    ),
                     const SizedBox(height: 36),
                     textContent,
                   ],
@@ -353,9 +362,18 @@ class AboutPage extends StatelessWidget {
                 return Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Expanded(flex: 5, child: imageCard),
+                    Expanded(
+                      flex: 5,
+                      child: AspectRatio(
+                        aspectRatio: 4 / 3.4,
+                        child: buildImageCard(),
+                      ),
+                    ),
                     const SizedBox(width: 48),
-                    Expanded(flex: 6, child: textContent),
+                    Expanded(
+                      flex: 6,
+                      child: textContent,
+                    ),
                   ],
                 );
               }
@@ -550,34 +568,30 @@ class AboutPage extends StatelessWidget {
     );
   }
 
-  // 4. Founders & Leadership Team Section (4 Founders)
+  // 4. Founders & Leadership Team Section (Text-Only Clean UI)
   Widget _buildFoundersSection(BuildContext context, bool isMobile) {
     final double paddingV = LiquidUI.fluid(context, minVal: 70, maxVal: 100);
     final double headingSize = LiquidUI.fluid(context, minVal: 28, maxVal: 38);
 
     final founders = [
       {
-        'name': 'Amar Patel',
+        'name': 'Labhesh Patel',
         'role': 'MANAGING DIRECTOR & FOUNDER',
-        'image': AppImages.founderCeo,
         'bio': 'Pioneering Mahuva\'s crop processing footprint, corporate strategy, and raw procurement partnerships.',
       },
       {
-        'name': 'Rajesh Patel',
+        'name': 'Hiren Patel',
         'role': 'OPERATIONS DIRECTOR & CO-FOUNDER',
-        'image': AppImages.founderOps,
         'bio': 'Overseeing continuous tunnel drying automation, factory sanitary compliance, and container stuffing.',
       },
       {
-        'name': 'Dr. Vikram Shah',
+        'name': 'Jagdish Patel',
         'role': 'QUALITY & R&D DIRECTOR & CO-FOUNDER',
-        'image': AppImages.founderQa,
         'bio': 'Ensuring stringent ISO/HACCP lab clearance, microbiological purity, and essential oil retention.',
       },
       {
-        'name': 'Sanjay Mehta',
+        'name': 'Milan Bheda',
         'role': 'INTERNATIONAL EXPORTS DIRECTOR & CO-FOUNDER',
-        'image': AppImages.founderExp,
         'bio': 'Managing global commercial trade networks across 15+ countries in Europe, the Gulf, and Southeast Asia.',
       },
     ];
@@ -620,24 +634,23 @@ class AboutPage extends StatelessWidget {
               ),
               const SizedBox(height: 48),
 
-              // 4 Founder Cards Grid (Single Horizontal Row on Desktop)
+              // 4 Founder Cards Grid (Clean Text UI)
               LayoutBuilder(
                 builder: (context, constraints) {
                   if (isMobile) {
                     return Column(
                       children: founders.map((f) => Padding(
-                        padding: const EdgeInsets.only(bottom: 24.0),
+                        padding: const EdgeInsets.only(bottom: 20.0),
                         child: _buildFounderCard(context, f),
                       )).toList(),
                     );
                   } else {
-                    return Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: founders.map((f) => Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: _buildFounderCard(context, f),
-                        ),
+                    return Wrap(
+                      spacing: 24,
+                      runSpacing: 24,
+                      children: founders.map((f) => SizedBox(
+                        width: (constraints.maxWidth - 24) / 2,
+                        child: _buildFounderCard(context, f),
                       )).toList(),
                     );
                   }
@@ -651,77 +664,83 @@ class AboutPage extends StatelessWidget {
   }
 
   Widget _buildFounderCard(BuildContext context, Map<String, String> f) {
-    return LiquidUI.interactiveGlassCard(
-      onTap: () => _showQuoteDialog(context),
-      padding: EdgeInsets.zero,
+    return LiquidUI.glassCard(
+      padding: const EdgeInsets.all(28),
       backgroundColor: AppColors.background,
-      borderRadius: 20,
+      borderRadius: 22,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Founder Portrait Image
-          ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-            child: AspectRatio(
-              aspectRatio: 1,
-              child: Image.asset(
-                f['image']!,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    color: AppColors.primaryLight,
-                    child: const Center(
-                      child: Icon(Icons.person_rounded, size: 48, color: AppColors.primary),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  f['name']!,
-                  style: GoogleFonts.outfit(
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.primary,
-                  ),
+          // Top Icon & Role Badge Header
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: AppColors.primaryLight,
+                  shape: BoxShape.circle,
+                  border: Border.all(color: AppColors.primary.withOpacity(0.15)),
                 ),
-                const SizedBox(height: 4),
-
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                child: const Icon(
+                  Icons.person_outline_rounded,
+                  color: AppColors.primary,
+                  size: 22,
+                ),
+              ),
+              Flexible(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   decoration: BoxDecoration(
-                    color: AppColors.secondary.withOpacity(0.1),
+                    color: AppColors.secondary.withOpacity(0.12),
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: AppColors.secondary.withOpacity(0.2)),
+                    border: Border.all(color: AppColors.secondary.withOpacity(0.25)),
                   ),
                   child: Text(
                     f['role']!,
                     style: GoogleFonts.outfit(
-                      fontSize: 9.5,
+                      fontSize: 10,
                       fontWeight: FontWeight.bold,
                       color: AppColors.secondary,
-                      letterSpacing: 0.3,
+                      letterSpacing: 0.4,
                     ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                const SizedBox(height: 10),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
 
-                Text(
-                  f['bio']!,
-                  style: GoogleFonts.inter(
-                    fontSize: 12.5,
-                    color: AppColors.textSecondary,
-                    height: 1.4,
-                  ),
-                ),
-              ],
+          // Founder Name
+          Text(
+            f['name']!,
+            style: GoogleFonts.playfairDisplay(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: AppColors.primary,
+            ),
+          ),
+          const SizedBox(height: 12),
+
+          // Subtle Accent Line
+          Container(
+            width: 40,
+            height: 3,
+            decoration: BoxDecoration(
+              gradient: AppColors.primaryGradient,
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+          const SizedBox(height: 14),
+
+          // Description Bio
+          Text(
+            f['bio']!,
+            style: GoogleFonts.inter(
+              fontSize: 14,
+              color: AppColors.textSecondary,
+              height: 1.55,
             ),
           ),
         ],

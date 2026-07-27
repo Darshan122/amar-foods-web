@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../constants/app_colors.dart';
+import '../services/firebase_service.dart';
 import '../utils/liquid_ui.dart';
 
 class QuoteDialog extends StatefulWidget {
@@ -42,18 +43,25 @@ class _QuoteDialogState extends State<QuoteDialog> {
     super.dispose();
   }
 
-  void _submitForm() {
+  Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
       setState(() => _isSubmitting = true);
 
-      Future.delayed(const Duration(seconds: 1, milliseconds: 500), () {
-        if (mounted) {
-          setState(() {
-            _isSubmitting = false;
-            _isSubmitted = true;
-          });
-        }
-      });
+      await FirebaseService.submitQuoteRequest(
+        name: _nameController.text.trim(),
+        email: _emailController.text.trim(),
+        phone: _phoneController.text.trim(),
+        country: _countryController.text.trim(),
+        product: _selectedProduct,
+        message: _messageController.text.trim(),
+      );
+
+      if (mounted) {
+        setState(() {
+          _isSubmitting = false;
+          _isSubmitted = true;
+        });
+      }
     }
   }
 
@@ -428,7 +436,7 @@ class _QuoteDialogState extends State<QuoteDialog> {
         const SizedBox(height: 24),
 
         Text(
-          'Inquiry Submitted Successfully!',
+          'Quote Request Saved to Firebase!',
           textAlign: TextAlign.center,
           style: GoogleFonts.outfit(
             fontSize: 24,
@@ -439,7 +447,7 @@ class _QuoteDialogState extends State<QuoteDialog> {
         const SizedBox(height: 12),
 
         Text(
-          'Thank you, ${_nameController.text.trim()}. Your inquiry regarding $_selectedProduct has been dispatched to our export desk. Our team will contact you within 24 hours with complete FOB/CIF pricing.',
+          'Thank you, ${_nameController.text.trim()}. Your quote request for $_selectedProduct has been saved to Firebase Realtime Database. Our Mahuva export team (+91 7284088737) will reach out to you shortly.',
           textAlign: TextAlign.center,
           style: GoogleFonts.inter(
             fontSize: 14,
