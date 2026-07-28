@@ -436,10 +436,10 @@ class _QuoteDialogState extends State<QuoteDialog> {
         const SizedBox(height: 24),
 
         Text(
-          'Quote Request Saved to Firebase!',
+          'Quotation Request Submitted!',
           textAlign: TextAlign.center,
           style: GoogleFonts.outfit(
-            fontSize: 24,
+            fontSize: 22,
             fontWeight: FontWeight.bold,
             color: AppColors.primary,
           ),
@@ -447,12 +447,12 @@ class _QuoteDialogState extends State<QuoteDialog> {
         const SizedBox(height: 12),
 
         Text(
-          'Thank you, ${_nameController.text.trim()}. Your quote request for $_selectedProduct has been saved to Firebase Realtime Database. Our Mahuva export team (+91 7284088737) will reach out to you shortly.',
+          'Thank you, ${_nameController.text.trim()}. Your container quote request for $_selectedProduct has been received by Amar Foods Export Desk. Our Mahuva trade team (+91 7284088737) will prepare your custom offer and contact you shortly.',
           textAlign: TextAlign.center,
           style: GoogleFonts.inter(
             fontSize: 14,
             color: AppColors.textSecondary,
-            height: 1.5,
+            height: 1.55,
           ),
         ),
         const SizedBox(height: 28),

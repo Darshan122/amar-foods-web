@@ -359,22 +359,21 @@ class AboutPage extends StatelessWidget {
                   ],
                 );
               } else {
-                return Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      flex: 5,
-                      child: AspectRatio(
-                        aspectRatio: 4 / 3.4,
+                return IntrinsicHeight(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Expanded(
+                        flex: 5,
                         child: buildImageCard(),
                       ),
-                    ),
-                    const SizedBox(width: 48),
-                    Expanded(
-                      flex: 6,
-                      child: textContent,
-                    ),
-                  ],
+                      const SizedBox(width: 48),
+                      Expanded(
+                        flex: 6,
+                        child: textContent,
+                      ),
+                    ],
+                  ),
                 );
               }
             },

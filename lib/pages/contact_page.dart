@@ -50,21 +50,22 @@ class _ContactPageState extends State<ContactPage> {
         context: context,
         builder: (context) => AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+          contentPadding: const EdgeInsets.all(28),
           title: Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(8),
-                decoration: const BoxDecoration(
-                  color: Color(0xFFF1F5F9), // Replacement for hypothetical secondaryLight
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: AppColors.secondary.withOpacity(0.12),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(Icons.check_circle_rounded, color: AppColors.secondary, size: 28),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: 14),
               Expanded(
                 child: Text(
-                  'Inquiry Saved to Firebase!',
-                  style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 18),
+                  'Inquiry Submitted Successfully!',
+                  style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 20, color: AppColors.primary),
                 ),
               ),
             ],
@@ -74,24 +75,25 @@ class _ContactPageState extends State<ContactPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Thank you ${_nameController.text}! Your export inquiry for $_selectedProduct has been saved to Firebase Realtime Database.',
-                style: GoogleFonts.inter(fontSize: 14, height: 1.5, color: Colors.black87),
+                'Thank you ${_nameController.text.trim()}! Your export inquiry for $_selectedProduct has been received by Amar Foods Export Desk. Our export manager will review your specifications and contact you within 24 hours.',
+                style: GoogleFonts.inter(fontSize: 14, height: 1.55, color: AppColors.textPrimary),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 20),
               Container(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(12),
+                  color: AppColors.primaryLight,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: AppColors.primary.withOpacity(0.15)),
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.mark_email_read_rounded, color: AppColors.primary, size: 20),
-                    const SizedBox(width: 10),
+                    const Icon(Icons.support_agent_rounded, color: AppColors.primary, size: 24),
+                    const SizedBox(width: 12),
                     Expanded(
                       child: Text(
-                        'Export Desk Hotline: +91 7284088737\nEmail: export@amarfoods.in',
-                        style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.primary),
+                        'Direct Export Hotline: +91 7284088737\nOfficial Email: export@amarfoods.in',
+                        style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.primary, height: 1.4),
                       ),
                     ),
                   ],
@@ -99,6 +101,7 @@ class _ContactPageState extends State<ContactPage> {
               ),
             ],
           ),
+          actionsPadding: const EdgeInsets.only(right: 24, bottom: 20),
           actions: [
             ElevatedButton(
               onPressed: () {
@@ -108,15 +111,18 @@ class _ContactPageState extends State<ContactPage> {
                 _phoneController.clear();
                 _countryController.clear();
                 _messageController.clear();
-                setState(() => _isSubmitted = false);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.secondary,
                 foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 12),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                elevation: 2,
               ),
-              child: const Text('OK Done'),
+              child: Text(
+                'Done',
+                style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 14),
+              ),
             ),
           ],
         ),
