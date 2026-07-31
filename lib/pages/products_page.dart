@@ -221,7 +221,7 @@ class _ProductsPageState extends State<ProductsPage> {
     // --- GARLIC RANGE ---
     ProductModel(
       id: 'garlic_flakes',
-      title: 'Dehydrated Garlic Flakes (Slices)',
+      title: 'Dehydrated Garlic Flakes',
       category: 'GARLIC',
       tag: '10-15 MM SLICES',
       tagline: 'Pungent sliced garlic cloves with natural yellowish luster.',
@@ -418,7 +418,7 @@ class _ProductsPageState extends State<ProductsPage> {
     // --- RED ONION RANGE ---
     ProductModel(
       id: 'red_onion_flakes',
-      title: 'Dehydrated Red Onion Flakes (Kibbled)',
+      title: 'Dehydrated Red Onion Flakes',
       category: 'RED ONION',
       tag: '8-15 MM FLAKES',
       tagline: 'Rich natural pungency, 8-15 mm uniform kibbled cut.',
@@ -615,7 +615,7 @@ class _ProductsPageState extends State<ProductsPage> {
     // --- PINK ONION RANGE ---
     ProductModel(
       id: 'pink_onion_flakes',
-      title: 'Dehydrated Pink Onion Flakes (Kibbled)',
+      title: 'Dehydrated Pink Onion Flakes',
       category: 'PINK ONION',
       tag: '8-15 MM FLAKES',
       tagline: 'Mild sweet pungency, 8-15 mm kibbled pink flakes.',
@@ -732,7 +732,7 @@ class _ProductsPageState extends State<ProductsPage> {
     ),
     ProductModel(
       id: 'pink_onion_granules',
-      title: 'Pink Onion Minced & Granules',
+      title: 'Pink Onion Granules',
       category: 'PINK ONION',
       tag: '0.5-1 MM GRANULES',
       tagline: '0.5-1 mm coarse granules, balanced sweetness & aroma.',
