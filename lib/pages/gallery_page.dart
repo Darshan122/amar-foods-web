@@ -16,8 +16,6 @@ class GalleryPage extends StatefulWidget {
 }
 
 class _GalleryPageState extends State<GalleryPage> {
-  String _selectedCategory = 'All';
-
   void _showQuoteDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -208,10 +206,6 @@ class _GalleryPageState extends State<GalleryPage> {
       },
     ];
 
-    final filteredItems = _selectedCategory == 'All'
-        ? galleryItems
-        : galleryItems.where((item) => item['category'] == _selectedCategory).toList();
-
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: const AppHeader(),
@@ -298,17 +292,7 @@ class _GalleryPageState extends State<GalleryPage> {
                           ),
                           const SizedBox(height: 28),
 
-                          // Filter Tabs
-                          Wrap(
-                            spacing: 12,
-                            runSpacing: 12,
-                            alignment: WrapAlignment.center,
-                            children: [
-                              _buildFilterTab('All', 'ALL MEDIA (${galleryItems.length})'),
-                              _buildFilterTab('PRODUCTS', 'PRODUCT SHOWCASE'),
-                              _buildFilterTab('FACILITY', 'PROCESSING FACILITY'),
-                            ],
-                          ),
+                          const SizedBox(height: 10),
                         ],
                       ),
                     ),
@@ -331,7 +315,7 @@ class _GalleryPageState extends State<GalleryPage> {
                         builder: (context, constraints) {
                           if (isMobile) {
                             return Column(
-                              children: filteredItems.map((item) => Padding(
+                              children: galleryItems.map((item) => Padding(
                                 padding: const EdgeInsets.only(bottom: 24.0),
                                 child: _buildGalleryCard(context, item),
                               )).toList(),
@@ -340,7 +324,7 @@ class _GalleryPageState extends State<GalleryPage> {
                             return Wrap(
                               spacing: 24,
                               runSpacing: 28,
-                              children: filteredItems.map((item) => SizedBox(
+                              children: galleryItems.map((item) => SizedBox(
                                 width: (constraints.maxWidth - 24) / 2 > 340
                                     ? (constraints.maxWidth - 48) / 3
                                     : (constraints.maxWidth - 24) / 2,
@@ -413,45 +397,6 @@ class _GalleryPageState extends State<GalleryPage> {
     );
   }
 
-  Widget _buildFilterTab(String categoryKey, String label) {
-    final bool isSelected = _selectedCategory == categoryKey;
-
-    return InkWell(
-      onTap: () => setState(() => _selectedCategory = categoryKey),
-      borderRadius: BorderRadius.circular(30),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 11),
-        decoration: BoxDecoration(
-          color: isSelected ? AppColors.secondary : const Color(0xFF1E293B),
-          borderRadius: BorderRadius.circular(30),
-          border: Border.all(
-            color: isSelected ? AppColors.secondary : Colors.white.withOpacity(0.2),
-            width: 1.5,
-          ),
-          boxShadow: isSelected
-              ? [
-                  BoxShadow(
-                    color: AppColors.secondaryGlow.withOpacity(0.45),
-                    blurRadius: 18,
-                    offset: const Offset(0, 4),
-                  )
-                ]
-              : null,
-        ),
-        child: Text(
-          label,
-          style: GoogleFonts.outfit(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 12,
-            letterSpacing: 0.5,
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _buildGalleryCard(BuildContext context, Map<String, String> item) {
     final String title = item['title'] ?? 'Amar Foods Dehydrated Product';
     final String category = item['category'] ?? 'PRODUCTS';
@@ -508,6 +453,7 @@ class _GalleryPageState extends State<GalleryPage> {
                   child: Image.asset(
                     item['image']!,
                     fit: BoxFit.cover,
+                    cacheWidth: 600,
                     errorBuilder: (context, error, stackTrace) {
                       return Container(
                         color: AppColors.primaryLight,

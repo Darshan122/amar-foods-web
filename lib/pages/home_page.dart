@@ -1131,6 +1131,7 @@ class _HomePageState extends State<HomePage> {
                       imagePath,
                       fit: imageFit,
                       alignment: imageAlignment,
+                      cacheWidth: 600,
                       errorBuilder: (context, error, stackTrace) {
                         return Container(
                           color: AppColors.primaryLight,

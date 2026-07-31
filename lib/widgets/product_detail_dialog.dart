@@ -163,6 +163,7 @@ class _ProductDetailDialogState extends State<ProductDetailDialog> {
                                 child: Image.asset(
                                   _activeModalImage,
                                   fit: BoxFit.cover,
+                                  cacheWidth: 800,
                                   errorBuilder: (context, error, stackTrace) {
                                     return Container(
                                       color: const Color(0xFF260B1E),
@@ -196,6 +197,7 @@ class _ProductDetailDialogState extends State<ProductDetailDialog> {
                                       child: Image.asset(
                                         img,
                                         fit: BoxFit.cover,
+                                        cacheWidth: 150,
                                         errorBuilder: (context, error, stackTrace) => Container(color: Colors.black26),
                                       ),
                                     ),

@@ -1141,6 +1141,7 @@ class _ProductCardWidgetState extends State<_ProductCardWidget> {
                   child: Image.asset(
                     _activeImage,
                     fit: BoxFit.cover,
+                    cacheWidth: 600,
                     errorBuilder: (context, error, stackTrace) {
                       return Container(
                         color: AppColors.primaryLight,
@@ -1231,7 +1232,11 @@ class _ProductCardWidgetState extends State<_ProductCardWidget> {
                         ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(6),
-                          child: Image.asset(img, fit: BoxFit.cover),
+                          child: Image.asset(
+                            img,
+                            fit: BoxFit.cover,
+                            cacheWidth: 100,
+                          ),
                         ),
                       ),
                     );
