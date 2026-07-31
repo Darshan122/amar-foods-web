@@ -9,34 +9,142 @@ class AppImages {
   static const String heroBackground = '$_basePath/about_amar_foods_products.jpg';
 
   // Product Range images
-  static const String productRedOnionFlakes = '$_basePath/product_red_onion_flakes.jpg';
-  static const String productRedOnionFlakes2 = '$_basePath/product_red_onion_flakes_2.jpg';
-  static const String productRedOnionFlakes3 = '$_basePath/product_red_onion_flakes_3.jpg';
-  static const String productRedOnionFlakes4 = '$_basePath/product_red_onion_flakes_4.jpg';
-  static const String productRedOnionFlakes5 = '$_basePath/product_red_onion_flakes_5.jpg';
-  static const String productWhiteOnionPowder = '$_basePath/product_white_onion_powder.jpg';
-  static const String productPinkOnionGranules = '$_basePath/product_pink_onion_granules.jpg';
-  static const String productPinkOnionGranules2 = '$_basePath/product_pink_onion_granules_2.jpg';
-  static const String productPinkOnionGranules3 = '$_basePath/product_pink_onion_granules_3.jpg';
-  static const String productPinkOnionGranules4 = '$_basePath/product_pink_onion_granules_4.jpg';
-  static const String productPinkOnionGranules5 = '$_basePath/product_pink_onion_granules_5.jpg';
-  static const String productGarlicFlakes = '$_basePath/product_garlic_flakes.jpg';
-  static const String productGarlicFlakes2 = '$_basePath/product_garlic_flakes_2.jpg';
-  static const String productGarlicPowder = '$_basePath/product_garlic_powder.jpg';
-  static const String productGarlicPowder2 = '$_basePath/product_garlic_powder_2.jpg';
-  static const String productGarlicPowder3 = '$_basePath/product_garlic_powder_3.jpg';
-  static const String productGarlicPowder4 = '$_basePath/product_garlic_powder_4.jpg';
-  static const String productGarlicPowder5 = '$_basePath/product_garlic_powder_5.jpg';
-  static const String productGarlicMinced = '$_basePath/product_garlic_minced.jpg';
-  static const String productGarlicMinced2 = '$_basePath/product_garlic_minced_2.jpg';
-  static const String productGarlicMinced3 = '$_basePath/product_garlic_minced_3.jpg';
-  static const String productGarlicMinced4 = '$_basePath/product_garlic_minced_4.jpg';
-  static const String productGarlicMinced5 = '$_basePath/product_garlic_minced_5.jpg';
-  static const String productGarlicGranules = '$_basePath/product_garlic_granules.jpg';
-  static const String productGarlicGranules2 = '$_basePath/product_garlic_granules_2.jpg';
-  static const String productGarlicGranules3 = '$_basePath/product_garlic_granules_3.jpg';
-  static const String productGarlicGranules4 = '$_basePath/product_garlic_granules_4.jpg';
-  static const String productGarlicGranules5 = '$_basePath/product_garlic_granules_5.jpg';
+  static const String productRedOnion = '$_basePath/product_red_onion.webp';
+  static const String productRedOnionFlakes = productRedOnion;
+
+  // Red Onion Subcategory Product Images
+  static const String productRedOnionFlakes1 = '$_basePath/red_onion/red_onion_flakes/red_onion_flakes_1.webp';
+  static const String productRedOnionFlakes2 = '$_basePath/red_onion/red_onion_flakes/red_onion_flakes_2.webp';
+  static const String productRedOnionFlakes3 = '$_basePath/red_onion/red_onion_flakes/red_onion_flakes_3.webp';
+  static const String productRedOnionFlakes4 = '$_basePath/red_onion/red_onion_flakes/red_onion_flakes_4.webp';
+  static const String productRedOnionFlakes5 = '$_basePath/red_onion/red_onion_flakes/red_onion_flakes_5.webp';
+
+  static const String productRedOnionChopped1 = '$_basePath/red_onion/red_onion_chooped/red_onion_chooped_1.webp';
+  static const String productRedOnionChopped2 = '$_basePath/red_onion/red_onion_chooped/red_onion_chooped_2.webp';
+  static const String productRedOnionChopped3 = '$_basePath/red_onion/red_onion_chooped/red_onion_chooped_3.webp';
+  static const String productRedOnionChopped4 = '$_basePath/red_onion/red_onion_chooped/red_onion_chooped_4.webp';
+  static const String productRedOnionChopped5 = '$_basePath/red_onion/red_onion_chooped/red_onion_chooped_5.webp';
+
+  static const String productRedOnionMinced1 = '$_basePath/red_onion/red_onion_minced/red_onion_minced_1.webp';
+  static const String productRedOnionMinced2 = '$_basePath/red_onion/red_onion_minced/red_onion_minced_2.webp';
+  static const String productRedOnionMinced3 = '$_basePath/red_onion/red_onion_minced/red_onion_minced_3.webp';
+  static const String productRedOnionMinced4 = '$_basePath/red_onion/red_onion_minced/red_onion_minced_4.webp';
+  static const String productRedOnionMinced5 = '$_basePath/red_onion/red_onion_minced/red_onion_minced_5.webp';
+
+  static const String productRedOnionGranules1 = '$_basePath/red_onion/red_onion_granules/red_onion_granules_1.webp';
+  static const String productRedOnionGranules2 = '$_basePath/red_onion/red_onion_granules/red_onion_granules_2.webp';
+  static const String productRedOnionGranules3 = '$_basePath/red_onion/red_onion_granules/red_onion_granules_3.webp';
+  static const String productRedOnionGranules4 = '$_basePath/red_onion/red_onion_granules/red_onion_granules_4.webp';
+  static const String productRedOnionGranules5 = '$_basePath/red_onion/red_onion_granules/red_onion_granules_5.webp';
+
+  static const String productRedOnionPowder1 = '$_basePath/red_onion/red_onion_poweder/red_onion_poweder_1.webp';
+  static const String productRedOnionPowder2 = '$_basePath/red_onion/red_onion_poweder/red_onion_poweder_2.webp';
+  static const String productRedOnionPowder3 = '$_basePath/red_onion/red_onion_poweder/red_onion_poweder_3.webp';
+  static const String productRedOnionPowder4 = '$_basePath/red_onion/red_onion_poweder/red_onion_poweder_4.webp';
+  static const String productRedOnionPowder5 = '$_basePath/red_onion/red_onion_poweder/red_onion_poweder_5.webp';
+
+  static const String productWhiteOnion = '$_basePath/product_white_onion.webp';
+  static const String productWhiteOnionPowder = productWhiteOnion;
+
+  // White Onion Subcategory Product Images
+  static const String productWhiteOnionFlakes1 = '$_basePath/white_onion/white_onion_flakes/white_onion_flakes_1.webp';
+  static const String productWhiteOnionFlakes2 = '$_basePath/white_onion/white_onion_flakes/white_onion_flakes_2.webp';
+  static const String productWhiteOnionFlakes3 = '$_basePath/white_onion/white_onion_flakes/white_onion_flakes_3.webp';
+  static const String productWhiteOnionFlakes4 = '$_basePath/white_onion/white_onion_flakes/white_onion_flakes_4.webp';
+  static const String productWhiteOnionFlakes5 = '$_basePath/white_onion/white_onion_flakes/white_onion_flakes_5.webp';
+
+  static const String productWhiteOnionChopped1 = '$_basePath/white_onion/white_onion_chooped/white_onion_chooped_1.webp';
+  static const String productWhiteOnionChopped2 = '$_basePath/white_onion/white_onion_chooped/white_onion_chooped_2.webp';
+  static const String productWhiteOnionChopped3 = '$_basePath/white_onion/white_onion_chooped/white_onion_chooped_3.webp';
+  static const String productWhiteOnionChopped4 = '$_basePath/white_onion/white_onion_chooped/white_onion_chooped_4.webp';
+  static const String productWhiteOnionChopped5 = '$_basePath/white_onion/white_onion_chooped/white_onion_chooped_5.webp';
+
+  static const String productWhiteOnionMinced1 = '$_basePath/white_onion/white_onion_minced/white_onion_minced_1.webp';
+  static const String productWhiteOnionMinced2 = '$_basePath/white_onion/white_onion_minced/white_onion_minced_2.webp';
+  static const String productWhiteOnionMinced3 = '$_basePath/white_onion/white_onion_minced/white_onion_minced_3.webp';
+  static const String productWhiteOnionMinced4 = '$_basePath/white_onion/white_onion_minced/white_onion_minced_4.webp';
+  static const String productWhiteOnionMinced5 = '$_basePath/white_onion/white_onion_minced/white_onion_minced_5.webp';
+
+  static const String productWhiteOnionGranules1 = '$_basePath/white_onion/white_onion_granules/white_onion_granules_1.webp';
+  static const String productWhiteOnionGranules2 = '$_basePath/white_onion/white_onion_granules/white_onion_granules_2.webp';
+  static const String productWhiteOnionGranules3 = '$_basePath/white_onion/white_onion_granules/white_onion_granules_3.webp';
+  static const String productWhiteOnionGranules4 = '$_basePath/white_onion/white_onion_granules/white_onion_granules_4.webp';
+  static const String productWhiteOnionGranules5 = '$_basePath/white_onion/white_onion_granules/white_onion_granules_5.webp';
+
+  static const String productWhiteOnionPowder1 = '$_basePath/white_onion/white_onion_poweder/white_onion_poweder_1.webp';
+  static const String productWhiteOnionPowder2 = '$_basePath/white_onion/white_onion_poweder/white_onion_poweder_2.webp';
+  static const String productWhiteOnionPowder3 = '$_basePath/white_onion/white_onion_poweder/white_onion_poweder_3.webp';
+  static const String productWhiteOnionPowder4 = '$_basePath/white_onion/white_onion_poweder/white_onion_poweder_4.webp';
+  static const String productWhiteOnionPowder5 = '$_basePath/white_onion/white_onion_poweder/white_onion_poweder_5.webp';
+  static const String productPinkOnion = '$_basePath/product_pink_onion.webp';
+  static const String productPinkOnionGranules = productPinkOnion;
+
+  // Pink Onion Subcategory Product Images
+  static const String productPinkOnionFlakes1 = '$_basePath/pink_onion/pink_onion_flakes/pink_onion_flakes_1.webp';
+  static const String productPinkOnionFlakes2 = '$_basePath/pink_onion/pink_onion_flakes/pink_onion_flakes_2.webp';
+  static const String productPinkOnionFlakes3 = '$_basePath/pink_onion/pink_onion_flakes/pink_onion_flakes_3.webp';
+  static const String productPinkOnionFlakes4 = '$_basePath/pink_onion/pink_onion_flakes/pink_onion_flakes_4.webp';
+  static const String productPinkOnionFlakes5 = '$_basePath/pink_onion/pink_onion_flakes/pink_onion_flakes_5.webp';
+
+  static const String productPinkOnionChopped1 = '$_basePath/pink_onion/pink_onion_chooped/pink_onion_chooped_1.webp';
+  static const String productPinkOnionChopped2 = '$_basePath/pink_onion/pink_onion_chooped/pink_onion_chooped_2.webp';
+  static const String productPinkOnionChopped3 = '$_basePath/pink_onion/pink_onion_chooped/pink_onion_chooped_3.webp';
+  static const String productPinkOnionChopped4 = '$_basePath/pink_onion/pink_onion_chooped/pink_onion_chooped_4.webp';
+  static const String productPinkOnionChopped5 = '$_basePath/pink_onion/pink_onion_chooped/pink_onion_chooped_5.webp';
+
+  static const String productPinkOnionMinced1 = '$_basePath/pink_onion/pink_onion_minced/pink_onion_minced_1.webp';
+  static const String productPinkOnionMinced2 = '$_basePath/pink_onion/pink_onion_minced/pink_onion_minced_2.webp';
+  static const String productPinkOnionMinced3 = '$_basePath/pink_onion/pink_onion_minced/pink_onion_minced_3.webp';
+  static const String productPinkOnionMinced4 = '$_basePath/pink_onion/pink_onion_minced/pink_onion_minced_4.webp';
+  static const String productPinkOnionMinced5 = '$_basePath/pink_onion/pink_onion_minced/pink_onion_minced_5.webp';
+
+  static const String productPinkOnionGranules1 = '$_basePath/pink_onion/pink_onion_granules/pink_onion_granules_1.webp';
+  static const String productPinkOnionGranules2 = '$_basePath/pink_onion/pink_onion_granules/pink_onion_granules_2.webp';
+  static const String productPinkOnionGranules3 = '$_basePath/pink_onion/pink_onion_granules/pink_onion_granules_3.webp';
+  static const String productPinkOnionGranules4 = '$_basePath/pink_onion/pink_onion_granules/pink_onion_granules_4.webp';
+  static const String productPinkOnionGranules5 = '$_basePath/pink_onion/pink_onion_granules/pink_onion_granules_5.webp';
+
+  static const String productPinkOnionPowder1 = '$_basePath/pink_onion/pink_onion_poweder/pink_onion_poweder_1.webp';
+  static const String productPinkOnionPowder2 = '$_basePath/pink_onion/pink_onion_poweder/pink_onion_poweder_2.webp';
+  static const String productPinkOnionPowder3 = '$_basePath/pink_onion/pink_onion_poweder/pink_onion_poweder_3.webp';
+  static const String productPinkOnionPowder4 = '$_basePath/pink_onion/pink_onion_poweder/pink_onion_poweder_4.webp';
+  static const String productPinkOnionPowder5 = '$_basePath/pink_onion/pink_onion_poweder/pink_onion_poweder_5.webp';
+  static const String productGarlic = '$_basePath/product_garlic.webp';
+  static const String productGarlicFlakes = productGarlic;
+  static const String productGarlicMinced = productGarlicMinced1;
+  static const String productGarlicGranules = productGarlicGranules1;
+  static const String productGarlicPowder = productGarlicPowder1;
+
+  // Garlic Subcategory Product Images
+  static const String productGarlicFlakes1 = '$_basePath/garlic/garlic_flakes/garlic_flakes_1.webp';
+  static const String productGarlicFlakes2 = '$_basePath/garlic/garlic_flakes/garlic_flakes_2.webp';
+  static const String productGarlicFlakes3 = '$_basePath/garlic/garlic_flakes/garlic_flakes_3.webp';
+  static const String productGarlicFlakes4 = '$_basePath/garlic/garlic_flakes/garlic_flakes_4.webp';
+  static const String productGarlicFlakes5 = '$_basePath/garlic/garlic_flakes/garlic_flakes_5.webp';
+
+  static const String productGarlicChopped1 = '$_basePath/garlic/garlic_chooped/garlic_chooped_1.webp';
+  static const String productGarlicChopped2 = '$_basePath/garlic/garlic_chooped/garlic_chooped_2.webp';
+  static const String productGarlicChopped3 = '$_basePath/garlic/garlic_chooped/garlic_chooped_3.webp';
+  static const String productGarlicChopped4 = '$_basePath/garlic/garlic_chooped/garlic_chooped_4.webp';
+  static const String productGarlicChopped5 = '$_basePath/garlic/garlic_chooped/garlic_chooped_5.webp';
+
+  static const String productGarlicMinced1 = '$_basePath/garlic/garlic_minced/garlic_minced_1.webp';
+  static const String productGarlicMinced2 = '$_basePath/garlic/garlic_minced/garlic_minced_2.webp';
+  static const String productGarlicMinced3 = '$_basePath/garlic/garlic_minced/garlic_minced_3.webp';
+  static const String productGarlicMinced4 = '$_basePath/garlic/garlic_minced/garlic_minced_4.webp';
+  static const String productGarlicMinced5 = '$_basePath/garlic/garlic_minced/garlic_minced_5.webp';
+
+  static const String productGarlicGranules1 = '$_basePath/garlic/garlic_granules/garlic_granules_1.webp';
+  static const String productGarlicGranules2 = '$_basePath/garlic/garlic_granules/garlic_granules_2.webp';
+  static const String productGarlicGranules3 = '$_basePath/garlic/garlic_granules/garlic_granules_3.webp';
+  static const String productGarlicGranules4 = '$_basePath/garlic/garlic_granules/garlic_granules_4.webp';
+  static const String productGarlicGranules5 = '$_basePath/garlic/garlic_granules/garlic_granules_5.webp';
+
+  static const String productGarlicPowder1 = '$_basePath/garlic/garlic_poweder/garlic_poweder_1.webp';
+  static const String productGarlicPowder2 = '$_basePath/garlic/garlic_poweder/garlic_poweder_2.webp';
+  static const String productGarlicPowder3 = '$_basePath/garlic/garlic_poweder/garlic_poweder_3.webp';
+  static const String productGarlicPowder4 = '$_basePath/garlic/garlic_poweder/garlic_poweder_4.webp';
+  static const String productGarlicPowder5 = '$_basePath/garlic/garlic_poweder/garlic_poweder_5.webp';
 
   // Founders & Leadership Team portraits
   static const String founderCeo = '$_basePath/founder_ceo.jpg';

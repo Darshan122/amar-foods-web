@@ -454,41 +454,52 @@ class AppDrawer extends StatelessWidget {
         color: Colors.white,
         child: Column(
           children: [
-            // Dark Header Section
+            // Clean High-Contrast Header Section inside Drawer
             Container(
-              padding: const EdgeInsets.fromLTRB(20, 48, 16, 24),
-              decoration: const BoxDecoration(
-                gradient: AppColors.primaryGradient,
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(24)),
+              padding: const EdgeInsets.fromLTRB(20, 44, 16, 20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.only(topLeft: Radius.circular(24)),
+                border: Border(bottom: BorderSide(color: AppColors.border, width: 1)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Image.asset(
-                        AppImages.logo,
-                        height: 44,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Text(
-                            'Amar Foods',
-                            style: GoogleFonts.playfairDisplay(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 22,
-                            ),
-                          );
-                        },
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFFAF5FF),
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(color: AppColors.primary.withOpacity(0.12)),
+                        ),
+                        child: Image.asset(
+                          AppImages.logo,
+                          height: 40,
+                          fit: BoxFit.contain,
+                          errorBuilder: (context, error, stackTrace) {
+                            return LiquidUI.gradientText(
+                              'Amar Foods',
+                              gradient: AppColors.primaryGradient,
+                              style: GoogleFonts.playfairDisplay(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22,
+                              ),
+                            );
+                          },
+                        ),
                       ),
                       Container(
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.18),
+                          color: AppColors.primaryLight,
                           shape: BoxShape.circle,
+                          border: Border.all(color: AppColors.primary.withOpacity(0.15)),
                         ),
                         child: IconButton(
-                          icon: const Icon(Icons.close_rounded, color: Colors.white, size: 20),
+                          icon: const Icon(Icons.close_rounded, color: AppColors.primary, size: 22),
                           onPressed: () => Navigator.of(context).pop(),
                           tooltip: 'Close Menu',
                         ),
@@ -497,21 +508,21 @@ class AppDrawer extends StatelessWidget {
                   ),
                   const SizedBox(height: 14),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     decoration: BoxDecoration(
-                      color: AppColors.secondary.withOpacity(0.25),
+                      color: AppColors.secondary.withOpacity(0.12),
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: AppColors.secondary.withOpacity(0.4)),
+                      border: Border.all(color: AppColors.secondary.withOpacity(0.3)),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Icons.verified_rounded, color: AppColors.secondaryLight, size: 12),
+                        const Icon(Icons.verified_rounded, color: AppColors.secondary, size: 14),
                         const SizedBox(width: 6),
                         Text(
                           'EXPORT DEHYDRATED SPICES',
                           style: GoogleFonts.outfit(
-                            color: Colors.white,
+                            color: AppColors.secondary,
                             fontSize: 10,
                             fontWeight: FontWeight.bold,
                             letterSpacing: 0.5,

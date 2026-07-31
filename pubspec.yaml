@@ -63,6 +63,26 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/images/white_onion/white_onion_flakes/
+    - assets/images/white_onion/white_onion_chooped/
+    - assets/images/white_onion/white_onion_minced/
+    - assets/images/white_onion/white_onion_granules/
+    - assets/images/white_onion/white_onion_poweder/
+    - assets/images/garlic/garlic_flakes/
+    - assets/images/garlic/garlic_chooped/
+    - assets/images/garlic/garlic_minced/
+    - assets/images/garlic/garlic_granules/
+    - assets/images/garlic/garlic_poweder/
+    - assets/images/red_onion/red_onion_flakes/
+    - assets/images/red_onion/red_onion_chooped/
+    - assets/images/red_onion/red_onion_minced/
+    - assets/images/red_onion/red_onion_granules/
+    - assets/images/red_onion/red_onion_poweder/
+    - assets/images/pink_onion/pink_onion_flakes/
+    - assets/images/pink_onion/pink_onion_chooped/
+    - assets/images/pink_onion/pink_onion_minced/
+    - assets/images/pink_onion/pink_onion_granules/
+    - assets/images/pink_onion/pink_onion_poweder/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

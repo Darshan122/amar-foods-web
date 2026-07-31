@@ -156,27 +156,51 @@ class _ProductDetailDialogState extends State<ProductDetailDialog> {
                         final imageGallery = Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(16),
-                              child: AspectRatio(
-                                aspectRatio: 1.3,
-                                child: Image.asset(
-                                  _activeModalImage,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Container(
-                                      color: const Color(0xFF260B1E),
-                                      child: const Icon(Icons.image_not_supported_rounded, color: Colors.white38, size: 48),
-                                    );
-                                  },
+                            Stack(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(16),
+                                  child: AspectRatio(
+                                    aspectRatio: 1.3,
+                                    child: Image.asset(
+                                      _activeModalImage,
+                                      fit: BoxFit.cover,
+                                      cacheWidth: 800,
+                                      errorBuilder: (context, error, stackTrace) {
+                                        return Container(
+                                          color: const Color(0xFF260B1E),
+                                          child: const Icon(Icons.image_not_supported_rounded, color: Colors.white38, size: 48),
+                                        );
+                                      },
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                Positioned(
+                                  bottom: 12,
+                                  right: 12,
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                    decoration: BoxDecoration(
+                                      color: Colors.black.withValues(alpha: 0.75),
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    child: Text(
+                                      'Photo ${widget.product.images.indexOf(_activeModalImage) + 1} of ${widget.product.images.length}',
+                                      style: GoogleFonts.outfit(
+                                        color: Colors.white,
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                             const SizedBox(height: 14),
 
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: widget.product.images.take(4).map((img) {
+                              children: widget.product.images.map((img) {
                                 final bool isActive = _activeModalImage == img;
                                 return GestureDetector(
                                   onTap: () => setState(() => _activeModalImage = img),
@@ -196,6 +220,7 @@ class _ProductDetailDialogState extends State<ProductDetailDialog> {
                                       child: Image.asset(
                                         img,
                                         fit: BoxFit.cover,
+                                        cacheWidth: 150,
                                         errorBuilder: (context, error, stackTrace) => Container(color: Colors.black26),
                                       ),
                                     ),
@@ -260,20 +285,6 @@ class _ProductDetailDialogState extends State<ProductDetailDialog> {
                                 _buildMetricCard('MOISTURE', widget.product.moisture),
                                 const SizedBox(width: 10),
                                 _buildMetricCard('SHELF LIFE', widget.product.shelfLife),
-                              ],
-                            ),
-                            const SizedBox(height: 18),
-
-                            // Accreditations Row
-                            Wrap(
-                              spacing: 8,
-                              runSpacing: 8,
-                              children: const [
-                                _AccreditationChip('FSSAI'),
-                                _AccreditationChip('APEDA'),
-                                _AccreditationChip('ISO 22000'),
-                                _AccreditationChip('HACCP'),
-                                _AccreditationChip('HALAL'),
                               ],
                             ),
                             const SizedBox(height: 22),
@@ -470,27 +481,6 @@ class _ProductDetailDialogState extends State<ProductDetailDialog> {
             fontSize: 14,
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _AccreditationChip extends StatelessWidget {
-  final String label;
-  const _AccreditationChip(this.label);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.08),
-        borderRadius: BorderRadius.circular(6),
-        border: Border.all(color: Colors.white12),
-      ),
-      child: Text(
-        '✓ $label',
-        style: GoogleFonts.outfit(color: Colors.white70, fontSize: 11, fontWeight: FontWeight.w600),
       ),
     );
   }

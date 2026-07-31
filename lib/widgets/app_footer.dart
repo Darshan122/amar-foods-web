@@ -101,8 +101,8 @@ class AppFooter extends StatelessWidget {
                       const SizedBox(width: 14),
                       _buildSocialIcon(
                         assetPath: AppImages.socialFacebook,
-                        url: 'https://www.facebook.com/amarfoodsmahuva',
-                        tooltip: 'Facebook: Amar Foods Mahuva',
+                        url: 'https://www.facebook.com/profile.php?viewas=100000686899395&id=61592459882888',
+                        tooltip: 'Facebook: Amar Foods',
                       ),
                     ],
                   ),
