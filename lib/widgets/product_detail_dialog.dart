@@ -176,7 +176,7 @@ class _ProductDetailDialogState extends State<ProductDetailDialog> {
 
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: widget.product.images.take(4).map((img) {
+                              children: widget.product.images.map((img) {
                                 final bool isActive = _activeModalImage == img;
                                 return GestureDetector(
                                   onTap: () => setState(() => _activeModalImage = img),

@@ -828,32 +828,28 @@ class _HomePageState extends State<HomePage> {
     // Main 4 Flagship Products matching amarfoods.in product range
     final featuredProductsData = [
       {
-        'image': AppImages.productRedOnionFlakes,
+        'image': AppImages.productRedOnion,
         'category': 'RED ONION',
-        'title': 'Dehydrated Red Onion Flakes (Kibbled)',
-        'desc': 'Premium 8-15 mm kibbled red onion flakes processed under hygienic multi-stage conveyor drying. Intense natural pungency and deep red hue.',
-        'specs': ['Cut Size: 8-15 mm Kibbled', 'Color: Deep Red Purple', 'Moisture: Max 6.0%'],
+        'title': 'Red Onion',
+        'desc': 'Dehydrated Red Onion range including Kibbled Flakes (8-15mm), Chopped (3-5mm), Minced (1-3mm), Granules (0.5-1mm), and Powder (80-100 mesh).',
       },
       {
-        'image': AppImages.productWhiteOnionPowder,
+        'image': AppImages.productWhiteOnion,
         'category': 'WHITE ONION',
-        'title': 'Dehydrated White Onion Powder',
-        'desc': 'Ultra-fine 80-100 mesh free-flowing white onion powder. High solubility and instant flavor release for seasonings and ready mixes.',
-        'specs': ['Mesh Size: 80-100 Mesh', 'Color: Ivory Off-White', 'Moisture: Max 5.0%'],
+        'title': 'White Onion',
+        'desc': 'Dehydrated White Onion range including Flakes (8-15mm), Chopped (3-5mm), Minced (1-3mm), Granules (0.5-1mm), and Powder (80-100 mesh).',
       },
       {
-        'image': AppImages.productPinkOnionGranules,
+        'image': AppImages.productPinkOnion,
         'category': 'PINK ONION',
-        'title': 'Pink Onion Minced & Granules',
-        'desc': 'Uniform 1-3 mm minced pink onion granules with sweet aromatic pungency. Ideal for texture-sensitive food manufacturing.',
-        'specs': ['Cut Size: 1-3 mm Minced', 'Color: Pinkish Cream', 'Moisture: Max 6.0%'],
+        'title': 'Pink Onion',
+        'desc': 'Dehydrated Pink Onion range including Flakes (8-15mm), Chopped (3-5mm), Minced (1-3mm), Granules (0.5-1mm), and Powder (80-100 mesh).',
       },
       {
-        'image': AppImages.productGarlicFlakes,
+        'image': AppImages.productGarlic,
         'category': 'GARLIC',
-        'title': 'Dehydrated Garlic Flakes (Slices)',
-        'desc': 'Crisp sliced garlic cloves with bright yellowish luster and rich essential Allicin oil potency for global export.',
-        'specs': ['Slice Size: 10-15 mm Slices', 'Color: Natural Yellowish', 'Moisture: Max 6.0%'],
+        'title': 'Dehydrated Garlic',
+        'desc': 'Dehydrated Garlic range including Sliced Flakes (10-15mm), Chopped (3-5mm), Minced (1-3mm), Granules (0.5-1mm), and Powder (80-100 mesh).',
       },
     ];
 
@@ -909,7 +905,8 @@ class _HomePageState extends State<HomePage> {
                           categoryTag: p['category'] as String,
                           title: p['title'] as String,
                           description: p['desc'] as String,
-                          specs: p['specs'] as List<String>,
+                          imageAlignment: (p['alignment'] as Alignment?) ?? Alignment.center,
+                          imageFit: (p['fit'] as BoxFit?) ?? BoxFit.contain,
                         ),
                       )).toList(),
                     );
@@ -925,7 +922,8 @@ class _HomePageState extends State<HomePage> {
                           categoryTag: p['category'] as String,
                           title: p['title'] as String,
                           description: p['desc'] as String,
-                          specs: p['specs'] as List<String>,
+                          imageAlignment: (p['alignment'] as Alignment?) ?? Alignment.center,
+                          imageFit: (p['fit'] as BoxFit?) ?? BoxFit.contain,
                         ),
                       )).toList(),
                     );
@@ -1077,7 +1075,8 @@ class _HomePageState extends State<HomePage> {
     required String categoryTag,
     required String title,
     required String description,
-    required List<String> specs,
+    Alignment imageAlignment = Alignment.center,
+    BoxFit imageFit = BoxFit.contain,
   }) {
     final product = ProductModel(
       id: title.toLowerCase().replaceAll(' ', '_'),
@@ -1124,19 +1123,23 @@ class _HomePageState extends State<HomePage> {
             children: [
               ClipRRect(
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-                child: AspectRatio(
-                  aspectRatio: 4 / 3,
-                  child: Image.asset(
-                    imagePath,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Container(
-                        color: AppColors.primaryLight,
-                        child: const Center(
-                          child: Icon(Icons.shopping_bag_outlined, size: 48, color: AppColors.primary),
-                        ),
-                      );
-                    },
+                child: Container(
+                  color: Colors.black,
+                  child: AspectRatio(
+                    aspectRatio: 4 / 3,
+                    child: Image.asset(
+                      imagePath,
+                      fit: imageFit,
+                      alignment: imageAlignment,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          color: AppColors.primaryLight,
+                          child: const Center(
+                            child: Icon(Icons.shopping_bag_outlined, size: 48, color: AppColors.primary),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -1187,29 +1190,6 @@ class _HomePageState extends State<HomePage> {
                     height: 1.45,
                   ),
                 ),
-                const SizedBox(height: 16),
-                const Divider(color: AppColors.border, height: 1),
-                const SizedBox(height: 14),
-
-                ...specs.map((spec) => Padding(
-                  padding: const EdgeInsets.only(bottom: 6.0),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.check_circle_outline_rounded, color: AppColors.secondary, size: 15),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          spec,
-                          style: GoogleFonts.inter(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.textPrimary,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                )).toList(),
                 const SizedBox(height: 20),
 
                 SizedBox(
@@ -1809,12 +1789,6 @@ class _HomePageState extends State<HomePage> {
         tag: 'U.S. FOOD & DRUG ADMIN',
         image: AppImages.certFdaLogo,
         desc: 'Official US FDA facility registration for exporting dehydrated products into North American markets.',
-      ),
-      _CertItem(
-        title: 'BRCGS Food Safety',
-        tag: 'GLOBAL FOOD SAFETY',
-        image: AppImages.certBrcgsLogo,
-        desc: 'BRCGS (QCAS) Global Standard for Food Safety accredited manufacturing and packaging facility.',
       ),
       _CertItem(
         title: 'FSSC 22000 Certified',
