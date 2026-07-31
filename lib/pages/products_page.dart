@@ -1002,7 +1002,7 @@ class _ProductsPageState extends State<ProductsPage> {
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        'We customize particle mesh sizes (kibbled, minced, granules, powder) and bulk barrier packaging (10kg - 25kg) for global export.',
+                        'We customize particle mesh sizes (kibbled, minced, granules, powder) and bulk barrier packaging (20kg - 40kg) for global export.',
                         textAlign: TextAlign.center,
                         style: GoogleFonts.inter(
                           fontSize: 15,
@@ -1089,7 +1089,7 @@ class _ProductsPageState extends State<ProductsPage> {
 }
 
 // Stateful Product Card Component with Interactive Thumbnail Selector
-class _ProductCardWidget extends StatefulWidget {
+class _ProductCardWidget extends StatelessWidget {
   final ProductModel product;
   final VoidCallback onViewDetails;
   final VoidCallback onQuoteRequest;
@@ -1101,20 +1101,9 @@ class _ProductCardWidget extends StatefulWidget {
   });
 
   @override
-  State<_ProductCardWidget> createState() => _ProductCardWidgetState();
-}
-
-class _ProductCardWidgetState extends State<_ProductCardWidget> {
-  late String _activeImage;
-
-  @override
-  void initState() {
-    super.initState();
-    _activeImage = widget.product.images.first;
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final String coverImage = product.images.first;
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -1131,49 +1120,80 @@ class _ProductCardWidgetState extends State<_ProductCardWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Main Image Stack with Category Tag Badge
-          Stack(
-            children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(22)),
-                child: AspectRatio(
-                  aspectRatio: 1.15,
-                  child: Image.asset(
-                    _activeImage,
-                    fit: BoxFit.cover,
-                    cacheWidth: 600,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Container(
-                        color: AppColors.primaryLight,
-                        child: const Center(
-                          child: Icon(Icons.inventory_2_outlined, size: 48, color: AppColors.primary),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 14,
-                left: 14,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary.withValues(alpha: 0.9),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Text(
-                    widget.product.tag,
-                    style: GoogleFonts.outfit(
-                      color: Colors.white,
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 0.5,
+          // Main Cover Image Stack with Tag & Photo Count Badge
+          GestureDetector(
+            onTap: onViewDetails,
+            child: Stack(
+              children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.vertical(top: Radius.circular(22)),
+                  child: AspectRatio(
+                    aspectRatio: 1.25,
+                    child: Image.asset(
+                      coverImage,
+                      fit: BoxFit.cover,
+                      cacheWidth: 500,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          color: AppColors.primaryLight,
+                          child: const Center(
+                            child: Icon(Icons.inventory_2_outlined, size: 48, color: AppColors.primary),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),
-              ),
-            ],
+                // Category Mesh Tag
+                Positioned(
+                  top: 14,
+                  left: 14,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: AppColors.primary.withValues(alpha: 0.9),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      product.tag,
+                      style: GoogleFonts.outfit(
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  ),
+                ),
+                // 5-Photo Gallery Badge Counter
+                Positioned(
+                  top: 14,
+                  right: 14,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withValues(alpha: 0.75),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.collections_rounded, color: Colors.white, size: 12),
+                        const SizedBox(width: 4),
+                        Text(
+                          '${product.images.length} Photos',
+                          style: GoogleFonts.outfit(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
 
           Padding(
@@ -1183,9 +1203,9 @@ class _ProductCardWidgetState extends State<_ProductCardWidget> {
               children: [
                 // Title in Playfair Display
                 Text(
-                  widget.product.title,
+                  product.title,
                   style: GoogleFonts.playfairDisplay(
-                    fontSize: 20,
+                    fontSize: 19,
                     fontWeight: FontWeight.bold,
                     color: AppColors.primary,
                   ),
@@ -1193,7 +1213,9 @@ class _ProductCardWidgetState extends State<_ProductCardWidget> {
                 const SizedBox(height: 6),
 
                 Text(
-                  widget.product.tagline,
+                  product.tagline,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.inter(
                     fontSize: 13,
                     color: AppColors.textSecondary,
@@ -1203,7 +1225,7 @@ class _ProductCardWidgetState extends State<_ProductCardWidget> {
 
                 // Origin Tag Line
                 Text(
-                  'ORIGIN • ${widget.product.origin}',
+                  'ORIGIN • ${product.origin}',
                   style: GoogleFonts.outfit(
                     fontSize: 10,
                     fontWeight: FontWeight.bold,
@@ -1211,59 +1233,47 @@ class _ProductCardWidgetState extends State<_ProductCardWidget> {
                     letterSpacing: 0.5,
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 14),
 
-                // 5 Thumbnail Images Gallery for Photos 1, 2, 3, 4, 5
-                Row(
-                  children: widget.product.images.map((img) {
-                    final bool isActive = _activeImage == img;
-                    return GestureDetector(
-                      onTap: () => setState(() => _activeImage = img),
-                      child: Container(
-                        margin: const EdgeInsets.only(right: 6),
-                        width: 38,
-                        height: 38,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: isActive ? AppColors.secondary : AppColors.border,
-                            width: isActive ? 2 : 1,
-                          ),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(6),
-                          child: Image.asset(
-                            img,
-                            fit: BoxFit.cover,
-                            cacheWidth: 100,
-                          ),
-                        ),
-                      ),
-                    );
-                  }).toList(),
+                // Quick Specs Pills Row
+                Wrap(
+                  spacing: 6,
+                  runSpacing: 6,
+                  children: [
+                    _buildSpecChip('Purity: ${product.purity}'),
+                    _buildSpecChip('Moisture: ${product.moisture}'),
+                    _buildSpecChip('Shelf Life: ${product.shelfLife}'),
+                  ],
                 ),
                 const SizedBox(height: 20),
 
-                // Action Row: View Details & WhatsApp Inquire Button
+                // Action Row: View Details & 5 Photos + WhatsApp Inquire Button
                 Row(
                   children: [
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: widget.onViewDetails,
+                        onPressed: onViewDetails,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.secondary,
                           foregroundColor: Colors.white,
                           padding: const EdgeInsets.symmetric(vertical: 14),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                          elevation: 4,
+                          elevation: 3,
                           shadowColor: AppColors.secondaryGlow,
                         ),
-                        child: Text(
-                          'View Details',
-                          style: GoogleFonts.outfit(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                          ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.photo_library_outlined, size: 16),
+                            const SizedBox(width: 6),
+                            Text(
+                              'View Details & Gallery',
+                              style: GoogleFonts.outfit(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -1276,7 +1286,7 @@ class _ProductCardWidgetState extends State<_ProductCardWidget> {
                       ),
                       child: IconButton(
                         icon: const Icon(Icons.chat_bubble_outline_rounded, color: Colors.white, size: 20),
-                        onPressed: widget.onQuoteRequest,
+                        onPressed: onQuoteRequest,
                         tooltip: 'Inquire on WhatsApp',
                       ),
                     ),
@@ -1286,6 +1296,25 @@ class _ProductCardWidgetState extends State<_ProductCardWidget> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  static Widget _buildSpecChip(String text) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
+      decoration: BoxDecoration(
+        color: AppColors.primaryLight.withValues(alpha: 0.5),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: AppColors.border),
+      ),
+      child: Text(
+        text,
+        style: GoogleFonts.inter(
+          fontSize: 11,
+          fontWeight: FontWeight.w600,
+          color: AppColors.textPrimary,
+        ),
       ),
     );
   }
