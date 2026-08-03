@@ -1078,41 +1078,8 @@ class _HomePageState extends State<HomePage> {
     Alignment imageAlignment = Alignment.center,
     BoxFit imageFit = BoxFit.contain,
   }) {
-    final product = ProductModel(
-      id: title.toLowerCase().replaceAll(' ', '_'),
-      title: title,
-      category: categoryTag,
-      tag: categoryTag,
-      tagline: 'Export-grade dehydrated crop from Mahuva, Gujarat.',
-      origin: 'MAHUVA, GUJARAT, INDIA',
-      images: [imagePath, AppImages.productRedOnionFlakes, AppImages.productGarlicFlakes, AppImages.productWhiteOnionPowder],
-      purity: '99.5% min',
-      moisture: '≤ 6.0%',
-      shelfLife: '24 Months',
-      description: description,
-      keyFeatures: const [
-        '100% pure Mahuva Gujarat agricultural origin',
-        'Optical color sorted and metal detector checked',
-        'Zero sulfur bleaching or chemical additives',
-        'ISO 22000, HACCP, FSSAI & HALAL accredited',
-      ],
-      applications: const [
-        'Industrial spice grinding and dry seasonings',
-        'Ready-to-eat meals, instant soups, and noodles',
-        'HoReCa hotel, restaurant, and catering supply',
-        'Bakery, pickle, sauce, and snack manufacturing',
-      ],
-      specs: {
-        'Category': categoryTag,
-        'Origin': 'Mahuva, Gujarat, India',
-        'Moisture Content': 'Max 6.0%',
-        'Total Ash': 'Max 4.5%',
-        'Microbiological': 'E.Coli: Negative / Salmonella: Absent',
-      },
-    );
-
     return LiquidUI.interactiveGlassCard(
-      onTap: () => showProductDetailModal(context, product),
+      onTap: () => Navigator.pushNamed(context, '/products'),
       padding: EdgeInsets.zero,
       backgroundColor: Colors.white,
       borderRadius: 20,
