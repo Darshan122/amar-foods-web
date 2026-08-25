@@ -157,6 +157,7 @@ class AppImages {
   static const String socialInstagram = '$_basePath/social_instagram.png';
   static const String socialLinkedin = '$_basePath/social_linkedin.png';
   static const String socialFacebook = '$_basePath/social_facebook.png';
+  static const String socialViber = '$_basePath/social_viber.png';
 
   // Official Accreditation & Certification Emblems (11 Certificates)
   static const String certFdaLogo = '$_basePath/cert_fda_logo.png';

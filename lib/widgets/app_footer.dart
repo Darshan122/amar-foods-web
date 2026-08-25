@@ -104,6 +104,13 @@ class AppFooter extends StatelessWidget {
                         url: 'https://www.facebook.com/profile.php?viewas=100000686899395&id=61592459882888',
                         tooltip: 'Facebook: Amar Foods',
                       ),
+                      const SizedBox(width: 14),
+                      _buildSocialIcon(
+                        assetPath: AppImages.socialViber,
+                        url: 'viber://chat?number=%2B917284088737',
+                        tooltip: 'Viber Chat: +91 7284088737',
+                        fallbackIcon: Icons.phone_in_talk_rounded,
+                      ),
                     ],
                   ),
                 ],
@@ -369,15 +376,20 @@ class AppFooter extends StatelessWidget {
     required String assetPath,
     required String url,
     required String tooltip,
+    IconData? fallbackIcon,
   }) {
     return Tooltip(
       message: tooltip,
       child: InkWell(
         onTap: () async {
           final Uri uri = Uri.parse(url);
-          if (await canLaunchUrl(uri)) {
-            await launchUrl(uri, mode: LaunchMode.externalApplication);
-          }
+          try {
+            if (await canLaunchUrl(uri)) {
+              await launchUrl(uri, mode: LaunchMode.externalApplication);
+            } else {
+              await launchUrl(uri);
+            }
+          } catch (_) {}
         },
         borderRadius: BorderRadius.circular(22),
         child: Container(
@@ -402,7 +414,7 @@ class AppFooter extends StatelessWidget {
               assetPath,
               fit: BoxFit.contain,
               errorBuilder: (context, error, stackTrace) {
-                return const Icon(Icons.link_rounded, color: Colors.white, size: 18);
+                return Icon(fallbackIcon ?? Icons.link_rounded, color: Colors.white, size: 18);
               },
             ),
           ),

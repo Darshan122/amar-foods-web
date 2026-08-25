@@ -1783,12 +1783,6 @@ class _HomePageState extends State<HomePage> {
         desc: 'Official licence from Food Safety and Standards Authority of India for hygienic processing & export.',
       ),
       _CertItem(
-        title: 'GST Registered',
-        tag: 'GOVT TAX REGISTRATION',
-        image: AppImages.certGstLogo,
-        desc: 'Official Government of India Goods & Services Tax (GST) registered legal commercial exporter.',
-      ),
-      _CertItem(
         title: 'HALAL Certified',
         tag: 'ISLAMIC DIETARY LAW',
         image: AppImages.certHalalLogo,
@@ -1805,12 +1799,6 @@ class _HomePageState extends State<HomePage> {
         tag: 'MINISTRY OF MSME',
         image: AppImages.certMsmeLogo,
         desc: 'Ministry of Micro, Small & Medium Enterprises (Udyam) government recognized enterprise.',
-      ),
-      _CertItem(
-        title: 'APMC License',
-        tag: 'MARKET COMMITTEE',
-        image: AppImages.certApmcLogo,
-        desc: 'Agricultural Produce Market Committee (APMC Mahuva) licensed primary agricultural processor.',
       ),
     ];
 
