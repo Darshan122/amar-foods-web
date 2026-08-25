@@ -36,16 +36,124 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;0,900;1,600;1,700&family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #0f0f14;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    #splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #0f0f14;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 999999;
+      transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #splash-screen.fade-out {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .splash-video-container {
+      width: 320px;
+      max-width: 85vw;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7), 0 0 45px rgba(123, 31, 162, 0.4);
+      background: #16161d;
+      border: 1.5px solid rgba(255, 255, 255, 0.15);
+      position: relative;
+    }
+    .splash-video-container video {
+      width: 100%;
+      height: auto;
+      max-height: 70vh;
+      display: block;
+      object-fit: contain;
+      background-color: #16161d;
+    }
+    .splash-loader-bar {
+      width: 180px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 4px;
+      margin-top: 28px;
+      overflow: hidden;
+      position: relative;
+    }
+    .splash-loader-progress {
+      width: 45%;
+      height: 100%;
+      background: linear-gradient(90deg, #7b1fa2, #e91e63, #7b1fa2);
+      border-radius: 4px;
+      position: absolute;
+      animation: loaderPulse 1.6s infinite ease-in-out;
+    }
+    @keyframes loaderPulse {
+      0% { left: -45%; width: 45%; }
+      50% { left: 40%; width: 65%; }
+      100% { left: 100%; width: 45%; }
+    }
+  </style>
 </head>
 <body>
-  <!--
-    You can customize the "flutter_bootstrap.js" script.
-    This is useful to provide a custom configuration to the Flutter loader
-    or to give the user feedback during the initialization process.
+  <!-- Animated Video Logo Splash Screen Overlay -->
+  <div id="splash-screen">
+    <div class="splash-video-container">
+      <video id="splash-video" autoplay loop muted playsinline preload="auto" disablepictureinpicture controlslist="nodownload noremoteplayback">
+        <source src="splash_logo.mp4" type="video/mp4">
+        <source src="assets/assets/images/Animate_this_exact_logo_image.mp4" type="video/mp4">
+        <source src="assets/images/Animate_this_exact_logo_image.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="splash-loader-bar">
+      <div class="splash-loader-progress"></div>
+    </div>
+  </div>
 
-    For more details:
-    * https://docs.flutter.dev/platform-integration/web/initialization
-  -->
+  <script>
+    function removeSplashScreen() {
+      const splash = document.getElementById('splash-screen');
+      if (splash && !splash.classList.contains('fade-out')) {
+        splash.classList.add('fade-out');
+        setTimeout(function() {
+          splash.remove();
+          document.body.style.overflow = 'auto';
+        }, 800);
+      }
+    }
+
+    // Force play video on start
+    const v = document.getElementById('splash-video');
+    if (v) {
+      v.muted = true;
+      v.play().catch(function(e) {
+        console.log("Auto play prevented:", e);
+      });
+    }
+
+    // Auto-detect when Flutter finishes rendering UI onto DOM
+    const observer = new MutationObserver(function(mutations) {
+      if (document.querySelector('flt-glass-pane') || document.querySelector('flutter-view') || document.querySelector('flt-scene-host')) {
+        setTimeout(removeSplashScreen, 1400);
+        observer.disconnect();
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // Fallback: auto-remove splash after max 6 seconds
+    setTimeout(removeSplashScreen, 6000);
+  </script>
+
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
