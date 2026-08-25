@@ -68,18 +68,22 @@
       max-width: 85vw;
       border-radius: 28px;
       overflow: hidden;
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7), 0 0 45px rgba(123, 31, 162, 0.4);
-      background: #16161d;
-      border: 1.5px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7), 0 0 50px rgba(123, 31, 162, 0.45);
+      background: transparent;
       position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .splash-video-container video {
+      display: none;
+    }
+    .splash-video-container canvas {
       width: 100%;
       height: auto;
       max-height: 70vh;
       display: block;
       object-fit: contain;
-      background-color: #16161d;
     }
     .splash-loader-bar {
       width: 180px;
@@ -114,6 +118,7 @@
         <source src="assets/assets/images/Animate_this_exact_logo_image.mp4" type="video/mp4">
         <source src="assets/images/Animate_this_exact_logo_image.mp4" type="video/mp4">
       </video>
+      <canvas id="splash-canvas"></canvas>
     </div>
     <div class="splash-loader-bar">
       <div class="splash-loader-progress"></div>
@@ -132,26 +137,79 @@
       }
     }
 
-    // Force play video on start
-    const v = document.getElementById('splash-video');
-    if (v) {
-      v.muted = true;
-      v.play().catch(function(e) {
-        console.log("Auto play prevented:", e);
+    // Real-time Canvas Background Remover (Chroma Keying)
+    const video = document.getElementById('splash-video');
+    const canvas = document.getElementById('splash-canvas');
+    let isProcessing = false;
+
+    if (video && canvas) {
+      const ctx = canvas.getContext('2d', { willReadFrequently: true });
+
+      function processFrame() {
+        if (video.paused || video.ended) {
+          isProcessing = false;
+          return;
+        }
+
+        if (video.videoWidth > 0) {
+          if (canvas.width !== video.videoWidth) {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+          }
+
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+          const frame = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          const d = frame.data;
+          const len = d.length;
+
+          for (let i = 0; i < len; i += 4) {
+            const r = d[i];
+            const g = d[i + 1];
+            const b = d[i + 2];
+
+            // Remove white, light-grey, and checkerboard grid pixels
+            if ((r > 165 && g > 165 && b > 165 && Math.abs(r - g) < 30 && Math.abs(g - b) < 30) ||
+                (r > 190 && g > 190 && b > 190)) {
+              d[i + 3] = 0; // Make 100% transparent!
+            }
+          }
+          ctx.putImageData(frame, 0, 0);
+        }
+
+        requestAnimationFrame(processFrame);
+      }
+
+      function startProcessing() {
+        if (!isProcessing) {
+          isProcessing = true;
+          processFrame();
+        }
+      }
+
+      video.muted = true;
+      video.play().then(startProcessing).catch(function() {
+        video.muted = true;
+        video.play().then(startProcessing).catch(function(e) {
+          console.log("Auto play:", e);
+        });
       });
+
+      video.addEventListener('play', startProcessing);
+      video.addEventListener('playing', startProcessing);
+      video.addEventListener('timeupdate', startProcessing);
     }
 
     // Auto-detect when Flutter finishes rendering UI onto DOM
     const observer = new MutationObserver(function(mutations) {
       if (document.querySelector('flt-glass-pane') || document.querySelector('flutter-view') || document.querySelector('flt-scene-host')) {
-        setTimeout(removeSplashScreen, 1400);
+        setTimeout(removeSplashScreen, 1600);
         observer.disconnect();
       }
     });
     observer.observe(document.body, { childList: true, subtree: true });
 
-    // Fallback: auto-remove splash after max 6 seconds
-    setTimeout(removeSplashScreen, 6000);
+    // Fallback: auto-remove splash after max 6.5 seconds
+    setTimeout(removeSplashScreen, 6500);
   </script>
 
   <script src="flutter_bootstrap.js" async></script>
