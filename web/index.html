@@ -36,16 +36,181 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;0,900;1,600;1,700&family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #0b0c10;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: 'Outfit', sans-serif;
+    }
+    #splash-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at center, #1b162b 0%, #0b0c10 80%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 999999;
+      transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #splash-loader.fade-out {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .pulse-wrapper {
+      position: relative;
+      width: 130px;
+      height: 130px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ring-outer {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-top-color: #f59e0b;
+      border-bottom-color: #7b1fa2;
+      animation: spinOuter 2.2s linear infinite;
+      box-shadow: 0 0 25px rgba(245, 158, 11, 0.25), 0 0 25px rgba(123, 31, 162, 0.3);
+    }
+    .ring-inner {
+      position: absolute;
+      width: 76%;
+      height: 76%;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      border-left-color: #e91e63;
+      border-right-color: #f59e0b;
+      animation: spinInner 1.4s linear infinite reverse;
+    }
+    .core-emblem {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: rgba(123, 31, 162, 0.2);
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 15px rgba(245, 158, 11, 0.3);
+      animation: pulseCore 1.8s ease-in-out infinite alternate;
+    }
+    .core-emblem svg {
+      width: 32px;
+      height: 32px;
+      fill: #f59e0b;
+      filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.8));
+    }
+    .splash-title {
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      margin-top: 32px;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, #ffffff, #f59e0b, #ffffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
+    }
+    .splash-subtitle {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 13px;
+      font-weight: 400;
+      margin-top: 6px;
+      letter-spacing: 0.5px;
+      font-family: 'Inter', sans-serif;
+      text-align: center;
+    }
+    .progress-bar-track {
+      width: 220px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      margin-top: 24px;
+      overflow: hidden;
+      position: relative;
+    }
+    .progress-bar-fill {
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, #7b1fa2, #f59e0b, #e91e63);
+      border-radius: 4px;
+      position: absolute;
+      animation: fillMove 1.6s ease-in-out infinite;
+    }
+
+    @keyframes spinOuter {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes spinInner {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes pulseCore {
+      0% { transform: scale(0.92); opacity: 0.85; }
+      100% { transform: scale(1.08); opacity: 1; }
+    }
+    @keyframes fillMove {
+      0% { left: -50%; width: 50%; }
+      50% { left: 25%; width: 65%; }
+      100% { left: 100%; width: 50%; }
+    }
+  </style>
 </head>
 <body>
-  <!--
-    You can customize the "flutter_bootstrap.js" script.
-    This is useful to provide a custom configuration to the Flutter loader
-    or to give the user feedback during the initialization process.
+  <!-- Option 1: Golden Crop Pulse & Glowing Aura Loader -->
+  <div id="splash-loader">
+    <div class="pulse-wrapper">
+      <div class="ring-outer"></div>
+      <div class="ring-inner"></div>
+      <div class="core-emblem">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 3v2.28c3.96.48 7 3.86 7 7.97 0 4.42-3.58 8-8 8s-8-3.58-8-8c0-4.11 3.04-7.49 7-7.97V3h2zm-1 4.07C7.61 7.55 5 10.47 5 14c0 3.31 2.69 6 6 6s6-2.69 6-6c0-3.53-2.61-6.45-6-6.93v1.98h-2V7.07z"/>
+        </svg>
+      </div>
+    </div>
+    <div class="splash-title">AMAR FOODS</div>
+    <div class="splash-subtitle">Loading Mahuva Export Portal...</div>
+    <div class="progress-bar-track">
+      <div class="progress-bar-fill"></div>
+    </div>
+  </div>
 
-    For more details:
-    * https://docs.flutter.dev/platform-integration/web/initialization
-  -->
+  <script>
+    function hideLoader() {
+      const loader = document.getElementById('splash-loader');
+      if (loader && !loader.classList.contains('fade-out')) {
+        loader.classList.add('fade-out');
+        setTimeout(function() {
+          loader.remove();
+          document.body.style.overflow = 'auto';
+        }, 700);
+      }
+    }
+
+    const observer = new MutationObserver(function(mutations) {
+      if (document.querySelector('flt-glass-pane') || document.querySelector('flutter-view') || document.querySelector('flt-scene-host')) {
+        setTimeout(hideLoader, 500);
+        observer.disconnect();
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    setTimeout(hideLoader, 5000);
+  </script>
+
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
