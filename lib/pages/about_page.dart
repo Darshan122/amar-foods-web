@@ -576,22 +576,30 @@ class AboutPage extends StatelessWidget {
       {
         'name': 'Labhesh Patel',
         'role': 'MANAGING DIRECTOR & FOUNDER',
-        'bio': 'Pioneering Mahuva\'s crop processing footprint, corporate strategy, and raw procurement partnerships.',
+        'exp': '15+ Years Industry Experience',
+        'expertise': 'Crop Sourcing & Dehydration Manufacturing',
+        'bio': 'With over 15+ years of dedicated experience in agricultural crop procurement and manufacturing, Labhesh Patel spearheads corporate strategy and raw material sourcing across Mahuva\'s vast agricultural belt. He has built direct contract farming partnerships with local onion and garlic growers, ensuring direct farm-to-factory supply chains for premium red, white, and pink onions alongside high-potency garlic.',
       },
       {
         'name': 'Hiren Patel',
         'role': 'OPERATIONS DIRECTOR & CO-FOUNDER',
-        'bio': 'Overseeing continuous tunnel drying automation, factory sanitary compliance, and container stuffing.',
+        'exp': '15+ Years Industry Experience',
+        'expertise': 'Factory Operations & Plant Engineering',
+        'bio': 'Bringing 15+ years of specialized experience in food dehydration engineering and plant operations, Hiren Patel directs the automated continuous multi-stage conveyor tunnel drying lines at Amar Foods. He oversees hands-free washing, precision slicing, optical sorting, and factory sanitary compliance to maintain high-volume export output with zero operational downtime.',
       },
       {
         'name': 'Jagdish Patel',
         'role': 'QUALITY & R&D DIRECTOR & CO-FOUNDER',
-        'bio': 'Ensuring stringent ISO/HACCP lab clearance, microbiological purity, and essential oil retention.',
+        'exp': '15+ Years Industry Experience',
+        'expertise': 'Quality Control & Food Safety R&D',
+        'bio': 'Backed by 15+ years of expertise in analytical quality assurance and food technology R&D, Jagdish Patel manages the in-house quality testing laboratory. He enforces strict adherence to ISO 22000, HACCP, and FSSAI standards—guaranteeing low moisture content (≤6.0%), essential oil retention, zero chemical additives, and total microbiological safety.',
       },
       {
         'name': 'Milan Bheda',
         'role': 'INTERNATIONAL EXPORTS DIRECTOR & CO-FOUNDER',
-        'bio': 'Managing global commercial trade networks across 15+ countries in Europe, the Gulf, and Southeast Asia.',
+        'exp': '15+ Years Industry Experience',
+        'expertise': 'Global Agri-Trade & Export Markets',
+        'bio': 'Leveraging 15+ years of extensive experience in international commodity trading and port logistics, Milan Bheda heads global commercial expansion at Amar Foods. He has established robust export networks across 15+ countries in Europe, North America, the Middle East, and Southeast Asia, handling customs clearance, container stuffing, and bulk packaging.',
       },
     ];
 
@@ -624,7 +632,7 @@ class AboutPage extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                'Driven by a shared commitment to quality, innovation, and global agricultural trade excellence.',
+                'Over 15+ years of deep manufacturing, crop procurement, and export trade excellence.',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
                   fontSize: 15,
@@ -679,7 +687,7 @@ class AboutPage extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: AppColors.primaryLight,
                   shape: BoxShape.circle,
-                  border: Border.all(color: AppColors.primary.withOpacity(0.15)),
+                  border: Border.all(color: AppColors.primary.withValues(alpha: 0.15)),
                 ),
                 child: const Icon(
                   Icons.person_outline_rounded,
@@ -691,9 +699,9 @@ class AboutPage extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   decoration: BoxDecoration(
-                    color: AppColors.secondary.withOpacity(0.12),
+                    color: AppColors.secondary.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: AppColors.secondary.withOpacity(0.25)),
+                    border: Border.all(color: AppColors.secondary.withValues(alpha: 0.25)),
                   ),
                   child: Text(
                     f['role']!,
@@ -718,6 +726,32 @@ class AboutPage extends StatelessWidget {
               fontSize: 22,
               fontWeight: FontWeight.bold,
               color: AppColors.primary,
+            ),
+          ),
+          const SizedBox(height: 8),
+
+          // 15+ Years Experience Badge
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            decoration: BoxDecoration(
+              color: AppColors.primaryLight,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: AppColors.primary.withValues(alpha: 0.2)),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.workspace_premium_rounded, size: 14, color: AppColors.primary),
+                const SizedBox(width: 5),
+                Text(
+                  f['exp']!,
+                  style: GoogleFonts.outfit(
+                    fontSize: 11,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primary,
+                  ),
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 12),
