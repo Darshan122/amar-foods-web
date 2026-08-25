@@ -39,7 +39,7 @@
 
   <style>
     body {
-      background-color: #0b0c10;
+      background-color: #0d0e12;
       margin: 0;
       padding: 0;
       overflow: hidden;
@@ -51,7 +51,7 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: radial-gradient(circle at center, #1b162b 0%, #0b0c10 80%);
+      background: radial-gradient(circle at center, #181528 0%, #0d0e12 85%);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -64,127 +64,95 @@
       visibility: hidden;
       pointer-events: none;
     }
-    .pulse-wrapper {
+    .logo-container {
       position: relative;
-      width: 130px;
-      height: 130px;
+      width: 140px;
+      height: 140px;
       display: flex;
       align-items: center;
       justify-content: center;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 36px;
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 35px rgba(123, 31, 162, 0.25);
+      animation: pulseGlow 2s ease-in-out infinite alternate;
     }
-    .ring-outer {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      border: 3px solid transparent;
-      border-top-color: #f59e0b;
-      border-bottom-color: #7b1fa2;
-      animation: spinOuter 2.2s linear infinite;
-      box-shadow: 0 0 25px rgba(245, 158, 11, 0.25), 0 0 25px rgba(123, 31, 162, 0.3);
-    }
-    .ring-inner {
-      position: absolute;
-      width: 76%;
-      height: 76%;
-      border-radius: 50%;
-      border: 2px solid transparent;
-      border-left-color: #e91e63;
-      border-right-color: #f59e0b;
-      animation: spinInner 1.4s linear infinite reverse;
-    }
-    .core-emblem {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: rgba(123, 31, 162, 0.2);
-      border: 1.5px solid rgba(255, 255, 255, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: inset 0 0 15px rgba(245, 158, 11, 0.3);
-      animation: pulseCore 1.8s ease-in-out infinite alternate;
-    }
-    .core-emblem svg {
-      width: 32px;
-      height: 32px;
-      fill: #f59e0b;
-      filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.8));
+    .logo-container img {
+      max-width: 100px;
+      max-height: 100px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
     }
     .splash-title {
       color: #ffffff;
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 1.8px;
       margin-top: 32px;
       text-transform: uppercase;
-      background: linear-gradient(90deg, #ffffff, #f59e0b, #ffffff);
+      background: linear-gradient(90deg, #ffffff, #d8b4fe, #ffffff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       text-align: center;
     }
     .splash-subtitle {
-      color: rgba(255, 255, 255, 0.6);
+      color: rgba(255, 255, 255, 0.65);
       font-size: 13px;
       font-weight: 400;
-      margin-top: 6px;
-      letter-spacing: 0.5px;
+      margin-top: 8px;
+      letter-spacing: 0.6px;
       font-family: 'Inter', sans-serif;
       text-align: center;
     }
-    .progress-bar-track {
-      width: 220px;
-      height: 4px;
+    .progress-track {
+      width: 240px;
+      height: 5px;
       background: rgba(255, 255, 255, 0.1);
-      border-radius: 4px;
-      margin-top: 24px;
+      border-radius: 6px;
+      margin-top: 26px;
       overflow: hidden;
       position: relative;
     }
-    .progress-bar-fill {
-      width: 50%;
+    .progress-fill {
+      width: 40%;
       height: 100%;
-      background: linear-gradient(90deg, #7b1fa2, #f59e0b, #e91e63);
-      border-radius: 4px;
+      background: linear-gradient(90deg, #7b1fa2, #e91e63, #f59e0b);
+      border-radius: 6px;
       position: absolute;
-      animation: fillMove 1.6s ease-in-out infinite;
+      animation: fluidFill 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      box-shadow: 0 0 12px rgba(233, 30, 99, 0.6);
     }
 
-    @keyframes spinOuter {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    @keyframes pulseGlow {
+      0% {
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 20px rgba(123, 31, 162, 0.2);
+        border-color: rgba(255, 255, 255, 0.12);
+        transform: scale(0.97);
+      }
+      100% {
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), 0 0 45px rgba(123, 31, 162, 0.5);
+        border-color: rgba(216, 180, 254, 0.4);
+        transform: scale(1.03);
+      }
     }
-    @keyframes spinInner {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    @keyframes pulseCore {
-      0% { transform: scale(0.92); opacity: 0.85; }
-      100% { transform: scale(1.08); opacity: 1; }
-    }
-    @keyframes fillMove {
-      0% { left: -50%; width: 50%; }
-      50% { left: 25%; width: 65%; }
-      100% { left: 100%; width: 50%; }
+
+    @keyframes fluidFill {
+      0% { left: -40%; width: 40%; }
+      50% { left: 30%; width: 60%; }
+      100% { left: 100%; width: 40%; }
     }
   </style>
 </head>
 <body>
-  <!-- Option 1: Golden Crop Pulse & Glowing Aura Loader -->
+  <!-- Option 2: Shimmering Brand Logo + Liquid Fluid Bar Loader -->
   <div id="splash-loader">
-    <div class="pulse-wrapper">
-      <div class="ring-outer"></div>
-      <div class="ring-inner"></div>
-      <div class="core-emblem">
-        <svg viewBox="0 0 24 24">
-          <path d="M12 3v2.28c3.96.48 7 3.86 7 7.97 0 4.42-3.58 8-8 8s-8-3.58-8-8c0-4.11 3.04-7.49 7-7.97V3h2zm-1 4.07C7.61 7.55 5 10.47 5 14c0 3.31 2.69 6 6 6s6-2.69 6-6c0-3.53-2.61-6.45-6-6.93v1.98h-2V7.07z"/>
-        </svg>
-      </div>
+    <div class="logo-container">
+      <img src="app_logo.png" alt="Amar Foods Logo" onerror="this.src='favicon.png'">
     </div>
     <div class="splash-title">AMAR FOODS</div>
-    <div class="splash-subtitle">Loading Mahuva Export Portal...</div>
-    <div class="progress-bar-track">
-      <div class="progress-bar-fill"></div>
+    <div class="splash-subtitle">Preparing High-Grade Dehydrated Products...</div>
+    <div class="progress-track">
+      <div class="progress-fill"></div>
     </div>
   </div>
 
