@@ -16,6 +16,8 @@ class GalleryPage extends StatefulWidget {
 }
 
 class _GalleryPageState extends State<GalleryPage> {
+  String _selectedCategory = 'ALL';
+
   void _showQuoteDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -30,6 +32,48 @@ class _GalleryPageState extends State<GalleryPage> {
     final double headingSize = LiquidUI.fluid(context, minVal: 28, maxVal: 42);
 
     final galleryItems = [
+      // --- EXPOS & EVENTS (5 EVENT PHOTOS) ---
+      {
+        'title': 'Fi India 2026 - Premier Food Ingredients Event',
+        'category': 'EXPOS & EVENTS',
+        'image': AppImages.expoFiIndiaHall,
+        'desc': 'Fi India 2026 20th Anniversary Edition at Bombay Exhibition Center (BEC), Mumbai (26-28 Aug 2026).',
+        'venue': 'Bombay Exhibition Center (BEC), Mumbai, India',
+        'date': '26 - 28 August 2026',
+      },
+      {
+        'title': 'Amar Foods Leadership at Fi India 2026',
+        'category': 'EXPOS & EVENTS',
+        'image': AppImages.expoFiIndia1,
+        'desc': 'Showcasing high-grade dehydrated onion & garlic products to international food processing brands.',
+        'venue': 'Bombay Exhibition Center (BEC), Mumbai, India',
+        'date': '26 - 28 August 2026',
+      },
+      {
+        'title': 'Global B2B Strategic Partnerships & Networking',
+        'category': 'EXPOS & EVENTS',
+        'image': AppImages.expoFiIndia2,
+        'desc': 'Business discussions with global ingredient distributors, spice importers, and contract packaging buyers.',
+        'venue': 'Bombay Exhibition Center (BEC), Mumbai, India',
+        'date': '26 - 28 August 2026',
+      },
+      {
+        'title': 'Agri Crop Innovation & Ingredient Sourcing',
+        'category': 'EXPOS & EVENTS',
+        'image': AppImages.expoFiIndia3,
+        'desc': 'Presenting Mahuva\'s rich agricultural origin, high dry matter, and natural flavor retention.',
+        'venue': 'Bombay Exhibition Center (BEC), Mumbai, India',
+        'date': '26 - 28 August 2026',
+      },
+      {
+        'title': 'Quality Assurance & Sustainability Wall',
+        'category': 'EXPOS & EVENTS',
+        'image': AppImages.expoFiIndia4,
+        'desc': 'Highlighting 100% natural, farm-traceable dehydrated products delivering goodness you can trust.',
+        'venue': 'Bombay Exhibition Center (BEC), Mumbai, India',
+        'date': '26 - 28 August 2026',
+      },
+
       // --- RED ONION RANGE (5 PRODUCTS) ---
       {
         'title': 'Dehydrated Red Onion Flakes',
@@ -262,13 +306,47 @@ class _GalleryPageState extends State<GalleryPage> {
                   constraints: LiquidUI.pageConstraints(),
                   child: Column(
                     children: [
+                      // Category Filter Bar
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            _buildFilterTab('ALL', 'All Media', galleryItems.length),
+                            const SizedBox(width: 10),
+                            _buildFilterTab('EXPOS & EVENTS', 'Fi India 2026 Expo', galleryItems.where((i) => i['category'] == 'EXPOS & EVENTS').length),
+                            const SizedBox(width: 10),
+                            _buildFilterTab('RED ONION', 'Red Onion', galleryItems.where((i) => i['category'] == 'RED ONION').length),
+                            const SizedBox(width: 10),
+                            _buildFilterTab('WHITE ONION', 'White Onion', galleryItems.where((i) => i['category'] == 'WHITE ONION').length),
+                            const SizedBox(width: 10),
+                            _buildFilterTab('PINK ONION', 'Pink Onion', galleryItems.where((i) => i['category'] == 'PINK ONION').length),
+                            const SizedBox(width: 10),
+                            _buildFilterTab('GARLIC', 'Garlic', galleryItems.where((i) => i['category'] == 'GARLIC').length),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 36),
 
                       // Gallery Grid
                       LayoutBuilder(
                         builder: (context, constraints) {
+                          final displayedItems = _selectedCategory == 'ALL'
+                              ? galleryItems
+                              : galleryItems.where((item) => item['category'] == _selectedCategory).toList();
+
+                          if (displayedItems.isEmpty) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 40.0),
+                              child: Text(
+                                'No items found for this category.',
+                                style: GoogleFonts.inter(color: AppColors.textSecondary),
+                              ),
+                            );
+                          }
+
                           if (isMobile) {
                             return Column(
-                              children: galleryItems.map((item) => Padding(
+                              children: displayedItems.map((item) => Padding(
                                 padding: const EdgeInsets.only(bottom: 24.0),
                                 child: _buildGalleryCard(context, item),
                               )).toList(),
@@ -277,7 +355,7 @@ class _GalleryPageState extends State<GalleryPage> {
                             return Wrap(
                               spacing: 24,
                               runSpacing: 28,
-                              children: galleryItems.map((item) => SizedBox(
+                              children: displayedItems.map((item) => SizedBox(
                                 width: (constraints.maxWidth - 24) / 2 > 340
                                     ? (constraints.maxWidth - 48) / 3
                                     : (constraints.maxWidth - 24) / 2,
@@ -350,47 +428,114 @@ class _GalleryPageState extends State<GalleryPage> {
     );
   }
 
+  Widget _buildFilterTab(String catKey, String label, int count) {
+    final bool isSelected = _selectedCategory == catKey;
+    return InkWell(
+      onTap: () {
+        setState(() {
+          _selectedCategory = catKey;
+        });
+      },
+      borderRadius: BorderRadius.circular(30),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+        decoration: BoxDecoration(
+          color: isSelected ? AppColors.primary : Colors.white,
+          borderRadius: BorderRadius.circular(30),
+          border: Border.all(
+            color: isSelected ? AppColors.primary : AppColors.primary.withValues(alpha: 0.15),
+          ),
+          boxShadow: isSelected
+              ? [
+                  BoxShadow(
+                    color: AppColors.primary.withValues(alpha: 0.25),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  )
+                ]
+              : [],
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              label,
+              style: GoogleFonts.outfit(
+                fontSize: 13,
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
+                color: isSelected ? Colors.white : AppColors.textPrimary,
+              ),
+            ),
+            const SizedBox(width: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+              decoration: BoxDecoration(
+                color: isSelected ? AppColors.secondary : AppColors.primary.withValues(alpha: 0.08),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                '$count',
+                style: GoogleFonts.inter(
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                  color: isSelected ? Colors.white : AppColors.primary,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildGalleryCard(BuildContext context, Map<String, String> item) {
-    final String title = item['title'] ?? 'Amar Foods Dehydrated Product';
+    final String title = item['title'] ?? 'Amar Foods Media';
     final String category = item['category'] ?? 'PRODUCTS';
     final String image = item['image'] ?? AppImages.aboutProducts;
     final String desc = item['desc'] ?? 'Export-grade dehydrated onion & garlic product processed under hygienic heat-controlled dehydration.';
-
-    final product = ProductModel(
-      id: title.toLowerCase().replaceAll(' ', '_'),
-      title: title,
-      category: category,
-      tag: category == 'STUDIO COLLECTION' ? 'EXPORT STUDIO PHOTO' : 'EXPORT GRADE',
-      tagline: 'Pure 100% natural dehydrated crop origin Mahuva, Gujarat.',
-      origin: 'MAHUVA, GUJARAT, INDIA',
-      images: [image, AppImages.productRedOnionFlakes, AppImages.productGarlicFlakes, AppImages.productWhiteOnionPowder],
-      purity: '99.5% min',
-      moisture: '≤ 6.0%',
-      shelfLife: '24 Months',
-      description: desc,
-      keyFeatures: const [
-        '100% pure Mahuva Gujarat agricultural origin',
-        'Multi-stage optical sorting and metal detection',
-        'Zero sulfur bleaching or artificial additives',
-        'ISO 22000, HACCP, FSSAI & HALAL certified',
-      ],
-      applications: const [
-        'Spice grinding, dry seasonings, and rub mixes',
-        'Ready-to-eat meals, soups, and noodle mixes',
-        'HoReCa hotel, restaurant, and catering supply',
-        'Bakery, pickle, sauce, and snack manufacturing',
-      ],
-      specs: const {
-        'Origin': 'Mahuva, Gujarat, India',
-        'Moisture Content': 'Max 6.0%',
-        'Total Ash': 'Max 4.5%',
-        'Acid Insoluble Ash': 'Max 0.5%',
-        'Microbiological': 'E.Coli: Negative / Salmonella: Absent',
-      },
-    );
+    final bool isExpo = category == 'EXPOS & EVENTS';
 
     return LiquidUI.interactiveGlassCard(
-      onTap: () => showProductDetailModal(context, product),
+      onTap: () {
+        if (isExpo) {
+          _showExpoLightbox(context, item);
+        } else {
+          final product = ProductModel(
+            id: title.toLowerCase().replaceAll(' ', '_'),
+            title: title,
+            category: category,
+            tag: 'EXPORT GRADE',
+            tagline: 'Pure 100% natural dehydrated crop origin Mahuva, Gujarat.',
+            origin: 'MAHUVA, GUJARAT, INDIA',
+            images: [image, AppImages.productRedOnionFlakes, AppImages.productGarlicFlakes, AppImages.productWhiteOnionPowder],
+            purity: '99.5% min',
+            moisture: '≤ 6.0%',
+            shelfLife: '24 Months',
+            description: desc,
+            keyFeatures: const [
+              '100% pure Mahuva Gujarat agricultural origin',
+              'Multi-stage optical sorting and metal detection',
+              'Zero sulfur bleaching or artificial additives',
+              'ISO 22000, HACCP, FSSAI & HALAL certified',
+            ],
+            applications: const [
+              'Spice grinding, dry seasonings, and rub mixes',
+              'Ready-to-eat meals, soups, and noodle mixes',
+              'HoReCa hotel, restaurant, and catering supply',
+              'Bakery, pickle, sauce, and snack manufacturing',
+            ],
+            specs: const {
+              'Origin': 'Mahuva, Gujarat, India',
+              'Moisture Content': 'Max 6.0%',
+              'Total Ash': 'Max 4.5%',
+              'Acid Insoluble Ash': 'Max 0.5%',
+              'Microbiological': 'E.Coli: Negative / Salmonella: Absent',
+            },
+          );
+          showProductDetailModal(context, product);
+        }
+      },
       padding: EdgeInsets.zero,
       backgroundColor: Colors.white,
       borderRadius: 20,
@@ -404,7 +549,7 @@ class _GalleryPageState extends State<GalleryPage> {
                 child: AspectRatio(
                   aspectRatio: 4 / 3,
                   child: Image.asset(
-                    item['image']!,
+                    image,
                     fit: BoxFit.cover,
                     cacheWidth: 600,
                     errorBuilder: (context, error, stackTrace) {
@@ -424,11 +569,11 @@ class _GalleryPageState extends State<GalleryPage> {
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.9),
+                    color: isExpo ? AppColors.secondary : AppColors.primary.withValues(alpha: 0.9),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
-                    item['category']!,
+                    category,
                     style: GoogleFonts.outfit(
                       color: Colors.white,
                       fontSize: 10,
@@ -438,6 +583,19 @@ class _GalleryPageState extends State<GalleryPage> {
                   ),
                 ),
               ),
+              if (isExpo)
+                Positioned(
+                  bottom: 12,
+                  right: 12,
+                  child: Container(
+                    padding: const EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withValues(alpha: 0.65),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(Icons.zoom_in_rounded, size: 16, color: Colors.white),
+                  ),
+                ),
             ],
           ),
           Padding(
@@ -446,27 +604,170 @@ class _GalleryPageState extends State<GalleryPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  item['title']!,
+                  title,
                   style: GoogleFonts.outfit(
-                    fontSize: 18,
+                    fontSize: 17,
                     fontWeight: FontWeight.bold,
                     color: AppColors.primary,
                   ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  item['desc']!,
+                  desc,
                   style: GoogleFonts.inter(
                     fontSize: 13,
                     color: AppColors.textSecondary,
                     height: 1.45,
                   ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  void _showExpoLightbox(BuildContext context, Map<String, String> item) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+          child: Container(
+            constraints: const BoxConstraints(maxWidth: 720),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(24),
+              boxShadow: const [
+                BoxShadow(color: Colors.black38, blurRadius: 30, offset: Offset(0, 10)),
+              ],
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+                        child: Image.asset(
+                          item['image']!,
+                          width: double.infinity,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                      Positioned(
+                        top: 14,
+                        right: 14,
+                        child: IconButton(
+                          onPressed: () => Navigator.pop(context),
+                          icon: Container(
+                            padding: const EdgeInsets.all(6),
+                            decoration: const BoxDecoration(
+                              color: Colors.black54,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(Icons.close_rounded, color: Colors.white, size: 20),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                          decoration: BoxDecoration(
+                            color: AppColors.secondary.withValues(alpha: 0.12),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text(
+                            'FI INDIA 2026 • MUMBAI',
+                            style: GoogleFonts.outfit(
+                              fontSize: 11,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.secondary,
+                              letterSpacing: 0.6,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        Text(
+                          item['title']!,
+                          style: GoogleFonts.playfairDisplay(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.primary,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          item['desc']!,
+                          style: GoogleFonts.inter(
+                            fontSize: 14,
+                            color: AppColors.textPrimary,
+                            height: 1.55,
+                          ),
+                        ),
+                        const SizedBox(height: 18),
+                        if (item['venue'] != null)
+                          Container(
+                            padding: const EdgeInsets.all(14),
+                            decoration: BoxDecoration(
+                              color: AppColors.background,
+                              borderRadius: BorderRadius.circular(14),
+                              border: Border.all(color: AppColors.primary.withValues(alpha: 0.1)),
+                            ),
+                            child: Row(
+                              children: [
+                                const Icon(Icons.event_available_rounded, color: AppColors.primary, size: 20),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        item['venue']!,
+                                        style: GoogleFonts.outfit(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColors.primary,
+                                        ),
+                                      ),
+                                      if (item['date'] != null)
+                                        Text(
+                                          item['date']!,
+                                          style: GoogleFonts.inter(
+                                            fontSize: 12,
+                                            color: AppColors.textSecondary,
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
