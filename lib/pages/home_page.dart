@@ -96,25 +96,25 @@ class _HomePageState extends State<HomePage> {
             // 5. Interactive "Our Product Range" Showcase with Category Filter Tabs
             _buildProductRangeSection(context, isMobile),
 
-            // 6. "Why Choose Amar Foods" Core Value Pillars Grid
+            // 6. Global Expos & Industry Events (Trust Showcase)
+            _buildExpoSection(context, isMobile),
+
+            // 7. "Why Choose Amar Foods" Core Value Pillars Grid (UNMATCHED EXPORT ADVANTAGES)
             _buildWhyChooseUsSection(context, isMobile),
 
-            // 7. Farm-to-Shipment Journey Process Timeline
+            // 8. Farm-to-Shipment Journey Process Timeline
             _buildProcessTimelineSection(context, isMobile),
 
-            // 8. "Our Promise" Quality Control Sanctuary & Certifications
+            // 9. "Our Promise" Quality Control Sanctuary & Certifications
             // _buildQualityPromiseSection(context, isMobile),
 
-            // 9. International Accreditation & Quality Certifications Section
+            // 10. International Accreditation & Quality Certifications Section
             _buildCertificationsSection(context, isMobile),
-
-            // 10. Global Expos & Industry Events (Option A Trust Showcase)
-            _buildExpoSection(context, isMobile),
 
             // 11. Global Export Footprint & Network
             // _buildGlobalFootprintSection(context, isMobile),
 
-            // 8. Ready to Source Bottom CTA Banner
+            // 12. Ready to Source Bottom CTA Banner
             _buildCtaBannerSection(context, isMobile),
 
             // Footer
@@ -2019,7 +2019,7 @@ class _HomePageState extends State<HomePage> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: paddingV),
       width: double.infinity,
-      color: Colors.white,
+      color: AppColors.background,
       child: Center(
         child: Container(
           constraints: LiquidUI.pageConstraints(),
