@@ -32,9 +32,9 @@ class _GalleryPageState extends State<GalleryPage> {
     final double headingSize = LiquidUI.fluid(context, minVal: 28, maxVal: 42);
 
     final galleryItems = [
-      // --- EXPOS & EVENTS (5 EVENT PHOTOS) ---
+      // --- EXPOS & EVENTS (4 EVENT PHOTOS) ---
       {
-        'title': 'Fi India 2026 - Premier Food Ingredients Event',
+        'title': 'Fi India 2026 - Celebrating 20 Years of Food Ingredients',
         'category': 'EXPOS & EVENTS',
         'image': AppImages.expoFiIndiaHall,
         'desc': 'Fi India 2026 20th Anniversary Edition at Bombay Exhibition Center (BEC), Mumbai (26-28 Aug 2026).',
@@ -42,7 +42,7 @@ class _GalleryPageState extends State<GalleryPage> {
         'date': '26 - 28 August 2026',
       },
       {
-        'title': 'Amar Foods Leadership at Fi India 2026',
+        'title': 'Leadership Presence at Fi India 2026 Pavilion',
         'category': 'EXPOS & EVENTS',
         'image': AppImages.expoFiIndia1,
         'desc': 'Showcasing high-grade dehydrated onion & garlic products to international food processing brands.',
@@ -53,23 +53,15 @@ class _GalleryPageState extends State<GalleryPage> {
         'title': 'Global B2B Strategic Partnerships & Networking',
         'category': 'EXPOS & EVENTS',
         'image': AppImages.expoFiIndia2,
-        'desc': 'Business discussions with global ingredient distributors, spice importers, and contract packaging buyers.',
+        'desc': 'Business discussions and client interaction with global ingredient distributors, spice importers, and buyers.',
         'venue': 'Bombay Exhibition Center (BEC), Mumbai, India',
         'date': '26 - 28 August 2026',
       },
       {
-        'title': 'Agri Crop Innovation & Ingredient Sourcing',
+        'title': 'Amar Foods Industry Participation & Agri Heritage',
         'category': 'EXPOS & EVENTS',
         'image': AppImages.expoFiIndia3,
         'desc': 'Presenting Mahuva\'s rich agricultural origin, high dry matter, and natural flavor retention.',
-        'venue': 'Bombay Exhibition Center (BEC), Mumbai, India',
-        'date': '26 - 28 August 2026',
-      },
-      {
-        'title': 'Quality Assurance & Sustainability Wall',
-        'category': 'EXPOS & EVENTS',
-        'image': AppImages.expoFiIndia4,
-        'desc': 'Highlighting 100% natural, farm-traceable dehydrated products delivering goodness you can trust.',
         'venue': 'Bombay Exhibition Center (BEC), Mumbai, India',
         'date': '26 - 28 August 2026',
       },
