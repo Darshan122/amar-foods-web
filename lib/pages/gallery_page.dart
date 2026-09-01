@@ -543,7 +543,7 @@ class _GalleryPageState extends State<GalleryPage> {
                   child: Image.asset(
                     image,
                     fit: BoxFit.cover,
-                    alignment: Alignment.center,
+                    alignment: isExpo ? Alignment.topCenter : Alignment.center,
                     cacheWidth: 600,
                     errorBuilder: (context, error, stackTrace) {
                       return Container(
