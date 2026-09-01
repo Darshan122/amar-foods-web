@@ -19,6 +19,57 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String _selectedCategory = 'All';
+  int _currentExpoIndex = 0;
+  final PageController _expoPageController = PageController();
+
+  final List<Map<String, String>> _expoItems = const [
+    {
+      'image': AppImages.expoFiIndiaHall,
+      'tag': 'FI INDIA 2026 • 20TH EDITION',
+      'title': 'Fi India 2026 - India\'s Premier Food Ingredients Event',
+      'venue': 'Bombay Exhibition Center (BEC), Mumbai, India',
+      'date': '26 - 28 August 2026',
+      'desc': 'Amar Foods visited and participated in Fi India 2026, Asia\'s leading exhibition & conference for food ingredients, networking with global buyers and exploring modern processing trends.',
+    },
+    {
+      'image': AppImages.expoFiIndia1,
+      'tag': 'LEADERSHIP PRESENCE',
+      'title': 'Connecting with Global Importers & Processors',
+      'venue': 'Bombay Exhibition Center (BEC), Mumbai, India',
+      'date': '26 - 28 August 2026',
+      'desc': 'Engaging with international spice traders, seasoning manufacturers, and B2B buyers to showcase Mahuva\'s dehydrated onion & garlic export capabilities.',
+    },
+    {
+      'image': AppImages.expoFiIndia2,
+      'tag': 'B2B STRATEGIC DIALOGUE',
+      'title': 'Partnerships, Sourcing & Bulk Contract Packing',
+      'venue': 'Bombay Exhibition Center (BEC), Mumbai, India',
+      'date': '26 - 28 August 2026',
+      'desc': 'Direct business discussions regarding mesh size specifications (kibbled, minced, granules, powder), container shipments, and international quality compliance.',
+    },
+    {
+      'image': AppImages.expoFiIndia3,
+      'tag': 'INDUSTRY PARTICIPATION',
+      'title': 'Showcasing Mahuva\'s High-Pungency Agri Heritage',
+      'venue': 'Bombay Exhibition Center (BEC), Mumbai, India',
+      'date': '26 - 28 August 2026',
+      'desc': 'Presenting the superior dry matter and natural allicin potency of dehydrated white, red, and pink onions and garlic from Gujarat to food developers.',
+    },
+    {
+      'image': AppImages.expoFiIndia4,
+      'tag': 'QUALITY & SUSTAINABILITY',
+      'title': 'Delivering Farm-to-Fork Purity Globally',
+      'venue': 'Bombay Exhibition Center (BEC), Mumbai, India',
+      'date': '26 - 28 August 2026',
+      'desc': 'Reinforcing our pledge of 100% natural, chemical-free dehydrated food ingredients with complete batch traceability and stringent food safety standards.',
+    },
+  ];
+
+  @override
+  void dispose() {
+    _expoPageController.dispose();
+    super.dispose();
+  }
 
   void _showQuoteDialog(BuildContext context) {
     showDialog(
@@ -65,7 +116,10 @@ class _HomePageState extends State<HomePage> {
             // 9. International Accreditation & Quality Certifications Section
             _buildCertificationsSection(context, isMobile),
 
-            // 10. Global Export Footprint & Network
+            // 10. Global Expos & Industry Events (Option A Trust Showcase)
+            _buildExpoSection(context, isMobile),
+
+            // 11. Global Export Footprint & Network
             // _buildGlobalFootprintSection(context, isMobile),
 
             // 8. Ready to Source Bottom CTA Banner
@@ -1962,6 +2016,647 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
+    );
+  }
+
+  // 10. Global Expos & Industry Events Section
+  Widget _buildExpoSection(BuildContext context, bool isMobile) {
+    final double paddingV = LiquidUI.fluid(context, minVal: 50, maxVal: 90);
+    final double headingSize = LiquidUI.fluid(context, minVal: 26, maxVal: 38);
+
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: paddingV),
+      width: double.infinity,
+      color: Colors.white,
+      child: Center(
+        child: Container(
+          constraints: LiquidUI.pageConstraints(),
+          child: Column(
+            children: [
+              LiquidUI.badgePill(
+                text: 'GLOBAL EXPOS & INDUSTRY EVENTS',
+                icon: Icons.public_rounded,
+                backgroundColor: AppColors.secondary.withValues(alpha: 0.12),
+                textColor: AppColors.secondary,
+              ),
+              const SizedBox(height: 16),
+
+              LiquidUI.gradientText(
+                'Connecting with Global Buyers at Premier Food Expos',
+                gradient: AppColors.primaryGradient,
+                style: GoogleFonts.playfairDisplay(
+                  fontSize: headingSize,
+                  fontWeight: FontWeight.w800,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 12),
+
+              Text(
+                'Amar Foods actively participates in international food exhibitions to showcase Mahuva\'s premier dehydrated crops, meet international food processors, and build trusted global supply partnerships.',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.inter(
+                  fontSize: 15,
+                  color: AppColors.textSecondary,
+                  height: 1.5,
+                ),
+              ),
+              const SizedBox(height: 32),
+
+              // Featured Expo Highlight Banner
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      AppColors.primary.withValues(alpha: 0.06),
+                      AppColors.secondary.withValues(alpha: 0.06),
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(18),
+                  border: Border.all(color: AppColors.primary.withValues(alpha: 0.15)),
+                ),
+                child: Wrap(
+                  alignment: WrapAlignment.spaceBetween,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  spacing: 16,
+                  runSpacing: 12,
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Icon(Icons.event_seat_rounded, color: Colors.white, size: 20),
+                        ),
+                        const SizedBox(width: 14),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Fi India 2026 • 20th Anniversary Edition',
+                              style: GoogleFonts.outfit(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.primary,
+                              ),
+                            ),
+                            Text(
+                              'Asia\'s Leading Food Ingredients Exhibition & Conference',
+                              style: GoogleFonts.inter(
+                                fontSize: 12,
+                                color: AppColors.textSecondary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Wrap(
+                      spacing: 12,
+                      runSpacing: 8,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(color: AppColors.primary.withValues(alpha: 0.12)),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(Icons.calendar_month_rounded, size: 14, color: AppColors.secondary),
+                              const SizedBox(width: 6),
+                              Text(
+                                '26 - 28 August 2026',
+                                style: GoogleFonts.inter(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.textPrimary,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(color: AppColors.primary.withValues(alpha: 0.12)),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(Icons.location_on_rounded, size: 14, color: AppColors.secondary),
+                              const SizedBox(width: 6),
+                              Text(
+                                'Bombay Exhibition Center (BEC), Mumbai',
+                                style: GoogleFonts.inter(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.textPrimary,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 36),
+
+              // Interactive Slider / Carousel
+              _buildExpoCarousel(context, isMobile),
+              const SizedBox(height: 28),
+
+              // Action Buttons
+              Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 16,
+                runSpacing: 12,
+                children: [
+                  OutlinedButton.icon(
+                    onPressed: () => Navigator.pushNamed(context, '/gallery'),
+                    icon: const Icon(Icons.photo_library_rounded, size: 18),
+                    label: Text(
+                      'View All Photos in Gallery',
+                      style: GoogleFonts.outfit(fontWeight: FontWeight.bold),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: AppColors.primary,
+                      side: const BorderSide(color: AppColors.primary, width: 1.5),
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                    ),
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () => _showQuoteDialog(context),
+                    icon: const Icon(Icons.handshake_rounded, size: 18),
+                    label: Text(
+                      'Meet Us / Request Bulk Quote',
+                      style: GoogleFonts.outfit(fontWeight: FontWeight.bold),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.secondary,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 16),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildExpoCarousel(BuildContext context, bool isMobile) {
+    return Column(
+      children: [
+        // Navigation Bar with Counter & Arrow Buttons
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withValues(alpha: 0.08),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.photo_library_outlined, size: 15, color: AppColors.primary),
+                      const SizedBox(width: 6),
+                      Text(
+                        'Photo ${_currentExpoIndex + 1} of ${_expoItems.length}',
+                        style: GoogleFonts.outfit(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                if (!isMobile) ...[
+                  const SizedBox(width: 12),
+                  Text(
+                    'Swipe or click arrows to explore photos',
+                    style: GoogleFonts.inter(fontSize: 12, color: AppColors.textSecondary),
+                  ),
+                ],
+              ],
+            ),
+            Row(
+              children: [
+                InkWell(
+                  onTap: () {
+                    if (_currentExpoIndex > 0) {
+                      _expoPageController.previousPage(
+                        duration: const Duration(milliseconds: 350),
+                        curve: Curves.easeInOut,
+                      );
+                    } else {
+                      _expoPageController.animateToPage(
+                        _expoItems.length - 1,
+                        duration: const Duration(milliseconds: 350),
+                        curve: Curves.easeInOut,
+                      );
+                    }
+                  },
+                  borderRadius: BorderRadius.circular(30),
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: AppColors.primary.withValues(alpha: 0.2)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.06),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: const Icon(Icons.arrow_back_ios_new_rounded, size: 16, color: AppColors.primary),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                InkWell(
+                  onTap: () {
+                    if (_currentExpoIndex < _expoItems.length - 1) {
+                      _expoPageController.nextPage(
+                        duration: const Duration(milliseconds: 350),
+                        curve: Curves.easeInOut,
+                      );
+                    } else {
+                      _expoPageController.animateToPage(
+                        0,
+                        duration: const Duration(milliseconds: 350),
+                        curve: Curves.easeInOut,
+                      );
+                    }
+                  },
+                  borderRadius: BorderRadius.circular(30),
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.primary.withValues(alpha: 0.3),
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: const Icon(Icons.arrow_forward_ios_rounded, size: 16, color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        const SizedBox(height: 18),
+
+        // Carousel PageView
+        SizedBox(
+          height: isMobile ? 420 : 450,
+          child: PageView.builder(
+            controller: _expoPageController,
+            itemCount: _expoItems.length,
+            onPageChanged: (index) {
+              setState(() {
+                _currentExpoIndex = index;
+              });
+            },
+            itemBuilder: (context, index) {
+              final item = _expoItems[index];
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: isMobile ? 4 : 8),
+                child: _buildExpoCard(context, item, isMobile),
+              );
+            },
+          ),
+        ),
+        const SizedBox(height: 20),
+
+        // Page Indicator Dots
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(
+            _expoItems.length,
+            (index) => GestureDetector(
+              onTap: () {
+                _expoPageController.animateToPage(
+                  index,
+                  duration: const Duration(milliseconds: 350),
+                  curve: Curves.easeInOut,
+                );
+              },
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 250),
+                margin: const EdgeInsets.symmetric(horizontal: 4),
+                width: _currentExpoIndex == index ? 28 : 8,
+                height: 8,
+                decoration: BoxDecoration(
+                  color: _currentExpoIndex == index ? AppColors.secondary : AppColors.primary.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildExpoCard(BuildContext context, Map<String, String> item, bool isMobile) {
+    return LiquidUI.interactiveGlassCard(
+      onTap: () => _showExpoDetailModal(context, item),
+      padding: EdgeInsets.zero,
+      backgroundColor: Colors.white,
+      borderRadius: 24,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+                  child: Image.asset(
+                    item['image']!,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        color: AppColors.primaryLight,
+                        child: const Center(
+                          child: Icon(Icons.image_outlined, size: 48, color: AppColors.primary),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Positioned(
+                  top: 14,
+                  left: 14,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: AppColors.primary.withValues(alpha: 0.92),
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: const [
+                        BoxShadow(color: Colors.black26, blurRadius: 8, offset: Offset(0, 2)),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.verified_rounded, size: 13, color: AppColors.secondary),
+                        const SizedBox(width: 6),
+                        Text(
+                          item['tag']!,
+                          style: GoogleFonts.outfit(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0.6,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Positioned(
+                  bottom: 14,
+                  right: 14,
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.9),
+                      shape: BoxShape.circle,
+                      boxShadow: const [
+                        BoxShadow(color: Colors.black26, blurRadius: 8, offset: Offset(0, 2)),
+                      ],
+                    ),
+                    child: const Icon(Icons.zoom_in_rounded, size: 18, color: AppColors.primary),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  item['title']!,
+                  style: GoogleFonts.playfairDisplay(
+                    fontSize: isMobile ? 17 : 19,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primary,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  item['desc']!,
+                  style: GoogleFonts.inter(
+                    fontSize: 13,
+                    color: AppColors.textSecondary,
+                    height: 1.45,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    const Icon(Icons.location_on_outlined, size: 14, color: AppColors.secondary),
+                    const SizedBox(width: 4),
+                    Expanded(
+                      child: Text(
+                        item['venue']!,
+                        style: GoogleFonts.inter(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.textPrimary,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      item['date']!,
+                      style: GoogleFonts.inter(
+                        fontSize: 11,
+                        color: AppColors.textSecondary,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showExpoDetailModal(BuildContext context, Map<String, String> item) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+          child: Container(
+            constraints: const BoxConstraints(maxWidth: 720),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(24),
+              boxShadow: const [
+                BoxShadow(color: Colors.black38, blurRadius: 30, offset: Offset(0, 10)),
+              ],
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+                        child: Image.asset(
+                          item['image']!,
+                          width: double.infinity,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                      Positioned(
+                        top: 14,
+                        right: 14,
+                        child: IconButton(
+                          onPressed: () => Navigator.pop(context),
+                          icon: Container(
+                            padding: const EdgeInsets.all(6),
+                            decoration: const BoxDecoration(
+                              color: Colors.black54,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(Icons.close_rounded, color: Colors.white, size: 20),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                          decoration: BoxDecoration(
+                            color: AppColors.secondary.withValues(alpha: 0.12),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text(
+                            item['tag']!,
+                            style: GoogleFonts.outfit(
+                              fontSize: 11,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.secondary,
+                              letterSpacing: 0.6,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        Text(
+                          item['title']!,
+                          style: GoogleFonts.playfairDisplay(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.primary,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          item['desc']!,
+                          style: GoogleFonts.inter(
+                            fontSize: 14,
+                            color: AppColors.textPrimary,
+                            height: 1.55,
+                          ),
+                        ),
+                        const SizedBox(height: 18),
+                        Container(
+                          padding: const EdgeInsets.all(14),
+                          decoration: BoxDecoration(
+                            color: AppColors.background,
+                            borderRadius: BorderRadius.circular(14),
+                            border: Border.all(color: AppColors.primary.withValues(alpha: 0.1)),
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.event_available_rounded, color: AppColors.primary, size: 20),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      item['venue']!,
+                                      style: GoogleFonts.outfit(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.primary,
+                                      ),
+                                    ),
+                                    Text(
+                                      item['date']!,
+                                      style: GoogleFonts.inter(
+                                        fontSize: 12,
+                                        color: AppColors.textSecondary,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 

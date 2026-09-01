@@ -180,4 +180,11 @@ class AppImages {
   static const String certApeda = '$_basePath/cert_apeda.jpg';
   static const String certHalal = '$_basePath/cert_halal.jpg';
   static const String certGmp = '$_basePath/cert_gmp.jpg';
+
+  // Global Food Expos & Industry Events (Fi India 2026)
+  static const String expoFiIndiaHall = '$_basePath/expo_fi_india_hall.webp';
+  static const String expoFiIndia1 = '$_basePath/expo_fi_india_1.webp';
+  static const String expoFiIndia2 = '$_basePath/expo_fi_india_2.webp';
+  static const String expoFiIndia3 = '$_basePath/expo_fi_india_3.webp';
+  static const String expoFiIndia4 = '$_basePath/expo_fi_india_4.webp';
 }
