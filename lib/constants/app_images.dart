@@ -182,6 +182,7 @@ class AppImages {
   static const String certGmp = '$_basePath/cert_gmp.jpg';
 
   // Global Food Expos & Industry Events (Fi India 2026)
+  static const String logoFiIndia = '$_basePath/logo_fi_india.png';
   static const String expoFiIndiaHall = '$_basePath/expo_fi_india_hall.webp';
   static const String expoFiIndia1 = '$_basePath/expo_fi_india_1.webp';
   static const String expoFiIndia2 = '$_basePath/expo_fi_india_2.webp';

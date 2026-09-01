@@ -546,20 +546,23 @@ class _GalleryPageState extends State<GalleryPage> {
             children: [
               ClipRRect(
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-                child: AspectRatio(
-                  aspectRatio: 4 / 3,
-                  child: Image.asset(
-                    image,
-                    fit: BoxFit.cover,
-                    cacheWidth: 600,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Container(
-                        color: AppColors.primaryLight,
-                        child: const Center(
-                          child: Icon(Icons.image_outlined, size: 48, color: AppColors.primary),
-                        ),
-                      );
-                    },
+                child: Container(
+                  color: isExpo ? const Color(0xFF16091A) : Colors.transparent,
+                  child: AspectRatio(
+                    aspectRatio: isExpo ? 1 : (4 / 3),
+                    child: Image.asset(
+                      image,
+                      fit: isExpo ? BoxFit.contain : BoxFit.cover,
+                      cacheWidth: 600,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          color: AppColors.primaryLight,
+                          child: const Center(
+                            child: Icon(Icons.image_outlined, size: 48, color: AppColors.primary),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
