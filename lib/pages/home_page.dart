@@ -2345,7 +2345,7 @@ class _HomePageState extends State<HomePage> {
 
         // Carousel PageView
         SizedBox(
-          height: isMobile ? 540 : 580,
+          height: isMobile ? 440 : 470,
           child: PageView.builder(
             controller: _expoPageController,
             itemCount: _expoItems.length,
@@ -2405,30 +2405,25 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: const Color(0xFF16091A),
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-              ),
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-                    child: Image.asset(
-                      item['image']!,
-                      fit: BoxFit.contain,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          color: AppColors.primaryLight,
-                          child: const Center(
-                            child: Icon(Icons.image_outlined, size: 48, color: AppColors.primary),
-                          ),
-                        );
-                      },
-                    ),
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+                  child: Image.asset(
+                    item['image']!,
+                    fit: BoxFit.cover,
+                    alignment: Alignment.center,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        color: AppColors.primaryLight,
+                        child: const Center(
+                          child: Icon(Icons.image_outlined, size: 48, color: AppColors.primary),
+                        ),
+                      );
+                    },
                   ),
+                ),
                   Positioned(
                     top: 14,
                     left: 14,
