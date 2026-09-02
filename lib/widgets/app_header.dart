@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_images.dart';
 import '../theme/app_theme.dart';
@@ -26,6 +27,19 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => const Size.fromHeight(95.0);
+
+  static Future<void> openBrochure() async {
+    final Uri url = Uri.parse('/amar_foods_brochure.pdf');
+    try {
+      if (await canLaunchUrl(url)) {
+        await launchUrl(url, mode: LaunchMode.externalApplication);
+      } else {
+        await launchUrl(url, mode: LaunchMode.platformDefault);
+      }
+    } catch (_) {
+      await launchUrl(url, mode: LaunchMode.platformDefault);
+    }
+  }
 
   void _navigateTo(BuildContext context, String routeName) {
     final String? currentRoute = ModalRoute.of(context)?.settings.name;
@@ -113,14 +127,21 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
         Expanded(
           child: Align(
             alignment: Alignment.centerRight,
-            child: _buildQuoteButton(context),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _buildBrochureButton(context),
+                const SizedBox(width: 10),
+                _buildQuoteButton(context),
+              ],
+            ),
           ),
         ),
       ],
     );
   }
 
-  // Mobile: logo left, quick quote button & hamburger menu right
+  // Mobile: logo left, brochure button, quick quote button & hamburger menu right
   Widget _buildMobileRow(BuildContext context, double logoHeight) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -130,6 +151,21 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
+            OutlinedButton.icon(
+              onPressed: openBrochure,
+              icon: const Icon(Icons.picture_as_pdf_rounded, size: 14, color: AppColors.primary),
+              label: Text(
+                'PDF',
+                style: GoogleFonts.outfit(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.primary),
+              ),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: AppColors.primary,
+                side: BorderSide(color: AppColors.primary.withValues(alpha: 0.35)),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              ),
+            ),
+            const SizedBox(width: 8),
             ElevatedButton(
               onPressed: () => _showQuoteDialog(context),
               style: ElevatedButton.styleFrom(
@@ -186,6 +222,38 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
               ),
             );
           },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBrochureButton(BuildContext context) {
+    return OutlinedButton.icon(
+      onPressed: openBrochure,
+      icon: const Icon(Icons.picture_as_pdf_rounded, size: 16, color: AppColors.primary),
+      label: Text(
+        'Brochure',
+        style: TextStyle(
+          fontFamily: AppTheme.outfitFont,
+          fontWeight: FontWeight.bold,
+          fontSize: LiquidUI.fluid(context, minVal: 12, maxVal: 14),
+          color: AppColors.primary,
+          letterSpacing: 0.2,
+        ),
+      ),
+      style: OutlinedButton.styleFrom(
+        foregroundColor: AppColors.primary,
+        side: BorderSide(color: AppColors.primary.withValues(alpha: 0.35), width: 1.5),
+        backgroundColor: AppColors.primary.withValues(alpha: 0.05),
+        padding: LiquidUI.fluidPaddingSymmetric(
+          context,
+          minHorizontal: 14,
+          maxHorizontal: 18,
+          minVertical: 12,
+          maxVertical: 16,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
         ),
       ),
     );
@@ -590,6 +658,31 @@ class AppDrawer extends StatelessWidget {
               ),
               child: Column(
                 children: [
+                  SizedBox(
+                    width: double.infinity,
+                    height: 46,
+                    child: OutlinedButton.icon(
+                      onPressed: AppHeader.openBrochure,
+                      icon: const Icon(Icons.picture_as_pdf_rounded, size: 16, color: AppColors.primary),
+                      label: Text(
+                        'Download Brochure (PDF)',
+                        style: GoogleFonts.outfit(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppColors.primary,
+                        side: BorderSide(color: AppColors.primary.withValues(alpha: 0.4), width: 1.5),
+                        backgroundColor: AppColors.primary.withValues(alpha: 0.05),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
                   SizedBox(
                     width: double.infinity,
                     height: 48,
