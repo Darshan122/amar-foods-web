@@ -151,18 +151,38 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            OutlinedButton.icon(
-              onPressed: openBrochure,
-              icon: const Icon(Icons.picture_as_pdf_rounded, size: 14, color: AppColors.primary),
-              label: Text(
-                'PDF',
-                style: GoogleFonts.outfit(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.primary),
-              ),
-              style: OutlinedButton.styleFrom(
-                foregroundColor: AppColors.primary,
-                side: BorderSide(color: AppColors.primary.withValues(alpha: 0.35)),
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            InkWell(
+              onTap: openBrochure,
+              borderRadius: BorderRadius.circular(20),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: AppColors.primary.withValues(alpha: 0.25), width: 1.2),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.primary.withValues(alpha: 0.06),
+                      blurRadius: 6,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.picture_as_pdf_rounded, size: 14, color: AppColors.primary),
+                    const SizedBox(width: 4),
+                    Text(
+                      'Catalog',
+                      style: GoogleFonts.outfit(
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primary,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(width: 8),
@@ -228,32 +248,59 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Widget _buildBrochureButton(BuildContext context) {
-    return OutlinedButton.icon(
-      onPressed: openBrochure,
-      icon: const Icon(Icons.picture_as_pdf_rounded, size: 16, color: AppColors.primary),
-      label: Text(
-        'Brochure',
-        style: TextStyle(
-          fontFamily: AppTheme.outfitFont,
-          fontWeight: FontWeight.bold,
-          fontSize: LiquidUI.fluid(context, minVal: 12, maxVal: 14),
-          color: AppColors.primary,
-          letterSpacing: 0.2,
-        ),
-      ),
-      style: OutlinedButton.styleFrom(
-        foregroundColor: AppColors.primary,
-        side: BorderSide(color: AppColors.primary.withValues(alpha: 0.35), width: 1.5),
-        backgroundColor: AppColors.primary.withValues(alpha: 0.05),
+    return InkWell(
+      onTap: openBrochure,
+      borderRadius: BorderRadius.circular(30),
+      child: Container(
         padding: LiquidUI.fluidPaddingSymmetric(
           context,
-          minHorizontal: 14,
-          maxHorizontal: 18,
+          minHorizontal: 16,
+          maxHorizontal: 22,
           minVertical: 12,
-          maxVertical: 16,
+          maxVertical: 15,
         ),
-        shape: RoundedRectangleBorder(
+        decoration: BoxDecoration(
+          color: Colors.white,
           borderRadius: BorderRadius.circular(30),
+          border: Border.all(
+            color: AppColors.primary.withValues(alpha: 0.25),
+            width: 1.5,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.primary.withValues(alpha: 0.06),
+              blurRadius: 10,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                color: AppColors.primary.withValues(alpha: 0.08),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.picture_as_pdf_rounded,
+                size: 14,
+                color: AppColors.primary,
+              ),
+            ),
+            const SizedBox(width: 8),
+            Text(
+              'Catalog (PDF)',
+              style: TextStyle(
+                fontFamily: AppTheme.outfitFont,
+                fontWeight: FontWeight.bold,
+                fontSize: LiquidUI.fluid(context, minVal: 12, maxVal: 14),
+                color: AppColors.primary,
+                letterSpacing: 0.2,
+              ),
+            ),
+          ],
         ),
       ),
     );
