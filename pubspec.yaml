@@ -83,6 +83,7 @@ flutter:
     - assets/images/pink_onion/pink_onion_minced/
     - assets/images/pink_onion/pink_onion_granules/
     - assets/images/pink_onion/pink_onion_poweder/
+    - assets/documents/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

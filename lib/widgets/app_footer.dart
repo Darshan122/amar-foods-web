@@ -206,9 +206,50 @@ class AppFooter extends StatelessWidget {
         const SizedBox(height: 18),
         _buildFooterLink(context, 'Home', '/'),
         _buildFooterLink(context, 'About Us', '/about'),
+        _buildFooterLink(context, 'Products Portfolio', '/products'),
         _buildFooterLink(context, 'Photo Gallery', '/gallery'),
         _buildFooterLink(context, 'Contact Us', '/contact'),
+        _buildFooterDocLink(context, '📥 Export Brochure (PDF)', '/amar_foods_brochure.pdf'),
       ],
+    );
+  }
+
+  Widget _buildFooterDocLink(BuildContext context, String text, String urlPath) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12.0),
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          onTap: () async {
+            final Uri uri = Uri.parse(urlPath);
+            try {
+              if (await canLaunchUrl(uri)) {
+                await launchUrl(uri, mode: LaunchMode.externalApplication);
+              } else {
+                await launchUrl(uri, mode: LaunchMode.platformDefault);
+              }
+            } catch (_) {
+              await launchUrl(uri, mode: LaunchMode.platformDefault);
+            }
+          },
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.picture_as_pdf_rounded, color: AppColors.secondary, size: 15),
+              const SizedBox(width: 6),
+              Text(
+                text,
+                style: TextStyle(
+                  fontFamily: AppTheme.outfitFont,
+                  color: AppColors.secondaryLight,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
