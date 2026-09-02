@@ -151,19 +151,29 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            ElevatedButton.icon(
+            ElevatedButton(
               onPressed: openBrochure,
-              icon: const Icon(Icons.download_rounded, size: 14),
-              label: Text(
-                'Brochure',
-                style: GoogleFonts.outfit(fontSize: 11, fontWeight: FontWeight.bold),
-              ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                 elevation: 2,
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.file_download_outlined, size: 14, color: Colors.white),
+                  const SizedBox(width: 4),
+                  Text(
+                    'Brochure',
+                    style: GoogleFonts.outfit(
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(width: 8),
@@ -229,18 +239,8 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Widget _buildBrochureButton(BuildContext context) {
-    return ElevatedButton.icon(
+    return ElevatedButton(
       onPressed: openBrochure,
-      icon: const Icon(Icons.download_rounded, size: 16),
-      label: Text(
-        'Brochure',
-        style: TextStyle(
-          fontFamily: AppTheme.outfitFont,
-          fontWeight: FontWeight.bold,
-          fontSize: LiquidUI.fluid(context, minVal: 13, maxVal: 15),
-          letterSpacing: 0.3,
-        ),
-      ),
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
@@ -254,8 +254,31 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30), // 30px radius, matching header & quote button
         ),
-        elevation: 3,
+        elevation: 4,
         shadowColor: AppColors.primaryGlow,
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Icon(
+            Icons.file_download_outlined,
+            size: 18,
+            color: Colors.white,
+          ),
+          const SizedBox(width: 6),
+          Text(
+            'Brochure',
+            style: TextStyle(
+              fontFamily: AppTheme.outfitFont,
+              fontWeight: FontWeight.bold,
+              fontSize: LiquidUI.fluid(context, minVal: 13, maxVal: 15),
+              color: Colors.white,
+              letterSpacing: 0.3,
+            ),
+          ),
+        ],
       ),
     );
   }
