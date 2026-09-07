@@ -1,0 +1,12 @@
+﻿# robots.txt for Amar Foods (https://amarfoods.in/)
+User-agent: *
+Allow: /
+Allow: /about
+Allow: /products
+Allow: /gallery
+Allow: /contact
+Allow: /amar_foods_brochure.pdf
+
+# XML Sitemap location
+Sitemap: https://amarfoods.in/sitemap.xml
+Sitemap: https://amar-foods.web.app/sitemap.xml
