@@ -4,6 +4,7 @@ import '../constants/app_colors.dart';
 import '../constants/app_images.dart';
 import '../theme/app_theme.dart';
 import '../utils/liquid_ui.dart';
+import '../services/language_service.dart';
 
 class AppFooter extends StatelessWidget {
   const AppFooter({super.key});
@@ -17,11 +18,14 @@ class AppFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isMobile = LiquidUI.isMobile(context);
-    final double verticalPadding = LiquidUI.fluid(context, minVal: 40, maxVal: 64);
-    final double horizontalPadding = LiquidUI.fluid(context, minVal: 20, maxVal: 48);
+    return ValueListenableBuilder<LanguageItem>(
+      valueListenable: LanguageService.instance.currentLanguage,
+      builder: (context, _, child) {
+        final bool isMobile = LiquidUI.isMobile(context);
+        final double verticalPadding = LiquidUI.fluid(context, minVal: 40, maxVal: 64);
+        final double horizontalPadding = LiquidUI.fluid(context, minVal: 20, maxVal: 48);
 
-    return Container(
+        return Container(
       width: double.infinity,
       decoration: const BoxDecoration(
         color: Color(0xFF16161D),
@@ -71,7 +75,7 @@ class AppFooter extends StatelessWidget {
                 runSpacing: 12,
                 children: [
                   Text(
-                    '© 2026 Amar Foods. All rights reserved.',
+                    LanguageService.instance.tr('footer_rights'),
                     style: TextStyle(
                       fontFamily: AppTheme.interFont,
                       color: Colors.grey.shade400,
@@ -119,6 +123,8 @@ class AppFooter extends StatelessWidget {
           ),
         ),
       ),
+    );
+      },
     );
   }
 
@@ -178,7 +184,7 @@ class AppFooter extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         Text(
-          'Premier manufacturer, supplier, and exporter of high-grade dehydrated onion and garlic products based in Mahuva, Bhavnagar, Gujarat, India.',
+          LanguageService.instance.tr('footer_desc'),
           style: TextStyle(
             fontFamily: AppTheme.interFont,
             color: Colors.grey.shade400,
@@ -194,9 +200,9 @@ class AppFooter extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Quick Links',
-          style: TextStyle(
+        Text(
+          LanguageService.instance.tr('footer_quick_links'),
+          style: const TextStyle(
             fontFamily: AppTheme.outfitFont,
             color: Colors.white,
             fontSize: 18,
@@ -204,12 +210,12 @@ class AppFooter extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 18),
-        _buildFooterLink(context, 'Home', '/'),
-        _buildFooterLink(context, 'About Us', '/about'),
-        _buildFooterLink(context, 'Products Portfolio', '/products'),
-        _buildFooterLink(context, 'Photo Gallery', '/gallery'),
-        _buildFooterLink(context, 'Contact Us', '/contact'),
-        _buildFooterDocLink(context, '📥 Export Brochure (PDF)', '/amar_foods_brochure.pdf'),
+        _buildFooterLink(context, LanguageService.instance.tr('nav_home'), '/'),
+        _buildFooterLink(context, LanguageService.instance.tr('nav_about'), '/about'),
+        _buildFooterLink(context, LanguageService.instance.tr('nav_products'), '/products'),
+        _buildFooterLink(context, LanguageService.instance.tr('nav_gallery'), '/gallery'),
+        _buildFooterLink(context, LanguageService.instance.tr('nav_contact'), '/contact'),
+        _buildFooterDocLink(context, '📥 ${LanguageService.instance.tr('btn_brochure')} (PDF)', '/amar_foods_brochure.pdf'),
       ],
     );
   }
@@ -287,9 +293,9 @@ class AppFooter extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Contact Details',
-          style: TextStyle(
+        Text(
+          LanguageService.instance.tr('footer_contact'),
+          style: const TextStyle(
             fontFamily: AppTheme.outfitFont,
             color: Colors.white,
             fontSize: 18,

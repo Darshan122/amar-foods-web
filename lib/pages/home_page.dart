@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_images.dart';
-import '../theme/app_theme.dart';
 import '../utils/liquid_ui.dart';
 import '../widgets/app_header.dart';
 import '../widgets/app_footer.dart';
 import '../widgets/quote_dialog.dart';
 import '../widgets/video_background.dart';
-import '../widgets/product_detail_dialog.dart';
+import '../services/language_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -72,56 +71,65 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isMobile = LiquidUI.isMobile(context);
+    return ValueListenableBuilder<LanguageItem>(
+      valueListenable: LanguageService.instance.currentLanguage,
+      builder: (context, currentLang, _) {
+        final bool isMobile = LiquidUI.isMobile(context);
+        final bool isRTL = LanguageService.instance.isRTL;
 
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: const AppHeader(),
-      endDrawer: const AppDrawer(),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // 1. Hero Section with Video Background
-            _buildVideoHeroSection(context, isMobile),
+        return Directionality(
+          textDirection: isRTL ? TextDirection.rtl : TextDirection.ltr,
+          child: Scaffold(
+            backgroundColor: AppColors.background,
+            appBar: const AppHeader(),
+            endDrawer: const AppDrawer(),
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  // 1. Hero Section with Video Background
+                  _buildVideoHeroSection(context, isMobile),
 
-            // 2. Floating Stats Bar (Paints OVER Video Hero and About Section without clipping)
-            _buildFloatingStatsSection(context, isMobile),
+                  // 2. Floating Stats Bar (Paints OVER Video Hero and About Section without clipping)
+                  _buildFloatingStatsSection(context, isMobile),
 
-            // 3. "About Amar Foods" Section (Product Photo on Left, Story on Right)
-            _buildAboutAmarSection(context, isMobile),
+                  // 3. "About Amar Foods" Section (Product Photo on Left, Story on Right)
+                  _buildAboutAmarSection(context, isMobile),
 
-            // 4. "Our Vision" Quote Card Section (Inspired by Vision Reference)
-            _buildVisionQuoteSection(context, isMobile),
+                  // 4. "Our Vision" Quote Card Section (Inspired by Vision Reference)
+                  _buildVisionQuoteSection(context, isMobile),
 
-            // 5. Interactive "Our Product Range" Showcase with Category Filter Tabs
-            _buildProductRangeSection(context, isMobile),
+                  // 5. Interactive "Our Product Range" Showcase with Category Filter Tabs
+                  _buildProductRangeSection(context, isMobile),
 
-            // 6. Global Expos & Industry Events (Trust Showcase)
-            _buildExpoSection(context, isMobile),
+                  // 6. Global Expos & Industry Events (Trust Showcase)
+                  _buildExpoSection(context, isMobile),
 
-            // 7. "Why Choose Amar Foods" Core Value Pillars Grid (UNMATCHED EXPORT ADVANTAGES)
-            _buildWhyChooseUsSection(context, isMobile),
+                  // 7. "Why Choose Amar Foods" Core Value Pillars Grid (UNMATCHED EXPORT ADVANTAGES)
+                  _buildWhyChooseUsSection(context, isMobile),
 
-            // 8. Farm-to-Shipment Journey Process Timeline
-            _buildProcessTimelineSection(context, isMobile),
+                  // 8. Farm-to-Shipment Journey Process Timeline
+                  _buildProcessTimelineSection(context, isMobile),
 
-            // 9. "Our Promise" Quality Control Sanctuary & Certifications
-            // _buildQualityPromiseSection(context, isMobile),
+                  // 9. "Our Promise" Quality Control Sanctuary & Certifications
+                  // _buildQualityPromiseSection(context, isMobile),
 
-            // 10. International Accreditation & Quality Certifications Section
-            _buildCertificationsSection(context, isMobile),
+                  // 10. International Accreditation & Quality Certifications Section
+                  _buildCertificationsSection(context, isMobile),
 
-            // 11. Global Export Footprint & Network
-            // _buildGlobalFootprintSection(context, isMobile),
+                  // 11. Global Export Footprint & Network
+                  // _buildGlobalFootprintSection(context, isMobile),
 
-            // 12. Ready to Source Bottom CTA Banner
-            _buildCtaBannerSection(context, isMobile),
+                  // 12. Ready to Source Bottom CTA Banner
+                  _buildCtaBannerSection(context, isMobile),
 
-            // Footer
-            const AppFooter(),
-          ],
-        ),
-      ),
+                  // Footer
+                  const AppFooter(),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -219,7 +227,7 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(width: 8),
               Flexible(
                 child: Text(
-                  'DIRECT FROM MAHUVA • EXPORTING TO 15+ NATIONS',
+                  LanguageService.instance.tr('hero_badge'),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.outfit(
@@ -252,7 +260,7 @@ class _HomePageState extends State<HomePage> {
         const SizedBox(height: 8),
 
         LiquidUI.gradientText(
-          'Premium Dehydrated Foods & Spices',
+          LanguageService.instance.tr('hero_title_2'),
           gradient: const LinearGradient(
             colors: [Color(0xFF81C784), Color(0xFFA5D6A7), Color(0xFFC8E6C9)],
           ),
@@ -266,7 +274,7 @@ class _HomePageState extends State<HomePage> {
         const SizedBox(height: 18),
 
         Text(
-          '6+ years of processing expertise. 100% pure & natural dehydrated onion and garlic. Zero artificial chemicals. International certifications. Built for global trade direct from Mahuva, India.',
+          LanguageService.instance.tr('hero_subtitle'),
           textAlign: TextAlign.center,
           style: GoogleFonts.inter(
             fontSize: descSize,
@@ -302,7 +310,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Explore Products',
+                    LanguageService.instance.tr('hero_btn_products'),
                     style: GoogleFonts.outfit(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
@@ -330,7 +338,7 @@ class _HomePageState extends State<HomePage> {
                   const Icon(Icons.mail_outline_rounded, size: 18, color: Colors.white),
                   const SizedBox(width: 8),
                   Text(
-                    'Get in Touch',
+                    LanguageService.instance.tr('hero_btn_contact'),
                     style: GoogleFonts.outfit(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -379,9 +387,9 @@ class _HomePageState extends State<HomePage> {
           children: [
             Row(
               children: [
-                Expanded(child: _buildStatBarItem(context, '6+', 'Years Experience')),
+                Expanded(child: _buildStatBarItem(context, LanguageService.instance.tr('stat_capacity'), LanguageService.instance.tr('stat_capacity_sub'))),
                 Container(height: 30, width: 1, color: AppColors.border),
-                Expanded(child: _buildStatBarItem(context, '15+', 'Countries Exported')),
+                Expanded(child: _buildStatBarItem(context, LanguageService.instance.tr('stat_countries'), LanguageService.instance.tr('stat_countries_sub'))),
               ],
             ),
             const Padding(
@@ -390,9 +398,9 @@ class _HomePageState extends State<HomePage> {
             ),
             Row(
               children: [
-                Expanded(child: _buildStatBarItem(context, '5000+', 'Tons Capacity')),
+                Expanded(child: _buildStatBarItem(context, LanguageService.instance.tr('stat_purity'), LanguageService.instance.tr('stat_purity_sub'))),
                 Container(height: 30, width: 1, color: AppColors.border),
-                Expanded(child: _buildStatBarItem(context, '100%', 'Pure & Natural')),
+                Expanded(child: _buildStatBarItem(context, LanguageService.instance.tr('stat_delivery'), LanguageService.instance.tr('stat_delivery_sub'))),
               ],
             ),
           ],
@@ -414,13 +422,13 @@ class _HomePageState extends State<HomePage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildStatBarItem(context, '6+', 'Years Experience'),
+          _buildStatBarItem(context, LanguageService.instance.tr('stat_capacity'), LanguageService.instance.tr('stat_capacity_sub')),
           _buildStatDivider(),
-          _buildStatBarItem(context, '15+', 'Countries Exported'),
+          _buildStatBarItem(context, LanguageService.instance.tr('stat_countries'), LanguageService.instance.tr('stat_countries_sub')),
           _buildStatDivider(),
-          _buildStatBarItem(context, '5000+', 'Tons Annual Capacity'),
+          _buildStatBarItem(context, LanguageService.instance.tr('stat_purity'), LanguageService.instance.tr('stat_purity_sub')),
           _buildStatDivider(),
-          _buildStatBarItem(context, '100%', 'Pure & Natural'),
+          _buildStatBarItem(context, LanguageService.instance.tr('stat_delivery'), LanguageService.instance.tr('stat_delivery_sub')),
         ],
       ),
     );
@@ -534,7 +542,7 @@ class _HomePageState extends State<HomePage> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        '100% Pure & Natural',
+                        LanguageService.instance.tr('about_card_badge').split('\n').first,
                         style: GoogleFonts.outfit(
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
@@ -542,7 +550,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       Text(
-                        'Direct from Mahuva, India',
+                        LanguageService.instance.tr('about_card_badge').split('\n').last,
                         style: GoogleFonts.inter(
                           fontSize: 12,
                           color: AppColors.textSecondary,
@@ -576,7 +584,7 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   LiquidUI.badgePill(
-                    text: 'ESTABLISHED 2020 • MAHUVA, GUJARAT',
+                    text: LanguageService.instance.tr('about_badge'),
                     icon: Icons.domain,
                     backgroundColor: AppColors.primaryLight,
                     textColor: AppColors.primary,
@@ -585,7 +593,7 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(height: 16),
 
                   LiquidUI.gradientText(
-                    'About Amar Foods',
+                    LanguageService.instance.tr('about_title'),
                     gradient: AppColors.primaryGradient,
                     style: GoogleFonts.playfairDisplay(
                       fontSize: headingSize,
@@ -595,7 +603,7 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(height: 8),
 
                   Text(
-                    'Premier Exporter of High-Grade Dehydrated Onion & Garlic',
+                    LanguageService.instance.tr('about_subtitle'),
                     style: GoogleFonts.outfit(
                       fontSize: headingSize * 0.48,
                       fontWeight: FontWeight.w700,
@@ -605,7 +613,7 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(height: 16),
 
                   Text(
-                    'Located in Mahuva, Gujarat—India\'s premier onion processing hub—Amar Foods is a leading manufacturer and exporter of dehydrated red, white, and pink onions as well as high-potency garlic products. We bring together regional agricultural richness with advanced hygienic processing to serve global food manufacturers, spice blenders, and culinary brands.',
+                    LanguageService.instance.tr('about_desc'),
                     style: GoogleFonts.inter(
                       fontSize: 15,
                       color: AppColors.textSecondary,
@@ -615,23 +623,23 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(height: 24),
 
                   _buildAboutFeaturePoint(
-                    'Farm-to-Factory Procurement',
-                    'Direct sourcing from Mahuva farmers for uncompromised raw crop purity.',
+                    LanguageService.instance.tr('about_b1_title'),
+                    LanguageService.instance.tr('about_b1_desc'),
                   ),
                   const SizedBox(height: 14),
                   _buildAboutFeaturePoint(
-                    'Automated Hygienic Control',
-                    'Optical color sorters, metal detectors, and clean-room packaging.',
+                    LanguageService.instance.tr('about_b2_title'),
+                    LanguageService.instance.tr('about_b2_desc'),
                   ),
                   const SizedBox(height: 14),
                   _buildAboutFeaturePoint(
-                    'Zero Artificial Additives',
-                    '100% pure, unadulterated dehydrated flakes, granules, and powders.',
+                    LanguageService.instance.tr('about_b3_title'),
+                    LanguageService.instance.tr('about_b3_desc'),
                   ),
                   const SizedBox(height: 14),
                   _buildAboutFeaturePoint(
-                    'Global Export Compliance',
-                    'Fully ISO 22000, HACCP, FSSAI, HALAL & KOSHER accredited.',
+                    LanguageService.instance.tr('about_b4_title'),
+                    LanguageService.instance.tr('about_b4_desc'),
                   ),
                   const SizedBox(height: 32),
 
@@ -785,7 +793,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const SizedBox(width: 10),
                   Text(
-                    'OUR VISION',
+                    LanguageService.instance.tr('vision_badge'),
                     style: GoogleFonts.outfit(
                       color: AppColors.secondaryLight,
                       fontWeight: FontWeight.w800,
@@ -797,49 +805,15 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 24),
 
-              // Main Vision Quote with Logo Green/Accent Highlights
-              RichText(
-                text: TextSpan(
-                  style: GoogleFonts.playfairDisplay(
-                    fontSize: quoteFontSize,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                    height: 1.55,
-                    letterSpacing: -0.2,
-                  ),
-                  children: [
-                    const TextSpan(text: '“To grow '),
-                    TextSpan(
-                      text: 'Amar Foods ',
-                      style: GoogleFonts.playfairDisplay(
-                        color: AppColors.secondary,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const TextSpan(text: 'into a dependable name in '),
-                    TextSpan(
-                      text: 'dehydrated onion and garlic exports ',
-                      style: GoogleFonts.playfairDisplay(
-                        color: AppColors.secondaryLight,
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const TextSpan(
-                      text: '— known among global buyers not for size, but for ',
-                    ),
-                    TextSpan(
-                      text: 'consistent grades, honest documentation, ',
-                      style: GoogleFonts.playfairDisplay(
-                        color: AppColors.secondaryLight,
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const TextSpan(
-                      text: 'and deliveries you can plan around.”',
-                    ),
-                  ],
+              // Main Vision Quote
+              Text(
+                LanguageService.instance.tr('vision_quote'),
+                style: GoogleFonts.playfairDisplay(
+                  fontSize: quoteFontSize,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                  height: 1.55,
+                  letterSpacing: -0.2,
                 ),
               ),
               const SizedBox(height: 32),
@@ -850,7 +824,7 @@ class _HomePageState extends State<HomePage> {
               Align(
                 alignment: Alignment.centerRight,
                 child: Text(
-                  'AMAR FOODS • MAHUVA, INDIA',
+                  LanguageService.instance.tr('vision_author'),
                   style: GoogleFonts.outfit(
                     color: AppColors.secondary,
                     fontWeight: FontWeight.bold,
@@ -909,7 +883,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: [
               LiquidUI.badgePill(
-                text: 'FLAGSHIP EXPORT PRODUCTS',
+                text: LanguageService.instance.tr('products_badge'),
                 icon: Icons.star_rounded,
                 backgroundColor: AppColors.secondary.withOpacity(0.15),
                 textColor: AppColors.secondary,
@@ -918,7 +892,7 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(height: 16),
 
               LiquidUI.gradientText(
-                'Featured Export Product Range',
+                LanguageService.instance.tr('products_title'),
                 gradient: AppColors.primaryGradient,
                 style: GoogleFonts.playfairDisplay(
                   fontSize: headingSize,
@@ -929,7 +903,7 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(height: 12),
 
               Text(
-                'Direct farm procurement in Mahuva, Gujarat. 100% natural dehydrated red, white, pink onions, and garlic.',
+                LanguageService.instance.tr('products_sub'),
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
                   fontSize: 15,
@@ -1287,7 +1261,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: [
               LiquidUI.badgePill(
-                text: 'UNMATCHED EXPORT ADVANTAGES',
+                text: LanguageService.instance.tr('why_badge'),
                 icon: Icons.workspace_premium_rounded,
                 backgroundColor: AppColors.primaryLight,
                 textColor: AppColors.primary,
@@ -1296,7 +1270,7 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(height: 16),
 
               LiquidUI.gradientText(
-                'Why Global Buyers Choose Amar Foods',
+                LanguageService.instance.tr('why_title'),
                 gradient: AppColors.primaryGradient,
                 style: GoogleFonts.playfairDisplay(
                   fontSize: headingSize,
@@ -2026,7 +2000,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: [
               LiquidUI.badgePill(
-                text: 'GLOBAL EXPOS & INDUSTRY EVENTS',
+                text: LanguageService.instance.tr('expo_badge'),
                 icon: Icons.public_rounded,
                 backgroundColor: AppColors.secondary.withValues(alpha: 0.12),
                 textColor: AppColors.secondary,
@@ -2034,7 +2008,7 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(height: 16),
 
               LiquidUI.gradientText(
-                'Connecting with Global Buyers at Premier Food Expos',
+                LanguageService.instance.tr('expo_title'),
                 gradient: AppColors.primaryGradient,
                 style: GoogleFonts.playfairDisplay(
                   fontSize: headingSize,
@@ -2045,7 +2019,7 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(height: 12),
 
               Text(
-                'Amar Foods actively participates in international food exhibitions to showcase Mahuva\'s premier dehydrated crops, meet international food processors, and build trusted global supply partnerships.',
+                LanguageService.instance.tr('expo_sub'),
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
                   fontSize: 15,
@@ -2795,7 +2769,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: [
               Text(
-                'Ready to Source Premium Quality Dehydrates?',
+                LanguageService.instance.tr('cta_title'),
                 textAlign: TextAlign.center,
                 style: GoogleFonts.playfairDisplay(
                   fontSize: 26,
@@ -2805,7 +2779,7 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 12),
               Text(
-                'Let\'s discuss how we can meet your exact specifications. Our export team is ready to assist.',
+                LanguageService.instance.tr('cta_sub'),
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
                   fontSize: 15,
@@ -2825,7 +2799,7 @@ class _HomePageState extends State<HomePage> {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                     ),
                     child: Text(
-                      'Get in Touch',
+                      LanguageService.instance.tr('cta_btn'),
                       style: GoogleFonts.outfit(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,

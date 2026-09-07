@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:js_interop' as js;
+import 'app_translations.dart';
 
 @js.JS('triggerGoogleTranslate')
 external void _triggerGoogleTranslate(js.JSString langCode);
@@ -38,6 +39,10 @@ class LanguageService {
 
   final ValueNotifier<LanguageItem> currentLanguage = ValueNotifier<LanguageItem>(supportedLanguages.first);
 
+  String tr(String key) => AppTranslations.tr(currentLanguage.value.code, key);
+
+  bool get isRTL => currentLanguage.value.code == 'ar';
+
   void setLanguage(LanguageItem language) {
     currentLanguage.value = language;
     if (kIsWeb) {
@@ -49,5 +54,3 @@ class LanguageService {
     }
   }
 }
-
-
