@@ -6,6 +6,7 @@ import '../services/firebase_service.dart';
 import '../utils/liquid_ui.dart';
 import '../widgets/app_header.dart';
 import '../widgets/app_footer.dart';
+import '../services/language_service.dart';
 
 class ContactPage extends StatefulWidget {
   const ContactPage({super.key});
@@ -64,7 +65,7 @@ class _ContactPageState extends State<ContactPage> {
               const SizedBox(width: 14),
               Expanded(
                 child: Text(
-                  'Inquiry Submitted Successfully!',
+                  LanguageService.instance.tr('contact_success_title'),
                   style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 20, color: AppColors.primary),
                 ),
               ),
@@ -75,7 +76,7 @@ class _ContactPageState extends State<ContactPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Thank you ${_nameController.text.trim()}! Your export inquiry for $_selectedProduct has been received by Amar Foods Export Desk. Our export manager will review your specifications and contact you within 24 hours.',
+                '${LanguageService.instance.tr('contact_success_desc')}',
                 style: GoogleFonts.inter(fontSize: 14, height: 1.55, color: AppColors.textPrimary),
               ),
               const SizedBox(height: 20),
@@ -120,7 +121,7 @@ class _ContactPageState extends State<ContactPage> {
                 elevation: 2,
               ),
               child: Text(
-                'Done',
+                LanguageService.instance.tr('contact_btn_done'),
                 style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 14),
               ),
             ),
@@ -200,7 +201,7 @@ class _ContactPageState extends State<ContactPage> {
                       child: Column(
                         children: [
                           LiquidUI.badgePill(
-                            text: 'EXPORT TRADE INQUIRIES & CONTACT',
+                            text: LanguageService.instance.tr('contact_hero_badge'),
                             icon: Icons.contact_mail_rounded,
                             backgroundColor: AppColors.secondary.withOpacity(0.2),
                             textColor: AppColors.secondary,
@@ -209,7 +210,7 @@ class _ContactPageState extends State<ContactPage> {
                           const SizedBox(height: 20),
 
                           LiquidUI.gradientText(
-                            'Get in Touch With Us',
+                            LanguageService.instance.tr('contact_hero_title'),
                             gradient: const LinearGradient(
                               colors: [Colors.white, Color(0xFFF5E6F0)],
                             ),
@@ -223,7 +224,7 @@ class _ContactPageState extends State<ContactPage> {
                           const SizedBox(height: 14),
 
                           Text(
-                            'Connect directly with our export management team in Mahuva, Gujarat for container quotes, custom mesh sizing, and trade inquiries.',
+                            LanguageService.instance.tr('contact_hero_sub'),
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
                               fontSize: 15,
@@ -251,7 +252,7 @@ class _ContactPageState extends State<ContactPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Corporate Headquarters & Plant',
+                            LanguageService.instance.tr('contact_hq_title'),
                             style: GoogleFonts.playfairDisplay(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -260,7 +261,7 @@ class _ContactPageState extends State<ContactPage> {
                           ),
                           const SizedBox(height: 12),
                           Text(
-                            'We welcome trade partners and international buyers to visit our facility in Mahuva, India.',
+                            LanguageService.instance.tr('contact_hq_sub'),
                             style: GoogleFonts.inter(
                               fontSize: 14,
                               color: AppColors.textSecondary,
@@ -271,29 +272,29 @@ class _ContactPageState extends State<ContactPage> {
 
                           _buildContactCard(
                             Icons.location_on_rounded,
-                            'Factory & Office Address',
-                            'Survey No. - 217, Savarkundla Rd,\nBhadara, Mahuva, Gujarat 364290',
+                            LanguageService.instance.tr('contact_card_address_title'),
+                            LanguageService.instance.tr('contact_card_address_val'),
                           ),
                           const SizedBox(height: 18),
 
                           _buildContactCard(
                             Icons.phone_in_talk_rounded,
-                            'Phone & WhatsApp Export Hotline',
-                            '+91 7284088737 (Export & Sales Desk)',
+                            LanguageService.instance.tr('contact_card_phone_title'),
+                            LanguageService.instance.tr('contact_card_phone_val'),
                           ),
                           const SizedBox(height: 18),
 
                           _buildContactCard(
                             Icons.mark_email_read_rounded,
-                            'Official Trade Email',
-                            'export@amarfoods.in\ninfo@amarfoods.in',
+                            LanguageService.instance.tr('contact_card_email_title'),
+                            LanguageService.instance.tr('contact_card_email_val'),
                           ),
                           const SizedBox(height: 18),
 
                           _buildContactCard(
                             Icons.access_time_filled_rounded,
-                            'Factory Operating Hours',
-                            'Monday – Saturday: 9:00 AM – 7:00 PM IST\nSunday: Closed (Inquiries via Email)',
+                            LanguageService.instance.tr('contact_card_hours_title'),
+                            LanguageService.instance.tr('contact_card_hours_val'),
                           ),
                         ],
                       );
@@ -308,7 +309,7 @@ class _ContactPageState extends State<ContactPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Send Export Inquiry',
+                                LanguageService.instance.tr('contact_form_title'),
                                 style: GoogleFonts.outfit(
                                   fontSize: 22,
                                   fontWeight: FontWeight.bold,
@@ -317,7 +318,7 @@ class _ContactPageState extends State<ContactPage> {
                               ),
                               const SizedBox(height: 6),
                               Text(
-                                'Fill in your specifications and destination port for an immediate FOB/CIF quote.',
+                                LanguageService.instance.tr('contact_form_sub'),
                                 style: GoogleFonts.inter(
                                   fontSize: 13,
                                   color: AppColors.textSecondary,
@@ -327,7 +328,7 @@ class _ContactPageState extends State<ContactPage> {
 
                               _buildTextField(
                                 controller: _nameController,
-                                label: 'Full Name / Company Name',
+                                label: LanguageService.instance.tr('contact_field_name'),
                                 icon: Icons.person_outline_rounded,
                                 validator: (val) => val == null || val.isEmpty ? 'Please enter your name' : null,
                               ),
@@ -335,7 +336,7 @@ class _ContactPageState extends State<ContactPage> {
 
                               _buildTextField(
                                 controller: _emailController,
-                                label: 'Corporate Email',
+                                label: LanguageService.instance.tr('contact_field_email'),
                                 icon: Icons.email_outlined,
                                 keyboardType: TextInputType.emailAddress,
                                 validator: (val) => val == null || !val.contains('@') ? 'Please enter a valid email' : null,
@@ -344,7 +345,7 @@ class _ContactPageState extends State<ContactPage> {
 
                               _buildTextField(
                                 controller: _phoneController,
-                                label: 'Phone / WhatsApp Number',
+                                label: LanguageService.instance.tr('contact_field_phone'),
                                 icon: Icons.phone_outlined,
                                 keyboardType: TextInputType.phone,
                                 validator: (val) => val == null || val.isEmpty ? 'Please enter your phone number' : null,
@@ -353,7 +354,7 @@ class _ContactPageState extends State<ContactPage> {
 
                               _buildTextField(
                                 controller: _countryController,
-                                label: 'Destination Country & Port',
+                                label: LanguageService.instance.tr('contact_field_country'),
                                 icon: Icons.public_rounded,
                                 validator: (val) => val == null || val.isEmpty ? 'Please enter destination country' : null,
                               ),
@@ -362,7 +363,7 @@ class _ContactPageState extends State<ContactPage> {
                               DropdownButtonFormField<String>(
                                 value: _selectedProduct,
                                 decoration: InputDecoration(
-                                  labelText: 'Product Interest',
+                                  labelText: LanguageService.instance.tr('contact_field_product'),
                                   prefixIcon: const Icon(Icons.shopping_bag_outlined, color: AppColors.primary),
                                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                                   contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -384,7 +385,7 @@ class _ContactPageState extends State<ContactPage> {
 
                               _buildTextField(
                                 controller: _messageController,
-                                label: 'Inquiry Details & Quantity (MT)',
+                                label: LanguageService.instance.tr('contact_field_message'),
                                 icon: Icons.notes_rounded,
                                 maxLines: 4,
                                 validator: (val) => val == null || val.isEmpty ? 'Please enter your inquiry details' : null,
@@ -412,7 +413,7 @@ class _ContactPageState extends State<ContactPage> {
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              'Submit Export Inquiry',
+                                              LanguageService.instance.tr('contact_btn_submit'),
                                               style: GoogleFonts.outfit(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold,

@@ -11,18 +11,7 @@ import '../services/language_service.dart';
 
 /// Product catalog shown in the header dropdown & mobile drawer.
 /// Centralized here so both surfaces always stay in sync.
-class _HeaderProduct {
-  final String name;
-  final String tagline;
-  const _HeaderProduct(this.name, this.tagline);
-}
 
-const List<_HeaderProduct> _kProducts = [
-  _HeaderProduct('Dehydrated Onion', 'Golden flakes, granules & powder'),
-  _HeaderProduct('Dehydrated Garlic', 'Intense aroma, minced or powdered'),
-  _HeaderProduct('Fried Onion', 'Crisp, golden, ready to use'),
-  _HeaderProduct('Spice Blends', 'Export-grade whole & ground spices'),
-];
 
 class AppHeader extends StatelessWidget implements PreferredSizeWidget {
   const AppHeader({super.key});
@@ -371,133 +360,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  // Products dropdown — icon-free trigger + a proper catalog panel:
-  // two-line entries (name + what it actually is), a divider, and a
-  // "View all products" link instead of a bare product list.
-  Widget _buildProductsDropdown(BuildContext context) {
-    final double textFontSize = LiquidUI.fluid(context, minVal: 13, maxVal: 15);
-    final double titleFontSize = LiquidUI.fluid(context, minVal: 13, maxVal: 14.5);
-    final double taglineFontSize = LiquidUI.fluid(context, minVal: 11, maxVal: 12);
-    final double panelWidth = LiquidUI.fluid(context, minVal: 240, maxVal: 280);
 
-    return PopupMenuButton<String>(
-      tooltip: '',
-      offset: const Offset(0, 46),
-      elevation: 8,
-      color: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-        side: const BorderSide(color: AppColors.border),
-      ),
-      onSelected: (value) {
-        if (value == 'all') {
-          _navigateTo(context, '/products');
-        } else {
-          _showQuoteDialog(context);
-        }
-      },
-      child: _HoverRegion(
-        builder: (hovering) {
-          return Padding(
-            padding: EdgeInsets.symmetric(vertical: LiquidUI.fluid(context, minVal: 4, maxVal: 6)),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      'Products',
-                      style: TextStyle(
-                        color: hovering ? AppColors.primary : AppColors.textPrimary,
-                        fontWeight: FontWeight.w600,
-                        fontSize: textFontSize,
-                      ),
-                    ),
-                    SizedBox(width: LiquidUI.fluid(context, minVal: 3, maxVal: 5)),
-                    Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                      color: hovering ? AppColors.primary : AppColors.textPrimary,
-                      size: LiquidUI.fluid(context, minVal: 16, maxVal: 19),
-                    ),
-                  ],
-                ),
-                SizedBox(height: LiquidUI.fluid(context, minVal: 3, maxVal: 5)),
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeOut,
-                  height: 2,
-                  width: hovering ? textFontSize * 1.5 : 0,
-                  decoration: BoxDecoration(
-                    color: AppColors.secondary,
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-      itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-        for (int i = 0; i < _kProducts.length; i++) ...[
-          PopupMenuItem<String>(
-            value: 'product_$i',
-            padding: EdgeInsets.symmetric(
-              horizontal: LiquidUI.fluid(context, minVal: 16, maxVal: 20),
-              vertical: LiquidUI.fluid(context, minVal: 8, maxVal: 10),
-            ),
-            child: SizedBox(
-              width: panelWidth,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    _kProducts[i].name,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: titleFontSize,
-                      color: AppColors.textPrimary,
-                    ),
-                  ),
-                  SizedBox(height: LiquidUI.fluid(context, minVal: 2, maxVal: 3)),
-                  Text(
-                    _kProducts[i].tagline,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: taglineFontSize,
-                      color: AppColors.textPrimary.withOpacity(0.55),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          if (i != _kProducts.length - 1)
-            const PopupMenuDivider(height: 1),
-        ],
-        const PopupMenuDivider(height: 1),
-        PopupMenuItem<String>(
-          value: 'all',
-          padding: EdgeInsets.symmetric(
-            horizontal: LiquidUI.fluid(context, minVal: 16, maxVal: 20),
-            vertical: LiquidUI.fluid(context, minVal: 8, maxVal: 10),
-          ),
-          child: SizedBox(
-            width: panelWidth,
-            child: Text(
-              'View all products  \u2192',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: taglineFontSize + 1,
-                color: AppColors.secondary,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
 }
 
 // Tracks hover state and hands it to the builder — shared by nav links and

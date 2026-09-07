@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../constants/app_colors.dart';
 import '../services/firebase_service.dart';
 import '../utils/liquid_ui.dart';
+import '../services/language_service.dart';
 
 class QuoteDialog extends StatefulWidget {
   const QuoteDialog({super.key});
@@ -126,7 +127,7 @@ class _QuoteDialogState extends State<QuoteDialog> {
                                 const Icon(Icons.verified_rounded, color: AppColors.secondaryLight, size: 12),
                                 const SizedBox(width: 6),
                                 Text(
-                                  'DIRECT EXPORT INQUIRY',
+                                  LanguageService.instance.tr('dialog_quote_badge'),
                                   style: GoogleFonts.outfit(
                                     color: Colors.white,
                                     fontSize: 10,
@@ -139,7 +140,7 @@ class _QuoteDialogState extends State<QuoteDialog> {
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            'Request Export Quotation',
+                            LanguageService.instance.tr('dialog_quote_title'),
                             style: GoogleFonts.playfairDisplay(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
@@ -148,7 +149,7 @@ class _QuoteDialogState extends State<QuoteDialog> {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            'Receive immediate FOB/CIF pricing & technical COA specs from Mahuva, India.',
+                            LanguageService.instance.tr('dialog_quote_sub'),
                             style: GoogleFonts.inter(
                               fontSize: 12,
                               color: Colors.white.withOpacity(0.9),
@@ -202,10 +203,10 @@ class _QuoteDialogState extends State<QuoteDialog> {
             controller: _nameController,
             style: GoogleFonts.inter(fontSize: 14),
             decoration: _buildInputDecoration(
-              label: 'Full Name / Company Name *',
+              label: '${LanguageService.instance.tr('contact_field_name')} *',
               icon: Icons.person_outline_rounded,
             ),
-            validator: (val) => val == null || val.trim().isEmpty ? 'Please enter your name or company' : null,
+            validator: (val) => val == null || val.trim().isEmpty ? 'Required' : null,
           ),
           const SizedBox(height: 14),
 
@@ -221,10 +222,10 @@ class _QuoteDialogState extends State<QuoteDialog> {
                         style: GoogleFonts.inter(fontSize: 14),
                         keyboardType: TextInputType.emailAddress,
                         decoration: _buildInputDecoration(
-                          label: 'Corporate Email *',
+                          label: '${LanguageService.instance.tr('contact_field_email')} *',
                           icon: Icons.email_outlined,
                         ),
-                        validator: (val) => val == null || !val.contains('@') ? 'Enter valid email' : null,
+                        validator: (val) => val == null || !val.contains('@') ? 'Required' : null,
                       ),
                     ),
                     const SizedBox(width: 12),
@@ -234,7 +235,7 @@ class _QuoteDialogState extends State<QuoteDialog> {
                         style: GoogleFonts.inter(fontSize: 14),
                         keyboardType: TextInputType.phone,
                         decoration: _buildInputDecoration(
-                          label: 'Phone / WhatsApp *',
+                          label: '${LanguageService.instance.tr('contact_field_phone')} *',
                           icon: Icons.phone_outlined,
                         ),
                         validator: (val) => val == null || val.trim().isEmpty ? 'Required' : null,
@@ -250,10 +251,10 @@ class _QuoteDialogState extends State<QuoteDialog> {
                       style: GoogleFonts.inter(fontSize: 14),
                       keyboardType: TextInputType.emailAddress,
                       decoration: _buildInputDecoration(
-                        label: 'Corporate Email *',
+                        label: '${LanguageService.instance.tr('contact_field_email')} *',
                         icon: Icons.email_outlined,
                       ),
-                      validator: (val) => val == null || !val.contains('@') ? 'Enter valid email' : null,
+                      validator: (val) => val == null || !val.contains('@') ? 'Required' : null,
                     ),
                     const SizedBox(height: 14),
                     TextFormField(
@@ -261,10 +262,10 @@ class _QuoteDialogState extends State<QuoteDialog> {
                       style: GoogleFonts.inter(fontSize: 14),
                       keyboardType: TextInputType.phone,
                       decoration: _buildInputDecoration(
-                        label: 'Phone / WhatsApp Number *',
+                        label: '${LanguageService.instance.tr('contact_field_phone')} *',
                         icon: Icons.phone_outlined,
                       ),
-                      validator: (val) => val == null || val.trim().isEmpty ? 'Please enter phone' : null,
+                      validator: (val) => val == null || val.trim().isEmpty ? 'Required' : null,
                     ),
                   ],
                 );
@@ -278,10 +279,10 @@ class _QuoteDialogState extends State<QuoteDialog> {
             controller: _countryController,
             style: GoogleFonts.inter(fontSize: 14),
             decoration: _buildInputDecoration(
-              label: 'Destination Country & Seaport *',
+              label: '${LanguageService.instance.tr('contact_field_country')} *',
               icon: Icons.public_rounded,
             ),
-            validator: (val) => val == null || val.trim().isEmpty ? 'Please enter destination country and port' : null,
+            validator: (val) => val == null || val.trim().isEmpty ? 'Required' : null,
           ),
           const SizedBox(height: 14),
 
@@ -289,7 +290,7 @@ class _QuoteDialogState extends State<QuoteDialog> {
           DropdownButtonFormField<String>(
             value: _selectedProduct,
             decoration: _buildInputDecoration(
-              label: 'Product of Interest',
+              label: LanguageService.instance.tr('contact_field_product'),
               icon: Icons.shopping_bag_outlined,
             ),
             items: _products.map((String product) {
@@ -314,7 +315,7 @@ class _QuoteDialogState extends State<QuoteDialog> {
             style: GoogleFonts.inter(fontSize: 14),
             maxLines: 3,
             decoration: _buildInputDecoration(
-              label: 'Message / Required Quantity (Metric Tons)',
+              label: LanguageService.instance.tr('contact_field_message'),
               icon: Icons.notes_rounded,
             ).copyWith(alignLabelWithHint: true),
           ),
@@ -362,7 +363,7 @@ class _QuoteDialogState extends State<QuoteDialog> {
                           const Icon(Icons.send_rounded, size: 16),
                           const SizedBox(width: 8),
                           Text(
-                            'Submit Request',
+                            LanguageService.instance.tr('dialog_quote_submit'),
                             style: GoogleFonts.outfit(
                               fontWeight: FontWeight.bold,
                               fontSize: 14,
@@ -436,7 +437,7 @@ class _QuoteDialogState extends State<QuoteDialog> {
         const SizedBox(height: 24),
 
         Text(
-          'Quotation Request Submitted!',
+          LanguageService.instance.tr('dialog_quote_success_title'),
           textAlign: TextAlign.center,
           style: GoogleFonts.outfit(
             fontSize: 22,
@@ -447,7 +448,7 @@ class _QuoteDialogState extends State<QuoteDialog> {
         const SizedBox(height: 12),
 
         Text(
-          'Thank you, ${_nameController.text.trim()}. Your container quote request for $_selectedProduct has been received by Amar Foods Export Desk. Our Mahuva trade team (+91 7284088737) will prepare your custom offer and contact you shortly.',
+          LanguageService.instance.tr('dialog_quote_success_sub'),
           textAlign: TextAlign.center,
           style: GoogleFonts.inter(
             fontSize: 14,
@@ -467,7 +468,7 @@ class _QuoteDialogState extends State<QuoteDialog> {
             elevation: 4,
           ),
           child: Text(
-            'Done',
+            LanguageService.instance.tr('contact_btn_done'),
             style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 15),
           ),
         ),

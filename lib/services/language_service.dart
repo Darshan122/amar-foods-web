@@ -23,6 +23,8 @@ class LanguageItem {
     required this.flag,
     required this.region,
   });
+
+  bool get isRTL => code == 'ar';
 }
 
 class LanguageService {

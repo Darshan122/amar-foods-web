@@ -7,6 +7,7 @@ import '../widgets/app_header.dart';
 import '../widgets/app_footer.dart';
 import '../widgets/quote_dialog.dart';
 import '../widgets/product_detail_dialog.dart';
+import '../services/language_service.dart';
 
 
 
@@ -888,7 +889,7 @@ class _ProductsPageState extends State<ProductsPage> {
                       child: Column(
                         children: [
                           LiquidUI.badgePill(
-                            text: 'EXPORT-GRADE DEHYDRATED PRODUCTS & SPICES',
+                            text: LanguageService.instance.tr('prod_hero_badge'),
                             icon: Icons.verified_rounded,
                             backgroundColor: AppColors.secondary.withValues(alpha: 0.2),
                             textColor: AppColors.secondary,
@@ -897,7 +898,7 @@ class _ProductsPageState extends State<ProductsPage> {
                           const SizedBox(height: 20),
 
                           LiquidUI.gradientText(
-                            'Our Complete Product Range',
+                            LanguageService.instance.tr('prod_hero_title'),
                             gradient: const LinearGradient(
                               colors: [Colors.white, Color(0xFFF5E6F0)],
                             ),
@@ -911,7 +912,7 @@ class _ProductsPageState extends State<ProductsPage> {
                           const SizedBox(height: 14),
 
                           Text(
-                            'Discover Mahuva\'s finest dehydrated red, white, and pink onions alongside high-pungency garlic flakes, granules, and powders.',
+                            LanguageService.instance.tr('prod_hero_sub'),
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
                               fontSize: 15,
@@ -927,11 +928,11 @@ class _ProductsPageState extends State<ProductsPage> {
                             runSpacing: 12,
                             alignment: WrapAlignment.center,
                             children: [
-                              _buildFilterPill('ALL', 'ALL PRODUCTS (${_allProducts.length})'),
-                              _buildFilterPill('RED ONION', 'RED ONION'),
-                              _buildFilterPill('WHITE ONION', 'WHITE ONION'),
-                              _buildFilterPill('PINK ONION', 'PINK ONION'),
-                              _buildFilterPill('GARLIC', 'GARLIC'),
+                              _buildFilterPill('ALL', '${LanguageService.instance.tr('tab_all')} (${_allProducts.length})'),
+                              _buildFilterPill('RED ONION', LanguageService.instance.tr('tab_red_onion')),
+                              _buildFilterPill('WHITE ONION', LanguageService.instance.tr('tab_white_onion')),
+                              _buildFilterPill('PINK ONION', LanguageService.instance.tr('tab_pink_onion')),
+                              _buildFilterPill('GARLIC', LanguageService.instance.tr('tab_garlic')),
                             ],
                           ),
                         ],
@@ -992,7 +993,7 @@ class _ProductsPageState extends State<ProductsPage> {
                   child: Column(
                     children: [
                       Text(
-                        'Require Custom Mesh Sizes or Private Label Packaging?',
+                        LanguageService.instance.tr('prod_custom_title'),
                         textAlign: TextAlign.center,
                         style: GoogleFonts.playfairDisplay(
                           fontSize: 26,
@@ -1002,7 +1003,7 @@ class _ProductsPageState extends State<ProductsPage> {
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        'We customize particle mesh sizes (kibbled, minced, granules, powder) and bulk barrier packaging (20kg - 40kg) for global export.',
+                        LanguageService.instance.tr('prod_custom_sub'),
                         textAlign: TextAlign.center,
                         style: GoogleFonts.inter(
                           fontSize: 15,
@@ -1019,7 +1020,7 @@ class _ProductsPageState extends State<ProductsPage> {
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                         ),
                         child: Text(
-                          'Request Custom Specification Quote',
+                          LanguageService.instance.tr('prod_custom_btn'),
                           style: GoogleFonts.outfit(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
@@ -1181,7 +1182,7 @@ class _ProductCardWidget extends StatelessWidget {
                         const Icon(Icons.collections_rounded, color: Colors.white, size: 12),
                         const SizedBox(width: 4),
                         Text(
-                          '${product.images.length} Photos',
+                          '${product.images.length} ${LanguageService.instance.tr('prod_photos_count')}',
                           style: GoogleFonts.outfit(
                             color: Colors.white,
                             fontSize: 10,
@@ -1225,7 +1226,7 @@ class _ProductCardWidget extends StatelessWidget {
 
                 // Origin Tag Line
                 Text(
-                  'ORIGIN • ${product.origin}',
+                  LanguageService.instance.tr('prod_origin_label'),
                   style: GoogleFonts.outfit(
                     fontSize: 10,
                     fontWeight: FontWeight.bold,
@@ -1240,9 +1241,9 @@ class _ProductCardWidget extends StatelessWidget {
                   spacing: 6,
                   runSpacing: 6,
                   children: [
-                    _buildSpecChip('Purity: ${product.purity}'),
-                    _buildSpecChip('Moisture: ${product.moisture}'),
-                    _buildSpecChip('Shelf Life: ${product.shelfLife}'),
+                    _buildSpecChip('${LanguageService.instance.tr('prod_purity')}: ${product.purity}'),
+                    _buildSpecChip('${LanguageService.instance.tr('prod_moisture')}: ${product.moisture}'),
+                    _buildSpecChip('${LanguageService.instance.tr('prod_shelf_life')}: ${product.shelfLife}'),
                   ],
                 ),
                 const SizedBox(height: 20),
@@ -1267,7 +1268,7 @@ class _ProductCardWidget extends StatelessWidget {
                             const Icon(Icons.photo_library_outlined, size: 16),
                             const SizedBox(width: 6),
                             Text(
-                              'View Details & Gallery',
+                              LanguageService.instance.tr('prod_view_details'),
                               style: GoogleFonts.outfit(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13,
