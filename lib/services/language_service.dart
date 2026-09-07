@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'dart:js_interop' as js;
 import 'app_translations.dart';
 
-@js.JS('triggerGoogleTranslate')
-external void _triggerGoogleTranslate(js.JSString langCode);
+@js.JS('saveLanguagePreference')
+external void _saveLanguagePreference(js.JSString code);
+
+@js.JS('getLanguagePreference')
+external js.JSString _getLanguagePreference();
 
 class LanguageItem {
   final String code;
@@ -23,7 +26,9 @@ class LanguageItem {
 }
 
 class LanguageService {
-  LanguageService._();
+  LanguageService._() {
+    _initSavedLanguage();
+  }
   static final LanguageService instance = LanguageService._();
 
   static const List<LanguageItem> supportedLanguages = [
@@ -39,6 +44,21 @@ class LanguageService {
 
   final ValueNotifier<LanguageItem> currentLanguage = ValueNotifier<LanguageItem>(supportedLanguages.first);
 
+  void _initSavedLanguage() {
+    if (kIsWeb) {
+      try {
+        final savedCode = _getLanguagePreference().toDart;
+        final match = supportedLanguages.firstWhere(
+          (l) => l.code == savedCode,
+          orElse: () => supportedLanguages.first,
+        );
+        currentLanguage.value = match;
+      } catch (e) {
+        debugPrint('Language restore error: $e');
+      }
+    }
+  }
+
   String tr(String key) => AppTranslations.tr(currentLanguage.value.code, key);
 
   bool get isRTL => currentLanguage.value.code == 'ar';
@@ -47,9 +67,9 @@ class LanguageService {
     currentLanguage.value = language;
     if (kIsWeb) {
       try {
-        _triggerGoogleTranslate(language.code.toJS);
+        _saveLanguagePreference(language.code.toJS);
       } catch (e) {
-        debugPrint('Google Translate trigger error: $e');
+        debugPrint('Language save error: $e');
       }
     }
   }

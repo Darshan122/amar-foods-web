@@ -339,39 +339,28 @@
     setTimeout(hideLoader, 5000);
   </script>
 
-  <!-- Google Translate Element & Bridge -->
-  <div id="google_translate_element" style="display:none"></div>
+  <!-- Language Preference Persistence Bridge -->
   <script type="text/javascript">
-    function googleTranslateElementInit() {
-      new google.translate.TranslateElement({
-        pageLanguage: 'en',
-        includedLanguages: 'en,ar,ru,es,de,fr,hi,gu,zh-CN,ja,pt,it,tr,nl,pl,vi,id,ko',
-        autoDisplay: false
-      }, 'google_translate_element');
-    }
+    // Clear legacy google translate cookie if present
+    try {
+      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" + window.location.hostname;
+    } catch(e) {}
 
-    window.triggerGoogleTranslate = function(langCode) {
-      if (langCode === 'en') {
-        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" + window.location.hostname;
-        window.location.reload();
-        return;
-      }
+    window.saveLanguagePreference = function(code) {
+      try {
+        localStorage.setItem('amar_foods_lang', code);
+      } catch (e) {}
+    };
 
-      var cookieVal = "/en/" + langCode;
-      document.cookie = "googtrans=" + cookieVal + "; path=/;";
-      document.cookie = "googtrans=" + cookieVal + "; path=/; domain=" + window.location.hostname;
-
-      var select = document.querySelector('.goog-te-combo');
-      if (select) {
-        select.value = langCode;
-        select.dispatchEvent(new Event('change'));
-      } else {
-        window.location.reload();
+    window.getLanguagePreference = function() {
+      try {
+        return localStorage.getItem('amar_foods_lang') || 'en';
+      } catch (e) {
+        return 'en';
       }
     };
   </script>
-  <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
   <script src="flutter_bootstrap.js" async></script>
 </body>
