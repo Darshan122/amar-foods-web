@@ -5,6 +5,7 @@ import '../constants/app_colors.dart';
 import '../constants/app_images.dart';
 import '../theme/app_theme.dart';
 import '../utils/liquid_ui.dart';
+import 'language_selector.dart';
 import 'quote_dialog.dart';
 
 /// Product catalog shown in the header dropdown & mobile drawer.
@@ -130,8 +131,10 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
+                const LanguageSelectorButton(isMobile: false),
+                const SizedBox(width: 8),
                 _buildBrochureButton(context),
-                const SizedBox(width: 10),
+                const SizedBox(width: 8),
                 _buildQuoteButton(context),
               ],
             ),
@@ -141,7 +144,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  // Mobile: logo left, brochure button, quick quote button & hamburger menu right
+  // Mobile: logo left, language button, brochure button, quick quote button & hamburger menu right
   Widget _buildMobileRow(BuildContext context, double logoHeight) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -151,6 +154,8 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
+            const LanguageSelectorButton(isMobile: true),
+            const SizedBox(width: 6),
             ElevatedButton(
               onPressed: openBrochure,
               style: ElevatedButton.styleFrom(
@@ -176,13 +181,13 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
                 ],
               ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: 6),
             ElevatedButton(
               onPressed: () => _showQuoteDialog(context),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.secondary,
                 foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                 elevation: 2,
               ),
@@ -191,7 +196,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
                 style: GoogleFonts.outfit(fontSize: 12, fontWeight: FontWeight.bold),
               ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: 6),
             Builder(
               builder: (context) {
                 return Container(
@@ -201,7 +206,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
                     border: Border.all(color: AppColors.primary.withOpacity(0.15)),
                   ),
                   child: IconButton(
-                    icon: const Icon(Icons.menu_rounded, color: AppColors.primary, size: 26),
+                    icon: const Icon(Icons.menu_rounded, color: AppColors.primary, size: 24),
                     onPressed: () => Scaffold.of(context).openEndDrawer(),
                     tooltip: 'Open Mobile Menu',
                   ),
@@ -682,6 +687,36 @@ class AppDrawer extends StatelessWidget {
               ),
               child: Column(
                 children: [
+                  SizedBox(
+                    width: double.infinity,
+                    height: 44,
+                    child: OutlinedButton.icon(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          barrierDismissible: true,
+                          builder: (context) => const LanguageDialog(),
+                        );
+                      },
+                      icon: const Icon(Icons.language_rounded, size: 16, color: AppColors.primary),
+                      label: Text(
+                        'Language / भाषा / لغة',
+                        style: GoogleFonts.outfit(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppColors.primary,
+                        side: BorderSide(color: AppColors.primary.withValues(alpha: 0.3), width: 1.2),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
                   SizedBox(
                     width: double.infinity,
                     height: 46,
