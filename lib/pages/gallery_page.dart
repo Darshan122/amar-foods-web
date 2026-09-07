@@ -7,6 +7,7 @@ import '../widgets/app_header.dart';
 import '../widgets/app_footer.dart';
 import '../widgets/quote_dialog.dart';
 import '../widgets/product_detail_dialog.dart';
+import '../services/language_service.dart';
 
 class GalleryPage extends StatefulWidget {
   const GalleryPage({super.key});
@@ -249,7 +250,7 @@ class _GalleryPageState extends State<GalleryPage> {
                       child: Column(
                         children: [
                           LiquidUI.badgePill(
-                            text: 'MEDIA & INFRASTRUCTURE GALLERY',
+                            text: LanguageService.instance.tr('gallery_hero_badge'),
                             icon: Icons.photo_library_rounded,
                             backgroundColor: AppColors.secondary.withOpacity(0.2),
                             textColor: AppColors.secondary,
@@ -258,7 +259,7 @@ class _GalleryPageState extends State<GalleryPage> {
                           const SizedBox(height: 20),
 
                           LiquidUI.gradientText(
-                            'Photos Gallery',
+                            LanguageService.instance.tr('gallery_hero_title'),
                             gradient: const LinearGradient(
                               colors: [Colors.white, Color(0xFFF5E6F0)],
                             ),
@@ -271,7 +272,7 @@ class _GalleryPageState extends State<GalleryPage> {
                           ),
                           const SizedBox(height: 12),
                           Text(
-                            'Explore our export product lineup, Mahuva factory facilities, and agricultural processing quality.',
+                            LanguageService.instance.tr('gallery_hero_sub'),
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
                               color: Colors.white70,
@@ -303,17 +304,17 @@ class _GalleryPageState extends State<GalleryPage> {
                         scrollDirection: Axis.horizontal,
                         child: Row(
                           children: [
-                            _buildFilterTab('ALL', 'All Media', galleryItems.length),
+                            _buildFilterTab('ALL', LanguageService.instance.tr('gallery_tab_all'), galleryItems.length),
                             const SizedBox(width: 10),
-                            _buildFilterTab('EXPOS & EVENTS', 'Fi India 2026 Expo', galleryItems.where((i) => i['category'] == 'EXPOS & EVENTS').length),
+                            _buildFilterTab('EXPOS & EVENTS', LanguageService.instance.tr('gallery_tab_expo'), galleryItems.where((i) => i['category'] == 'EXPOS & EVENTS').length),
                             const SizedBox(width: 10),
-                            _buildFilterTab('RED ONION', 'Red Onion', galleryItems.where((i) => i['category'] == 'RED ONION').length),
+                            _buildFilterTab('RED ONION', LanguageService.instance.tr('gallery_tab_red'), galleryItems.where((i) => i['category'] == 'RED ONION').length),
                             const SizedBox(width: 10),
-                            _buildFilterTab('WHITE ONION', 'White Onion', galleryItems.where((i) => i['category'] == 'WHITE ONION').length),
+                            _buildFilterTab('WHITE ONION', LanguageService.instance.tr('gallery_tab_white'), galleryItems.where((i) => i['category'] == 'WHITE ONION').length),
                             const SizedBox(width: 10),
-                            _buildFilterTab('PINK ONION', 'Pink Onion', galleryItems.where((i) => i['category'] == 'PINK ONION').length),
+                            _buildFilterTab('PINK ONION', LanguageService.instance.tr('gallery_tab_pink'), galleryItems.where((i) => i['category'] == 'PINK ONION').length),
                             const SizedBox(width: 10),
-                            _buildFilterTab('GARLIC', 'Garlic', galleryItems.where((i) => i['category'] == 'GARLIC').length),
+                            _buildFilterTab('GARLIC', LanguageService.instance.tr('gallery_tab_garlic'), galleryItems.where((i) => i['category'] == 'GARLIC').length),
                           ],
                         ),
                       ),
@@ -373,7 +374,7 @@ class _GalleryPageState extends State<GalleryPage> {
                   child: Column(
                     children: [
                       Text(
-                        'Need High-Resolution Product Specifications or Samples?',
+                        LanguageService.instance.tr('gallery_cta_title'),
                         textAlign: TextAlign.center,
                         style: GoogleFonts.playfairDisplay(
                           fontSize: 24,
@@ -383,7 +384,7 @@ class _GalleryPageState extends State<GalleryPage> {
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        'Contact our export team for laboratory analysis reports, COA certificates, and sample dispatch.',
+                        LanguageService.instance.tr('gallery_cta_sub'),
                         textAlign: TextAlign.center,
                         style: GoogleFonts.inter(
                           fontSize: 14,
@@ -400,7 +401,7 @@ class _GalleryPageState extends State<GalleryPage> {
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                         ),
                         child: Text(
-                          'Request Product Samples',
+                          LanguageService.instance.tr('gallery_cta_btn'),
                           style: GoogleFonts.outfit(
                             fontWeight: FontWeight.bold,
                             fontSize: 15,

@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../constants/app_colors.dart';
 import '../utils/liquid_ui.dart';
 import 'quote_dialog.dart';
+import '../services/language_service.dart';
 
 class ProductModel {
   final String id;
@@ -280,11 +281,11 @@ class _ProductDetailDialogState extends State<ProductDetailDialog> {
                             // Quality Metric Pills
                             Row(
                               children: [
-                                _buildMetricCard('PURITY', widget.product.purity),
+                                _buildMetricCard(LanguageService.instance.tr('prod_purity').toUpperCase(), widget.product.purity),
                                 const SizedBox(width: 10),
-                                _buildMetricCard('MOISTURE', widget.product.moisture),
+                                _buildMetricCard(LanguageService.instance.tr('prod_moisture').toUpperCase(), widget.product.moisture),
                                 const SizedBox(width: 10),
-                                _buildMetricCard('SHELF LIFE', widget.product.shelfLife),
+                                _buildMetricCard(LanguageService.instance.tr('prod_shelf_life').toUpperCase(), widget.product.shelfLife),
                               ],
                             ),
                             const SizedBox(height: 22),
@@ -296,7 +297,7 @@ class _ProductDetailDialogState extends State<ProductDetailDialog> {
                                 onPressed: () => _showQuoteDialog(context),
                                 icon: const Icon(Icons.chat_rounded, size: 18),
                                 label: Text(
-                                  'Inquire on WhatsApp →',
+                                  LanguageService.instance.tr('dialog_detail_whatsapp'),
                                   style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 14),
                                 ),
                                 style: ElevatedButton.styleFrom(
@@ -318,10 +319,10 @@ class _ProductDetailDialogState extends State<ProductDetailDialog> {
                                 scrollDirection: Axis.horizontal,
                                 child: Row(
                                   children: [
-                                    _buildModalTab(0, 'Description'),
-                                    _buildModalTab(1, 'Key Features'),
-                                    _buildModalTab(2, 'Applications'),
-                                    _buildModalTab(3, 'Specifications'),
+                                    _buildModalTab(0, LanguageService.instance.tr('dialog_detail_tab_desc')),
+                                    _buildModalTab(1, LanguageService.instance.tr('dialog_detail_tab_features')),
+                                    _buildModalTab(2, LanguageService.instance.tr('dialog_detail_tab_apps')),
+                                    _buildModalTab(3, LanguageService.instance.tr('dialog_detail_tab_specs')),
                                   ],
                                 ),
                               ),

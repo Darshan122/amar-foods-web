@@ -6,6 +6,7 @@ import '../utils/liquid_ui.dart';
 import '../widgets/app_header.dart';
 import '../widgets/app_footer.dart';
 import '../widgets/quote_dialog.dart';
+import '../services/language_service.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
@@ -116,7 +117,7 @@ class AboutPage extends StatelessWidget {
                 children: [
                   // Live Status Badge Pill
                   LiquidUI.badgePill(
-                    text: 'ESTABLISHED 2020 • MAHUVA DEHYDRATION HUB',
+                    text: LanguageService.instance.tr('about_hero_badge'),
                     icon: Icons.verified_rounded,
                     backgroundColor: AppColors.secondary.withOpacity(0.2),
                     textColor: AppColors.secondary,
@@ -125,7 +126,7 @@ class AboutPage extends StatelessWidget {
                   const SizedBox(height: 20),
 
                   LiquidUI.gradientText(
-                    'About Amar Foods',
+                    LanguageService.instance.tr('about_hero_h1'),
                     gradient: const LinearGradient(
                       colors: [Colors.white, Color(0xFFF5E6F0)],
                     ),
@@ -139,7 +140,7 @@ class AboutPage extends StatelessWidget {
                   const SizedBox(height: 8),
 
                   LiquidUI.gradientText(
-                    'Pioneering Indian Dehydrated Foods & Spices',
+                    LanguageService.instance.tr('about_hero_h2'),
                     gradient: const LinearGradient(
                       colors: [Color(0xFF81C784), Color(0xFFA5D6A7), Color(0xFFC8E6C9)],
                     ),
@@ -153,7 +154,7 @@ class AboutPage extends StatelessWidget {
                   const SizedBox(height: 18),
 
                   Text(
-                    'Direct farm procurement in Mahuva, Gujarat. 100% natural dehydrated onion and garlic. Advanced conveyor dehydration technology serving global buyers across 15+ export nations.',
+                    LanguageService.instance.tr('about_hero_desc'),
                     textAlign: TextAlign.center,
                     style: GoogleFonts.inter(
                       fontSize: descSize,
@@ -169,10 +170,10 @@ class AboutPage extends StatelessWidget {
                     runSpacing: 12,
                     alignment: WrapAlignment.center,
                     children: [
-                      _buildHeroStatPill(Icons.location_on_rounded, 'Mahuva Processing Hub'),
-                      _buildHeroStatPill(Icons.speed_rounded, '5,000+ MT Annual Capacity'),
-                      _buildHeroStatPill(Icons.public_rounded, '15+ Export Nations'),
-                      _buildHeroStatPill(Icons.verified_user_rounded, 'ISO 22000 & HACCP'),
+                      _buildHeroStatPill(Icons.location_on_rounded, LanguageService.instance.tr('about_pill_hub')),
+                      _buildHeroStatPill(Icons.speed_rounded, LanguageService.instance.tr('about_pill_capacity')),
+                      _buildHeroStatPill(Icons.public_rounded, LanguageService.instance.tr('about_pill_nations')),
+                      _buildHeroStatPill(Icons.verified_user_rounded, LanguageService.instance.tr('about_pill_cert')),
                     ],
                   ),
                 ],
@@ -269,7 +270,7 @@ class AboutPage extends StatelessWidget {
                     const SizedBox(width: 6),
                     Flexible(
                       child: Text(
-                        '100% Pure & Natural • Mahuva Hub',
+                        LanguageService.instance.tr('about_story_card_badge'),
                         style: GoogleFonts.outfit(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -300,7 +301,7 @@ class AboutPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   LiquidUI.badgePill(
-                    text: 'OUR HERITAGE & MISSION',
+                    text: LanguageService.instance.tr('about_story_badge'),
                     icon: Icons.history_edu_rounded,
                     backgroundColor: AppColors.primaryLight,
                     textColor: AppColors.primary,
@@ -309,7 +310,7 @@ class AboutPage extends StatelessWidget {
                   const SizedBox(height: 16),
 
                   LiquidUI.gradientText(
-                    'Connecting Mahuva’s Soil to Global Buyers',
+                    LanguageService.instance.tr('about_story_h1'),
                     gradient: AppColors.primaryGradient,
                     style: GoogleFonts.playfairDisplay(
                       fontSize: headingSize,
@@ -320,7 +321,7 @@ class AboutPage extends StatelessWidget {
                   const SizedBox(height: 16),
 
                   Text(
-                    'Founded in 2020 in Mahuva—India\'s renowned onion capital—Amar Foods was built to bridge local farmers directly with international industrial food processors. We process fresh red, white, and pink onions alongside high-pungency garlic into export-ready dehydrated flakes, granules, and powders.',
+                    LanguageService.instance.tr('about_story_p1'),
                     style: GoogleFonts.inter(
                       fontSize: 15,
                       color: AppColors.textSecondary,
@@ -330,7 +331,7 @@ class AboutPage extends StatelessWidget {
                   const SizedBox(height: 14),
 
                   Text(
-                    'Our state-of-the-art facility adheres to global hygiene standards, leveraging multi-stage continuous conveyor dryers, optical color sorters, and magnetic metal traps to guarantee consistent purity.',
+                    LanguageService.instance.tr('about_story_p2'),
                     style: GoogleFonts.inter(
                       fontSize: 15,
                       color: AppColors.textSecondary,
@@ -339,11 +340,11 @@ class AboutPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
 
-                  _buildStoryPoint('Direct Farm Procurement', 'Procuring directly from Mahuva farmers for peak crop freshness.'),
+                  _buildStoryPoint(LanguageService.instance.tr('about_story_pt1_t'), LanguageService.instance.tr('about_story_pt1_d')),
                   const SizedBox(height: 10),
-                  _buildStoryPoint('Zero Chemical Additives', '100% natural aroma, flavor, and color with zero artificial preservers.'),
+                  _buildStoryPoint(LanguageService.instance.tr('about_story_pt2_t'), LanguageService.instance.tr('about_story_pt2_d')),
                   const SizedBox(height: 10),
-                  _buildStoryPoint('International Certifications', 'ISO 22000, HACCP, and FSSAI accredited analytical lab clearance.'),
+                  _buildStoryPoint(LanguageService.instance.tr('about_story_pt3_t'), LanguageService.instance.tr('about_story_pt3_d')),
                 ],
               );
 
@@ -422,30 +423,30 @@ class AboutPage extends StatelessWidget {
     final double paddingV = LiquidUI.fluid(context, minVal: 60, maxVal: 90);
     final double headingSize = LiquidUI.fluid(context, minVal: 26, maxVal: 36);
 
-    final List<_ValueItem> values = const [
+    final List<_ValueItem> values = [
       _ValueItem(
         index: '01',
-        title: 'Farm Fresh Sourcing',
+        title: LanguageService.instance.tr('about_v1_title'),
         icon: Icons.agriculture_rounded,
-        desc: 'Direct raw material procurement from Mahuva agricultural markets ensuring peak pungency.',
+        desc: LanguageService.instance.tr('about_v1_desc'),
       ),
       _ValueItem(
         index: '02',
-        title: 'Automated Hygiene',
+        title: LanguageService.instance.tr('about_v2_title'),
         icon: Icons.cleaning_services_rounded,
-        desc: 'Hands-free washing, peeling, and continuous low-temperature conveyor tunnel drying.',
+        desc: LanguageService.instance.tr('about_v2_desc'),
       ),
       _ValueItem(
         index: '03',
-        title: 'Lab Quality Control',
+        title: LanguageService.instance.tr('about_v3_title'),
         icon: Icons.biotech_rounded,
-        desc: 'Analytical testing for moisture (<6%), total ash, acid-insoluble ash, and zero pesticide residues.',
+        desc: LanguageService.instance.tr('about_v3_desc'),
       ),
       _ValueItem(
         index: '04',
-        title: 'Export Port Access',
+        title: LanguageService.instance.tr('about_v4_title'),
         icon: Icons.sailing_rounded,
-        desc: 'Strategic proximity to Pipavav, Mundra & Hazira seaports for fast FCL container shipping.',
+        desc: LanguageService.instance.tr('about_v4_desc'),
       ),
     ];
 
@@ -459,7 +460,7 @@ class AboutPage extends StatelessWidget {
           child: Column(
             children: [
               LiquidUI.badgePill(
-                text: 'GUIDING PRINCIPLES',
+                text: LanguageService.instance.tr('about_values_badge'),
                 icon: Icons.shield_rounded,
                 backgroundColor: AppColors.primaryLight,
                 textColor: AppColors.primary,
@@ -468,7 +469,7 @@ class AboutPage extends StatelessWidget {
               const SizedBox(height: 16),
 
               Text(
-                'Our Core Values & Promises',
+                LanguageService.instance.tr('about_values_title'),
                 textAlign: TextAlign.center,
                 style: GoogleFonts.playfairDisplay(
                   fontSize: headingSize,
@@ -478,7 +479,7 @@ class AboutPage extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Text(
-                'Every batch of dehydrated onion and garlic we export is guided by strict quality standards.',
+                LanguageService.instance.tr('about_values_sub'),
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
                   fontSize: 15,
@@ -575,31 +576,31 @@ class AboutPage extends StatelessWidget {
     final founders = [
       {
         'name': 'Labhesh Patel',
-        'role': 'MANAGING DIRECTOR & FOUNDER',
-        'exp': '15+ Years Industry Experience',
+        'role': LanguageService.instance.tr('about_f1_role'),
+        'exp': LanguageService.instance.tr('about_f_exp'),
         'expertise': 'Crop Sourcing & Dehydration Manufacturing',
-        'bio': 'With over 15+ years of dedicated experience in agricultural crop procurement and manufacturing, Labhesh Patel spearheads corporate strategy and raw material sourcing across Mahuva\'s vast agricultural belt. He has built direct contract farming partnerships with local onion and garlic growers, ensuring direct farm-to-factory supply chains for premium red, white, and pink onions alongside high-potency garlic.',
+        'bio': LanguageService.instance.tr('about_f1_bio'),
       },
       {
         'name': 'Hiren Patel',
-        'role': 'OPERATIONS DIRECTOR & CO-FOUNDER',
-        'exp': '15+ Years Industry Experience',
+        'role': LanguageService.instance.tr('about_f2_role'),
+        'exp': LanguageService.instance.tr('about_f_exp'),
         'expertise': 'Factory Operations & Plant Engineering',
-        'bio': 'Bringing 15+ years of specialized experience in food dehydration engineering and plant operations, Hiren Patel directs the automated continuous multi-stage conveyor tunnel drying lines at Amar Foods. He oversees hands-free washing, precision slicing, optical sorting, and factory sanitary compliance to maintain high-volume export output with zero operational downtime.',
+        'bio': LanguageService.instance.tr('about_f2_bio'),
       },
       {
         'name': 'Jagdish Patel',
-        'role': 'QUALITY & R&D DIRECTOR & CO-FOUNDER',
-        'exp': '15+ Years Industry Experience',
+        'role': LanguageService.instance.tr('about_f3_role'),
+        'exp': LanguageService.instance.tr('about_f_exp'),
         'expertise': 'Quality Control & Food Safety R&D',
-        'bio': 'Backed by 15+ years of expertise in analytical quality assurance and food technology R&D, Jagdish Patel manages the in-house quality testing laboratory. He enforces strict adherence to ISO 22000, HACCP, and FSSAI standards—guaranteeing low moisture content (≤6.0%), essential oil retention, zero chemical additives, and total microbiological safety.',
+        'bio': LanguageService.instance.tr('about_f3_bio'),
       },
       {
         'name': 'Milan Bheda',
-        'role': 'INTERNATIONAL EXPORTS DIRECTOR & CO-FOUNDER',
-        'exp': '15+ Years Industry Experience',
+        'role': LanguageService.instance.tr('about_f4_role'),
+        'exp': LanguageService.instance.tr('about_f_exp'),
         'expertise': 'Global Agri-Trade & Export Markets',
-        'bio': 'Leveraging 15+ years of extensive experience in international commodity trading and port logistics, Milan Bheda heads global commercial expansion at Amar Foods. He has established robust export networks across 15+ countries in Europe, North America, the Middle East, and Southeast Asia, handling customs clearance, container stuffing, and bulk packaging.',
+        'bio': LanguageService.instance.tr('about_f4_bio'),
       },
     ];
 
@@ -613,7 +614,7 @@ class AboutPage extends StatelessWidget {
           child: Column(
             children: [
               LiquidUI.badgePill(
-                text: 'LEADERSHIP & VISION',
+                text: LanguageService.instance.tr('about_founders_badge'),
                 icon: Icons.groups_rounded,
                 backgroundColor: AppColors.secondaryLight,
                 textColor: AppColors.secondary,
@@ -622,7 +623,7 @@ class AboutPage extends StatelessWidget {
               const SizedBox(height: 16),
 
               Text(
-                'Meet Our Founding Visionaries',
+                LanguageService.instance.tr('about_founders_title'),
                 textAlign: TextAlign.center,
                 style: GoogleFonts.playfairDisplay(
                   fontSize: headingSize,
@@ -632,7 +633,7 @@ class AboutPage extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                'Over 15+ years of deep manufacturing, crop procurement, and export trade excellence.',
+                LanguageService.instance.tr('about_founders_sub'),
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
                   fontSize: 15,
@@ -786,24 +787,24 @@ class AboutPage extends StatelessWidget {
     final double paddingV = LiquidUI.fluid(context, minVal: 70, maxVal: 100);
     final double headingSize = LiquidUI.fluid(context, minVal: 28, maxVal: 38);
 
-    final List<_InfraStepItem> infraSteps = const [
+    final List<_InfraStepItem> infraSteps = [
       _InfraStepItem(
         step: 'STEP 01',
-        title: 'Automated Triple Hydro Wash',
+        title: LanguageService.instance.tr('about_infra_s1_t'),
         icon: Icons.water_drop_rounded,
-        desc: 'Continuous multi-stage washing and mechanical peeling under strict sanitary conditions.',
+        desc: LanguageService.instance.tr('about_infra_s1_d'),
       ),
       _InfraStepItem(
         step: 'STEP 02',
-        title: 'Conveyor Tunnel Dehydration',
+        title: LanguageService.instance.tr('about_infra_s2_t'),
         icon: Icons.thermostat_rounded,
-        desc: 'Low-temperature continuous air drying to lock in natural flavor, essential oils, and aroma.',
+        desc: LanguageService.instance.tr('about_infra_s2_d'),
       ),
       _InfraStepItem(
         step: 'STEP 03',
-        title: 'Optical Color & Metal Sort',
+        title: LanguageService.instance.tr('about_infra_s3_t'),
         icon: Icons.center_focus_strong_rounded,
-        desc: 'High-precision optical color sorting and magnetic traps to eliminate all foreign defects.',
+        desc: LanguageService.instance.tr('about_infra_s3_d'),
       ),
     ];
 
@@ -829,7 +830,7 @@ class AboutPage extends StatelessWidget {
                     const Icon(Icons.memory_rounded, color: AppColors.secondary, size: 14),
                     const SizedBox(width: 6),
                     Text(
-                      'PROCESSING INFRASTRUCTURE',
+                      LanguageService.instance.tr('about_infra_badge'),
                       style: GoogleFonts.outfit(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -843,7 +844,7 @@ class AboutPage extends StatelessWidget {
               const SizedBox(height: 18),
 
               Text(
-                'Dehydration Facility & Automation',
+                LanguageService.instance.tr('about_infra_title'),
                 textAlign: TextAlign.center,
                 style: GoogleFonts.playfairDisplay(
                   fontSize: headingSize,
@@ -853,7 +854,7 @@ class AboutPage extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                'Modern conveyor dryers, stainless steel sorting lines, and cleanroom packaging bays.',
+                LanguageService.instance.tr('about_infra_sub'),
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
                   fontSize: 15,
@@ -964,7 +965,7 @@ class AboutPage extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                'Ready to Partner With Amar Foods?',
+                LanguageService.instance.tr('about_cta_title'),
                 textAlign: TextAlign.center,
                 style: GoogleFonts.playfairDisplay(
                   fontSize: 26,
@@ -974,7 +975,7 @@ class AboutPage extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                'Discuss your target specifications, mesh sizes, and container shipments with our founders.',
+                LanguageService.instance.tr('about_cta_sub'),
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
                   fontSize: 15,
@@ -993,7 +994,7 @@ class AboutPage extends StatelessWidget {
                   elevation: 6,
                 ),
                 child: Text(
-                  'Request Direct Quote',
+                  LanguageService.instance.tr('about_cta_btn'),
                   style: GoogleFonts.outfit(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
