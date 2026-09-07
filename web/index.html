@@ -339,6 +339,40 @@
     setTimeout(hideLoader, 5000);
   </script>
 
+  <!-- Google Translate Element & Bridge -->
+  <div id="google_translate_element" style="display:none"></div>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'en,ar,ru,es,de,fr,hi,gu,zh-CN,ja,pt,it,tr,nl,pl,vi,id,ko',
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+
+    window.triggerGoogleTranslate = function(langCode) {
+      if (langCode === 'en') {
+        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" + window.location.hostname;
+        window.location.reload();
+        return;
+      }
+
+      var cookieVal = "/en/" + langCode;
+      document.cookie = "googtrans=" + cookieVal + "; path=/;";
+      document.cookie = "googtrans=" + cookieVal + "; path=/; domain=" + window.location.hostname;
+
+      var select = document.querySelector('.goog-te-combo');
+      if (select) {
+        select.value = langCode;
+        select.dispatchEvent(new Event('change'));
+      } else {
+        window.location.reload();
+      }
+    };
+  </script>
+  <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
