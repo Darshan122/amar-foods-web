@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Amar Foods | Dehydrated Onion & Garlic Manufacturer & Exporter in India',
+      title: 'Amar Foods | Dehydrated Onion & Garlic Manufacturer in Mahuva, Gujarat',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       initialRoute: '/',
