@@ -7,6 +7,7 @@ import '../theme/app_theme.dart';
 import '../utils/liquid_ui.dart';
 import 'language_selector.dart';
 import 'quote_dialog.dart';
+import '../services/language_service.dart';
 
 /// Product catalog shown in the header dropdown & mobile drawer.
 /// Centralized here so both surfaces always stay in sync.
@@ -58,33 +59,38 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final bool isMobileHeader = constraints.maxWidth < 960;
-        final double outerMarginH = LiquidUI.fluid(context, minVal: 8, maxVal: 32);
-        final double outerMarginV = LiquidUI.fluid(context, minVal: 6, maxVal: 16);
-        final double innerPaddingH = LiquidUI.fluid(context, minVal: 12, maxVal: 28);
-        final double logoHeight = LiquidUI.fluid(context, minVal: 32, maxVal: 46);
+    return ValueListenableBuilder<LanguageItem>(
+      valueListenable: LanguageService.instance.currentLanguage,
+      builder: (context, _, child) {
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            final bool isMobileHeader = constraints.maxWidth < 960;
+            final double outerMarginH = LiquidUI.fluid(context, minVal: 8, maxVal: 32);
+            final double outerMarginV = LiquidUI.fluid(context, minVal: 6, maxVal: 16);
+            final double innerPaddingH = LiquidUI.fluid(context, minVal: 12, maxVal: 28);
+            final double logoHeight = LiquidUI.fluid(context, minVal: 32, maxVal: 46);
 
-        return Container(
-          color: Colors.transparent, // outer breathing room around the floating pill
-          padding: EdgeInsets.symmetric(horizontal: outerMarginH, vertical: outerMarginV),
-          child: Container(
-            decoration: BoxDecoration(
-              color: AppColors.surfaceGlass,
-              borderRadius: BorderRadius.circular(30), // 30px on both corners
-              border: Border.all(color: AppColors.borderGlass, width: 1.5),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.primaryGlow.withOpacity(0.08),
-                  blurRadius: 20,
-                  offset: const Offset(0, 6),
+            return Container(
+              color: Colors.transparent, // outer breathing room around the floating pill
+              padding: EdgeInsets.symmetric(horizontal: outerMarginH, vertical: outerMarginV),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: AppColors.surfaceGlass,
+                  borderRadius: BorderRadius.circular(30), // 30px on both corners
+                  border: Border.all(color: AppColors.borderGlass, width: 1.5),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.primaryGlow.withOpacity(0.08),
+                      blurRadius: 20,
+                      offset: const Offset(0, 6),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            padding: EdgeInsets.symmetric(horizontal: innerPaddingH, vertical: 8),
-            child: isMobileHeader ? _buildMobileRow(context, logoHeight) : _buildDesktopRow(context, logoHeight),
-          ),
+                padding: EdgeInsets.symmetric(horizontal: innerPaddingH, vertical: 8),
+                child: isMobileHeader ? _buildMobileRow(context, logoHeight) : _buildDesktopRow(context, logoHeight),
+              ),
+            );
+          },
         );
       },
     );
@@ -111,15 +117,15 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  _buildNavLink(context, 'Home', '/'),
+                  _buildNavLink(context, LanguageService.instance.tr('nav_home'), '/'),
                   SizedBox(width: LiquidUI.fluid(context, minVal: 16, maxVal: 28)),
-                  _buildNavLink(context, 'About', '/about'),
+                  _buildNavLink(context, LanguageService.instance.tr('nav_about'), '/about'),
                   SizedBox(width: LiquidUI.fluid(context, minVal: 16, maxVal: 28)),
-                  _buildNavLink(context, 'Products', '/products'),
+                  _buildNavLink(context, LanguageService.instance.tr('nav_products'), '/products'),
                   SizedBox(width: LiquidUI.fluid(context, minVal: 16, maxVal: 28)),
-                  _buildNavLink(context, 'Gallery', '/gallery'),
+                  _buildNavLink(context, LanguageService.instance.tr('nav_gallery'), '/gallery'),
                   SizedBox(width: LiquidUI.fluid(context, minVal: 16, maxVal: 28)),
-                  _buildNavLink(context, 'Contact', '/contact'),
+                  _buildNavLink(context, LanguageService.instance.tr('nav_contact'), '/contact'),
                 ],
               ),
             ),
@@ -171,7 +177,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
                   const Icon(Icons.file_download_outlined, size: 14, color: Colors.white),
                   const SizedBox(width: 4),
                   Text(
-                    'Brochure',
+                    LanguageService.instance.tr('btn_brochure'),
                     style: GoogleFonts.outfit(
                       fontSize: 11,
                       fontWeight: FontWeight.bold,
@@ -192,7 +198,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
                 elevation: 2,
               ),
               child: Text(
-                'Quote',
+                LanguageService.instance.tr('btn_quote_short'),
                 style: GoogleFonts.outfit(fontSize: 12, fontWeight: FontWeight.bold),
               ),
             ),
@@ -274,7 +280,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
           ),
           const SizedBox(width: 6),
           Text(
-            'Brochure',
+            LanguageService.instance.tr('btn_brochure'),
             style: TextStyle(
               fontFamily: AppTheme.outfitFont,
               fontWeight: FontWeight.bold,
@@ -309,7 +315,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
         shadowColor: AppColors.secondaryGlow,
       ),
       child: Text(
-        'Request Quote',
+        LanguageService.instance.tr('btn_quote'),
         style: TextStyle(
           fontFamily: AppTheme.outfitFont,
           fontWeight: FontWeight.bold,
@@ -641,35 +647,35 @@ class AppDrawer extends StatelessWidget {
                 children: [
                   _buildDrawerItem(
                     context,
-                    title: 'Home',
+                    title: LanguageService.instance.tr('nav_home'),
                     icon: Icons.home_rounded,
                     routeName: '/',
                     currentRoute: currentRoute,
                   ),
                   _buildDrawerItem(
                     context,
-                    title: 'About Us',
+                    title: LanguageService.instance.tr('nav_about'),
                     icon: Icons.business_rounded,
                     routeName: '/about',
                     currentRoute: currentRoute,
                   ),
                   _buildDrawerItem(
                     context,
-                    title: 'Products Portfolio',
+                    title: LanguageService.instance.tr('nav_products'),
                     icon: Icons.grid_view_rounded,
                     routeName: '/products',
                     currentRoute: currentRoute,
                   ),
                   _buildDrawerItem(
                     context,
-                    title: 'Facility Gallery',
+                    title: LanguageService.instance.tr('nav_gallery'),
                     icon: Icons.photo_library_rounded,
                     routeName: '/gallery',
                     currentRoute: currentRoute,
                   ),
                   _buildDrawerItem(
                     context,
-                    title: 'Contact & Export Inquiry',
+                    title: LanguageService.instance.tr('nav_contact'),
                     icon: Icons.contact_mail_rounded,
                     routeName: '/contact',
                     currentRoute: currentRoute,
@@ -724,7 +730,7 @@ class AppDrawer extends StatelessWidget {
                       onPressed: AppHeader.openBrochure,
                       icon: const Icon(Icons.picture_as_pdf_rounded, size: 16, color: AppColors.primary),
                       label: Text(
-                        'Download Brochure (PDF)',
+                        LanguageService.instance.tr('btn_brochure'),
                         style: GoogleFonts.outfit(
                           fontWeight: FontWeight.bold,
                           fontSize: 13,
@@ -762,7 +768,7 @@ class AppDrawer extends StatelessWidget {
                           const Icon(Icons.send_rounded, size: 16),
                           const SizedBox(width: 8),
                           Text(
-                            'Request Export Quote',
+                            LanguageService.instance.tr('btn_quote'),
                             style: GoogleFonts.outfit(
                               fontWeight: FontWeight.bold,
                               fontSize: 14,
