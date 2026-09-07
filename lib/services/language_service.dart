@@ -1,4 +1,9 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'dart:js_interop' as js;
+
+@js.JS('triggerGoogleTranslate')
+external void _triggerGoogleTranslate(js.JSString langCode);
 
 class LanguageItem {
   final String code;
@@ -35,5 +40,14 @@ class LanguageService {
 
   void setLanguage(LanguageItem language) {
     currentLanguage.value = language;
+    if (kIsWeb) {
+      try {
+        _triggerGoogleTranslate(language.code.toJS);
+      } catch (e) {
+        debugPrint('Google Translate trigger error: $e');
+      }
+    }
   }
 }
+
+
