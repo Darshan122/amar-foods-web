@@ -6,6 +6,7 @@ import '../services/firebase_service.dart';
 import '../utils/liquid_ui.dart';
 import '../widgets/app_header.dart';
 import '../widgets/app_footer.dart';
+import '../widgets/whatsapp_floating_button.dart';
 import '../services/language_service.dart';
 
 class ContactPage extends StatefulWidget {
@@ -151,6 +152,7 @@ class _ContactPageState extends State<ContactPage> {
       backgroundColor: AppColors.background,
       appBar: const AppHeader(),
       endDrawer: const AppDrawer(),
+      floatingActionButton: const WhatsAppFloatingButton(),
       body: SingleChildScrollView(
         child: Column(
           children: [

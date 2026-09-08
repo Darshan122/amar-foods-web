@@ -7,6 +7,7 @@ import '../widgets/app_header.dart';
 import '../widgets/app_footer.dart';
 import '../widgets/quote_dialog.dart';
 import '../widgets/video_background.dart';
+import '../widgets/whatsapp_floating_button.dart';
 import '../services/language_service.dart';
 
 class HomePage extends StatefulWidget {
@@ -83,6 +84,7 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: AppColors.background,
             appBar: const AppHeader(),
             endDrawer: const AppDrawer(),
+            floatingActionButton: const WhatsAppFloatingButton(),
             body: SingleChildScrollView(
               child: Column(
                 children: [

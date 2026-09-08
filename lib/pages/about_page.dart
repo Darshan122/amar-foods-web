@@ -6,6 +6,7 @@ import '../utils/liquid_ui.dart';
 import '../widgets/app_header.dart';
 import '../widgets/app_footer.dart';
 import '../widgets/quote_dialog.dart';
+import '../widgets/whatsapp_floating_button.dart';
 import '../services/language_service.dart';
 
 class AboutPage extends StatelessWidget {
@@ -26,6 +27,7 @@ class AboutPage extends StatelessWidget {
       backgroundColor: AppColors.background,
       appBar: const AppHeader(),
       endDrawer: const AppDrawer(),
+      floatingActionButton: const WhatsAppFloatingButton(),
       body: SingleChildScrollView(
         child: Column(
           children: [
