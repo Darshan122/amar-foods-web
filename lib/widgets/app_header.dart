@@ -17,7 +17,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
   const AppHeader({super.key});
 
   @override
-  Size get preferredSize => const Size.fromHeight(95.0);
+  Size get preferredSize => const Size.fromHeight(88.0);
 
   static Future<void> openBrochure() async {
     final Uri url = Uri.parse('/amar_foods_brochure.pdf');
@@ -54,10 +54,19 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
         return LayoutBuilder(
           builder: (context, constraints) {
             final bool isMobileHeader = constraints.maxWidth < 960;
-            final double outerMarginH = LiquidUI.fluid(context, minVal: 8, maxVal: 32);
-            final double outerMarginV = LiquidUI.fluid(context, minVal: 6, maxVal: 16);
-            final double innerPaddingH = LiquidUI.fluid(context, minVal: 12, maxVal: 28);
-            final double logoHeight = LiquidUI.fluid(context, minVal: 32, maxVal: 46);
+            final bool isCompactMobile = constraints.maxWidth < 680;
+            final double outerMarginH = isCompactMobile
+                ? 10.0
+                : LiquidUI.fluid(context, minVal: 12, maxVal: 32);
+            final double outerMarginV = isCompactMobile
+                ? 6.0
+                : LiquidUI.fluid(context, minVal: 8, maxVal: 16);
+            final double innerPaddingH = isCompactMobile
+                ? 10.0
+                : LiquidUI.fluid(context, minVal: 14, maxVal: 28);
+            final double logoHeight = isCompactMobile
+                ? 34.0
+                : LiquidUI.fluid(context, minVal: 36, maxVal: 46);
 
             return Container(
               color: Colors.transparent, // outer breathing room around the floating pill
@@ -69,14 +78,19 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
                   border: Border.all(color: AppColors.borderGlass, width: 1.5),
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.primaryGlow.withOpacity(0.08),
+                      color: AppColors.primaryGlow.withValues(alpha: 0.08),
                       blurRadius: 20,
                       offset: const Offset(0, 6),
                     ),
                   ],
                 ),
-                padding: EdgeInsets.symmetric(horizontal: innerPaddingH, vertical: 8),
-                child: isMobileHeader ? _buildMobileRow(context, logoHeight) : _buildDesktopRow(context, logoHeight),
+                padding: EdgeInsets.symmetric(
+                  horizontal: innerPaddingH,
+                  vertical: isCompactMobile ? 6 : 8,
+                ),
+                child: isMobileHeader
+                    ? _buildMobileRow(context, logoHeight, constraints)
+                    : _buildDesktopRow(context, logoHeight),
               ),
             );
           },
@@ -139,80 +153,142 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  // Mobile: logo left, language button, brochure button, quick quote button & hamburger menu right
-  Widget _buildMobileRow(BuildContext context, double logoHeight) {
+  // Mobile / Tablet Row: perfectly responsive without horizontal overflow
+  Widget _buildMobileRow(BuildContext context, double logoHeight, BoxConstraints constraints) {
+    final double availWidth = constraints.maxWidth;
+    final bool isTablet = availWidth >= 680;
+    final bool showFullQuote = availWidth >= 370;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        _buildLogo(context, logoHeight),
+        Flexible(
+          child: _buildLogo(context, logoHeight),
+        ),
+        const SizedBox(width: 6),
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             const LanguageSelectorButton(isMobile: true),
+            if (isTablet) ...[
+              const SizedBox(width: 8),
+              _buildBrochureButtonMobile(context),
+            ],
             const SizedBox(width: 6),
-            ElevatedButton(
-              onPressed: openBrochure,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                elevation: 2,
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(Icons.file_download_outlined, size: 14, color: Colors.white),
-                  const SizedBox(width: 4),
-                  Text(
-                    LanguageService.instance.tr('btn_brochure'),
-                    style: GoogleFonts.outfit(
-                      fontSize: 11,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            _buildQuoteButtonMobile(context, showFullText: showFullQuote),
             const SizedBox(width: 6),
-            ElevatedButton(
-              onPressed: () => _showQuoteDialog(context),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.secondary,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                elevation: 2,
-              ),
-              child: Text(
-                LanguageService.instance.tr('btn_quote_short'),
-                style: GoogleFonts.outfit(fontSize: 12, fontWeight: FontWeight.bold),
-              ),
-            ),
-            const SizedBox(width: 6),
-            Builder(
-              builder: (context) {
-                return Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.08),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: AppColors.primary.withOpacity(0.15)),
-                  ),
-                  child: IconButton(
-                    icon: const Icon(Icons.menu_rounded, color: AppColors.primary, size: 24),
-                    onPressed: () => Scaffold.of(context).openEndDrawer(),
-                    tooltip: 'Open Mobile Menu',
-                  ),
-                );
-              },
-            ),
+            _buildMobileMenuButton(context),
           ],
         ),
       ],
     );
   }
+
+  Widget _buildQuoteButtonMobile(BuildContext context, {required bool showFullText}) {
+    return ElevatedButton(
+      onPressed: () => _showQuoteDialog(context),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: AppColors.secondary,
+        foregroundColor: Colors.white,
+        padding: EdgeInsets.symmetric(
+          horizontal: showFullText ? 11 : 8,
+          vertical: 7,
+        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        elevation: 2,
+        shadowColor: AppColors.secondaryGlow,
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.bolt_rounded, size: 14, color: Colors.white),
+          if (showFullText) ...[
+            const SizedBox(width: 3),
+            Text(
+              LanguageService.instance.tr('btn_quote_short'),
+              style: GoogleFonts.outfit(
+                fontSize: 11.5,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBrochureButtonMobile(BuildContext context) {
+    return ElevatedButton(
+      onPressed: openBrochure,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: AppColors.primary,
+        foregroundColor: Colors.white,
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        elevation: 2,
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.file_download_outlined, size: 14, color: Colors.white),
+          const SizedBox(width: 4),
+          Text(
+            LanguageService.instance.tr('btn_brochure'),
+            style: GoogleFonts.outfit(
+              fontSize: 11,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMobileMenuButton(BuildContext context) {
+    return Builder(
+      builder: (context) {
+        return Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () => Scaffold.of(context).openEndDrawer(),
+            borderRadius: BorderRadius.circular(12),
+            splashColor: AppColors.primary.withValues(alpha: 0.15),
+            highlightColor: AppColors.primary.withValues(alpha: 0.08),
+            child: Container(
+              width: 38,
+              height: 38,
+              decoration: BoxDecoration(
+                color: AppColors.primary.withValues(alpha: 0.08),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: AppColors.primary.withValues(alpha: 0.22),
+                  width: 1.2,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.primary.withValues(alpha: 0.05),
+                    blurRadius: 6,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: const Center(
+                child: Icon(
+                  Icons.menu_rounded,
+                  color: AppColors.primary,
+                  size: 22,
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
 
   Widget _buildLogo(BuildContext context, double logoHeight) {
     return GestureDetector(
@@ -506,11 +582,12 @@ class AppDrawer extends StatelessWidget {
             // Drawer Navigation Links
             Expanded(
               child: ListView(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                 children: [
                   _buildDrawerItem(
                     context,
                     title: LanguageService.instance.tr('nav_home'),
+                    subtitle: 'Amar Foods Mahuva',
                     icon: Icons.home_rounded,
                     routeName: '/',
                     currentRoute: currentRoute,
@@ -518,20 +595,23 @@ class AppDrawer extends StatelessWidget {
                   _buildDrawerItem(
                     context,
                     title: LanguageService.instance.tr('nav_about'),
-                    icon: Icons.business_rounded,
+                    subtitle: 'Plant & Heritage',
+                    icon: Icons.factory_rounded,
                     routeName: '/about',
                     currentRoute: currentRoute,
                   ),
                   _buildDrawerItem(
                     context,
                     title: LanguageService.instance.tr('nav_products'),
-                    icon: Icons.grid_view_rounded,
+                    subtitle: 'Dehydrated Onion & Garlic',
+                    icon: Icons.eco_rounded,
                     routeName: '/products',
                     currentRoute: currentRoute,
                   ),
                   _buildDrawerItem(
                     context,
                     title: LanguageService.instance.tr('nav_gallery'),
+                    subtitle: 'Facility & Processing',
                     icon: Icons.photo_library_rounded,
                     routeName: '/gallery',
                     currentRoute: currentRoute,
@@ -539,7 +619,8 @@ class AppDrawer extends StatelessWidget {
                   _buildDrawerItem(
                     context,
                     title: LanguageService.instance.tr('nav_contact'),
-                    icon: Icons.contact_mail_rounded,
+                    subtitle: 'Direct Export Desk',
+                    icon: Icons.support_agent_rounded,
                     routeName: '/contact',
                     currentRoute: currentRoute,
                   ),
@@ -549,16 +630,17 @@ class AppDrawer extends StatelessWidget {
 
             // Footer Section inside Drawer
             Container(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 20),
               decoration: BoxDecoration(
                 color: const Color(0xFFFAFAFD),
                 border: Border(top: BorderSide(color: AppColors.border)),
               ),
               child: Column(
                 children: [
+                  // Language Selector
                   SizedBox(
                     width: double.infinity,
-                    height: 44,
+                    height: 42,
                     child: OutlinedButton.icon(
                       onPressed: () {
                         showDialog(
@@ -567,7 +649,7 @@ class AppDrawer extends StatelessWidget {
                           builder: (context) => const LanguageDialog(),
                         );
                       },
-                      icon: const Icon(Icons.language_rounded, size: 16, color: AppColors.primary),
+                      icon: const Icon(Icons.translate_rounded, size: 17, color: AppColors.primary),
                       label: Text(
                         'Language / भाषा / لغة',
                         style: GoogleFonts.outfit(
@@ -579,19 +661,22 @@ class AppDrawer extends StatelessWidget {
                       style: OutlinedButton.styleFrom(
                         foregroundColor: AppColors.primary,
                         side: BorderSide(color: AppColors.primary.withValues(alpha: 0.3), width: 1.2),
+                        backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
+
+                  // Download Brochure
                   SizedBox(
                     width: double.infinity,
-                    height: 46,
+                    height: 44,
                     child: OutlinedButton.icon(
                       onPressed: AppHeader.openBrochure,
-                      icon: const Icon(Icons.picture_as_pdf_rounded, size: 16, color: AppColors.primary),
+                      icon: const Icon(Icons.picture_as_pdf_rounded, size: 17, color: AppColors.primary),
                       label: Text(
                         LanguageService.instance.tr('btn_brochure'),
                         style: GoogleFonts.outfit(
@@ -602,7 +687,7 @@ class AppDrawer extends StatelessWidget {
                       ),
                       style: OutlinedButton.styleFrom(
                         foregroundColor: AppColors.primary,
-                        side: BorderSide(color: AppColors.primary.withValues(alpha: 0.4), width: 1.5),
+                        side: BorderSide(color: AppColors.primary.withValues(alpha: 0.35), width: 1.3),
                         backgroundColor: AppColors.primary.withValues(alpha: 0.05),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
@@ -610,12 +695,22 @@ class AppDrawer extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
+
+                  // Request Quote
                   SizedBox(
                     width: double.infinity,
-                    height: 48,
-                    child: ElevatedButton(
+                    height: 46,
+                    child: ElevatedButton.icon(
                       onPressed: () => _showQuoteDialog(context),
+                      icon: const Icon(Icons.request_quote_rounded, size: 18),
+                      label: Text(
+                        LanguageService.instance.tr('btn_quote'),
+                        style: GoogleFonts.outfit(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13.5,
+                        ),
+                      ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.secondary,
                         foregroundColor: Colors.white,
@@ -625,29 +720,76 @@ class AppDrawer extends StatelessWidget {
                         elevation: 3,
                         shadowColor: AppColors.secondaryGlow,
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.send_rounded, size: 16),
-                          const SizedBox(width: 8),
-                          Text(
-                            LanguageService.instance.tr('btn_quote'),
-                            style: GoogleFonts.outfit(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
                     ),
                   ),
                   const SizedBox(height: 12),
-                  Text(
-                    '📍 Mahuva - 364290, Gujarat, India',
-                    style: GoogleFonts.inter(
-                      fontSize: 11,
-                      color: AppColors.textSecondary,
-                    ),
+
+                  // Direct Quick Contact Strip (WhatsApp & Phone)
+                  Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton.icon(
+                          onPressed: () => _launchExternal('https://wa.me/917284088737'),
+                          icon: const Icon(Icons.chat_bubble_rounded, size: 14, color: Color(0xFF25D366)),
+                          label: Text(
+                            'WhatsApp',
+                            style: GoogleFonts.outfit(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: const Color(0xFF1E7E34),
+                            ),
+                          ),
+                          style: OutlinedButton.styleFrom(
+                            backgroundColor: const Color(0xFFE8F8EE),
+                            side: const BorderSide(color: Color(0xFF8CE3A7), width: 1),
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: OutlinedButton.icon(
+                          onPressed: () => _launchExternal('tel:+917284088737'),
+                          icon: const Icon(Icons.phone_in_talk_rounded, size: 14, color: AppColors.primary),
+                          label: Text(
+                            'Call Direct',
+                            style: GoogleFonts.outfit(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.primary,
+                            ),
+                          ),
+                          style: OutlinedButton.styleFrom(
+                            backgroundColor: AppColors.primaryLight,
+                            side: BorderSide(color: AppColors.primary.withValues(alpha: 0.25), width: 1),
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+
+                  // Location Footer
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.location_on_rounded, size: 13, color: AppColors.secondary),
+                      const SizedBox(width: 4),
+                      Flexible(
+                        child: Text(
+                          'Mahuva - 364290, Gujarat, India',
+                          style: GoogleFonts.inter(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.textSecondary,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -658,9 +800,19 @@ class AppDrawer extends StatelessWidget {
     );
   }
 
+  static Future<void> _launchExternal(String urlStr) async {
+    final Uri url = Uri.parse(urlStr);
+    try {
+      if (await canLaunchUrl(url)) {
+        await launchUrl(url, mode: LaunchMode.externalApplication);
+      }
+    } catch (_) {}
+  }
+
   Widget _buildDrawerItem(
     BuildContext context, {
     required String title,
+    required String subtitle,
     required IconData icon,
     required String routeName,
     required String? currentRoute,
@@ -672,18 +824,20 @@ class AppDrawer extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: ListTile(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
           tileColor: isSelected ? AppColors.primaryLight : Colors.transparent,
           leading: Container(
-            padding: const EdgeInsets.all(8),
+            width: 38,
+            height: 38,
             decoration: BoxDecoration(
-              color: isSelected ? AppColors.primary : AppColors.primary.withOpacity(0.08),
+              color: isSelected ? AppColors.primary : AppColors.primary.withValues(alpha: 0.08),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Icon(
               icon,
               color: isSelected ? Colors.white : AppColors.primary,
-              size: 18,
+              size: 20,
             ),
           ),
           title: Text(
@@ -691,7 +845,14 @@ class AppDrawer extends StatelessWidget {
             style: GoogleFonts.outfit(
               fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
               color: isSelected ? AppColors.primary : AppColors.textPrimary,
-              fontSize: 14,
+              fontSize: 14.5,
+            ),
+          ),
+          subtitle: Text(
+            subtitle,
+            style: GoogleFonts.inter(
+              fontSize: 11,
+              color: isSelected ? AppColors.primary.withValues(alpha: 0.8) : AppColors.textSecondary,
             ),
           ),
           trailing: isSelected
@@ -709,4 +870,5 @@ class AppDrawer extends StatelessWidget {
       ),
     );
   }
+
 }
