@@ -53,7 +53,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
       builder: (context, _, child) {
         return LayoutBuilder(
           builder: (context, constraints) {
-            final bool isMobileHeader = constraints.maxWidth < 960;
+            final bool isMobileHeader = constraints.maxWidth < 1040;
             final bool isCompactMobile = constraints.maxWidth < 680;
             final double outerMarginH = isCompactMobile
                 ? 10.0
@@ -99,20 +99,14 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  // Desktop: logo | nav (true-centered) | CTA — three equal Expanded slots so the
-  // nav is centered on the header itself, not just "space between" the other two.
+  // Desktop: logo | nav (flex-centered) | CTA — cleanly bounded without right-side clipping
   Widget _buildDesktopRow(BuildContext context, double logoHeight) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        _buildLogo(context, logoHeight),
+        const SizedBox(width: 14),
         Expanded(
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: _buildLogo(context, logoHeight),
-          ),
-        ),
-        Expanded(
-          flex: 2,
           child: Center(
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -121,33 +115,30 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   _buildNavLink(context, LanguageService.instance.tr('nav_home'), '/'),
-                  SizedBox(width: LiquidUI.fluid(context, minVal: 16, maxVal: 28)),
+                  SizedBox(width: LiquidUI.fluid(context, minVal: 12, maxVal: 22)),
                   _buildNavLink(context, LanguageService.instance.tr('nav_about'), '/about'),
-                  SizedBox(width: LiquidUI.fluid(context, minVal: 16, maxVal: 28)),
+                  SizedBox(width: LiquidUI.fluid(context, minVal: 12, maxVal: 22)),
                   _buildNavLink(context, LanguageService.instance.tr('nav_products'), '/products'),
-                  SizedBox(width: LiquidUI.fluid(context, minVal: 16, maxVal: 28)),
+                  SizedBox(width: LiquidUI.fluid(context, minVal: 12, maxVal: 22)),
                   _buildNavLink(context, LanguageService.instance.tr('nav_gallery'), '/gallery'),
-                  SizedBox(width: LiquidUI.fluid(context, minVal: 16, maxVal: 28)),
+                  SizedBox(width: LiquidUI.fluid(context, minVal: 12, maxVal: 22)),
                   _buildNavLink(context, LanguageService.instance.tr('nav_contact'), '/contact'),
                 ],
               ),
             ),
           ),
         ),
-        Expanded(
-          child: Align(
-            alignment: Alignment.centerRight,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const LanguageSelectorButton(isMobile: false),
-                const SizedBox(width: 8),
-                _buildBrochureButton(context),
-                const SizedBox(width: 8),
-                _buildQuoteButton(context),
-              ],
-            ),
-          ),
+        const SizedBox(width: 14),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const LanguageSelectorButton(isMobile: false),
+            const SizedBox(width: 8),
+            _buildBrochureButton(context),
+            const SizedBox(width: 8),
+            _buildQuoteButton(context),
+          ],
         ),
       ],
     );
@@ -322,10 +313,10 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
         foregroundColor: Colors.white,
         padding: LiquidUI.fluidPaddingSymmetric(
           context,
-          minHorizontal: 16,
-          maxHorizontal: 22,
-          minVertical: 12,
-          maxVertical: 16,
+          minHorizontal: 12,
+          maxHorizontal: 18,
+          minVertical: 10,
+          maxVertical: 14,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30), // 30px radius, matching header & quote button
@@ -340,16 +331,16 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
         children: [
           const Icon(
             Icons.file_download_outlined,
-            size: 18,
+            size: 16,
             color: Colors.white,
           ),
-          const SizedBox(width: 6),
+          const SizedBox(width: 5),
           Text(
             LanguageService.instance.tr('btn_brochure'),
             style: TextStyle(
               fontFamily: AppTheme.outfitFont,
               fontWeight: FontWeight.bold,
-              fontSize: LiquidUI.fluid(context, minVal: 13, maxVal: 15),
+              fontSize: LiquidUI.fluid(context, minVal: 12.5, maxVal: 14),
               color: Colors.white,
               letterSpacing: 0.3,
             ),
@@ -368,10 +359,10 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
         foregroundColor: Colors.white,
         padding: LiquidUI.fluidPaddingSymmetric(
           context,
-          minHorizontal: 20,
-          maxHorizontal: 28,
-          minVertical: 12,
-          maxVertical: 16,
+          minHorizontal: 16,
+          maxHorizontal: 22,
+          minVertical: 10,
+          maxVertical: 14,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30), // 30px radius, matches header
@@ -384,7 +375,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
         style: TextStyle(
           fontFamily: AppTheme.outfitFont,
           fontWeight: FontWeight.bold,
-          fontSize: LiquidUI.fluid(context, minVal: 13, maxVal: 15),
+          fontSize: LiquidUI.fluid(context, minVal: 12.5, maxVal: 14),
           letterSpacing: 0.3,
         ),
       ),
@@ -637,39 +628,6 @@ class AppDrawer extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  // Language Selector
-                  SizedBox(
-                    width: double.infinity,
-                    height: 42,
-                    child: OutlinedButton.icon(
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          barrierDismissible: true,
-                          builder: (context) => const LanguageDialog(),
-                        );
-                      },
-                      icon: const Icon(Icons.translate_rounded, size: 17, color: AppColors.primary),
-                      label: Text(
-                        'Language / भाषा / لغة',
-                        style: GoogleFonts.outfit(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                          color: AppColors.primary,
-                        ),
-                      ),
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: AppColors.primary,
-                        side: BorderSide(color: AppColors.primary.withValues(alpha: 0.3), width: 1.2),
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-
                   // Download Brochure
                   SizedBox(
                     width: double.infinity,
