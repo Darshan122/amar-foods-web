@@ -1595,64 +1595,147 @@ class _EnquiryPageState extends State<EnquiryPage> {
     VoidCallback? onSubmit,
     bool isSubmitting = false,
   }) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        if (onBack != null)
-          OutlinedButton.icon(
-            onPressed: onBack,
-            icon: const Icon(Icons.arrow_back_rounded, size: 18),
-            label: Text('Back', style: GoogleFonts.outfit(fontWeight: FontWeight.w600)),
-            style: OutlinedButton.styleFrom(
-              foregroundColor: const Color(0xFF555B66),
-              side: const BorderSide(color: AppColors.border),
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-            ),
-          )
-        else
-          const SizedBox(),
-        if (onNext != null)
-          ElevatedButton.icon(
-            onPressed: onNext,
-            icon: const Icon(Icons.arrow_forward_rounded, size: 18),
-            label: Text('Next Step →', style: GoogleFonts.outfit(fontWeight: FontWeight.bold)),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              foregroundColor: Colors.white,
-              elevation: 4,
-              shadowColor: AppColors.primary.withOpacity(0.4),
-              padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 14),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-            ),
-          )
-        else if (onSubmit != null)
-          ElevatedButton(
-            onPressed: isSubmitting ? null : onSubmit,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.secondary,
-              foregroundColor: Colors.white,
-              elevation: 6,
-              shadowColor: AppColors.secondary.withOpacity(0.4),
-              padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 16),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-            ),
-            child: isSubmitting
-                ? const SizedBox(
-                    width: 22,
-                    height: 22,
-                    child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5),
-                  )
-                : Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text('Submit Enquiry', style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 15)),
-                      const SizedBox(width: 8),
-                      const Icon(Icons.send_rounded, size: 18),
-                    ],
+    return Container(
+      padding: const EdgeInsets.only(top: 24),
+      decoration: const BoxDecoration(
+        border: Border(top: BorderSide(color: Color(0xFFEEEEF2), width: 1.2)),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          if (onBack != null)
+            OutlinedButton(
+              onPressed: onBack,
+              style: OutlinedButton.styleFrom(
+                foregroundColor: const Color(0xFF4A5060),
+                side: const BorderSide(color: Color(0xFFD0D5DD), width: 1.5),
+                backgroundColor: Colors.white,
+                elevation: 0,
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.arrow_back_rounded, size: 18, color: Color(0xFF4A5060)),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Back',
+                    style: GoogleFonts.outfit(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14,
+                      color: const Color(0xFF4A5060),
+                    ),
                   ),
-          ),
-      ],
+                ],
+              ),
+            )
+          else
+            const SizedBox(),
+          if (onNext != null)
+            DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: AppColors.primaryGradient,
+                borderRadius: BorderRadius.circular(30),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.primary.withValues(alpha: 0.35),
+                    blurRadius: 14,
+                    offset: const Offset(0, 5),
+                  ),
+                ],
+              ),
+              child: ElevatedButton(
+                onPressed: onNext,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  shadowColor: Colors.transparent,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 14),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Next Step',
+                      style: GoogleFonts.outfit(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14.5,
+                        letterSpacing: 0.3,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.22),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(Icons.arrow_forward_rounded, size: 15, color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          else if (onSubmit != null)
+            DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [Color(0xFF009846), Color(0xFF006B31)],
+                ),
+                borderRadius: BorderRadius.circular(30),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFF009846).withValues(alpha: 0.4),
+                    blurRadius: 16,
+                    offset: const Offset(0, 6),
+                  ),
+                ],
+              ),
+              child: ElevatedButton(
+                onPressed: isSubmitting ? null : onSubmit,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  shadowColor: Colors.transparent,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 15),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                ),
+                child: isSubmitting
+                    ? const SizedBox(
+                        width: 22,
+                        height: 22,
+                        child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5),
+                      )
+                    : Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'Submit Enquiry',
+                            style: GoogleFonts.outfit(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                              letterSpacing: 0.4,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Container(
+                            padding: const EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withValues(alpha: 0.25),
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(Icons.send_rounded, size: 15, color: Colors.white),
+                          ),
+                        ],
+                      ),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }
