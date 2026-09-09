@@ -198,6 +198,39 @@ class _QuoteDialogState extends State<QuoteDialog> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Banner to open full 5-Step Export Wizard
+          InkWell(
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.pushNamed(context, '/enquiry');
+            },
+            borderRadius: BorderRadius.circular(12),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+              margin: const EdgeInsets.only(bottom: 16),
+              decoration: BoxDecoration(
+                color: const Color(0xFFF0F7FF),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: const Color(0xFFBCD8FF)),
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.auto_awesome_rounded, color: AppColors.primary, size: 20),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      'Looking for Bulk Export FOB/CIF Quote with Incoterms? Open 5-Step Wizard →',
+                      style: GoogleFonts.outfit(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xFF0F325E),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
           // Full Name Field
           TextFormField(
             controller: _nameController,
