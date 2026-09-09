@@ -66,7 +66,7 @@ class AppFooter extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 40),
-              Divider(color: Colors.white.withOpacity(0.1), height: 1, thickness: 1),
+              Divider(color: Colors.white.withValues(alpha: 0.1), height: 1, thickness: 1),
               const SizedBox(height: 24),
               Wrap(
                 alignment: WrapAlignment.spaceBetween,
@@ -155,9 +155,9 @@ class AppFooter extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
-                color: AppColors.secondary.withOpacity(0.2),
+                color: AppColors.secondary.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: AppColors.secondary.withOpacity(0.4)),
+                border: Border.all(color: AppColors.secondary.withValues(alpha: 0.4)),
               ),
               child: const Text(
                 'EXPORTER',
@@ -305,9 +305,15 @@ class AppFooter extends StatelessWidget {
         const SizedBox(height: 18),
         InkWell(
           onTap: () async {
-            final uri = Uri.parse('https://maps.google.com/maps?q=Amarfoods+mahuva');
-            if (await canLaunchUrl(uri)) {
-              await launchUrl(uri, mode: LaunchMode.externalApplication);
+            final uri = Uri.parse('https://maps.app.goo.gl/h6m7NWwtvi6GykRZ9');
+            try {
+              if (await canLaunchUrl(uri)) {
+                await launchUrl(uri, mode: LaunchMode.externalApplication);
+              } else {
+                await launchUrl(uri, mode: LaunchMode.platformDefault);
+              }
+            } catch (_) {
+              await launchUrl(uri, mode: LaunchMode.platformDefault);
             }
           },
           borderRadius: BorderRadius.circular(8),
@@ -317,7 +323,7 @@ class AppFooter extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(6),
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.2),
+                  color: AppColors.primary.withValues(alpha: 0.2),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(Icons.location_on, color: AppColors.primary, size: 16),
@@ -370,7 +376,7 @@ class AppFooter extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(6),
                 decoration: BoxDecoration(
-                  color: AppColors.secondary.withOpacity(0.2),
+                  color: AppColors.secondary.withValues(alpha: 0.2),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(Icons.phone, color: AppColors.secondary, size: 16),
@@ -402,7 +408,7 @@ class AppFooter extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(6),
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.2),
+                  color: AppColors.primary.withValues(alpha: 0.2),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(Icons.email, color: AppColors.primary, size: 16),
@@ -444,9 +450,9 @@ class AppFooter extends StatelessWidget {
           height: 40,
           padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.08),
+            color: Colors.white.withValues(alpha: 0.08),
             shape: BoxShape.circle,
-            border: Border.all(color: Colors.white.withOpacity(0.18), width: 1.2),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.18), width: 1.2),
             boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
