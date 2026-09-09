@@ -1,4 +1,4 @@
-﻿# robots.txt for Amar Foods (https://amarfoods.in/)
+# robots.txt for Amar Foods (https://amarfoods.in/)
 User-agent: *
 Allow: /
 Allow: /about
