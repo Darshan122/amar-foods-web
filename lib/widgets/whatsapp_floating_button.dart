@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../constants/app_images.dart';
-import '../services/language_service.dart';
 
 class WhatsAppFloatingButton extends StatefulWidget {
   const WhatsAppFloatingButton({super.key});

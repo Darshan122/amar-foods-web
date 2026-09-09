@@ -44,7 +44,15 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- 6. Official Product Export Brochure PDF -->
+  <!-- 6. B2B Product Enquiry & Bulk Quotation Page -->
+  <url>
+    <loc>https://amarfoods.in/enquiry</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- 7. Official Product Export Brochure PDF -->
   <url>
     <loc>https://amarfoods.in/amar_foods_brochure.pdf</loc>
     <lastmod>2026-09-07</lastmod>

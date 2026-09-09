@@ -6,7 +6,6 @@ import '../constants/app_images.dart';
 import '../theme/app_theme.dart';
 import '../utils/liquid_ui.dart';
 import 'language_selector.dart';
-import 'quote_dialog.dart';
 import '../services/language_service.dart';
 
 /// Product catalog shown in the header dropdown & mobile drawer.
@@ -40,10 +39,9 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
   }
 
   void _showQuoteDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) => const QuoteDialog(),
-    );
+    final String? currentRoute = ModalRoute.of(context)?.settings.name;
+    if (currentRoute == '/enquiry' || currentRoute == '/quote') return;
+    Navigator.pushNamed(context, '/enquiry');
   }
 
   @override
@@ -468,10 +466,9 @@ class AppDrawer extends StatelessWidget {
 
   void _showQuoteDialog(BuildContext context) {
     Navigator.of(context).pop();
-    showDialog(
-      context: context,
-      builder: (BuildContext context) => const QuoteDialog(),
-    );
+    final String? currentRoute = ModalRoute.of(context)?.settings.name;
+    if (currentRoute == '/enquiry' || currentRoute == '/quote') return;
+    Navigator.pushNamed(context, '/enquiry');
   }
 
   @override
