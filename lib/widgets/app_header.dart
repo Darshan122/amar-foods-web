@@ -6,6 +6,7 @@ import '../constants/app_images.dart';
 import '../theme/app_theme.dart';
 import '../utils/liquid_ui.dart';
 import 'language_selector.dart';
+import 'brochure_dialog.dart';
 import '../services/language_service.dart';
 
 /// Product catalog shown in the header dropdown & mobile drawer.
@@ -18,17 +19,8 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(88.0);
 
-  static Future<void> openBrochure() async {
-    final Uri url = Uri.parse('/amar_foods_brochure.pdf');
-    try {
-      if (await canLaunchUrl(url)) {
-        await launchUrl(url, mode: LaunchMode.externalApplication);
-      } else {
-        await launchUrl(url, mode: LaunchMode.platformDefault);
-      }
-    } catch (_) {
-      await launchUrl(url, mode: LaunchMode.platformDefault);
-    }
+  static Future<void> openBrochure(BuildContext context) async {
+    await BrochureDialog.show(context);
   }
 
   void _navigateTo(BuildContext context, String routeName) {
@@ -210,7 +202,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
 
   Widget _buildBrochureButtonMobile(BuildContext context) {
     return ElevatedButton(
-      onPressed: openBrochure,
+      onPressed: () => openBrochure(context),
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
@@ -305,7 +297,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
 
   Widget _buildBrochureButton(BuildContext context) {
     return ElevatedButton(
-      onPressed: openBrochure,
+      onPressed: () => openBrochure(context),
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
@@ -630,7 +622,10 @@ class AppDrawer extends StatelessWidget {
                     width: double.infinity,
                     height: 44,
                     child: OutlinedButton.icon(
-                      onPressed: AppHeader.openBrochure,
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        AppHeader.openBrochure(context);
+                      },
                       icon: const Icon(Icons.picture_as_pdf_rounded, size: 17, color: AppColors.primary),
                       label: Text(
                         LanguageService.instance.tr('btn_brochure'),
