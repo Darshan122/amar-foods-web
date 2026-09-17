@@ -12,6 +12,7 @@ class ProductModel {
   final String tag;
   final String tagline;
   final String origin;
+  final String image;
   final List<String> images;
   final String purity;
   final String moisture;
@@ -28,7 +29,8 @@ class ProductModel {
     required this.tag,
     required this.tagline,
     required this.origin,
-    required this.images,
+    required this.image,
+    this.images = const [],
     required this.purity,
     required this.moisture,
     required this.shelfLife,
@@ -56,14 +58,7 @@ class ProductDetailDialog extends StatefulWidget {
 }
 
 class _ProductDetailDialogState extends State<ProductDetailDialog> {
-  late String _activeModalImage;
   int _selectedTab = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _activeModalImage = widget.product.images.first;
-  }
 
   void _showQuoteDialog(BuildContext context) {
     Navigator.of(context).pop();
@@ -81,7 +76,7 @@ class _ProductDetailDialogState extends State<ProductDetailDialog> {
       backgroundColor: const Color(0xFF1E0A19),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(24),
-        side: BorderSide(color: AppColors.primary.withOpacity(0.3), width: 1.5),
+        side: BorderSide(color: AppColors.primary.withValues(alpha:0.3), width: 1.5),
       ),
       insetPadding: EdgeInsets.symmetric(
         horizontal: isMobile ? 10 : 24,
@@ -108,7 +103,7 @@ class _ProductDetailDialogState extends State<ProductDetailDialog> {
                             Container(
                               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                               decoration: BoxDecoration(
-                                color: AppColors.secondary.withOpacity(0.2),
+                                color: AppColors.secondary.withValues(alpha:0.2),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Text(
@@ -162,82 +157,60 @@ class _ProductDetailDialogState extends State<ProductDetailDialog> {
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(16),
                                   child: AspectRatio(
-                                    aspectRatio: 1.3,
+                                    aspectRatio: 1.25,
                                     child: Image.asset(
-                                      _activeModalImage,
+                                      widget.product.image,
                                       fit: BoxFit.cover,
                                       cacheWidth: 800,
                                       errorBuilder: (context, error, stackTrace) {
                                         return Container(
                                           color: const Color(0xFF260B1E),
-                                          child: const Icon(Icons.image_not_supported_rounded, color: Colors.white38, size: 48),
+                                          child: const Center(
+                                            child: Icon(Icons.inventory_2_outlined, color: AppColors.secondary, size: 54),
+                                          ),
                                         );
                                       },
                                     ),
                                   ),
                                 ),
                                 Positioned(
-                                  bottom: 12,
-                                  right: 12,
+                                  top: 12,
+                                  left: 12,
                                   child: Container(
                                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                     decoration: BoxDecoration(
                                       color: Colors.black.withValues(alpha: 0.75),
                                       borderRadius: BorderRadius.circular(16),
                                     ),
-                                    child: Text(
-                                      'Photo ${widget.product.images.indexOf(_activeModalImage) + 1} of ${widget.product.images.length}',
-                                      style: GoogleFonts.outfit(
-                                        color: Colors.white,
-                                        fontSize: 11,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        const Icon(Icons.verified_rounded, color: AppColors.secondary, size: 14),
+                                        const SizedBox(width: 5),
+                                        Text(
+                                          '100% PURE & NATURAL',
+                                          style: GoogleFonts.outfit(
+                                            color: Colors.white,
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.bold,
+                                            letterSpacing: 0.5,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 14),
-
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: widget.product.images.map((img) {
-                                final bool isActive = _activeModalImage == img;
-                                return GestureDetector(
-                                  onTap: () => setState(() => _activeModalImage = img),
-                                  child: Container(
-                                    margin: const EdgeInsets.symmetric(horizontal: 6),
-                                    width: 54,
-                                    height: 54,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(
-                                        color: isActive ? AppColors.secondary : Colors.white24,
-                                        width: isActive ? 2.5 : 1,
-                                      ),
-                                    ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8),
-                                      child: Image.asset(
-                                        img,
-                                        fit: BoxFit.cover,
-                                        cacheWidth: 150,
-                                        errorBuilder: (context, error, stackTrace) => Container(color: Colors.black26),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 16),
 
                             // Export Quality Guarantee Box
                             Container(
                               padding: const EdgeInsets.all(16),
                               decoration: BoxDecoration(
-                                color: AppColors.primary.withOpacity(0.15),
+                                color: AppColors.primary.withValues(alpha:0.15),
                                 borderRadius: BorderRadius.circular(16),
-                                border: Border.all(color: AppColors.primary.withOpacity(0.3)),
+                                border: Border.all(color: AppColors.primary.withValues(alpha:0.3)),
                               ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -264,7 +237,7 @@ class _ProductDetailDialogState extends State<ProductDetailDialog> {
                                     '• Safety: 100% Natural, Pesticide & Pathogen Free\n'
                                     '• Custom Cuts: Kibbled, Minced, Granules, Powder',
                                     style: GoogleFonts.inter(
-                                      color: Colors.white.withOpacity(0.85),
+                                      color: Colors.white.withValues(alpha:0.85),
                                       fontSize: 12,
                                       height: 1.65,
                                     ),
@@ -333,7 +306,7 @@ class _ProductDetailDialogState extends State<ProductDetailDialog> {
                             if (_selectedTab == 0)
                               Text(
                                 widget.product.description,
-                                style: GoogleFonts.inter(color: Colors.white.withOpacity(0.9), fontSize: 14, height: 1.6),
+                                style: GoogleFonts.inter(color: Colors.white.withValues(alpha:0.9), fontSize: 14, height: 1.6),
                               )
                             else if (_selectedTab == 1)
                               Column(
@@ -348,7 +321,7 @@ class _ProductDetailDialogState extends State<ProductDetailDialog> {
                                               Expanded(
                                                 child: Text(
                                                   feat,
-                                                  style: GoogleFonts.inter(color: Colors.white.withOpacity(0.9), fontSize: 14),
+                                                  style: GoogleFonts.inter(color: Colors.white.withValues(alpha:0.9), fontSize: 14),
                                                 ),
                                               ),
                                             ],
@@ -369,7 +342,7 @@ class _ProductDetailDialogState extends State<ProductDetailDialog> {
                                               Expanded(
                                                 child: Text(
                                                   app,
-                                                  style: GoogleFonts.inter(color: Colors.white.withOpacity(0.9), fontSize: 14),
+                                                  style: GoogleFonts.inter(color: Colors.white.withValues(alpha:0.9), fontSize: 14),
                                                 ),
                                               ),
                                             ],
@@ -394,7 +367,7 @@ class _ProductDetailDialogState extends State<ProductDetailDialog> {
                                         padding: const EdgeInsets.all(10),
                                         child: Text(
                                           e.value,
-                                          style: GoogleFonts.inter(color: Colors.white.withOpacity(0.9), fontSize: 13),
+                                          style: GoogleFonts.inter(color: Colors.white.withValues(alpha:0.9), fontSize: 13),
                                         ),
                                       ),
                                     ],
@@ -439,7 +412,7 @@ class _ProductDetailDialogState extends State<ProductDetailDialog> {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.06),
+          color: Colors.white.withValues(alpha:0.06),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: Colors.white12),
         ),

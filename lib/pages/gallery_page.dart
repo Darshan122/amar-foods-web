@@ -503,6 +503,7 @@ class _GalleryPageState extends State<GalleryPage> {
             tag: 'EXPORT GRADE',
             tagline: 'Pure 100% natural dehydrated crop origin Mahuva, Gujarat.',
             origin: 'MAHUVA, GUJARAT, INDIA',
+            image: image,
             images: [image, AppImages.productRedOnionFlakes, AppImages.productGarlicFlakes, AppImages.productWhiteOnionPowder],
             purity: '99.5% min',
             moisture: '≤ 6.0%',
