@@ -100,7 +100,10 @@ class _HomePageState extends State<HomePage> {
                   // 4. "Our Vision" Quote Card Section (Inspired by Vision Reference)
                   _buildVisionQuoteSection(context, isMobile),
 
-                  // 5. Interactive "Our Product Range" Showcase with Category Filter Tabs
+                  // 5. "Applications of Our Products" Section (Food Industry Applications)
+                  _buildProductApplicationsSection(context, isMobile),
+
+                  // 6. Interactive "Our Product Range" Showcase with Category Filter Tabs
                   _buildProductRangeSection(context, isMobile),
 
                   // 6. Global Expos & Industry Events (Trust Showcase)
@@ -839,6 +842,493 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+    );
+  }
+
+  // Section: "Applications of Our Products" (Global Food Industry Applications)
+  Widget _buildProductApplicationsSection(BuildContext context, bool isMobile) {
+    final double paddingV = LiquidUI.fluid(context, minVal: 60, maxVal: 90);
+    final double headingSize = LiquidUI.fluid(context, minVal: 28, maxVal: 38);
+
+    final List<_ApplicationItem> applications = const [
+      _ApplicationItem(
+        id: '01',
+        title: 'Ready-to-Eat Meals',
+        subtitle: 'Gravies, Curries, Frozen & Instant Foods',
+        icon: Icons.dinner_dining_rounded,
+        tags: ['Curries & Gravies', 'Frozen Ready Meals', 'Instant Meal Kits'],
+      ),
+      _ApplicationItem(
+        id: '02',
+        title: 'Instant Noodles / Pasta / Soups',
+        subtitle: 'Seasoning Mix & Dehydrated Vegetable Blends',
+        icon: Icons.ramen_dining_rounded,
+        tags: ['Seasoning Tastemakers', 'Ramen Broths', 'Vegetable Blends'],
+      ),
+      _ApplicationItem(
+        id: '03',
+        title: 'Snacks Industry',
+        subtitle: 'Namkeen, Extruded Snacks & Chips Seasoning',
+        icon: Icons.bakery_dining_rounded,
+        tags: ['Namkeen Seasoning', 'Potato Chips', 'Extruded Puff Mixes'],
+      ),
+      _ApplicationItem(
+        id: '04',
+        title: 'Frozen Foods',
+        subtitle: 'Burger Patties, Kebabs & Cutlets',
+        icon: Icons.ac_unit_rounded,
+        tags: ['Burger Patties', 'Kebabs & Cutlets', 'Frozen Appetizers'],
+      ),
+      _ApplicationItem(
+        id: '05',
+        title: 'Sauce & Ketchup Manufacturers',
+        subtitle: 'Flavor Base for Sauces',
+        icon: Icons.water_drop_rounded,
+        tags: ['Tomato Ketchups', 'BBQ Sauces', 'Salad Dressings & Dips'],
+      ),
+      _ApplicationItem(
+        id: '06',
+        title: 'Meat Processing / Sausages',
+        subtitle: 'Seasoning & Flavor Enhancer',
+        icon: Icons.kebab_dining_rounded,
+        tags: ['Sausage Seasonings', 'Meat Curing', 'Marinade Blends'],
+      ),
+      _ApplicationItem(
+        id: '07',
+        title: 'Spice Blends & Masalas',
+        subtitle: 'Key Ingredient for Onion-Based Powders & Mixes',
+        icon: Icons.grain_rounded,
+        tags: ['Curry Powders', 'Garam Masalas', 'Industrial Spice Mixes'],
+      ),
+      _ApplicationItem(
+        id: '08',
+        title: 'Pet Food Industry',
+        subtitle: 'Limited Use for Flavoring (in Controlled Proportions)',
+        icon: Icons.pets_rounded,
+        tags: ['Controlled Flavoring', 'Animal Feeds', 'Savory Bases'],
+      ),
+    ];
+
+    return Container(
+      width: double.infinity,
+      decoration: const BoxDecoration(
+        color: Color(0xFFF8FAFC),
+        border: Border(
+          top: BorderSide(color: Color(0xFFE2E8F0), width: 1),
+          bottom: BorderSide(color: Color(0xFFE2E8F0), width: 1),
+        ),
+      ),
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: paddingV),
+      child: Center(
+        child: Container(
+          constraints: LiquidUI.pageConstraints(),
+          child: Column(
+            children: [
+              LiquidUI.badgePill(
+                text: 'GLOBAL FOOD INDUSTRY APPLICATIONS',
+                icon: Icons.hub_rounded,
+                backgroundColor: AppColors.primaryLight,
+                textColor: AppColors.primary,
+                fontSize: 11,
+              ),
+              const SizedBox(height: 16),
+              LiquidUI.gradientText(
+                'Some Applications of Our Products',
+                gradient: AppColors.primaryGradient,
+                style: GoogleFonts.playfairDisplay(
+                  fontSize: headingSize,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: -0.5,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 12),
+              Container(
+                constraints: const BoxConstraints(maxWidth: 820),
+                child: Text(
+                  'Amar Foods dehydrated onions, garlic, and specialty vegetable powders are foundational ingredients for multinational food processors, spice blenders, and consumer brands worldwide.',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.inter(
+                    fontSize: 15,
+                    color: AppColors.textSecondary,
+                    height: 1.6,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 48),
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  final double width = constraints.maxWidth;
+                  if (width < 650) {
+                    return Column(
+                      children: applications
+                          .map((item) => Padding(
+                                padding: const EdgeInsets.only(bottom: 16.0),
+                                child: _buildApplicationCard(context, item, isMobile),
+                              ))
+                          .toList(),
+                    );
+                  } else if (width < 1050) {
+                    final double cardWidth = (width - 20) / 2;
+                    return Wrap(
+                      spacing: 20,
+                      runSpacing: 20,
+                      children: applications
+                          .map((item) => SizedBox(
+                                width: cardWidth,
+                                child: _buildApplicationCard(context, item, isMobile),
+                              ))
+                          .toList(),
+                    );
+                  } else {
+                    final double cardWidth = (width - (3 * 20)) / 4;
+                    return Wrap(
+                      spacing: 20,
+                      runSpacing: 20,
+                      children: applications
+                          .map((item) => SizedBox(
+                                width: cardWidth,
+                                child: _buildApplicationCard(context, item, isMobile),
+                              ))
+                          .toList(),
+                    );
+                  }
+                },
+              ),
+              const SizedBox(height: 40),
+              _buildApplicationCtaBanner(context, isMobile),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildApplicationCard(
+    BuildContext context,
+    _ApplicationItem item,
+    bool isMobile,
+  ) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: const Color(0xFFE2E8F0),
+          width: 1.2,
+        ),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x0A0F172A),
+            blurRadius: 20,
+            offset: Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () => _showQuoteDialog(context),
+          borderRadius: BorderRadius.circular(20),
+          hoverColor: AppColors.primary.withOpacity(0.04),
+          child: Padding(
+            padding: const EdgeInsets.all(22),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      width: 48,
+                      height: 48,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            AppColors.primary.withOpacity(0.12),
+                            AppColors.secondary.withOpacity(0.10),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(
+                          color: AppColors.primary.withOpacity(0.20),
+                          width: 1,
+                        ),
+                      ),
+                      child: Icon(
+                        item.icon,
+                        color: AppColors.primary,
+                        size: 24,
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF1F5F9),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: const Color(0xFFE2E8F0)),
+                      ),
+                      child: Text(
+                        item.id,
+                        style: GoogleFonts.outfit(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.primary,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 18),
+                Text(
+                  item.title,
+                  style: GoogleFonts.outfit(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                    color: const Color(0xFF0F172A),
+                    height: 1.25,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  item.subtitle,
+                  style: GoogleFonts.inter(
+                    fontSize: 13.5,
+                    color: const Color(0xFF475569),
+                    height: 1.5,
+                  ),
+                ),
+                const SizedBox(height: 14),
+                Wrap(
+                  spacing: 6,
+                  runSpacing: 6,
+                  children: item.tags
+                      .map((tag) => Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFF8FAFC),
+                              borderRadius: BorderRadius.circular(6),
+                              border: Border.all(color: const Color(0xFFE2E8F0)),
+                            ),
+                            child: Text(
+                              tag,
+                              style: GoogleFonts.inter(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF334155),
+                              ),
+                            ),
+                          ))
+                      .toList(),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildApplicationCtaBanner(BuildContext context, bool isMobile) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(
+        horizontal: isMobile ? 20 : 36,
+        vertical: isMobile ? 24 : 30,
+      ),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color(0xFF2A0822),
+            Color(0xFF160412),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(22),
+        border: Border.all(
+          color: AppColors.secondary.withOpacity(0.4),
+          width: 1.5,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.primaryGlow.withOpacity(0.20),
+            blurRadius: 30,
+            offset: const Offset(0, 10),
+          ),
+        ],
+      ),
+      child: isMobile
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: AppColors.secondary.withOpacity(0.15),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Icon(
+                        Icons.lightbulb_outline_rounded,
+                        color: AppColors.secondary,
+                        size: 22,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        'Reach out to us and Understand more uses of Our Product.',
+                        style: GoogleFonts.outfit(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                          height: 1.3,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  'Looking for tailored mesh sizes, moisture-controlled batches, or specialized applications for your food processing line? Our technical export specialists are here to assist.',
+                  style: GoogleFonts.inter(
+                    fontSize: 13,
+                    color: Colors.white.withOpacity(0.8),
+                    height: 1.5,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Wrap(
+                  spacing: 12,
+                  runSpacing: 12,
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () => _showQuoteDialog(context),
+                      icon: const Icon(Icons.send_rounded, size: 16),
+                      label: const Text('Inquire for Applications'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.secondary,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        textStyle: GoogleFonts.outfit(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                    OutlinedButton.icon(
+                      onPressed: () => WhatsAppFloatingButton.launchWhatsApp(),
+                      icon: const Icon(Icons.chat_rounded, size: 16, color: Color(0xFF25D366)),
+                      label: const Text('Chat on WhatsApp'),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        side: BorderSide(color: Colors.white.withOpacity(0.3)),
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        textStyle: GoogleFonts.outfit(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            )
+          : Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    color: AppColors.secondary.withOpacity(0.15),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: AppColors.secondary.withOpacity(0.3)),
+                  ),
+                  child: const Icon(
+                    Icons.lightbulb_outline_rounded,
+                    color: AppColors.secondary,
+                    size: 30,
+                  ),
+                ),
+                const SizedBox(width: 22),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Reach out to us and Understand more uses of Our Product.',
+                        style: GoogleFonts.outfit(
+                          fontSize: 19,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                          height: 1.3,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        'Looking for tailored mesh sizes, moisture-controlled batches, or specialized applications for your food processing line? Our technical export specialists are here to assist.',
+                        style: GoogleFonts.inter(
+                          fontSize: 13.5,
+                          color: Colors.white.withOpacity(0.82),
+                          height: 1.5,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 24),
+                Row(
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () => _showQuoteDialog(context),
+                      icon: const Icon(Icons.send_rounded, size: 16),
+                      label: const Text('Inquire Now'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.secondary,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        textStyle: GoogleFonts.outfit(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    OutlinedButton.icon(
+                      onPressed: () => WhatsAppFloatingButton.launchWhatsApp(),
+                      icon: const Icon(Icons.chat_rounded, size: 16, color: Color(0xFF25D366)),
+                      label: const Text('WhatsApp Us'),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        side: BorderSide(color: Colors.white.withOpacity(0.35)),
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        textStyle: GoogleFonts.outfit(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
     );
   }
 
@@ -3134,3 +3624,20 @@ class _CertItem {
     required this.desc,
   });
 }
+
+class _ApplicationItem {
+  final String id;
+  final String title;
+  final String subtitle;
+  final IconData icon;
+  final List<String> tags;
+
+  const _ApplicationItem({
+    required this.id,
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+    required this.tags,
+  });
+}
+
