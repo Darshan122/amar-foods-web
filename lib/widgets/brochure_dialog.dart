@@ -34,14 +34,43 @@ class _BrochureDialogState extends State<BrochureDialog> {
   bool _isSubmitting = false;
   bool _isSubmitted = false;
 
+  bool get _isFormValid {
+    final name = _nameController.text.trim();
+    final company = _companyController.text.trim();
+    final email = _emailController.text.trim();
+    final phone = _phoneController.text.trim();
+    final country = _selectedCountry?.trim() ?? '';
+
+    return name.isNotEmpty &&
+        company.isNotEmpty &&
+        email.isNotEmpty &&
+        email.contains('@') &&
+        email.contains('.') &&
+        phone.isNotEmpty &&
+        phone.length >= 6 &&
+        country.isNotEmpty;
+  }
+
+  void _onFieldChanged() {
+    if (mounted) setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
+    _nameController.addListener(_onFieldChanged);
+    _companyController.addListener(_onFieldChanged);
+    _emailController.addListener(_onFieldChanged);
+    _phoneController.addListener(_onFieldChanged);
     _loadCountries();
   }
 
   @override
   void dispose() {
+    _nameController.removeListener(_onFieldChanged);
+    _companyController.removeListener(_onFieldChanged);
+    _emailController.removeListener(_onFieldChanged);
+    _phoneController.removeListener(_onFieldChanged);
     _nameController.dispose();
     _companyController.dispose();
     _emailController.dispose();
@@ -55,6 +84,12 @@ class _BrochureDialogState extends State<BrochureDialog> {
       setState(() {
         _countries = list;
         _isLoadingCountries = false;
+        if (_selectedCountry == null) {
+          final hasIndia = list.any((c) => c.name.toLowerCase() == 'india');
+          if (hasIndia) {
+            _selectedCountry = 'India';
+          }
+        }
       });
     }
   }
@@ -349,55 +384,72 @@ class _BrochureDialogState extends State<BrochureDialog> {
           const SizedBox(height: 22),
 
           // Submit & Download Button
-          SizedBox(
-            width: double.infinity,
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [Color(0xFF009846), Color(0xFF006B31)],
-                ),
-                borderRadius: BorderRadius.circular(30),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0xFF009846).withValues(alpha: 0.35),
-                    blurRadius: 14,
-                    offset: const Offset(0, 5),
-                  ),
-                ],
-              ),
-              child: ElevatedButton(
-                onPressed: _isSubmitting ? null : _submitForm,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.transparent,
-                  shadowColor: Colors.transparent,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                ),
-                child: _isSubmitting
-                    ? const SizedBox(
-                        width: 22,
-                        height: 22,
-                        child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5),
-                      )
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.file_download_outlined, size: 19, color: Colors.white),
-                          const SizedBox(width: 8),
-                          Text(
-                            'Download Brochure PDF',
-                            style: GoogleFonts.outfit(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                              letterSpacing: 0.3,
-                              color: Colors.white,
+          Builder(
+            builder: (context) {
+              final bool canSubmit = _isFormValid && !_isSubmitting;
+              return SizedBox(
+                width: double.infinity,
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 250),
+                  decoration: BoxDecoration(
+                    gradient: canSubmit
+                        ? const LinearGradient(
+                            colors: [Color(0xFF009846), Color(0xFF006B31)],
+                          )
+                        : null,
+                    color: canSubmit ? null : const Color(0xFFE2E8F0),
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: canSubmit
+                        ? [
+                            BoxShadow(
+                              color: const Color(0xFF009846).withValues(alpha: 0.35),
+                              blurRadius: 14,
+                              offset: const Offset(0, 5),
                             ),
+                          ]
+                        : null,
+                  ),
+                  child: ElevatedButton(
+                    onPressed: canSubmit ? _submitForm : null,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      shadowColor: Colors.transparent,
+                      disabledBackgroundColor: Colors.transparent,
+                      disabledForegroundColor: const Color(0xFF94A3B8),
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                    ),
+                    child: _isSubmitting
+                        ? const SizedBox(
+                            width: 22,
+                            height: 22,
+                            child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5),
+                          )
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                canSubmit ? Icons.file_download_outlined : Icons.lock_outline_rounded,
+                                size: 19,
+                                color: canSubmit ? Colors.white : const Color(0xFF94A3B8),
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                canSubmit ? 'Download Brochure PDF' : 'Fill All Details to Download',
+                                style: GoogleFonts.outfit(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                  letterSpacing: 0.3,
+                                  color: canSubmit ? Colors.white : const Color(0xFF94A3B8),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-              ),
-            ),
+                  ),
+                ),
+              );
+            },
           ),
           const SizedBox(height: 10),
           Center(
@@ -466,7 +518,7 @@ class _BrochureDialogState extends State<BrochureDialog> {
                 final phone = _phoneController.text.trim();
                 final name = _nameController.text.trim();
                 final msg = Uri.encodeComponent(
-                  'Hello Amar Foods, I am $name. I just downloaded your product brochure and would like to request live container pricing.',
+                  'Hello Amar Foods, I am $name ($phone). I just downloaded your product brochure and would like to request live container pricing.',
                 );
                 final whatsappUrl = Uri.parse('https://wa.me/917284088737?text=$msg');
                 if (await canLaunchUrl(whatsappUrl)) {
