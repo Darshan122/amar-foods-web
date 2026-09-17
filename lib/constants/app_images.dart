@@ -146,6 +146,25 @@ class AppImages {
   static const String productGarlicPowder4 = '$_basePath/garlic/garlic_poweder/garlic_poweder_4.webp';
   static const String productGarlicPowder5 = '$_basePath/garlic/garlic_poweder/garlic_poweder_5.webp';
 
+  // Vegetable, Botanical, Root, Leafy & Fruit Powders
+  static const String productBlackGarlicPowder = '$_basePath/powders/black_garlic_powder.jpg';
+  static const String productGingerPowder = '$_basePath/powders/ginger_powder.jpg';
+  static const String productBeetrootPowder = '$_basePath/powders/beetroot_powder.jpg';
+  static const String productCarrotPowder = '$_basePath/powders/carrot_powder.jpg';
+  static const String productSweetPotatoPowder = '$_basePath/powders/sweet_potato_powder.jpg';
+  static const String productMoringaPowder = '$_basePath/powders/moringa_powder.jpg';
+  static const String productSpinachPowder = '$_basePath/powders/spinach_powder.jpg';
+  static const String productMintPowder = '$_basePath/powders/mint_powder.jpg';
+  static const String productCorianderLeafPowder = '$_basePath/powders/coriander_leaf_powder.jpg';
+  static const String productCurryLeafPowder = '$_basePath/powders/curry_leaf_powder.jpg';
+  static const String productKasuriMethi = '$_basePath/powders/kasuri_methi.jpg';
+  static const String productGreenChilliPowder = '$_basePath/powders/green_chilli_powder.jpg';
+  static const String productRedChilliPowder = '$_basePath/powders/red_chilli_powder.jpg';
+  static const String productDryMangoPowder = '$_basePath/powders/dry_mango_powder.jpg';
+  static const String productTomatoPowder = '$_basePath/powders/tomato_powder.jpg';
+  static const String productLemonPowder = '$_basePath/powders/lemon_powder.jpg';
+  static const String productTamarindPowder = '$_basePath/powders/tamarind_powder.jpg';
+
   // Founders & Leadership Team portraits
   static const String founderCeo = '$_basePath/founder_ceo.jpg';
   static const String founderOps = '$_basePath/founder_ops.jpg';
