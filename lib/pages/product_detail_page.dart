@@ -147,16 +147,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             // 5. PACKAGING & CONTAINER SHIPPING SPECS
             _buildPackagingShippingSection(context, isMobile, paddingH),
 
-            // 6. EXPORT CERTIFICATIONS & DOCUMENTATION
-            Center(
-              child: Container(
-                constraints: LiquidUI.pageConstraints(),
-                padding: EdgeInsets.symmetric(horizontal: paddingH, vertical: 48),
-                child: _buildDocumentationSection(context, isMobile),
-              ),
-            ),
-
-            // 7. CULINARY & INDUSTRIAL APPLICATIONS
+            // 6. CULINARY & INDUSTRIAL APPLICATIONS
             _buildApplicationsSection(context, isMobile, paddingH),
 
             // 8. DIRECT CONTAINER INQUIRY FORM
@@ -1089,90 +1080,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   }
 
   // ===========================================================================
-  // SECTION 6: EXPORT CERTIFICATIONS & DOCUMENTATION
-  // ===========================================================================
-  Widget _buildDocumentationSection(BuildContext context, bool isMobile) {
-    final docs = [
-      {'title': 'Certificate of Origin (COO)', 'desc': 'Issued by Chamber of Commerce / Govt. of India for preferential tariff import.'},
-      {'title': 'Phytosanitary Certificate', 'desc': 'Official Plant Quarantine inspection certificate verifying freedom from plant pests.'},
-      {'title': 'Certificate of Analysis (COA)', 'desc': 'Full batch lab analysis verifying purity, moisture, microbiological and physical specs.'},
-      {'title': 'Fumigation Certificate', 'desc': 'Professional sea container fumigation certificate (Methyl Bromide / Phosphine gas).'},
-      {'title': 'Third-Party Lab Reports', 'desc': 'SGS / Eurofins / Geo-Chem pre-shipment inspection reports available upon buyer request.'},
-      {'title': 'Halal & Kosher Compliance', 'desc': 'Officially accredited Halal and Kosher certification for religious dietary compliance.'},
-    ];
-
-    return Column(
-      children: [
-        Text(
-          'Export Documentation Provided with Every Shipment',
-          textAlign: TextAlign.center,
-          style: GoogleFonts.playfairDisplay(
-            color: const Color(0xFF0F172A),
-            fontSize: isMobile ? 22 : 30,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          'Hassle-free customs clearance with complete international export compliance papers',
-          textAlign: TextAlign.center,
-          style: GoogleFonts.inter(color: const Color(0xFF64748B), fontSize: 14),
-        ),
-        const SizedBox(height: 32),
-
-        Wrap(
-          spacing: 16,
-          runSpacing: 16,
-          children: docs.map((d) {
-            return SizedBox(
-              width: isMobile ? double.infinity : 360,
-              child: Container(
-                padding: const EdgeInsets.all(18),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: const Color(0xFFE2E8F0)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.03),
-                      blurRadius: 8,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Icon(Icons.assignment_turned_in_outlined, color: AppColors.secondary, size: 22),
-                    const SizedBox(width: 14),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            d['title']!,
-                            style: GoogleFonts.outfit(color: const Color(0xFF0F172A), fontSize: 14, fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            d['desc']!,
-                            style: GoogleFonts.inter(color: const Color(0xFF475569), fontSize: 12.5, height: 1.4),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }).toList(),
-        ),
-      ],
-    );
-  }
-
-  // ===========================================================================
-  // SECTION 7: APPLICATIONS
+  // SECTION 6: APPLICATIONS
   // ===========================================================================
   Widget _buildApplicationsSection(BuildContext context, bool isMobile, double paddingH) {
     return Container(
