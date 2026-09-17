@@ -9,6 +9,7 @@ import '../widgets/app_header.dart';
 import '../widgets/app_footer.dart';
 import '../widgets/quote_dialog.dart';
 import '../widgets/product_detail_dialog.dart';
+import 'product_detail_page.dart';
 import '../widgets/whatsapp_floating_button.dart';
 import '../services/language_service.dart';
 
@@ -40,9 +41,11 @@ class _ProductsPageState extends State<ProductsPage> {
   }
 
   void _showProductDetailModal(BuildContext context, ProductModel product) {
-    showDialog(
-      context: context,
-      builder: (context) => ProductDetailDialog(product: product),
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ProductDetailPage(product: product),
+      ),
     );
   }
 

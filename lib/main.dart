@@ -5,6 +5,8 @@ import 'pages/products_page.dart';
 import 'pages/contact_page.dart';
 import 'pages/gallery_page.dart';
 import 'pages/enquiry_page.dart';
+import 'pages/product_detail_page.dart';
+import 'data/products_data.dart';
 import 'theme/app_theme.dart';
 import 'services/language_service.dart';
 
@@ -43,6 +45,20 @@ class MyApp extends StatelessWidget {
             '/shipments': (context) => const ShipmentsPage(),
             '/enquiry': (context) => const EnquiryPage(),
             '/quote': (context) => const EnquiryPage(),
+          },
+          onGenerateRoute: (settings) {
+            if (settings.name != null && settings.name!.startsWith('/product/')) {
+              final productId = settings.name!.replaceFirst('/product/', '');
+              final product = ProductsData.allProducts.firstWhere(
+                (p) => p.id == productId,
+                orElse: () => ProductsData.allProducts.first,
+              );
+              return MaterialPageRoute(
+                builder: (context) => ProductDetailPage(product: product),
+                settings: settings,
+              );
+            }
+            return null;
           },
         );
       },

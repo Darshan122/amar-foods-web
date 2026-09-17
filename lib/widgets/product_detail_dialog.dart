@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../constants/app_colors.dart';
 import '../utils/liquid_ui.dart';
 import 'quote_dialog.dart';
+import '../pages/product_detail_page.dart';
 import '../services/language_service.dart';
 
 class ProductModel {
@@ -39,6 +40,70 @@ class ProductModel {
     required this.applications,
     required this.specs,
   });
+
+  String get botanicalName {
+    final lower = ('$title $category').toLowerCase();
+    if (lower.contains('garlic')) {
+      return 'Allium sativum L.';
+    } else if (lower.contains('onion')) {
+      return 'Allium cepa L.';
+    } else if (lower.contains('ginger')) {
+      return 'Zingiber officinale';
+    } else if (lower.contains('beetroot')) {
+      return 'Beta vulgaris';
+    } else if (lower.contains('carrot')) {
+      return 'Daucus carota';
+    } else if (lower.contains('sweet potato')) {
+      return 'Ipomoea batatas';
+    } else if (lower.contains('moringa')) {
+      return 'Moringa oleifera';
+    } else if (lower.contains('spinach')) {
+      return 'Spinacia oleracea';
+    } else if (lower.contains('mint') || lower.contains('pudina')) {
+      return 'Mentha spicata';
+    } else if (lower.contains('coriander')) {
+      return 'Coriandrum sativum';
+    } else if (lower.contains('curry leaf')) {
+      return 'Murraya koenigii';
+    } else if (lower.contains('kasuri methi') || lower.contains('fenugreek')) {
+      return 'Trigonella foenum-graecum';
+    } else if (lower.contains('chilli')) {
+      return 'Capsicum annuum';
+    } else if (lower.contains('mango') || lower.contains('amchur')) {
+      return 'Mangifera indica';
+    } else if (lower.contains('tomato')) {
+      return 'Solanum lycopersicum';
+    } else if (lower.contains('lemon')) {
+      return 'Citrus limon';
+    } else if (lower.contains('tamarind')) {
+      return 'Tamarindus indica';
+    }
+    return '100% Pure Agricultural Botanical Produce';
+  }
+
+  String get hsCode {
+    final lower = ('$title $category').toLowerCase();
+    if (lower.contains('onion')) return '0712.20.00';
+    if (lower.contains('garlic')) return '0712.90.20';
+    if (lower.contains('ginger')) return '0910.11.20';
+    if (lower.contains('chilli')) return '0904.22.11';
+    if (lower.contains('moringa') ||
+        lower.contains('spinach') ||
+        lower.contains('mint') ||
+        lower.contains('coriander') ||
+        lower.contains('curry') ||
+        lower.contains('methi')) {
+      return '1211.90.29';
+    }
+    if (lower.contains('beetroot') || lower.contains('carrot') || lower.contains('sweet potato')) {
+      return '0712.90.90';
+    }
+    if (lower.contains('mango') || lower.contains('amchur')) return '0813.40.90';
+    if (lower.contains('tomato')) return '0712.90.90';
+    if (lower.contains('lemon')) return '2009.39.00';
+    if (lower.contains('tamarind')) return '0813.40.10';
+    return '0712.90.90';
+  }
 }
 
 void showProductDetailModal(BuildContext context, ProductModel product) {
@@ -264,22 +329,49 @@ class _ProductDetailDialogState extends State<ProductDetailDialog> {
                             const SizedBox(height: 22),
 
                             // Action CTA Buttons
-                            SizedBox(
-                              width: double.infinity,
-                              child: ElevatedButton.icon(
-                                onPressed: () => _showQuoteDialog(context),
-                                icon: const Icon(Icons.chat_rounded, size: 18),
-                                label: Text(
-                                  LanguageService.instance.tr('dialog_detail_whatsapp'),
-                                  style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 14),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: ElevatedButton.icon(
+                                    onPressed: () => _showQuoteDialog(context),
+                                    icon: const Icon(Icons.chat_rounded, size: 18),
+                                    label: Text(
+                                      LanguageService.instance.tr('dialog_detail_whatsapp'),
+                                      style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 13),
+                                    ),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0xFF25D366),
+                                      foregroundColor: Colors.white,
+                                      padding: const EdgeInsets.symmetric(vertical: 16),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                                    ),
+                                  ),
                                 ),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF25D366),
-                                  foregroundColor: Colors.white,
-                                  padding: const EdgeInsets.symmetric(vertical: 16),
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: OutlinedButton.icon(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (_) => ProductDetailPage(product: widget.product),
+                                        ),
+                                      );
+                                    },
+                                    icon: const Icon(Icons.open_in_new_rounded, size: 18),
+                                    label: Text(
+                                      'Full Specs Page',
+                                      style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 13),
+                                    ),
+                                    style: OutlinedButton.styleFrom(
+                                      side: const BorderSide(color: AppColors.secondary, width: 1.5),
+                                      foregroundColor: AppColors.secondary,
+                                      padding: const EdgeInsets.symmetric(vertical: 16),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
                             const SizedBox(height: 24),
 
