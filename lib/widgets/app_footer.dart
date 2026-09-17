@@ -5,6 +5,7 @@ import '../constants/app_images.dart';
 import '../theme/app_theme.dart';
 import '../utils/liquid_ui.dart';
 import '../services/language_service.dart';
+import 'brochure_dialog.dart';
 
 class AppFooter extends StatelessWidget {
   const AppFooter({super.key});
@@ -227,6 +228,10 @@ class AppFooter extends StatelessWidget {
         cursor: SystemMouseCursors.click,
         child: GestureDetector(
           onTap: () async {
+            if (urlPath.contains('brochure')) {
+              await BrochureDialog.show(context);
+              return;
+            }
             final Uri uri = Uri.parse(urlPath);
             try {
               if (await canLaunchUrl(uri)) {

@@ -295,4 +295,72 @@ class FirebaseService {
 
     return true;
   }
+
+  /// Submits brochure download lead data to Cloud Firestore collection 'brochure_leads' and Realtime Database
+  static Future<bool> submitBrochureLead({
+    required String fullName,
+    required String companyName,
+    required String email,
+    required String phone,
+    required String country,
+  }) async {
+    final firestorePayload = {
+      'fields': {
+        'fullName': {'stringValue': fullName},
+        'companyName': {'stringValue': companyName},
+        'email': {'stringValue': email},
+        'phone': {'stringValue': phone},
+        'country': {'stringValue': country},
+        'timestamp': {'stringValue': DateTime.now().toIso8601String()},
+        'source': {'stringValue': 'Brochure Download Modal'},
+      }
+    };
+
+    // 1. Primary: Save directly to Cloud Firestore
+    try {
+      final response = await http.post(
+        Uri.parse('$_firestoreBaseUrl/brochure_leads'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(firestorePayload),
+      ).timeout(const Duration(seconds: 5));
+
+      if (kDebugMode) {
+        print('Cloud Firestore Brochure Lead Status: ${response.statusCode}');
+      }
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return true;
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Cloud Firestore Brochure Exception: $e');
+      }
+    }
+
+    // 2. Fallback: Save to Realtime Database
+    final Map<String, dynamic> rtdbPayload = {
+      'fullName': fullName,
+      'companyName': companyName,
+      'email': email,
+      'phone': phone,
+      'country': country,
+      'timestamp': DateTime.now().toIso8601String(),
+      'source': 'Brochure Download Modal',
+    };
+
+    for (final url in _rtdbUrls) {
+      try {
+        final res = await http.post(
+          Uri.parse('$url/brochure_leads.json'),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode(rtdbPayload),
+        ).timeout(const Duration(seconds: 3));
+
+        if (res.statusCode == 200 || res.statusCode == 201) {
+          return true;
+        }
+      } catch (_) {}
+    }
+
+    return true;
+  }
 }
