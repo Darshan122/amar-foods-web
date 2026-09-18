@@ -24,13 +24,35 @@ class _ProductsPageState extends State<ProductsPage> {
   String _selectedCategory = 'ALL';
   String _searchQuery = '';
   final TextEditingController _searchController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+  int _currentPage = 1;
+  static const int _pageSize = 12;
 
   final List<ProductModel> _allProducts = ProductsData.allProducts;
 
   @override
   void dispose() {
     _searchController.dispose();
+    _scrollController.dispose();
     super.dispose();
+  }
+
+  void _goToPage(int page, bool isMobile) {
+    setState(() {
+      _currentPage = page;
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients) {
+        final double target = isMobile ? 380.0 : 420.0;
+        if (_scrollController.offset > target) {
+          _scrollController.animateTo(
+            target,
+            duration: const Duration(milliseconds: 400),
+            curve: Curves.easeOutCubic,
+          );
+        }
+      }
+    });
   }
 
   void _showQuoteDialog(BuildContext context) {
@@ -81,12 +103,22 @@ class _ProductsPageState extends State<ProductsPage> {
       return matchesCategory && matchesSearch;
     }).toList();
 
+    final int totalProducts = filteredProducts.length;
+    final int totalPages = (totalProducts / _pageSize).ceil().clamp(1, 999);
+    final int validPage = _currentPage.clamp(1, totalPages);
+    final int startIndex = totalProducts == 0 ? 0 : (validPage - 1) * _pageSize;
+    final int endIndex = (startIndex + _pageSize).clamp(0, totalProducts);
+    final paginatedProducts = totalProducts > 0
+        ? filteredProducts.sublist(startIndex, endIndex)
+        : <ProductModel>[];
+
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: const AppHeader(),
       endDrawer: const AppDrawer(),
       floatingActionButton: const WhatsAppFloatingButton(),
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Column(
           children: [
             // ==================== HERO SECTION ====================
@@ -183,7 +215,10 @@ class _ProductsPageState extends State<ProductsPage> {
                             child: TextField(
                               controller: _searchController,
                               style: GoogleFonts.outfit(color: Colors.white, fontSize: 14),
-                              onChanged: (val) => setState(() => _searchQuery = val.trim().toLowerCase()),
+                              onChanged: (val) => setState(() {
+                                _searchQuery = val.trim().toLowerCase();
+                                _currentPage = 1;
+                              }),
                               decoration: InputDecoration(
                                 hintText: 'Search products (e.g. Cumin, Birista, Sesame, Garlic, Moringa)...',
                                 hintStyle: GoogleFonts.outfit(color: Colors.white60, fontSize: 13),
@@ -193,7 +228,10 @@ class _ProductsPageState extends State<ProductsPage> {
                                         icon: const Icon(Icons.clear_rounded, color: Colors.white70, size: 18),
                                         onPressed: () {
                                           _searchController.clear();
-                                          setState(() => _searchQuery = '');
+                                          setState(() {
+                                            _searchQuery = '';
+                                            _currentPage = 1;
+                                          });
                                         },
                                       )
                                     : null,
@@ -238,40 +276,86 @@ class _ProductsPageState extends State<ProductsPage> {
                   constraints: LiquidUI.pageConstraints(),
                   child: filteredProducts.isEmpty
                       ? _buildEmptyState()
-                      : LayoutBuilder(
-                          builder: (context, constraints) {
-                            if (isMobile) {
-                              return Column(
-                                children: filteredProducts
-                                    .map((product) => Padding(
-                                          padding: const EdgeInsets.only(bottom: 24.0),
-                                          child: _ProductCardWidget(
-                                            product: product,
-                                            onViewDetails: () => _showProductDetailModal(context, product),
-                                            onQuoteRequest: () => _openWhatsAppInquiry(product),
-                                          ),
-                                        ))
-                                    .toList(),
-                              );
-                            } else {
-                              return Wrap(
-                                spacing: 24,
-                                runSpacing: 30,
-                                children: filteredProducts
-                                    .map((product) => SizedBox(
-                                          width: (constraints.maxWidth - 48) / 3 > 320
-                                              ? (constraints.maxWidth - 48) / 3
-                                              : (constraints.maxWidth - 24) / 2,
-                                          child: _ProductCardWidget(
-                                            product: product,
-                                            onViewDetails: () => _showProductDetailModal(context, product),
-                                            onQuoteRequest: () => _openWhatsAppInquiry(product),
-                                          ),
-                                        ))
-                                    .toList(),
-                              );
-                            }
-                          },
+                      : Column(
+                          children: [
+                            // Result stats info bar
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 24.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Showing ${startIndex + 1}–$endIndex of $totalProducts Products',
+                                    style: GoogleFonts.outfit(
+                                      fontSize: isMobile ? 13 : 15,
+                                      fontWeight: FontWeight.w600,
+                                      color: const Color(0xFF475569),
+                                    ),
+                                  ),
+                                  if (totalPages > 1)
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFF1F5F9),
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(color: const Color(0xFFE2E8F0)),
+                                      ),
+                                      child: Text(
+                                        'Page $validPage of $totalPages',
+                                        style: GoogleFonts.outfit(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w700,
+                                          color: AppColors.primary,
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ),
+
+                            // Cards Grid (renders only 12 items for fast load)
+                            LayoutBuilder(
+                              builder: (context, constraints) {
+                                if (isMobile) {
+                                  return Column(
+                                    children: paginatedProducts
+                                        .map((product) => Padding(
+                                              padding: const EdgeInsets.only(bottom: 24.0),
+                                              child: _ProductCardWidget(
+                                                product: product,
+                                                onViewDetails: () => _showProductDetailModal(context, product),
+                                                onQuoteRequest: () => _openWhatsAppInquiry(product),
+                                              ),
+                                            ))
+                                        .toList(),
+                                  );
+                                } else {
+                                  return Wrap(
+                                    spacing: 24,
+                                    runSpacing: 30,
+                                    children: paginatedProducts
+                                        .map((product) => SizedBox(
+                                              width: (constraints.maxWidth - 48) / 3 > 320
+                                                  ? (constraints.maxWidth - 48) / 3
+                                                  : (constraints.maxWidth - 24) / 2,
+                                              child: _ProductCardWidget(
+                                                product: product,
+                                                onViewDetails: () => _showProductDetailModal(context, product),
+                                                onQuoteRequest: () => _openWhatsAppInquiry(product),
+                                              ),
+                                            ))
+                                        .toList(),
+                                  );
+                                }
+                              },
+                            ),
+
+                            // Pagination Navigation Controls
+                            if (totalPages > 1) ...[
+                              const SizedBox(height: 48),
+                              _buildPaginationControls(isMobile, totalPages, validPage),
+                            ],
+                          ],
                         ),
                 ),
               ),
@@ -337,11 +421,155 @@ class _ProductsPageState extends State<ProductsPage> {
     );
   }
 
+  Widget _buildPaginationControls(bool isMobile, int totalPages, int currentPage) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 18),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: const Color(0xFFE2E8F0)),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x080F172A),
+            blurRadius: 18,
+            offset: Offset(0, 6),
+          ),
+        ],
+      ),
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        spacing: 8,
+        runSpacing: 10,
+        children: [
+          // Previous Button
+          _buildPageNavButton(
+            icon: Icons.chevron_left_rounded,
+            label: isMobile ? null : 'Previous',
+            isEnabled: currentPage > 1,
+            onTap: () => _goToPage(currentPage - 1, isMobile),
+          ),
+          const SizedBox(width: 4),
+
+          // Page Numbers
+          ...List.generate(totalPages, (index) {
+            final pageNum = index + 1;
+            final bool isSelected = pageNum == currentPage;
+
+            return InkWell(
+              onTap: () => _goToPage(pageNum, isMobile),
+              borderRadius: BorderRadius.circular(12),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                width: 38,
+                height: 38,
+                decoration: BoxDecoration(
+                  gradient: isSelected ? AppColors.primaryGradient : null,
+                  color: isSelected ? null : const Color(0xFFF8FAFC),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: isSelected ? AppColors.primary : const Color(0xFFE2E8F0),
+                    width: 1.2,
+                  ),
+                  boxShadow: isSelected
+                      ? [
+                          BoxShadow(
+                            color: AppColors.primary.withValues(alpha: 0.28),
+                            blurRadius: 8,
+                            offset: const Offset(0, 3),
+                          ),
+                        ]
+                      : null,
+                ),
+                child: Center(
+                  child: Text(
+                    '$pageNum',
+                    style: GoogleFonts.outfit(
+                      fontSize: 14,
+                      fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
+                      color: isSelected ? Colors.white : const Color(0xFF1E293B),
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }),
+
+          const SizedBox(width: 4),
+          // Next Button
+          _buildPageNavButton(
+            icon: Icons.chevron_right_rounded,
+            label: isMobile ? null : 'Next',
+            isEnabled: currentPage < totalPages,
+            onTap: () => _goToPage(currentPage + 1, isMobile),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPageNavButton({
+    required IconData icon,
+    String? label,
+    required bool isEnabled,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: isEnabled ? onTap : null,
+      borderRadius: BorderRadius.circular(12),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        height: 38,
+        padding: EdgeInsets.symmetric(horizontal: label != null ? 14 : 10),
+        decoration: BoxDecoration(
+          color: isEnabled ? Colors.white : const Color(0xFFF1F5F9),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: isEnabled ? const Color(0xFFCBD5E1) : const Color(0xFFE2E8F0),
+            width: 1.2,
+          ),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (icon == Icons.chevron_left_rounded)
+              Icon(
+                icon,
+                size: 20,
+                color: isEnabled ? const Color(0xFF1E293B) : const Color(0xFF94A3B8),
+              ),
+            if (label != null) ...[
+              const SizedBox(width: 4),
+              Text(
+                label,
+                style: GoogleFonts.outfit(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: isEnabled ? const Color(0xFF1E293B) : const Color(0xFF94A3B8),
+                ),
+              ),
+              const SizedBox(width: 4),
+            ],
+            if (icon == Icons.chevron_right_rounded)
+              Icon(
+                icon,
+                size: 20,
+                color: isEnabled ? const Color(0xFF1E293B) : const Color(0xFF94A3B8),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildFilterPill(String categoryKey, String label) {
     final bool isSelected = _selectedCategory == categoryKey;
 
     return InkWell(
-      onTap: () => setState(() => _selectedCategory = categoryKey),
+      onTap: () => setState(() {
+        _selectedCategory = categoryKey;
+        _currentPage = 1;
+      }),
       borderRadius: BorderRadius.circular(30),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
@@ -454,7 +682,25 @@ class _ProductCardWidget extends StatelessWidget {
                     child: Image.asset(
                       product.image,
                       fit: BoxFit.cover,
-                      cacheWidth: 600,
+                      cacheWidth: 480,
+                      frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                        if (wasSynchronouslyLoaded || frame != null) {
+                          return child;
+                        }
+                        return Container(
+                          color: const Color(0xFFF1F5F9),
+                          child: Center(
+                            child: SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: AppColors.primary.withValues(alpha: 0.35),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
                       errorBuilder: (context, error, stackTrace) {
                         return Container(
                           color: AppColors.primaryLight,
