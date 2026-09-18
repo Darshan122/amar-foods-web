@@ -126,9 +126,9 @@ class ExhibitionsData {
     ),
     ExhibitionItem(
       id: 'fi-india-2026',
-      title: 'Fi India & Hi 2026',
+      title: 'FI India',
       tag: 'Domestic',
-      edition: '20th Anniversary Edition • Food Ingredients',
+      edition: 'Food Ingredients India',
       venue: 'Bombay Exhibition Center (BEC)',
       location: 'Goregaon East, Mumbai, India',
       dates: 'August 26 – 28, 2026',

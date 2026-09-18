@@ -83,6 +83,56 @@ class _ExhibitionsPageState extends State<ExhibitionsPage> {
     }
   }
 
+  void _showImageLightbox(BuildContext context, String imageUrl, String title) {
+    showDialog(
+      context: context,
+      barrierColor: Colors.black87,
+      builder: (context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          insetPadding: const EdgeInsets.all(16),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Container(
+                constraints: const BoxConstraints(maxWidth: 900, maxHeight: 720),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  color: const Color(0xFF140818),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: InteractiveViewer(
+                    maxScale: 3.5,
+                    child: Image.asset(
+                      imageUrl,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 10,
+                right: 10,
+                child: IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: const BoxDecoration(
+                      color: Colors.black87,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(Icons.close_rounded, color: Colors.white, size: 20),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<LanguageItem>(
@@ -437,102 +487,160 @@ class _ExhibitionsPageState extends State<ExhibitionsPage> {
   }
 
   Widget _buildShowcaseImageBlock(ExhibitionItem expo, String activeImageUrl, bool isMobile) {
-    final double imageHeight = isMobile ? 220 : 300;
+    final double imageHeight = isMobile ? 280 : 380;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Main Preview Image with Pill Tag
-        Stack(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 300),
-                child: Image.asset(
-                  activeImageUrl,
-                  key: ValueKey<String>(activeImageUrl),
-                  width: double.infinity,
-                  height: imageHeight,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
+        // Main Preview Image with Pill Tag and Ambient Backdrop (Never cuts off portraits or posters)
+        GestureDetector(
+          onTap: () => _showImageLightbox(context, activeImageUrl, expo.title),
+          child: MouseRegion(
+            cursor: SystemMouseCursors.zoomIn,
+            child: Container(
+              height: imageHeight,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: const Color(0xFF16161D),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: AppColors.borderGlass),
+              ),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  // Ambient blurred fill to match the photo
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Image.asset(
+                      activeImageUrl,
                       width: double.infinity,
-                      height: imageHeight,
-                      color: AppColors.primaryLight,
-                      child: const Center(
-                        child: Icon(Icons.image_outlined, size: 48, color: AppColors.primary),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
-
-            // Top-Left Tag Pill Badge (International / Domestic)
-            Positioned(
-              top: 14,
-              left: 14,
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-                decoration: BoxDecoration(
-                  color: expo.tag == 'International'
-                      ? const Color(0xFF1D5A38)
-                      : const Color(0xFF1E3A8A),
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.25),
-                      blurRadius: 8,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      expo.tag == 'International' ? Icons.public_rounded : Icons.apartment_rounded,
-                      size: 13,
-                      color: Colors.white,
-                    ),
-                    const SizedBox(width: 6),
-                    Text(
-                      expo.tag,
-                      style: GoogleFonts.outfit(
-                        color: Colors.white,
-                        fontSize: 11,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-            // Top-Right Edition/Booth Badge if available
-            if (expo.boothNumber != null)
-              Positioned(
-                top: 14,
-                right: 14,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withValues(alpha: 0.65),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Text(
-                    expo.boothNumber!,
-                    style: GoogleFonts.outfit(
-                      color: Colors.white,
-                      fontSize: 10.5,
-                      fontWeight: FontWeight.w600,
+                      height: double.infinity,
+                      fit: BoxFit.cover,
+                      color: Colors.black.withValues(alpha: 0.65),
+                      colorBlendMode: BlendMode.darken,
                     ),
                   ),
-                ),
+
+                  // Sharp, 100% visible uncropped foreground image!
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 300),
+                      child: Image.asset(
+                        activeImageUrl,
+                        key: ValueKey<String>(activeImageUrl),
+                        width: double.infinity,
+                        height: double.infinity,
+                        fit: BoxFit.contain,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            width: double.infinity,
+                            height: imageHeight,
+                            color: AppColors.primaryLight,
+                            child: const Center(
+                              child: Icon(Icons.image_outlined, size: 48, color: AppColors.primary),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+
+                  // Top-Left Tag Pill Badge (International / Domestic)
+                  Positioned(
+                    top: 14,
+                    left: 14,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: expo.tag == 'International'
+                            ? const Color(0xFF1D5A38)
+                            : const Color(0xFF1E3A8A),
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black26,
+                            blurRadius: 8,
+                            offset: Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            expo.tag == 'International' ? Icons.public_rounded : Icons.apartment_rounded,
+                            size: 13,
+                            color: Colors.white,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            expo.tag,
+                            style: GoogleFonts.outfit(
+                              color: Colors.white,
+                              fontSize: 11,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 0.5,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  // Top-Right Edition/Booth Badge if available
+                  if (expo.boothNumber != null)
+                    Positioned(
+                      top: 14,
+                      right: 14,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withValues(alpha: 0.7),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Text(
+                          expo.boothNumber!,
+                          style: GoogleFonts.outfit(
+                            color: Colors.white,
+                            fontSize: 10.5,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+
+                  // Bottom-Right Enlarge Hint Badge
+                  Positioned(
+                    bottom: 12,
+                    right: 12,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withValues(alpha: 0.7),
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Icons.zoom_in_rounded, size: 14, color: Colors.white),
+                          const SizedBox(width: 4),
+                          Text(
+                            'Click to enlarge',
+                            style: GoogleFonts.outfit(
+                              color: Colors.white,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
-          ],
+            ),
+          ),
         ),
 
         // Clickable Thumbnail Row beneath Main Image
@@ -554,18 +662,18 @@ class _ExhibitionsPageState extends State<ExhibitionsPage> {
                 borderRadius: BorderRadius.circular(12),
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
-                  width: 68,
-                  height: 48,
+                  width: 72,
+                  height: 52,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
-                      color: isSelected ? AppColors.primary : Colors.transparent,
-                      width: 2.2,
+                      color: isSelected ? AppColors.primary : Colors.black.withValues(alpha: 0.15),
+                      width: isSelected ? 2.5 : 1.2,
                     ),
                     boxShadow: isSelected
                         ? [
                             BoxShadow(
-                              color: AppColors.primary.withValues(alpha: 0.3),
+                              color: AppColors.primary.withValues(alpha: 0.35),
                               blurRadius: 8,
                               offset: const Offset(0, 2),
                             ),

@@ -294,7 +294,7 @@ class AppFooter extends StatelessWidget {
   }
 
   Widget _buildContactInfo(BuildContext context) {
-    final double textFontSize = LiquidUI.fluid(context, minVal: 12, maxVal: 14);
+    final double textFontSize = LiquidUI.fluid(context, minVal: 12, maxVal: 13.5);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -309,6 +309,53 @@ class AppFooter extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 18),
+
+        // Office Address
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: AppColors.primary.withValues(alpha: 0.2),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(Icons.business_rounded, color: AppColors.primary, size: 16),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'OFFICE ADDRESS',
+                    style: TextStyle(
+                      fontFamily: AppTheme.outfitFont,
+                      color: AppColors.secondary,
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 0.6,
+                    ),
+                  ),
+                  const SizedBox(height: 3),
+                  Text(
+                    'Shop No. 24, Near Way Bridge, APMC Market, Mahuva, Bhavnagar, Gujarat - 364290',
+                    style: TextStyle(
+                      fontFamily: AppTheme.interFont,
+                      color: Colors.grey.shade300,
+                      fontSize: textFontSize,
+                      height: 1.4,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+
+        const SizedBox(height: 14),
+
+        // Factory & Processing Plant Address
         InkWell(
           onTap: () async {
             final uri = Uri.parse('https://maps.app.goo.gl/h6m7NWwtvi6GykRZ9');
@@ -329,18 +376,29 @@ class AppFooter extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(6),
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withValues(alpha: 0.2),
+                  color: AppColors.secondary.withValues(alpha: 0.2),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.location_on, color: AppColors.primary, size: 16),
+                child: const Icon(Icons.factory_rounded, color: AppColors.secondary, size: 16),
               ),
               const SizedBox(width: 10),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const Text(
+                      'FACTORY / PROCESSING PLANT',
+                      style: TextStyle(
+                        fontFamily: AppTheme.outfitFont,
+                        color: AppColors.secondary,
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.6,
+                      ),
+                    ),
+                    const SizedBox(height: 3),
                     Text(
-                      'Survey No. - 217, Savarkundla Rd, Bhadara, Mahuva, Gujarat 364290',
+                      'Survey No. - 217, Savarkundla Rd, Bhadara, Mahuva, Gujarat - 364290',
                       style: TextStyle(
                         fontFamily: AppTheme.interFont,
                         color: Colors.grey.shade300,
@@ -349,18 +407,14 @@ class AppFooter extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 2),
-                    Row(
-                      children: [
-                        Text(
-                          'View on Google Maps ↗',
-                          style: TextStyle(
-                            fontFamily: AppTheme.interFont,
-                            color: AppColors.secondary,
-                            fontSize: 11,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
+                    const Text(
+                      'View on Google Maps ↗',
+                      style: TextStyle(
+                        fontFamily: AppTheme.interFont,
+                        color: AppColors.secondary,
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
@@ -368,39 +422,69 @@ class AppFooter extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 12),
-        InkWell(
-          onTap: () async {
-            final uri = Uri.parse('tel:+917284088737');
-            if (await canLaunchUrl(uri)) {
-              await launchUrl(uri);
-            }
-          },
-          borderRadius: BorderRadius.circular(8),
-          child: Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(6),
-                decoration: BoxDecoration(
-                  color: AppColors.secondary.withValues(alpha: 0.2),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(Icons.phone, color: AppColors.secondary, size: 16),
+
+        const SizedBox(height: 14),
+
+        // Contact Numbers (+91 72840 88737 / +91 90336 25725)
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: AppColors.secondary.withValues(alpha: 0.2),
+                shape: BoxShape.circle,
               ),
-              const SizedBox(width: 10),
-              Text(
-                '+91 7284088737',
-                style: TextStyle(
-                  fontFamily: AppTheme.interFont,
-                  color: Colors.grey.shade300,
-                  fontSize: textFontSize,
-                  fontWeight: FontWeight.w600,
-                ),
+              child: const Icon(Icons.phone, color: AppColors.secondary, size: 16),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  InkWell(
+                    onTap: () async {
+                      final uri = Uri.parse('tel:+917284088737');
+                      if (await canLaunchUrl(uri)) await launchUrl(uri);
+                    },
+                    child: Text(
+                      '+91 72840 88737',
+                      style: TextStyle(
+                        fontFamily: AppTheme.interFont,
+                        color: Colors.grey.shade300,
+                        fontSize: textFontSize,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    ' / ',
+                    style: TextStyle(color: Colors.grey.shade400, fontSize: textFontSize),
+                  ),
+                  InkWell(
+                    onTap: () async {
+                      final uri = Uri.parse('tel:+919033625725');
+                      if (await canLaunchUrl(uri)) await launchUrl(uri);
+                    },
+                    child: Text(
+                      '+91 90336 25725',
+                      style: TextStyle(
+                        fontFamily: AppTheme.interFont,
+                        color: Colors.grey.shade300,
+                        fontSize: textFontSize,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
+
         const SizedBox(height: 12),
+
+        // Email
         InkWell(
           onTap: () async {
             final uri = Uri.parse('mailto:export@amarfoods.in');
@@ -422,7 +506,12 @@ class AppFooter extends StatelessWidget {
               const SizedBox(width: 10),
               Text(
                 'export@amarfoods.in',
-                style: TextStyle(fontFamily: AppTheme.interFont, color: Colors.grey.shade300, fontSize: textFontSize),
+                style: TextStyle(
+                  fontFamily: AppTheme.interFont,
+                  color: Colors.grey.shade300,
+                  fontSize: textFontSize,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ],
           ),
