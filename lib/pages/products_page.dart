@@ -162,7 +162,7 @@ class _ProductsPageState extends State<ProductsPage> {
                           const SizedBox(height: 12),
 
                           Text(
-                            'Pure farm-to-factory dehydrated onions, garlic, root crops, superfood leaves, and fruit powders from Mahuva, Gujarat.',
+                            'Pure farm-to-factory dehydrated onions, garlic, whole & ground spices, crispy fried onions, sesame seeds, root crops, and botanical powders from Mahuva, Gujarat.',
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
                               fontSize: isMobile ? 13.5 : 15,
@@ -185,7 +185,7 @@ class _ProductsPageState extends State<ProductsPage> {
                               style: GoogleFonts.outfit(color: Colors.white, fontSize: 14),
                               onChanged: (val) => setState(() => _searchQuery = val.trim().toLowerCase()),
                               decoration: InputDecoration(
-                                hintText: 'Search products (e.g. Moringa, Garlic, Flakes, Amchur)...',
+                                hintText: 'Search products (e.g. Cumin, Birista, Sesame, Garlic, Moringa)...',
                                 hintStyle: GoogleFonts.outfit(color: Colors.white60, fontSize: 13),
                                 prefixIcon: const Icon(Icons.search_rounded, color: Colors.white70, size: 20),
                                 suffixIcon: _searchQuery.isNotEmpty
@@ -214,6 +214,9 @@ class _ProductsPageState extends State<ProductsPage> {
                               _buildFilterPill('WHITE ONION', 'White Onion (5)'),
                               _buildFilterPill('GARLIC', 'Garlic & Black Garlic (6)'),
                               _buildFilterPill('RED & PINK ONION', 'Red & Pink Onion (10)'),
+                              _buildFilterPill('SPICES', 'Whole & Ground Spices (6)'),
+                              _buildFilterPill('FRIED & TOASTED', 'Fried & Toasted Onion (2)'),
+                              _buildFilterPill('OILSEEDS', 'Sesame Seeds (2)'),
                               _buildFilterPill('ROOT & GINGER', 'Root & Ginger (4)'),
                               _buildFilterPill('LEAFY & HERBS', 'Leafy & Herbs (6)'),
                               _buildFilterPill('CHILLI & FRUIT', 'Chilli, Veg & Fruit (6)'),

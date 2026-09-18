@@ -165,6 +165,18 @@ class AppImages {
   static const String productLemonPowder = '$_basePath/powders/lemon_powder.jpg';
   static const String productTamarindPowder = '$_basePath/powders/tamarind_powder.jpg';
 
+  // Whole & Ground Spices, Specialties & Seeds
+  static const String productCuminSeeds = '$_basePath/spices/cumin_seeds.jpg';
+  static const String productCuminPowder = '$_basePath/spices/cumin_powder.jpg';
+  static const String productCorianderSeeds = '$_basePath/spices/coriander_seeds.jpg';
+  static const String productCorianderPowder = '$_basePath/spices/coriander_powder.jpg';
+  static const String productTurmericFingers = '$_basePath/spices/turmeric_fingers.jpg';
+  static const String productTurmericPowder = '$_basePath/spices/turmeric_powder.jpg';
+  static const String productCrispyFriedOnion = '$_basePath/spices/crispy_fried_onion.jpg';
+  static const String productToastedOnion = '$_basePath/spices/toasted_onion.jpg';
+  static const String productSesameSeedsNatural = '$_basePath/spices/sesame_seeds_natural.jpg';
+  static const String productSesameSeedsHulled = '$_basePath/spices/sesame_seeds_hulled.jpg';
+
   // Founders & Leadership Team portraits
   static const String founderCeo = '$_basePath/founder_ceo.jpg';
   static const String founderOps = '$_basePath/founder_ops.jpg';
