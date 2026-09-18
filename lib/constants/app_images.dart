@@ -229,4 +229,10 @@ class AppImages {
   static const String expoAaharBooth1 = '$_basePath/expo_aahar_booth_1.webp';
   static const String expoAaharBooth2 = '$_basePath/expo_aahar_booth_2.webp';
   static const String expoAaharHall = '$_basePath/expo_aahar_hall.jpg';
+
+  // Founders & Executive Leadership
+  static const String founderLabheshPatel = '$_basePath/founder_labhesh_patel.jpg';
+  static const String founderHirenPatel = '$_basePath/founder_hiren_patel.jpg';
+  static const String founderJagdishPatel = '$_basePath/founder_jagdish_patel.jpg';
+  static const String founderMilanBheda = '$_basePath/founder_milan_bheda.jpg';
 }

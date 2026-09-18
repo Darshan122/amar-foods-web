@@ -582,6 +582,7 @@ class AboutPage extends StatelessWidget {
         'exp': LanguageService.instance.tr('about_f_exp'),
         'expertise': 'Crop Sourcing & Dehydration Manufacturing',
         'bio': LanguageService.instance.tr('about_f1_bio'),
+        'image': AppImages.founderLabheshPatel,
       },
       {
         'name': 'Hiren Patel',
@@ -589,6 +590,7 @@ class AboutPage extends StatelessWidget {
         'exp': LanguageService.instance.tr('about_f_exp'),
         'expertise': 'Factory Operations & Plant Engineering',
         'bio': LanguageService.instance.tr('about_f2_bio'),
+        'image': AppImages.founderHirenPatel,
       },
       {
         'name': 'Jagdish Patel',
@@ -596,6 +598,7 @@ class AboutPage extends StatelessWidget {
         'exp': LanguageService.instance.tr('about_f_exp'),
         'expertise': 'Quality Control & Food Safety R&D',
         'bio': LanguageService.instance.tr('about_f3_bio'),
+        'image': AppImages.founderJagdishPatel,
       },
       {
         'name': 'Milan Bheda',
@@ -603,6 +606,7 @@ class AboutPage extends StatelessWidget {
         'exp': LanguageService.instance.tr('about_f_exp'),
         'expertise': 'Global Agri-Trade & Export Markets',
         'bio': LanguageService.instance.tr('about_f4_bio'),
+        'image': AppImages.founderMilanBheda,
       },
     ];
 
@@ -674,112 +678,172 @@ class AboutPage extends StatelessWidget {
   }
 
   Widget _buildFounderCard(BuildContext context, Map<String, String> f) {
-    return LiquidUI.glassCard(
-      padding: const EdgeInsets.all(28),
-      backgroundColor: AppColors.background,
-      borderRadius: 22,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Top Icon & Role Badge Header
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: AppColors.primaryLight,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: AppColors.primary.withValues(alpha: 0.15)),
-                ),
-                child: const Icon(
-                  Icons.person_outline_rounded,
-                  color: AppColors.primary,
-                  size: 22,
-                ),
-              ),
-              Flexible(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  decoration: BoxDecoration(
-                    color: AppColors.secondary.withValues(alpha: 0.12),
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: AppColors.secondary.withValues(alpha: 0.25)),
-                  ),
-                  child: Text(
-                    f['role']!,
-                    style: GoogleFonts.outfit(
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.secondary,
-                      letterSpacing: 0.4,
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
+    final String? imagePath = f['image'];
 
-          // Founder Name
-          Text(
-            f['name']!,
-            style: GoogleFonts.playfairDisplay(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              color: AppColors.primary,
-            ),
-          ),
-          const SizedBox(height: 8),
-
-          // 15+ Years Experience Badge
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-            decoration: BoxDecoration(
-              color: AppColors.primaryLight,
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: AppColors.primary.withValues(alpha: 0.2)),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(Icons.workspace_premium_rounded, size: 14, color: AppColors.primary),
-                const SizedBox(width: 5),
-                Text(
-                  f['exp']!,
-                  style: GoogleFonts.outfit(
-                    fontSize: 11,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.primary,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 12),
-
-          // Subtle Accent Line
-          Container(
-            width: 40,
-            height: 3,
-            decoration: BoxDecoration(
-              gradient: AppColors.primaryGradient,
-              borderRadius: BorderRadius.circular(2),
-            ),
-          ),
-          const SizedBox(height: 14),
-
-          // Description Bio
-          Text(
-            f['bio']!,
-            style: GoogleFonts.inter(
-              fontSize: 14,
-              color: AppColors.textSecondary,
-              height: 1.55,
-            ),
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.background,
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: AppColors.borderGlass, width: 1.4),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 18,
+            offset: const Offset(0, 6),
           ),
         ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Founder Portrait Photo with Floating Experience Badge
+            if (imagePath != null)
+              Stack(
+                children: [
+                  Image.asset(
+                    imagePath,
+                    height: 320,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                    alignment: Alignment.topCenter,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        height: 240,
+                        color: AppColors.primaryLight,
+                        child: const Center(
+                          child: Icon(Icons.person_rounded, size: 56, color: AppColors.primary),
+                        ),
+                      );
+                    },
+                  ),
+                  // Dark gradient vignette overlay at the bottom of the photo
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    height: 80,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.transparent,
+                            Colors.black.withValues(alpha: 0.65),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  // 15+ Years Industry Experience Badge floating bottom-left of photo
+                  Positioned(
+                    bottom: 12,
+                    left: 14,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withValues(alpha: 0.75),
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: AppColors.secondary.withValues(alpha: 0.4)),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Icons.workspace_premium_rounded, size: 13, color: AppColors.secondary),
+                          const SizedBox(width: 5),
+                          Text(
+                            f['exp']!,
+                            style: GoogleFonts.outfit(
+                              fontSize: 11,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              letterSpacing: 0.3,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+            // Card Body Content
+            Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Role Badge
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: AppColors.secondary.withValues(alpha: 0.12),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: AppColors.secondary.withValues(alpha: 0.25)),
+                    ),
+                    child: Text(
+                      f['role']!,
+                      style: GoogleFonts.outfit(
+                        fontSize: 10.5,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.secondary,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+
+                  // Founder Name
+                  Text(
+                    f['name']!,
+                    style: GoogleFonts.playfairDisplay(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primary,
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+
+                  // Expertise Tag
+                  if (f['expertise'] != null) ...[
+                    Text(
+                      f['expertise']!,
+                      style: GoogleFonts.outfit(
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.textSecondary,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                  ],
+
+                  // Gradient Accent Line
+                  Container(
+                    width: 44,
+                    height: 3,
+                    decoration: BoxDecoration(
+                      gradient: AppColors.primaryGradient,
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+
+                  // Bio description
+                  Text(
+                    f['bio']!,
+                    style: GoogleFonts.inter(
+                      fontSize: 13.5,
+                      color: AppColors.textSecondary,
+                      height: 1.6,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
