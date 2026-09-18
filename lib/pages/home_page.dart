@@ -1261,7 +1261,7 @@ class _HomePageState extends State<HomePage> {
                           title: p['title'] as String,
                           description: p['desc'] as String,
                           imageAlignment: (p['alignment'] as Alignment?) ?? Alignment.center,
-                          imageFit: (p['fit'] as BoxFit?) ?? BoxFit.contain,
+                          imageFit: (p['fit'] as BoxFit?) ?? BoxFit.cover,
                         ),
                       )).toList(),
                     );
@@ -1278,7 +1278,7 @@ class _HomePageState extends State<HomePage> {
                           title: p['title'] as String,
                           description: p['desc'] as String,
                           imageAlignment: (p['alignment'] as Alignment?) ?? Alignment.center,
-                          imageFit: (p['fit'] as BoxFit?) ?? BoxFit.contain,
+                          imageFit: (p['fit'] as BoxFit?) ?? BoxFit.cover,
                         ),
                       )).toList(),
                     );
@@ -1431,7 +1431,7 @@ class _HomePageState extends State<HomePage> {
     required String title,
     required String description,
     Alignment imageAlignment = Alignment.center,
-    BoxFit imageFit = BoxFit.contain,
+    BoxFit imageFit = BoxFit.cover,
   }) {
     return LiquidUI.interactiveGlassCard(
       onTap: () => Navigator.pushNamed(context, '/products'),
@@ -1446,14 +1446,14 @@ class _HomePageState extends State<HomePage> {
               ClipRRect(
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
                 child: Container(
-                  color: Colors.black,
+                  color: const Color(0xFF16161D),
                   child: AspectRatio(
-                    aspectRatio: 4 / 3,
+                    aspectRatio: 16 / 10,
                     child: Image.asset(
                       imagePath,
                       fit: imageFit,
                       alignment: imageAlignment,
-                      cacheWidth: 600,
+                      cacheWidth: 1000,
                       errorBuilder: (context, error, stackTrace) {
                         return Container(
                           color: AppColors.primaryLight,
@@ -1472,7 +1472,7 @@ class _HomePageState extends State<HomePage> {
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.9),
+                    color: AppColors.primary.withValues(alpha: 0.9),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
