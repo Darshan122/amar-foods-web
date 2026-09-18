@@ -608,6 +608,14 @@ class AboutPage extends StatelessWidget {
         'bio': LanguageService.instance.tr('about_f4_bio'),
         'image': AppImages.founderMilanBheda,
       },
+      {
+        'name': 'Bhavesh Patel',
+        'role': LanguageService.instance.tr('about_f5_role'),
+        'exp': LanguageService.instance.tr('about_f_exp'),
+        'expertise': 'Brand Strategy & Global Trade Marketing',
+        'bio': LanguageService.instance.tr('about_f5_bio'),
+        'image': AppImages.founderBhaveshPatel,
+      },
     ];
 
     return Container(
@@ -648,7 +656,7 @@ class AboutPage extends StatelessWidget {
               ),
               const SizedBox(height: 48),
 
-              // 4 Founder Cards Grid (Clean Text UI)
+              // 5 Founder & Leadership Cards Grid
               LayoutBuilder(
                 builder: (context, constraints) {
                   if (isMobile) {
@@ -662,6 +670,7 @@ class AboutPage extends StatelessWidget {
                     return Wrap(
                       spacing: 24,
                       runSpacing: 24,
+                      alignment: WrapAlignment.center,
                       children: founders.map((f) => SizedBox(
                         width: (constraints.maxWidth - 24) / 2,
                         child: _buildFounderCard(context, f),

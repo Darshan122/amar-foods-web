@@ -118,6 +118,8 @@ const Map<String, String> esTranslations = {
   'about_f3_bio': 'Con 15 años en aseguramiento de calidad, Jagdish Patel dirige el laboratorio y asegura el estricto cumplimiento de ISO 22000 y HACCP.',
   'about_f4_role': 'DIRECTOR DE EXPORTACIONES Y COFUNDADOR',
   'about_f4_bio': 'Con 15 años en comercio exterior y logística portuaria, Milan Bheda comanda la expansión internacional hacia más de 15 naciones.',
+  'about_f5_role': 'DIRECTOR DE MARKETING (CMO)',
+  'about_f5_bio': 'Liderando la estrategia de marca y expansión comercial de Amar Foods, Bhavesh Patel dirige las campañas internacionales, exhibiciones feriales y alianzas estratégicas.',
   'about_infra_badge': 'INFRAESTRUCTURA DE PROCESO',
   'about_infra_title': 'Planta de deshidratación y automatización',
   'about_infra_sub': 'Secadores continuos de última generación, líneas de acero inoxidable y áreas limpias de empaque.',

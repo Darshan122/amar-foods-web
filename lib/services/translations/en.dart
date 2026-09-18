@@ -118,6 +118,8 @@ const Map<String, String> enTranslations = {
   'about_f3_bio': 'Backed by 15+ years of expertise in analytical quality assurance and food technology R&D, Jagdish Patel manages the in-house quality testing laboratory. He enforces strict adherence to ISO 22000, HACCP, and FSSAI standards—guaranteeing low moisture content (≤6.0%), essential oil retention, zero chemical additives, and total microbiological safety.',
   'about_f4_role': 'INTERNATIONAL EXPORTS DIRECTOR & CO-FOUNDER',
   'about_f4_bio': 'Leveraging 15+ years of extensive experience in international commodity trading and port logistics, Milan Bheda heads global commercial expansion at Amar Foods. He has established robust export networks across 15+ countries in Europe, North America, the Middle East, and Southeast Asia, handling customs clearance, container stuffing, and bulk packaging.',
+  'about_f5_role': 'CHIEF MARKETING OFFICER (CMO)',
+  'about_f5_bio': 'Directing corporate marketing initiatives and international trade outreach at Amar Foods, Bhavesh Patel oversees global brand promotion, international food expo showcases, and strategic client acquisition. His deep understanding of global spice and dehydrated vegetable markets strengthens brand visibility and fosters enduring partnerships with industrial food manufacturers, distributors, and bulk importers worldwide.',
   'about_infra_badge': 'PROCESSING INFRASTRUCTURE',
   'about_infra_title': 'Dehydration Facility & Automation',
   'about_infra_sub': 'Modern conveyor dryers, stainless steel sorting lines, and cleanroom packaging bays.',

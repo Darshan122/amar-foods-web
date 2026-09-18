@@ -235,4 +235,5 @@ class AppImages {
   static const String founderHirenPatel = '$_basePath/founder_hiren_patel.jpg';
   static const String founderJagdishPatel = '$_basePath/founder_jagdish_patel.jpg';
   static const String founderMilanBheda = '$_basePath/founder_milan_bheda.jpg';
+  static const String founderBhaveshPatel = '$_basePath/founder_bhavesh_patel.jpg';
 }

@@ -118,6 +118,8 @@ const Map<String, String> frTranslations = {
   'about_f3_bio': 'Fort de 15 ans d\'expérience en contrôle analytique, Jagdish Patel dirige le laboratoire et assure la conformité ISO 22000 et HACCP.',
   'about_f4_role': 'DIRECTEUR DE L\'EXPORTATION & COFONDATEUR',
   'about_f4_bio': 'Fort de 15 ans d\'expertise en négoce international et logistique maritime, Milan Bheda pilote les marchés export dans plus de 15 pays.',
+  'about_f5_role': 'DIRECTEUR MARKETING (CMO)',
+  'about_f5_bio': 'Supervisant la stratégie de marque et le rayonnement international, Bhavesh Patel dirige le marketing mondial, les salons agroalimentaires et les relations clients stratégiques.',
   'about_infra_badge': 'INFRASTRUCTURE DE TRANSFORMATION',
   'about_infra_title': 'Installations de séchage & automatisation',
   'about_infra_sub': 'Séchoirs à bande modernes, lignes de tri inox et zones d\'emballage ultra-propres.',

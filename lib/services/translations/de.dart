@@ -118,6 +118,8 @@ const Map<String, String> deTranslations = {
   'about_f3_bio': 'Mit 15 Jahren Expertise in Lebensmittelanalytik überwacht Jagdish Patel das Labor und sichert Standards wie ISO 22000 und HACCP ab.',
   'about_f4_role': 'EXPORTDIREKTOR & MITGRÜNDER',
   'about_f4_bio': 'Mit fundierter Erfahrung im internationalen Warenhandel leitet Milan Bheda die globale Expansion in über 15 Länder.',
+  'about_f5_role': 'CHIEF MARKETING OFFICER (CMO)',
+  'about_f5_bio': 'Als Marketingleiter steuert Bhavesh Patel die internationale Markenpräsenz, weltweite Messeauftritte und strategische Kundenbeziehungen.',
   'about_infra_badge': 'VERARBEITUNGSINFRASTRUKTUR',
   'about_infra_title': 'Trocknungsanlage & Automation',
   'about_infra_sub': 'Moderne Durchlauftrockner, Edelstahl-Sortieranlagen und hygienische Verpackungsräume.',
