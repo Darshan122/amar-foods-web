@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_images.dart';
 import '../services/firebase_service.dart';
@@ -26,6 +27,19 @@ class _ContactPageState extends State<ContactPage> {
   String _selectedProduct = 'Dehydrated Red Onion Flakes';
   bool _isSubmitting = false;
   bool _isSubmitted = false;
+
+  Future<void> _launchExternal(String urlString) async {
+    final uri = Uri.parse(urlString);
+    try {
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } else {
+        await launchUrl(uri, mode: LaunchMode.platformDefault);
+      }
+    } catch (_) {
+      await launchUrl(uri, mode: LaunchMode.platformDefault);
+    }
+  }
 
   Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
@@ -94,7 +108,7 @@ class _ContactPageState extends State<ContactPage> {
                     const SizedBox(width: 12),
                     Expanded(
                       child: Text(
-                        'Direct Export Hotline: +91 7284088737\nOfficial Email: export@amarfoods.in',
+                        'Direct Export Hotline: +91 72840 88737 / +91 90336 25725\nOfficial Email: export@amarfoods.in',
                         style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.primary, height: 1.4),
                       ),
                     ),
@@ -270,34 +284,38 @@ class _ContactPageState extends State<ContactPage> {
                               height: 1.5,
                             ),
                           ),
-                          const SizedBox(height: 32),
+                          const SizedBox(height: 28),
 
-                          _buildContactCard(
-                            Icons.location_on_rounded,
-                            LanguageService.instance.tr('contact_card_address_title'),
-                            LanguageService.instance.tr('contact_card_address_val'),
+                          // 1. Office Address Card
+                          _buildAddressCard(
+                            icon: Icons.business_rounded,
+                            badge: 'OFFICE ADDRESS',
+                            title: 'Corporate & Registered Office',
+                            address: 'Shop No. 24, Near Way Bridge, APMC Market, Mahuva, Bhavnagar, Gujarat - 364290',
                           ),
-                          const SizedBox(height: 18),
+                          const SizedBox(height: 16),
 
-                          _buildContactCard(
-                            Icons.phone_in_talk_rounded,
-                            LanguageService.instance.tr('contact_card_phone_title'),
-                            LanguageService.instance.tr('contact_card_phone_val'),
+                          // 2. Factory / Processing Plant Address Card
+                          _buildAddressCard(
+                            icon: Icons.factory_rounded,
+                            badge: 'FACTORY / PROCESSING PLANT',
+                            title: 'Manufacturing & Dehydration Facility',
+                            address: 'Survey No. - 217, Savarkundla Rd, Bhadara, Mahuva, Gujarat - 364290',
+                            actionLabel: 'View on Google Maps ↗',
+                            onActionTap: () => _launchExternal('https://maps.app.goo.gl/h6m7NWwtvi6GykRZ9'),
                           ),
-                          const SizedBox(height: 18),
+                          const SizedBox(height: 16),
 
-                          _buildContactCard(
-                            Icons.mark_email_read_rounded,
-                            LanguageService.instance.tr('contact_card_email_title'),
-                            LanguageService.instance.tr('contact_card_email_val'),
-                          ),
-                          const SizedBox(height: 18),
+                          // 3. Direct Phone & WhatsApp Support Card (Both Numbers)
+                          _buildPhoneNumbersCard(),
+                          const SizedBox(height: 16),
 
-                          _buildContactCard(
-                            Icons.access_time_filled_rounded,
-                            LanguageService.instance.tr('contact_card_hours_title'),
-                            LanguageService.instance.tr('contact_card_hours_val'),
-                          ),
+                          // 4. Official Email Card
+                          _buildEmailCard(),
+                          const SizedBox(height: 16),
+
+                          // 5. Operating Hours Card
+                          _buildHoursCard(),
                         ],
                       );
 
@@ -459,6 +477,373 @@ class _ContactPageState extends State<ContactPage> {
             const AppFooter(),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildAddressCard({
+    required IconData icon,
+    required String badge,
+    required String title,
+    required String address,
+    String? actionLabel,
+    VoidCallback? onActionTap,
+  }) {
+    return LiquidUI.glassCard(
+      padding: const EdgeInsets.all(20),
+      backgroundColor: Colors.white,
+      borderRadius: 16,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: AppColors.secondary.withValues(alpha: 0.15),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(icon, color: AppColors.secondary, size: 22),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  decoration: BoxDecoration(
+                    color: AppColors.secondary.withValues(alpha: 0.12),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Text(
+                    badge,
+                    style: GoogleFonts.outfit(
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.secondary,
+                      letterSpacing: 0.6,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  title,
+                  style: GoogleFonts.outfit(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  address,
+                  style: GoogleFonts.inter(
+                    fontSize: 13.5,
+                    color: AppColors.textSecondary,
+                    height: 1.5,
+                  ),
+                ),
+                if (actionLabel != null && onActionTap != null) ...[
+                  const SizedBox(height: 8),
+                  InkWell(
+                    onTap: onActionTap,
+                    borderRadius: BorderRadius.circular(6),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 2),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            actionLabel,
+                            style: GoogleFonts.outfit(
+                              fontSize: 12.5,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.secondary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPhoneNumbersCard() {
+    return LiquidUI.glassCard(
+      padding: const EdgeInsets.all(20),
+      backgroundColor: Colors.white,
+      borderRadius: 16,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: AppColors.secondary.withValues(alpha: 0.15),
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(Icons.phone_in_talk_rounded, color: AppColors.secondary, size: 22),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  decoration: BoxDecoration(
+                    color: AppColors.secondary.withValues(alpha: 0.12),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Text(
+                    'DIRECT CALL & WHATSAPP',
+                    style: GoogleFonts.outfit(
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.secondary,
+                      letterSpacing: 0.6,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  'Phone & WhatsApp Support',
+                  style: GoogleFonts.outfit(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: 10),
+
+                // Number 1
+                InkWell(
+                  onTap: () => _launchExternal('tel:+917284088737'),
+                  borderRadius: BorderRadius.circular(8),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.phone_rounded, size: 16, color: AppColors.primary),
+                        const SizedBox(width: 8),
+                        Text(
+                          '+91 72840 88737',
+                          style: GoogleFonts.inter(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: AppColors.primaryLight,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Text(
+                            'Export Desk',
+                            style: GoogleFonts.outfit(
+                              fontSize: 10.5,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.primaryDark,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 4),
+
+                // Number 2
+                InkWell(
+                  onTap: () => _launchExternal('tel:+919033625725'),
+                  borderRadius: BorderRadius.circular(8),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.phone_rounded, size: 16, color: AppColors.primary),
+                        const SizedBox(width: 8),
+                        Text(
+                          '+91 90336 25725',
+                          style: GoogleFonts.inter(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: AppColors.primaryLight,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Text(
+                            'Sales & Corporate',
+                            style: GoogleFonts.outfit(
+                              fontSize: 10.5,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.primaryDark,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEmailCard() {
+    return LiquidUI.glassCard(
+      padding: const EdgeInsets.all(20),
+      backgroundColor: Colors.white,
+      borderRadius: 16,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: AppColors.secondary.withValues(alpha: 0.15),
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(Icons.mark_email_read_rounded, color: AppColors.secondary, size: 22),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  decoration: BoxDecoration(
+                    color: AppColors.secondary.withValues(alpha: 0.12),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Text(
+                    'OFFICIAL EMAIL',
+                    style: GoogleFonts.outfit(
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.secondary,
+                      letterSpacing: 0.6,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  'Official Trade Email',
+                  style: GoogleFonts.outfit(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                InkWell(
+                  onTap: () => _launchExternal('mailto:export@amarfoods.in'),
+                  borderRadius: BorderRadius.circular(6),
+                  child: Text(
+                    'export@amarfoods.in',
+                    style: GoogleFonts.inter(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.primary,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  'Response guaranteed within 24 hours for all export inquiries',
+                  style: GoogleFonts.inter(
+                    fontSize: 12,
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHoursCard() {
+    return LiquidUI.glassCard(
+      padding: const EdgeInsets.all(20),
+      backgroundColor: Colors.white,
+      borderRadius: 16,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: AppColors.secondary.withValues(alpha: 0.15),
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(Icons.access_time_filled_rounded, color: AppColors.secondary, size: 22),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  decoration: BoxDecoration(
+                    color: AppColors.secondary.withValues(alpha: 0.12),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Text(
+                    'WORKING HOURS',
+                    style: GoogleFonts.outfit(
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.secondary,
+                      letterSpacing: 0.6,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  'Factory & Office Operating Hours',
+                  style: GoogleFonts.outfit(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'Monday – Saturday: 9:00 AM – 7:00 PM (IST)\nSunday: Closed (Inquiries active via Email & WhatsApp)',
+                  style: GoogleFonts.inter(
+                    fontSize: 13,
+                    color: AppColors.textSecondary,
+                    height: 1.5,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
