@@ -659,24 +659,29 @@ class AboutPage extends StatelessWidget {
               // 5 Founder & Leadership Cards Grid
               LayoutBuilder(
                 builder: (context, constraints) {
-                  if (isMobile) {
-                    return Column(
-                      children: founders.map((f) => Padding(
-                        padding: const EdgeInsets.only(bottom: 20.0),
-                        child: _buildFounderCard(context, f),
-                      )).toList(),
-                    );
+                  final double maxWidth = constraints.maxWidth;
+                  final double cardWidth;
+
+                  if (maxWidth >= 992) {
+                    // Desktop: 3 columns (3 on top row, 2 centered on bottom row)
+                    cardWidth = (maxWidth - 48) / 3;
+                  } else if (maxWidth >= 640) {
+                    // Tablet: 2 columns
+                    cardWidth = (maxWidth - 24) / 2;
                   } else {
-                    return Wrap(
-                      spacing: 24,
-                      runSpacing: 24,
-                      alignment: WrapAlignment.center,
-                      children: founders.map((f) => SizedBox(
-                        width: (constraints.maxWidth - 24) / 2,
-                        child: _buildFounderCard(context, f),
-                      )).toList(),
-                    );
+                    // Mobile: 1 column
+                    cardWidth = maxWidth;
                   }
+
+                  return Wrap(
+                    spacing: 24,
+                    runSpacing: 28,
+                    alignment: WrapAlignment.center,
+                    children: founders.map((f) => SizedBox(
+                      width: cardWidth,
+                      child: _buildFounderCard(context, f),
+                    )).toList(),
+                  );
                 },
               ),
             ],
@@ -707,75 +712,76 @@ class AboutPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Founder Portrait Photo with Floating Experience Badge
+            // Founder Portrait Photo with Floating Experience Badge (Exact 3:4 aspect ratio for full view)
             if (imagePath != null)
-              Stack(
-                children: [
-                  Image.asset(
-                    imagePath,
-                    height: 320,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                    alignment: Alignment.topCenter,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Container(
-                        height: 240,
-                        color: AppColors.primaryLight,
-                        child: const Center(
-                          child: Icon(Icons.person_rounded, size: 56, color: AppColors.primary),
+              AspectRatio(
+                aspectRatio: 3 / 4,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    Image.asset(
+                      imagePath,
+                      fit: BoxFit.cover,
+                      alignment: Alignment.topCenter,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          color: AppColors.primaryLight,
+                          child: const Center(
+                            child: Icon(Icons.person_rounded, size: 56, color: AppColors.primary),
+                          ),
+                        );
+                      },
+                    ),
+                    // Dark gradient vignette overlay at the bottom of the photo
+                    Positioned(
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      height: 90,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.transparent,
+                              Colors.black.withValues(alpha: 0.7),
+                            ],
+                          ),
                         ),
-                      );
-                    },
-                  ),
-                  // Dark gradient vignette overlay at the bottom of the photo
-                  Positioned(
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    height: 80,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Colors.transparent,
-                            Colors.black.withValues(alpha: 0.65),
+                      ),
+                    ),
+                    // 15+ Years Industry Experience Badge floating bottom-left of photo
+                    Positioned(
+                      bottom: 14,
+                      left: 14,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withValues(alpha: 0.78),
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(color: AppColors.secondary.withValues(alpha: 0.4)),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.workspace_premium_rounded, size: 13, color: AppColors.secondary),
+                            const SizedBox(width: 5),
+                            Text(
+                              f['exp']!,
+                              style: GoogleFonts.outfit(
+                                fontSize: 11,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                letterSpacing: 0.3,
+                              ),
+                            ),
                           ],
                         ),
                       ),
                     ),
-                  ),
-                  // 15+ Years Industry Experience Badge floating bottom-left of photo
-                  Positioned(
-                    bottom: 12,
-                    left: 14,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      decoration: BoxDecoration(
-                        color: Colors.black.withValues(alpha: 0.75),
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: AppColors.secondary.withValues(alpha: 0.4)),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(Icons.workspace_premium_rounded, size: 13, color: AppColors.secondary),
-                          const SizedBox(width: 5),
-                          Text(
-                            f['exp']!,
-                            style: GoogleFonts.outfit(
-                              fontSize: 11,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              letterSpacing: 0.3,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
 
             // Card Body Content
