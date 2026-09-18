@@ -96,6 +96,38 @@ class ExhibitionsData {
       isFeatured: true,
     ),
     ExhibitionItem(
+      id: 'aahar-2026',
+      title: 'AAHAR 2026',
+      tag: 'Domestic',
+      edition: '40th Edition • The International Food & Hospitality Fair',
+      venue: 'Bharat Mandapam (Pragati Maidan)',
+      location: 'New Delhi, India',
+      dates: 'March 10 – 14, 2026',
+      description:
+          'AAHAR is Asia\'s premier flagship B2B food and hospitality mega-fair, organized by the India Trade Promotion Organisation (ITPO) and the Ministry of Food Processing Industries (MoFPI). Amar Foods presented its full dehydration and spices spectrum at Bharat Mandapam, conducting high-impact meetings with major HORECA chains, quick-service restaurant networks, institutional foodservice buyers, and food ingredient distributors.',
+      mainImage: AppImages.expoAahar2026,
+      galleryImages: [
+        AppImages.expoAahar2026,
+        AppImages.expoAaharBooth1,
+        AppImages.expoAaharBooth2,
+        AppImages.expoAaharHall,
+      ],
+      highlights: [
+        'Organised under ITPO & Ministry of Food Processing Industries (MoFPI) at Bharat Mandapam',
+        'Met with key procurement heads across hotel chains, restaurant networks, and flight caterers',
+        'Demonstrated premium dehydrated allium grades with zero adulteration and intense natural pungency',
+        'Finalized volume annual supply orders for crispy fried onion (Birista) and garlic powder',
+      ],
+      focusProducts: [
+        'Dehydrated White Onion Flakes & Powder',
+        'Crispy Fried Onion (Birista)',
+        'Garlic Granules & Minced Powder',
+        'Whole & Ground Spices (Turmeric, Cumin, Chilli)',
+      ],
+      boothNumber: 'Hall 4 (Ground Floor)',
+      isFeatured: true,
+    ),
+    ExhibitionItem(
       id: 'sial-2025',
       title: 'SIAL Food Forum (APEDA Pavilion)',
       tag: 'International',

@@ -223,4 +223,10 @@ class AppImages {
   static const String expoFiIndia2 = '$_basePath/expo_fi_india_2.webp';
   static const String expoFiIndia3 = '$_basePath/expo_fi_india_3.webp';
   static const String expoFiIndia4 = '$_basePath/expo_fi_india_4.webp';
+
+  // AAHAR - The International Food & Hospitality Fair
+  static const String expoAahar2026 = '$_basePath/expo_aahar_2026.jpg';
+  static const String expoAaharBooth1 = '$_basePath/expo_aahar_booth_1.webp';
+  static const String expoAaharBooth2 = '$_basePath/expo_aahar_booth_2.webp';
+  static const String expoAaharHall = '$_basePath/expo_aahar_hall.jpg';
 }

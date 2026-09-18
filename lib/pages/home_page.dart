@@ -2194,7 +2194,7 @@ class _HomePageState extends State<HomePage> {
   Widget _buildExpoSection(BuildContext context, bool isMobile) {
     final double paddingV = LiquidUI.fluid(context, minVal: 50, maxVal: 90);
     final double headingSize = LiquidUI.fluid(context, minVal: 26, maxVal: 38);
-    final featuredExpos = ExhibitionsData.allExhibitions.take(2).toList();
+    final featuredExpos = ExhibitionsData.allExhibitions.where((e) => e.isFeatured).toList();
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: paddingV),
@@ -2238,12 +2238,15 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 38),
 
-              // 2-Column Responsive Card Grid (Gulfood 2026 & Indusfood 2026)
+              // Responsive Featured Card Grid (Gulfood 2026, Indusfood 2026 & AAHAR 2026)
               LayoutBuilder(
                 builder: (context, constraints) {
+                  final bool isWideDesktop = constraints.maxWidth >= 960;
                   final double cardWidth = isMobile
                       ? constraints.maxWidth
-                      : (constraints.maxWidth - 24) / 2;
+                      : isWideDesktop
+                          ? (constraints.maxWidth - 48) / 3
+                          : (constraints.maxWidth - 24) / 2;
 
                   return Wrap(
                     spacing: 24,
