@@ -2,6 +2,7 @@ const Map<String, String> arTranslations = {
   'nav_home': 'الرئيسية',
   'nav_about': 'من نحن',
   'nav_products': 'المنتجات',
+  'nav_exhibitions': 'المعارض',
   'nav_gallery': 'معرض الصور',
   'nav_contact': 'اتصل بنا',
   'btn_brochure': 'الكتالوج',

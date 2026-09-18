@@ -2,6 +2,7 @@ const Map<String, String> esTranslations = {
   'nav_home': 'Inicio',
   'nav_about': 'Nosotros',
   'nav_products': 'Productos',
+  'nav_exhibitions': 'Exposiciones',
   'nav_gallery': 'Galería',
   'nav_contact': 'Contacto',
   'btn_brochure': 'Folleto',

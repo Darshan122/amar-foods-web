@@ -214,6 +214,7 @@ class AppFooter extends StatelessWidget {
         _buildFooterLink(context, LanguageService.instance.tr('nav_home'), '/'),
         _buildFooterLink(context, LanguageService.instance.tr('nav_about'), '/about'),
         _buildFooterLink(context, LanguageService.instance.tr('nav_products'), '/products'),
+        _buildFooterLink(context, '${LanguageService.instance.tr('nav_exhibitions')} & Trade Shows', '/exhibitions'),
         _buildFooterLink(context, LanguageService.instance.tr('nav_gallery'), '/gallery'),
         _buildFooterLink(context, LanguageService.instance.tr('nav_contact'), '/contact'),
         _buildFooterDocLink(context, '📥 ${LanguageService.instance.tr('btn_brochure')} (PDF)', '/amar_foods_brochure.pdf'),

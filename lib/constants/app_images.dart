@@ -212,8 +212,12 @@ class AppImages {
   static const String certHalal = '$_basePath/cert_halal.jpg';
   static const String certGmp = '$_basePath/cert_gmp.jpg';
 
-  // Global Food Expos & Industry Events (Fi India 2026)
+  // Global Food Expos & Industry Events (Gulfood, Indusfood, SIAL, Fi India)
   static const String logoFiIndia = '$_basePath/logo_fi_india.png';
+  static const String expoGulfood2026 = '$_basePath/expo_gulfood_2026.jpg';
+  static const String expoGulfoodSouthHalls = '$_basePath/expo_gulfood_south_halls.jpg';
+  static const String expoIndusfood2026 = '$_basePath/expo_indusfood_2026.jpg';
+  static const String expoSial2024 = '$_basePath/expo_sial_2024.jpg';
   static const String expoFiIndiaHall = '$_basePath/expo_fi_india_hall.webp';
   static const String expoFiIndia1 = '$_basePath/expo_fi_india_1.webp';
   static const String expoFiIndia2 = '$_basePath/expo_fi_india_2.webp';

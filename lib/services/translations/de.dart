@@ -2,6 +2,7 @@ const Map<String, String> deTranslations = {
   'nav_home': 'Startseite',
   'nav_about': 'Über uns',
   'nav_products': 'Produkte',
+  'nav_exhibitions': 'Messen',
   'nav_gallery': 'Galerie',
   'nav_contact': 'Kontakt',
   'btn_brochure': 'Broschüre',

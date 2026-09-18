@@ -2,6 +2,7 @@ const Map<String, String> enTranslations = {
   'nav_home': 'Home',
   'nav_about': 'About',
   'nav_products': 'Products',
+  'nav_exhibitions': 'Exhibitions',
   'nav_gallery': 'Gallery',
   'nav_contact': 'Contact',
   'btn_brochure': 'Brochure',

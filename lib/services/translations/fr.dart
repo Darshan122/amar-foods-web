@@ -2,6 +2,7 @@ const Map<String, String> frTranslations = {
   'nav_home': 'Accueil',
   'nav_about': 'À propos',
   'nav_products': 'Produits',
+  'nav_exhibitions': 'Salons',
   'nav_gallery': 'Galerie',
   'nav_contact': 'Contact',
   'btn_brochure': 'Brochure',

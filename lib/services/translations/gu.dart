@@ -2,6 +2,7 @@ const Map<String, String> guTranslations = {
   'nav_home': 'હોમ',
   'nav_about': 'અમારા વિશે',
   'nav_products': 'પ્રોડક્ટ્સ',
+  'nav_exhibitions': 'પ્રદર્શનો',
   'nav_gallery': 'ગેલેરી',
   'nav_contact': 'સંપર્ક',
   'btn_brochure': 'બ્રોશર',

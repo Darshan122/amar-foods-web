@@ -4,6 +4,7 @@ import 'pages/about_page.dart';
 import 'pages/products_page.dart';
 import 'pages/contact_page.dart';
 import 'pages/gallery_page.dart';
+import 'pages/exhibitions_page.dart';
 import 'pages/enquiry_page.dart';
 import 'pages/product_detail_page.dart';
 import 'data/products_data.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
             '/': (context) => const HomePage(),
             '/about': (context) => const AboutPage(),
             '/products': (context) => const ProductsPage(),
+            '/exhibitions': (context) => const ExhibitionsPage(),
             '/gallery': (context) => const GalleryPage(),
             '/contact': (context) => const ContactPage(),
             '/quality': (context) => const QualityPage(),

@@ -2,6 +2,7 @@ const Map<String, String> ruTranslations = {
   'nav_home': 'Главная',
   'nav_about': 'О нас',
   'nav_products': 'Продукция',
+  'nav_exhibitions': 'Выставки',
   'nav_gallery': 'Галерея',
   'nav_contact': 'Контакты',
   'btn_brochure': 'Брошюра',

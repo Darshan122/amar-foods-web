@@ -2,6 +2,7 @@ const Map<String, String> hiTranslations = {
   'nav_home': 'होम',
   'nav_about': 'हमारे बारे में',
   'nav_products': 'उत्पाद',
+  'nav_exhibitions': 'प्रदर्शनियां',
   'nav_gallery': 'गैलरी',
   'nav_contact': 'संपर्क करें',
   'btn_brochure': 'ब्रोशर',
