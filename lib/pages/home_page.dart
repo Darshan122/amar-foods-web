@@ -1448,7 +1448,7 @@ class _HomePageState extends State<HomePage> {
                 child: Container(
                   color: const Color(0xFF16161D),
                   child: AspectRatio(
-                    aspectRatio: 16 / 10,
+                    aspectRatio: 16 / 9,
                     child: Image.asset(
                       imagePath,
                       fit: imageFit,
