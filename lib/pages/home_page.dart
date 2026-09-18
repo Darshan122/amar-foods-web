@@ -959,6 +959,7 @@ class _HomePageState extends State<HomePage> {
               LayoutBuilder(
                 builder: (context, constraints) {
                   final double width = constraints.maxWidth;
+                  const double uniformCardHeight = 310;
                   if (width < 650) {
                     return Column(
                       children: applications
@@ -976,6 +977,7 @@ class _HomePageState extends State<HomePage> {
                       children: applications
                           .map((item) => SizedBox(
                                 width: cardWidth,
+                                height: uniformCardHeight,
                                 child: _buildApplicationCard(context, item, isMobile),
                               ))
                           .toList(),
@@ -988,6 +990,7 @@ class _HomePageState extends State<HomePage> {
                       children: applications
                           .map((item) => SizedBox(
                                 width: cardWidth,
+                                height: uniformCardHeight,
                                 child: _buildApplicationCard(context, item, isMobile),
                               ))
                           .toList(),
@@ -1009,127 +1012,9 @@ class _HomePageState extends State<HomePage> {
     _ApplicationItem item,
     bool isMobile,
   ) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: const Color(0xFFE2E8F0),
-          width: 1.2,
-        ),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x0A0F172A),
-            blurRadius: 20,
-            offset: Offset(0, 8),
-          ),
-        ],
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: () => _showQuoteDialog(context),
-          borderRadius: BorderRadius.circular(20),
-          hoverColor: AppColors.primary.withOpacity(0.04),
-          child: Padding(
-            padding: const EdgeInsets.all(22),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      width: 48,
-                      height: 48,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            AppColors.primary.withOpacity(0.12),
-                            AppColors.secondary.withOpacity(0.10),
-                          ],
-                        ),
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(
-                          color: AppColors.primary.withOpacity(0.20),
-                          width: 1,
-                        ),
-                      ),
-                      child: Icon(
-                        item.icon,
-                        color: AppColors.primary,
-                        size: 24,
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF1F5F9),
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: const Color(0xFFE2E8F0)),
-                      ),
-                      child: Text(
-                        item.id,
-                        style: GoogleFonts.outfit(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w800,
-                          color: AppColors.primary,
-                          letterSpacing: 0.5,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 18),
-                Text(
-                  item.title,
-                  style: GoogleFonts.outfit(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                    color: const Color(0xFF0F172A),
-                    height: 1.25,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  item.subtitle,
-                  style: GoogleFonts.inter(
-                    fontSize: 13.5,
-                    color: const Color(0xFF475569),
-                    height: 1.5,
-                  ),
-                ),
-                const SizedBox(height: 14),
-                Wrap(
-                  spacing: 6,
-                  runSpacing: 6,
-                  children: item.tags
-                      .map((tag) => Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFF8FAFC),
-                              borderRadius: BorderRadius.circular(6),
-                              border: Border.all(color: const Color(0xFFE2E8F0)),
-                            ),
-                            child: Text(
-                              tag,
-                              style: GoogleFonts.inter(
-                                fontSize: 11,
-                                fontWeight: FontWeight.w500,
-                                color: const Color(0xFF334155),
-                              ),
-                            ),
-                          ))
-                      .toList(),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return _ApplicationCardWidget(
+      item: item,
+      onTap: () => _showQuoteDialog(context),
     );
   }
 
@@ -3640,4 +3525,171 @@ class _ApplicationItem {
     required this.tags,
   });
 }
+
+class _ApplicationCardWidget extends StatefulWidget {
+  final _ApplicationItem item;
+  final VoidCallback onTap;
+
+  const _ApplicationCardWidget({
+    required this.item,
+    required this.onTap,
+  });
+
+  @override
+  State<_ApplicationCardWidget> createState() => _ApplicationCardWidgetState();
+}
+
+class _ApplicationCardWidgetState extends State<_ApplicationCardWidget> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: _isHovered ? AppColors.primary.withValues(alpha: 0.45) : const Color(0xFFE2E8F0),
+            width: _isHovered ? 1.6 : 1.2,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: _isHovered
+                  ? AppColors.primary.withValues(alpha: 0.12)
+                  : const Color(0x0A0F172A),
+              blurRadius: _isHovered ? 24 : 16,
+              offset: Offset(0, _isHovered ? 10 : 5),
+            ),
+          ],
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: widget.onTap,
+            borderRadius: BorderRadius.circular(20),
+            hoverColor: Colors.transparent,
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        width: 46,
+                        height: 46,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              AppColors.primary.withValues(alpha: _isHovered ? 0.20 : 0.12),
+                              AppColors.secondary.withValues(alpha: _isHovered ? 0.18 : 0.10),
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(
+                            color: AppColors.primary.withValues(alpha: _isHovered ? 0.35 : 0.20),
+                            width: 1,
+                          ),
+                        ),
+                        child: Icon(
+                          widget.item.icon,
+                          color: AppColors.primary,
+                          size: 22,
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFF1F5F9),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: const Color(0xFFE2E8F0)),
+                        ),
+                        child: Text(
+                          widget.item.id,
+                          style: GoogleFonts.outfit(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w800,
+                            color: AppColors.primary,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 14),
+                  SizedBox(
+                    height: 44,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        widget.item.title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.outfit(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w700,
+                          color: const Color(0xFF0F172A),
+                          height: 1.25,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  SizedBox(
+                    height: 38,
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        widget.item.subtitle,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.inter(
+                          fontSize: 12.5,
+                          color: const Color(0xFF475569),
+                          height: 1.35,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Wrap(
+                    spacing: 6,
+                    runSpacing: 6,
+                    children: widget.item.tags
+                        .map((tag) => Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFF8FAFC),
+                                borderRadius: BorderRadius.circular(6),
+                                border: Border.all(color: const Color(0xFFE2E8F0)),
+                              ),
+                              child: Text(
+                                tag,
+                                style: GoogleFonts.inter(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xFF334155),
+                                ),
+                              ),
+                            ))
+                        .toList(),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 
