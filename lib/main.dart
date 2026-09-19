@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       builder: (context, lang, _) {
         return MaterialApp(
           key: ValueKey(lang.code),
-          title: 'Amar Foods | Dehydrated Onion & Garlic Manufacturer in Mahuva, Gujarat',
+          title: 'Dehydrated Onion & Garlic Manufacturer and Exporter from Mahuva | Amar Foods',
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme,
           builder: (context, child) {
