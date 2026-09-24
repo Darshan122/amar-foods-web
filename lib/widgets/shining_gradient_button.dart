@@ -11,7 +11,6 @@ class ShiningGradientButton extends StatefulWidget {
   final EdgeInsetsGeometry padding;
   final bool enableShine;
   final Color shineColor;
-  final double elevation;
   final List<BoxShadow>? shadows;
   final Border? border;
 
@@ -25,10 +24,9 @@ class ShiningGradientButton extends StatefulWidget {
       end: Alignment.centerRight,
     ),
     this.borderRadius = const BorderRadius.all(Radius.circular(5)),
-    this.padding = const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+    this.padding = const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
     this.enableShine = true,
     this.shineColor = Colors.white,
-    this.elevation = 3.0,
     this.shadows,
     this.border,
   });
@@ -79,14 +77,14 @@ class _ShiningGradientButtonState extends State<ShiningGradientButton>
     final List<BoxShadow> defaultShadows = widget.shadows ??
         [
           BoxShadow(
-            color: const Color(0xFFA64787).withValues(alpha: _isHovered ? 0.35 : 0.20),
+            color: const Color(0xFFA64787).withValues(alpha: _isHovered ? 0.35 : 0.18),
             blurRadius: _isHovered ? 12 : 6,
-            offset: const Offset(0, 3),
+            offset: const Offset(0, 2),
           ),
           BoxShadow(
-            color: const Color(0xFF009846).withValues(alpha: _isHovered ? 0.30 : 0.18),
+            color: const Color(0xFF009846).withValues(alpha: _isHovered ? 0.30 : 0.15),
             blurRadius: _isHovered ? 12 : 6,
-            offset: const Offset(2, 3),
+            offset: const Offset(1, 2),
           ),
         ];
 
@@ -100,59 +98,68 @@ class _ShiningGradientButtonState extends State<ShiningGradientButton>
         scale: _isHovered && widget.onPressed != null ? 1.025 : 1.0,
         duration: const Duration(milliseconds: 180),
         curve: Curves.easeOutCubic,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
-          curve: Curves.easeOutCubic,
+        child: DecoratedBox(
           decoration: BoxDecoration(
-            gradient: widget.gradient,
             borderRadius: widget.borderRadius,
-            border: widget.border ??
-                Border.all(
-                  color: Colors.white.withValues(alpha: _isHovered ? 0.35 : 0.20),
-                  width: 1.0,
-                ),
             boxShadow: defaultShadows,
           ),
-          child: Material(
-            color: Colors.transparent,
+          child: ClipRRect(
             borderRadius: widget.borderRadius,
-            child: InkWell(
-              onTap: widget.onPressed,
-              borderRadius: widget.borderRadius,
-              splashColor: Colors.white.withValues(alpha: 0.15),
-              highlightColor: Colors.white.withValues(alpha: 0.08),
-              child: widget.enableShine
-                  ? AnimatedBuilder(
-                      animation: _controller,
-                      builder: (context, child) {
-                        final double t = _controller.value;
-                        double sweepProgress = 2.0; // default off-screen (idle)
-
-                        // 0.0 to 0.42 is the active shine sweep (~1.34s)
-                        // 0.42 to 1.0 is idle pause (~1.86s)
-                        if (t <= 0.42) {
-                          final double norm = t / 0.42;
-                          sweepProgress = Curves.easeInOutCubic.transform(norm);
-                        }
-
-                        return CustomPaint(
-                          foregroundPainter: _ShinePainter(
-                            progress: sweepProgress,
-                            borderRadius: widget.borderRadius,
-                            shineColor: widget.shineColor,
-                          ),
-                          child: child,
-                        );
-                      },
-                      child: Padding(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: widget.gradient,
+                borderRadius: widget.borderRadius,
+                border: widget.border ??
+                    Border.all(
+                      color: Colors.white.withValues(alpha: _isHovered ? 0.40 : 0.22),
+                      width: 1.0,
+                    ),
+              ),
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: widget.onPressed,
+                  borderRadius: widget.borderRadius,
+                  splashColor: Colors.white.withValues(alpha: 0.18),
+                  highlightColor: Colors.white.withValues(alpha: 0.08),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Padding(
                         padding: widget.padding,
                         child: widget.child,
                       ),
-                    )
-                  : Padding(
-                      padding: widget.padding,
-                      child: widget.child,
-                    ),
+                      if (widget.enableShine)
+                        Positioned.fill(
+                          child: IgnorePointer(
+                            child: AnimatedBuilder(
+                              animation: _controller,
+                              builder: (context, _) {
+                                final double t = _controller.value;
+                                double sweepProgress = 2.0; // default off-screen (idle)
+
+                                // 0.0 to 0.40 is the active shine sweep (~1.28s)
+                                // 0.40 to 1.0 is idle pause (~1.92s)
+                                if (t <= 0.40) {
+                                  final double norm = t / 0.40;
+                                  sweepProgress = Curves.easeInOutCubic.transform(norm);
+                                }
+
+                                return CustomPaint(
+                                  painter: _ShinePainter(
+                                    progress: sweepProgress,
+                                    borderRadius: widget.borderRadius,
+                                    shineColor: widget.shineColor,
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
         ),
@@ -182,7 +189,7 @@ class _ShinePainter extends CustomPainter {
 
     // Diagonal angle: ~0.35 radians (~20 degrees tilt) matching reference image
     const double angle = 0.35;
-    const double barWidth = 38.0;
+    const double barWidth = 36.0;
     final double barHeight = size.height * 3.5;
 
     // Sweep from left off-screen to right off-screen
@@ -205,9 +212,9 @@ class _ShinePainter extends CustomPainter {
         end: Alignment.centerRight,
         colors: [
           shineColor.withValues(alpha: 0.0),
-          shineColor.withValues(alpha: 0.22),
-          shineColor.withValues(alpha: 0.65),
-          shineColor.withValues(alpha: 0.22),
+          shineColor.withValues(alpha: 0.20),
+          shineColor.withValues(alpha: 0.60),
+          shineColor.withValues(alpha: 0.20),
           shineColor.withValues(alpha: 0.0),
         ],
         stops: const [0.0, 0.30, 0.50, 0.70, 1.0],

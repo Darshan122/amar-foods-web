@@ -18,7 +18,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
   const AppHeader({super.key});
 
   @override
-  Size get preferredSize => const Size.fromHeight(104.0);
+  Size get preferredSize => const Size.fromHeight(96.0);
 
   static Future<void> openBrochure(BuildContext context) async {
     await BrochureDialog.show(context);
@@ -49,15 +49,13 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
             final double outerMarginH = isCompactMobile
                 ? 10.0
                 : LiquidUI.fluid(context, minVal: 12, maxVal: 32);
-            final double outerMarginV = isCompactMobile
-                ? 8.0
-                : LiquidUI.fluid(context, minVal: 10, maxVal: 16);
+            final double outerMarginV = isCompactMobile ? 5.0 : 7.0;
             final double innerPaddingH = isCompactMobile
                 ? 12.0
-                : LiquidUI.fluid(context, minVal: 16, maxVal: 32);
+                : LiquidUI.fluid(context, minVal: 14, maxVal: 28);
             final double logoHeight = isCompactMobile
-                ? 38.0
-                : LiquidUI.fluid(context, minVal: 46, maxVal: 56);
+                ? 36.0
+                : LiquidUI.fluid(context, minVal: 40, maxVal: 46);
 
             return Container(
               color: Colors.transparent, // outer breathing room around the floating pill
@@ -65,7 +63,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
               child: Container(
                 decoration: BoxDecoration(
                   color: AppColors.surfaceGlass,
-                  borderRadius: BorderRadius.circular(18), // elegant curved header bar
+                  borderRadius: BorderRadius.circular(16), // elegant curved header bar
                   border: Border.all(color: AppColors.borderGlass, width: 1.5),
                   boxShadow: [
                     BoxShadow(
@@ -77,7 +75,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
                 ),
                 padding: EdgeInsets.symmetric(
                   horizontal: innerPaddingH,
-                  vertical: isCompactMobile ? 10 : 14,
+                  vertical: isCompactMobile ? 8 : 10,
                 ),
                 child: isMobileHeader
                     ? _buildMobileRow(context, logoHeight, constraints)
@@ -308,13 +306,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),
-      padding: LiquidUI.fluidPaddingSymmetric(
-        context,
-        minHorizontal: 12,
-        maxHorizontal: 18,
-        minVertical: 10,
-        maxVertical: 13,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
       enableShine: false,
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -329,10 +321,9 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
           const SizedBox(width: 5),
           Text(
             LanguageService.instance.tr('btn_brochure'),
-            style: TextStyle(
-              fontFamily: AppTheme.outfitFont,
+            style: GoogleFonts.outfit(
               fontWeight: FontWeight.bold,
-              fontSize: LiquidUI.fluid(context, minVal: 12.5, maxVal: 14),
+              fontSize: 13,
               color: Colors.white,
               letterSpacing: 0.3,
             ),
@@ -352,13 +343,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
       ),
-      padding: LiquidUI.fluidPaddingSymmetric(
-        context,
-        minHorizontal: 16,
-        maxHorizontal: 22,
-        minVertical: 10,
-        maxVertical: 13,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 9),
       enableShine: true,
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -366,10 +351,9 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
         children: [
           Text(
             LanguageService.instance.tr('btn_quote'),
-            style: TextStyle(
-              fontFamily: AppTheme.outfitFont,
+            style: GoogleFonts.outfit(
               fontWeight: FontWeight.bold,
-              fontSize: LiquidUI.fluid(context, minVal: 12.5, maxVal: 14),
+              fontSize: 13,
               color: Colors.white,
               letterSpacing: 0.3,
             ),
