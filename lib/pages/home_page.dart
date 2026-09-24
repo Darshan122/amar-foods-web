@@ -1302,15 +1302,14 @@ class _HomePageState extends State<HomePage> {
                     ],
                   );
 
-                  final btn = ElevatedButton(
+                  final btn = ShiningGradientButton(
                     onPressed: () => Navigator.pushNamed(context, '/products'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.secondary,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                      elevation: 4,
-                      shadowColor: AppColors.secondaryGlow,
+                    borderRadius: BorderRadius.circular(8),
+                    padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 14),
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFFA64787), Color(0xFF009846)],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -1321,10 +1320,11 @@ class _HomePageState extends State<HomePage> {
                           style: GoogleFonts.outfit(
                             fontWeight: FontWeight.bold,
                             fontSize: 15,
+                            color: Colors.white,
                           ),
                         ),
                         const SizedBox(width: 8),
-                        const Icon(Icons.arrow_forward_rounded, size: 18),
+                        const Icon(Icons.arrow_forward_rounded, size: 18, color: Colors.white),
                       ],
                     ),
                   );
@@ -1503,14 +1503,14 @@ class _HomePageState extends State<HomePage> {
 
                 SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(
+                  child: ShiningGradientButton(
                     onPressed: () => Navigator.pushNamed(context, '/products'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.secondary,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                      elevation: 2,
+                    borderRadius: BorderRadius.circular(8),
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFFA64787), Color(0xFF009846)],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -1520,10 +1520,11 @@ class _HomePageState extends State<HomePage> {
                           style: GoogleFonts.outfit(
                             fontWeight: FontWeight.bold,
                             fontSize: 14,
+                            color: Colors.white,
                           ),
                         ),
                         const SizedBox(width: 6),
-                        const Icon(Icons.arrow_forward_rounded, size: 16),
+                        const Icon(Icons.arrow_forward_rounded, size: 16, color: Colors.white),
                       ],
                     ),
                   ),
