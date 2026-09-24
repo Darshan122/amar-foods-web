@@ -208,26 +208,33 @@ class _InteractiveCardWrapperState extends State<_InteractiveCardWrapper> {
           curve: Curves.easeOutCubic,
           margin: widget.margin,
           padding: widget.padding ?? const EdgeInsets.all(24),
-          transform: _isHovered
-              ? (Matrix4.identity()..translate(0, -6, 0))
-              : Matrix4.identity(),
+          transform: Matrix4.translationValues(
+            0,
+            _isHovered ? -7.0 : 0.0,
+            0,
+          ),
           decoration: BoxDecoration(
             color: widget.backgroundColor,
             borderRadius: BorderRadius.circular(widget.borderRadius),
             border: Border.all(
               color: _isHovered
-                  ? AppColors.secondary.withOpacity(0.6)
+                  ? AppColors.primary.withValues(alpha: 0.5)
                   : widget.borderColor,
-              width: _isHovered ? 1.8 : 1.2,
+              width: _isHovered ? 1.7 : 1.2,
             ),
             boxShadow: [
               BoxShadow(
-                color: _isHovered
-                    ? AppColors.secondaryGlow.withOpacity(0.2)
-                    : AppColors.primaryGlow.withOpacity(0.06),
+                color: Colors.black.withValues(alpha: _isHovered ? 0.09 : 0.04),
                 blurRadius: _isHovered ? 28 : 16,
-                offset: Offset(0, _isHovered ? 12 : 6),
+                offset: Offset(0, _isHovered ? 12 : 5),
               ),
+              if (_isHovered)
+                BoxShadow(
+                  color: AppColors.primaryGlow.withValues(alpha: 0.16),
+                  blurRadius: 22,
+                  spreadRadius: 1,
+                  offset: const Offset(0, 6),
+                ),
             ],
           ),
           child: widget.child,

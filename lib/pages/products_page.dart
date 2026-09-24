@@ -12,6 +12,7 @@ import '../widgets/product_detail_dialog.dart';
 import 'product_detail_page.dart';
 import '../widgets/whatsapp_floating_button.dart';
 import '../widgets/app_buttons.dart';
+import '../widgets/amar_card.dart';
 import '../services/language_service.dart';
 
 class ProductsPage extends StatefulWidget {
@@ -618,20 +619,11 @@ class _ProductCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(22),
-        border: Border.all(color: AppColors.border),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.primaryGlow.withValues(alpha: 0.08),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
-      child: Column(
+    return AmarHoverCard(
+      onTap: onViewDetails,
+      borderRadius: 22,
+      padding: EdgeInsets.zero,
+      builder: (context, isHovered) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Single Hero Image with Tag Badge
@@ -643,36 +635,40 @@ class _ProductCardWidget extends StatelessWidget {
                   borderRadius: const BorderRadius.vertical(top: Radius.circular(22)),
                   child: AspectRatio(
                     aspectRatio: 1.25,
-                    child: Image.asset(
-                      product.image,
-                      fit: BoxFit.cover,
-                      cacheWidth: 480,
-                      frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                        if (wasSynchronouslyLoaded || frame != null) {
-                          return child;
-                        }
-                        return Container(
-                          color: const Color(0xFFF1F5F9),
-                          child: Center(
-                            child: SizedBox(
-                              width: 24,
-                              height: 24,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                color: AppColors.primary.withValues(alpha: 0.35),
+                    child: AmarCardImageZoom(
+                      isHovered: isHovered,
+                      scale: 1.06,
+                      child: Image.asset(
+                        product.image,
+                        fit: BoxFit.cover,
+                        cacheWidth: 480,
+                        frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                          if (wasSynchronouslyLoaded || frame != null) {
+                            return child;
+                          }
+                          return Container(
+                            color: const Color(0xFFF1F5F9),
+                            child: Center(
+                              child: SizedBox(
+                                width: 24,
+                                height: 24,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: AppColors.primary.withValues(alpha: 0.35),
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                      errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          color: AppColors.primaryLight,
-                          child: const Center(
-                            child: Icon(Icons.inventory_2_outlined, size: 48, color: AppColors.primary),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            color: AppColors.primaryLight,
+                            child: const Center(
+                              child: Icon(Icons.inventory_2_outlined, size: 48, color: AppColors.primary),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),

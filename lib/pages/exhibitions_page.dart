@@ -10,6 +10,7 @@ import '../widgets/app_header.dart';
 import '../widgets/brochure_dialog.dart';
 import '../widgets/whatsapp_floating_button.dart';
 import '../widgets/app_buttons.dart';
+import '../widgets/amar_card.dart';
 
 class ExhibitionsPage extends StatefulWidget {
   const ExhibitionsPage({super.key});
@@ -927,36 +928,23 @@ class _ExhibitionsPageState extends State<ExhibitionsPage> {
   }
 
   Widget _buildExhibitionCard(BuildContext context, ExhibitionItem expo, bool isCurrent) {
-    return InkWell(
+    return AmarHoverCard(
       onTap: () => _selectExhibition(expo.id),
-      borderRadius: BorderRadius.circular(24),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 250),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(24),
-          border: Border.all(
-            color: isCurrent ? AppColors.primary : AppColors.border,
-            width: isCurrent ? 2 : 1,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: isCurrent
-                  ? AppColors.primary.withValues(alpha: 0.15)
-                  : Colors.black.withValues(alpha: 0.04),
-              blurRadius: isCurrent ? 20 : 12,
-              offset: const Offset(0, 6),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Image with tag
-            Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.vertical(top: Radius.circular(23)),
+      borderRadius: 24,
+      padding: EdgeInsets.zero,
+      borderColor: isCurrent ? AppColors.primary : AppColors.border,
+      hoverBorderColor: isCurrent ? AppColors.primary : AppColors.primary.withValues(alpha: 0.5),
+      builder: (context, isHovered) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Image with tag
+          Stack(
+            children: [
+              ClipRRect(
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(23)),
+                child: AmarCardImageZoom(
+                  isHovered: isHovered,
+                  scale: 1.06,
                   child: Image.asset(
                     expo.mainImage,
                     height: 200,
@@ -973,6 +961,7 @@ class _ExhibitionsPageState extends State<ExhibitionsPage> {
                     },
                   ),
                 ),
+              ),
                 Positioned(
                   top: 12,
                   left: 12,
@@ -1105,7 +1094,6 @@ class _ExhibitionsPageState extends State<ExhibitionsPage> {
             ),
           ],
         ),
-      ),
     );
   }
 

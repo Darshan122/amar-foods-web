@@ -8,6 +8,7 @@ import '../widgets/app_footer.dart';
 import '../widgets/quote_dialog.dart';
 import '../widgets/whatsapp_floating_button.dart';
 import '../widgets/app_buttons.dart';
+import '../widgets/amar_card.dart';
 import '../services/language_service.dart';
 
 class AboutPage extends StatelessWidget {
@@ -520,23 +521,27 @@ class AboutPage extends StatelessWidget {
   }
 
   Widget _buildValueCard(String index, String title, IconData icon, String desc) {
-    return LiquidUI.glassCard(
+    return AmarHoverCard(
       padding: const EdgeInsets.all(24),
       backgroundColor: Colors.white,
       borderRadius: 20,
-      child: Column(
+      showSheen: true,
+      builder: (context, isHovered) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: const BoxDecoration(
-                  color: AppColors.primaryLight,
-                  shape: BoxShape.circle,
+              AmarCardIconPop(
+                isHovered: isHovered,
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: isHovered ? AppColors.primaryLight : AppColors.primaryLight.withValues(alpha: 0.7),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(icon, color: AppColors.primary, size: 24),
                 ),
-                child: Icon(icon, color: AppColors.primary, size: 24),
               ),
               Text(
                 '#$index',
@@ -695,32 +700,24 @@ class AboutPage extends StatelessWidget {
   Widget _buildFounderCard(BuildContext context, Map<String, String> f) {
     final String? imagePath = f['image'];
 
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.background,
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: AppColors.borderGlass, width: 1.4),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 18,
-            offset: const Offset(0, 6),
-          ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Founder Portrait Photo with Floating Experience Badge (Exact 3:4 aspect ratio for full view)
-            if (imagePath != null)
-              AspectRatio(
-                aspectRatio: 3 / 4,
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    Image.asset(
+    return AmarHoverCard(
+      borderRadius: 24,
+      padding: EdgeInsets.zero,
+      backgroundColor: AppColors.background,
+      builder: (context, isHovered) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Founder Portrait Photo with Floating Experience Badge (Exact 3:4 aspect ratio for full view)
+          if (imagePath != null)
+            AspectRatio(
+              aspectRatio: 3 / 4,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  AmarCardImageZoom(
+                    isHovered: isHovered,
+                    scale: 1.05,
+                    child: Image.asset(
                       imagePath,
                       fit: BoxFit.cover,
                       alignment: Alignment.topCenter,
@@ -733,6 +730,7 @@ class AboutPage extends StatelessWidget {
                         );
                       },
                     ),
+                  ),
                     // Dark gradient vignette overlay at the bottom of the photo
                     Positioned(
                       bottom: 0,
@@ -860,7 +858,6 @@ class AboutPage extends StatelessWidget {
             ),
           ],
         ),
-      ),
     );
   }
 
@@ -974,26 +971,28 @@ class AboutPage extends StatelessWidget {
   }
 
   Widget _buildInfraCard(String step, String title, IconData icon, String desc) {
-    return Container(
+    return AmarHoverCard(
+      isDarkSurface: true,
       padding: const EdgeInsets.all(28),
-      decoration: BoxDecoration(
-        color: const Color(0xFF1B1C26),
-        borderRadius: BorderRadius.circular(22),
-        border: Border.all(color: Colors.white.withOpacity(0.08)),
-      ),
-      child: Column(
+      borderRadius: 22,
+      backgroundColor: const Color(0xFF1B1C26),
+      borderColor: Colors.white.withValues(alpha: 0.08),
+      builder: (context, isHovered) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: AppColors.secondary.withOpacity(0.15),
-                  borderRadius: BorderRadius.circular(16),
+              AmarCardIconPop(
+                isHovered: isHovered,
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: AppColors.secondary.withValues(alpha: isHovered ? 0.28 : 0.15),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Icon(icon, color: AppColors.secondary, size: 26),
                 ),
-                child: Icon(icon, color: AppColors.secondary, size: 26),
               ),
               Text(
                 step,

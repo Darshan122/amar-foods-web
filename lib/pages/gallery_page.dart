@@ -9,6 +9,7 @@ import '../widgets/quote_dialog.dart';
 import '../widgets/product_detail_dialog.dart';
 import '../widgets/whatsapp_floating_button.dart';
 import '../widgets/app_buttons.dart';
+import '../widgets/amar_card.dart';
 import '../services/language_service.dart';
 
 class GalleryPage extends StatefulWidget {
@@ -482,7 +483,7 @@ class _GalleryPageState extends State<GalleryPage> {
     final String desc = item['desc'] ?? 'Export-grade dehydrated onion & garlic product processed under hygienic heat-controlled dehydration.';
     final bool isExpo = category == 'EXPOS & EVENTS';
 
-    return LiquidUI.interactiveGlassCard(
+    return AmarHoverCard(
       onTap: () {
         if (isExpo) {
           _showExpoLightbox(context, item);
@@ -526,7 +527,7 @@ class _GalleryPageState extends State<GalleryPage> {
       padding: EdgeInsets.zero,
       backgroundColor: Colors.white,
       borderRadius: 20,
-      child: Column(
+      builder: (context, isHovered) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Stack(
@@ -535,19 +536,23 @@ class _GalleryPageState extends State<GalleryPage> {
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
                 child: AspectRatio(
                   aspectRatio: 4 / 3,
-                  child: Image.asset(
-                    image,
-                    fit: BoxFit.cover,
-                    alignment: isExpo ? Alignment.topCenter : Alignment.center,
-                    cacheWidth: 600,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Container(
-                        color: AppColors.primaryLight,
-                        child: const Center(
-                          child: Icon(Icons.image_outlined, size: 48, color: AppColors.primary),
-                        ),
-                      );
-                    },
+                  child: AmarCardImageZoom(
+                    isHovered: isHovered,
+                    scale: 1.06,
+                    child: Image.asset(
+                      image,
+                      fit: BoxFit.cover,
+                      alignment: isExpo ? Alignment.topCenter : Alignment.center,
+                      cacheWidth: 600,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          color: AppColors.primaryLight,
+                          child: const Center(
+                            child: Icon(Icons.image_outlined, size: 48, color: AppColors.primary),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),

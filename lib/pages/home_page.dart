@@ -11,6 +11,7 @@ import '../widgets/video_background.dart';
 import '../widgets/whatsapp_floating_button.dart';
 import '../widgets/shining_gradient_button.dart';
 import '../widgets/app_buttons.dart';
+import '../widgets/amar_card.dart';
 import '../services/language_service.dart';
 
 class HomePage extends StatefulWidget {
@@ -1329,12 +1330,12 @@ class _HomePageState extends State<HomePage> {
     Alignment imageAlignment = Alignment.center,
     BoxFit imageFit = BoxFit.cover,
   }) {
-    return LiquidUI.interactiveGlassCard(
+    return AmarHoverCard(
       onTap: () => Navigator.pushNamed(context, '/products'),
       padding: EdgeInsets.zero,
       backgroundColor: Colors.white,
       borderRadius: 20,
-      child: Column(
+      builder: (context, isHovered) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Stack(
@@ -1345,19 +1346,23 @@ class _HomePageState extends State<HomePage> {
                   color: const Color(0xFF16161D),
                   child: AspectRatio(
                     aspectRatio: 16 / 9,
-                    child: Image.asset(
-                      imagePath,
-                      fit: imageFit,
-                      alignment: imageAlignment,
-                      cacheWidth: 1000,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          color: AppColors.primaryLight,
-                          child: const Center(
-                            child: Icon(Icons.shopping_bag_outlined, size: 48, color: AppColors.primary),
-                          ),
-                        );
-                      },
+                    child: AmarCardImageZoom(
+                      isHovered: isHovered,
+                      scale: 1.06,
+                      child: Image.asset(
+                        imagePath,
+                        fit: imageFit,
+                        alignment: imageAlignment,
+                        cacheWidth: 1000,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            color: AppColors.primaryLight,
+                            child: const Center(
+                              child: Icon(Icons.shopping_bag_outlined, size: 48, color: AppColors.primary),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),
@@ -1572,33 +1577,37 @@ class _HomePageState extends State<HomePage> {
     String title,
     String desc,
   ) {
-    return LiquidUI.interactiveGlassCard(
+    return AmarHoverCard(
       onTap: () => _showQuoteDialog(context),
       padding: const EdgeInsets.all(28),
       backgroundColor: AppColors.background,
       borderRadius: 22,
-      child: Column(
+      showSheen: true,
+      builder: (context, isHovered) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  color: AppColors.secondary.withOpacity(0.12),
-                  borderRadius: BorderRadius.circular(16),
+              AmarCardIconPop(
+                isHovered: isHovered,
+                child: Container(
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    color: AppColors.secondary.withValues(alpha: isHovered ? 0.22 : 0.12),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Icon(icon, color: AppColors.secondary, size: 28),
                 ),
-                child: Icon(icon, color: AppColors.secondary, size: 28),
               ),
               const SizedBox(width: 8),
               Flexible(
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
                   decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.08),
+                    color: AppColors.primary.withValues(alpha: isHovered ? 0.14 : 0.08),
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: AppColors.primary.withOpacity(0.15)),
+                    border: Border.all(color: AppColors.primary.withValues(alpha: isHovered ? 0.35 : 0.15)),
                   ),
                   child: Text(
                     '#$index • $badge',
@@ -1787,40 +1796,41 @@ class _HomePageState extends State<HomePage> {
     String title,
     String desc,
   ) {
-    return Container(
+    return AmarHoverCard(
+      isDarkSurface: true,
       padding: const EdgeInsets.all(26),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.06),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.white.withOpacity(0.12)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.15),
-            blurRadius: 16,
-            offset: const Offset(0, 6),
-          ),
-        ],
-      ),
-      child: Column(
+      borderRadius: 20,
+      backgroundColor: Colors.white.withValues(alpha: 0.06),
+      borderColor: Colors.white.withValues(alpha: 0.12),
+      builder: (context, isHovered) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: AppColors.secondary.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(14),
+              AmarCardIconPop(
+                isHovered: isHovered,
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: AppColors.secondary.withValues(alpha: isHovered ? 0.32 : 0.20),
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  child: Icon(icon, color: AppColors.secondary, size: 24),
                 ),
-                child: Icon(icon, color: AppColors.secondary, size: 24),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.1),
+                  color: isHovered
+                      ? AppColors.secondary.withValues(alpha: 0.20)
+                      : Colors.white.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: Colors.white.withOpacity(0.2)),
+                  border: Border.all(
+                    color: isHovered
+                        ? AppColors.secondary.withValues(alpha: 0.45)
+                        : Colors.white.withValues(alpha: 0.2),
+                  ),
                 ),
                 child: Text(
                   'STEP $stepNum',
@@ -1853,9 +1863,10 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           const SizedBox(height: 16),
-          Container(
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 220),
             height: 3,
-            width: 40,
+            width: isHovered ? 56 : 40,
             decoration: BoxDecoration(
               color: AppColors.secondary,
               borderRadius: BorderRadius.circular(2),
@@ -1996,41 +2007,55 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildCertCard(BuildContext context, _CertItem c) {
-    return LiquidUI.interactiveGlassCard(
+    return AmarHoverCard(
       onTap: () => _showCertDetailDialog(context, c),
       padding: const EdgeInsets.all(24),
       backgroundColor: AppColors.background,
       borderRadius: 22,
-      child: Column(
+      showSheen: true,
+      builder: (context, isHovered) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Real Emblem Image Header (Large & Zoomed)
-              Container(
-                width: 72,
-                height: 72,
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(18),
-                  border: Border.all(color: AppColors.primary.withOpacity(0.18), width: 1.5),
-                  boxShadow: const [
-                    BoxShadow(color: Colors.black12, blurRadius: 10, offset: Offset(0, 4)),
-                  ],
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(14),
-                  child: Container(
+              // Real Emblem Image Header (Large & Zoomed on hover)
+              AmarCardImageZoom(
+                isHovered: isHovered,
+                scale: 1.05,
+                child: Container(
+                  width: 72,
+                  height: 72,
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
                     color: Colors.white,
-                    alignment: Alignment.center,
-                    child: Image.asset(
-                      c.image,
-                      fit: BoxFit.contain,
-                      errorBuilder: (context, error, stackTrace) {
-                        return const Icon(Icons.verified_rounded, color: AppColors.primary, size: 32);
-                      },
+                    borderRadius: BorderRadius.circular(18),
+                    border: Border.all(
+                      color: isHovered
+                          ? AppColors.primary.withValues(alpha: 0.45)
+                          : AppColors.primary.withValues(alpha: 0.18),
+                      width: 1.5,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: isHovered ? 0.16 : 0.08),
+                        blurRadius: 10,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(14),
+                    child: Container(
+                      color: Colors.white,
+                      alignment: Alignment.center,
+                      child: Image.asset(
+                        c.image,
+                        fit: BoxFit.contain,
+                        errorBuilder: (context, error, stackTrace) {
+                          return const Icon(Icons.verified_rounded, color: AppColors.primary, size: 32);
+                        },
+                      ),
                     ),
                   ),
                 ),
@@ -2044,9 +2069,11 @@ class _HomePageState extends State<HomePage> {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                       decoration: BoxDecoration(
-                        color: AppColors.primary.withOpacity(0.08),
+                        color: AppColors.primary.withValues(alpha: isHovered ? 0.14 : 0.08),
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: AppColors.primary.withOpacity(0.15)),
+                        border: Border.all(
+                          color: AppColors.primary.withValues(alpha: isHovered ? 0.35 : 0.15),
+                        ),
                       ),
                       child: Text(
                         c.tag,
@@ -2199,30 +2226,21 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildHomeExpoCard(BuildContext context, ExhibitionItem expo) {
-    return InkWell(
+    return AmarHoverCard(
       onTap: () => Navigator.pushNamed(context, '/exhibitions'),
-      borderRadius: BorderRadius.circular(24),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: AppColors.borderGlass, width: 1.4),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.05),
-              blurRadius: 18,
-              offset: const Offset(0, 6),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Top Image with Tag Badge
-            Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.vertical(top: Radius.circular(23)),
+      borderRadius: 24,
+      padding: EdgeInsets.zero,
+      builder: (context, isHovered) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Top Image with Tag Badge
+          Stack(
+            children: [
+              ClipRRect(
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(23)),
+                child: AmarCardImageZoom(
+                  isHovered: isHovered,
+                  scale: 1.06,
                   child: Image.asset(
                     expo.mainImage,
                     height: 220,
@@ -2239,6 +2257,7 @@ class _HomePageState extends State<HomePage> {
                     },
                   ),
                 ),
+              ),
                 // Pill Badge (International / Domestic)
                 Positioned(
                   top: 14,
@@ -2384,7 +2403,6 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-      ),
     );
   }
 

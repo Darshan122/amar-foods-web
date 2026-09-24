@@ -10,6 +10,7 @@ import '../widgets/quote_dialog.dart';
 import '../widgets/product_detail_dialog.dart';
 import '../widgets/whatsapp_floating_button.dart';
 import '../widgets/app_buttons.dart';
+import '../widgets/amar_card.dart';
 import '../services/firebase_service.dart';
 
 class ProductDetailPage extends StatefulWidget {
@@ -1320,29 +1321,22 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 children: relatedProducts.map((rel) {
                   return SizedBox(
                     width: isMobile ? double.infinity : 350,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: const Color(0xFFE2E8F0)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.04),
-                            blurRadius: 10,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      clipBehavior: Clip.antiAlias,
-                      child: Column(
+                    child: AmarHoverCard(
+                      borderRadius: 16,
+                      padding: EdgeInsets.zero,
+                      builder: (context, isHovered) => Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           AspectRatio(
                             aspectRatio: 1.6,
-                            child: Image.asset(
-                              rel.image,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) => Container(color: const Color(0xFFF1F5F9)),
+                            child: AmarCardImageZoom(
+                              isHovered: isHovered,
+                              scale: 1.06,
+                              child: Image.asset(
+                                rel.image,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) => Container(color: const Color(0xFFF1F5F9)),
+                              ),
                             ),
                           ),
                           Padding(
