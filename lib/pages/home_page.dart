@@ -10,6 +10,7 @@ import '../widgets/quote_dialog.dart';
 import '../widgets/video_background.dart';
 import '../widgets/whatsapp_floating_button.dart';
 import '../widgets/shining_gradient_button.dart';
+import '../widgets/app_buttons.dart';
 import '../services/language_service.dart';
 
 class HomePage extends StatefulWidget {
@@ -592,34 +593,16 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const SizedBox(height: 32),
 
-                  ElevatedButton(
+                  AmarSecondaryButton(
                     onPressed: () => Navigator.pushNamed(context, '/about'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      foregroundColor: Colors.white,
-                      padding: LiquidUI.fluidPaddingSymmetric(
-                        context,
-                        minHorizontal: 24, maxHorizontal: 32,
-                        minVertical: 14, maxVertical: 18,
-                      ),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                      elevation: 4,
-                      shadowColor: AppColors.primaryGlow,
+                    label: 'Learn More About Us',
+                    trailing: const Icon(Icons.arrow_forward_rounded, size: 16, color: AppColors.primary),
+                    padding: LiquidUI.fluidPaddingSymmetric(
+                      context,
+                      minHorizontal: 24, maxHorizontal: 32,
+                      minVertical: 14, maxVertical: 18,
                     ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          'Learn More About Us',
-                          style: GoogleFonts.outfit(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        const Icon(Icons.arrow_forward_rounded, size: 16),
-                      ],
-                    ),
+                    fontSize: 15,
                   ),
                 ],
               );
@@ -1037,39 +1020,21 @@ class _HomePageState extends State<HomePage> {
                   spacing: 12,
                   runSpacing: 12,
                   children: [
-                    ElevatedButton.icon(
+                    AmarPrimaryButton(
                       onPressed: () => _showQuoteDialog(context),
-                      icon: const Icon(Icons.send_rounded, size: 16),
-                      label: const Text('Inquire for Applications'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.secondary,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        textStyle: GoogleFonts.outfit(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
-                      ),
+                      icon: Icons.send_rounded,
+                      label: 'Inquire for Applications',
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 13),
+                      fontSize: 13.5,
                     ),
-                    OutlinedButton.icon(
+                    AmarSecondaryButton(
                       onPressed: () => WhatsAppFloatingButton.launchWhatsApp(),
-                      icon: const Icon(Icons.chat_rounded, size: 16, color: Color(0xFF25D366)),
-                      label: const Text('Chat on WhatsApp'),
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        side: BorderSide(color: Colors.white.withOpacity(0.3)),
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        textStyle: GoogleFonts.outfit(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
-                        ),
-                      ),
+                      icon: Icons.chat_rounded,
+                      label: 'Chat on WhatsApp',
+                      isDarkSurface: true,
+                      customAccent: const Color(0xFF25D366),
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 13),
+                      fontSize: 13.5,
                     ),
                   ],
                 ),
@@ -1119,40 +1084,22 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(width: 24),
                 Row(
                   children: [
-                    ElevatedButton.icon(
+                    AmarPrimaryButton(
                       onPressed: () => _showQuoteDialog(context),
-                      icon: const Icon(Icons.send_rounded, size: 16),
-                      label: const Text('Inquire Now'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.secondary,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        textStyle: GoogleFonts.outfit(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
-                      ),
+                      icon: Icons.send_rounded,
+                      label: 'Inquire Now',
+                      padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 15),
+                      fontSize: 14,
                     ),
                     const SizedBox(width: 12),
-                    OutlinedButton.icon(
+                    AmarSecondaryButton(
                       onPressed: () => WhatsAppFloatingButton.launchWhatsApp(),
-                      icon: const Icon(Icons.chat_rounded, size: 16, color: Color(0xFF25D366)),
-                      label: const Text('WhatsApp Us'),
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        side: BorderSide(color: Colors.white.withOpacity(0.35)),
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        textStyle: GoogleFonts.outfit(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
-                        ),
-                      ),
+                      icon: Icons.chat_rounded,
+                      label: 'WhatsApp Us',
+                      isDarkSurface: true,
+                      customAccent: const Color(0xFF25D366),
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                      fontSize: 14,
                     ),
                   ],
                 ),
@@ -1371,44 +1318,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildCategoryFilterTab(String categoryKey, String label) {
-    final bool isSelected = _selectedCategory == categoryKey;
 
-    return InkWell(
-      onTap: () => setState(() => _selectedCategory = categoryKey),
-      borderRadius: BorderRadius.circular(30),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary : Colors.white,
-          borderRadius: BorderRadius.circular(30),
-          border: Border.all(
-            color: isSelected ? AppColors.primary : AppColors.border,
-            width: 1.5,
-          ),
-          boxShadow: isSelected
-              ? [
-                  BoxShadow(
-                    color: AppColors.primaryGlow.withOpacity(0.2),
-                    blurRadius: 12,
-                    offset: const Offset(0, 4),
-                  )
-                ]
-              : null,
-        ),
-        child: Text(
-          label,
-          style: GoogleFonts.outfit(
-            color: isSelected ? Colors.white : AppColors.textPrimary,
-            fontWeight: FontWeight.bold,
-            fontSize: 12,
-            letterSpacing: 0.5,
-          ),
-        ),
-      ),
-    );
-  }
 
   Widget _buildProductCard(
     BuildContext context, {
@@ -2256,59 +2166,28 @@ class _HomePageState extends State<HomePage> {
                 spacing: 16,
                 runSpacing: 12,
                 children: [
-                  ElevatedButton.icon(
+                  AmarPrimaryButton(
                     onPressed: () => Navigator.pushNamed(context, '/exhibitions'),
-                    icon: const Icon(Icons.storefront_rounded, size: 18),
-                    label: Text(
-                      'Explore All Exhibitions & Gallery →',
-                      style: GoogleFonts.outfit(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      ),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 16),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                      elevation: 3,
-                      shadowColor: AppColors.primaryGlow,
-                    ),
+                    icon: Icons.storefront_rounded,
+                    label: 'Explore All Exhibitions',
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 15),
+                    fontSize: 14,
                   ),
-                  ElevatedButton.icon(
+                  AmarSecondaryButton(
                     onPressed: () => _showQuoteDialog(context),
-                    icon: const Icon(Icons.handshake_rounded, size: 18),
-                    label: Text(
-                      'Schedule B2B Meeting',
-                      style: GoogleFonts.outfit(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      ),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.secondary,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                      elevation: 2,
-                    ),
+                    icon: Icons.handshake_rounded,
+                    label: 'Schedule B2B Meeting',
+                    customAccent: AppColors.secondary,
+                    padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 15),
+                    fontSize: 14,
                   ),
-                  OutlinedButton.icon(
+                  AmarSecondaryButton(
                     onPressed: () => AppHeader.openBrochure(context),
-                    icon: const Icon(Icons.picture_as_pdf_outlined, size: 17),
-                    label: Text(
-                      'Download Brochure',
-                      style: GoogleFonts.outfit(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      ),
-                    ),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: AppColors.primaryDark,
-                      side: BorderSide(color: AppColors.primary.withValues(alpha: 0.3), width: 1.4),
-                      padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 16),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                    ),
+                    icon: Icons.picture_as_pdf_outlined,
+                    label: 'Download Brochure',
+                    customAccent: AppColors.primaryDark,
+                    padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 15),
+                    fontSize: 14,
                   ),
                 ],
               ),
@@ -2629,25 +2508,12 @@ class _HomePageState extends State<HomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ElevatedButton(
+                  AmarPrimaryButton(
                     onPressed: () => _showQuoteDialog(context),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.secondary,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 16),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                    ),
-                    child: Text(
-                      LanguageService.instance.tr('cta_btn'),
-                      style: GoogleFonts.outfit(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                      ),
-                    ),
+                    label: LanguageService.instance.tr('cta_btn'),
+                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                    fontSize: 15,
                   ),
-                  // const SizedBox(width: 16),
-                  // OutlinedButton(
-                  //   onPressed: () => Navigator.pushNamed(context, '/quality'),
                 ],
               ),
             ],

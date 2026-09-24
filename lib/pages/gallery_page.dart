@@ -8,6 +8,7 @@ import '../widgets/app_footer.dart';
 import '../widgets/quote_dialog.dart';
 import '../widgets/product_detail_dialog.dart';
 import '../widgets/whatsapp_floating_button.dart';
+import '../widgets/app_buttons.dart';
 import '../services/language_service.dart';
 
 class GalleryPage extends StatefulWidget {
@@ -394,21 +395,11 @@ class _GalleryPageState extends State<GalleryPage> {
                         ),
                       ),
                       const SizedBox(height: 24),
-                      ElevatedButton(
+                      AmarPrimaryButton(
                         onPressed: () => _showQuoteDialog(context),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.secondary,
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                        ),
-                        child: Text(
-                          LanguageService.instance.tr('gallery_cta_btn'),
-                          style: GoogleFonts.outfit(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
-                        ),
+                        label: LanguageService.instance.tr('gallery_cta_btn'),
+                        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                        fontSize: 15,
                       ),
                     ],
                   ),

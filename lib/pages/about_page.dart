@@ -7,6 +7,7 @@ import '../widgets/app_header.dart';
 import '../widgets/app_footer.dart';
 import '../widgets/quote_dialog.dart';
 import '../widgets/whatsapp_floating_button.dart';
+import '../widgets/app_buttons.dart';
 import '../services/language_service.dart';
 
 class AboutPage extends StatelessWidget {
@@ -1065,22 +1066,11 @@ class AboutPage extends StatelessWidget {
               ),
               const SizedBox(height: 28),
 
-              ElevatedButton(
+              AmarPrimaryButton(
                 onPressed: () => _showQuoteDialog(context),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.secondary,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 34, vertical: 18),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                  elevation: 6,
-                ),
-                child: Text(
-                  LanguageService.instance.tr('about_cta_btn'),
-                  style: GoogleFonts.outfit(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
+                label: LanguageService.instance.tr('about_cta_btn'),
+                padding: const EdgeInsets.symmetric(horizontal: 34, vertical: 17),
+                fontSize: 16,
               ),
             ],
           ),

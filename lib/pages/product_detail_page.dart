@@ -9,6 +9,7 @@ import '../widgets/app_footer.dart';
 import '../widgets/quote_dialog.dart';
 import '../widgets/product_detail_dialog.dart';
 import '../widgets/whatsapp_floating_button.dart';
+import '../widgets/app_buttons.dart';
 import '../services/firebase_service.dart';
 
 class ProductDetailPage extends StatefulWidget {
@@ -516,34 +517,20 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           spacing: 14,
           runSpacing: 12,
           children: [
-            ElevatedButton.icon(
+            AmarPrimaryButton(
               onPressed: () => _showQuoteDialog(context),
-              icon: const Icon(Icons.description_outlined, size: 18),
-              label: Text(
-                'Request Container Quote',
-                style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 14),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.secondary,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 17),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                elevation: 3,
-              ),
+              icon: Icons.description_outlined,
+              label: 'Request Container Quote',
+              padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 16),
+              fontSize: 14,
             ),
-            OutlinedButton.icon(
+            AmarSecondaryButton(
               onPressed: _openWhatsAppInquiry,
-              icon: const Icon(Icons.chat_rounded, size: 18, color: Color(0xFF16A34A)),
-              label: Text(
-                'Chat on WhatsApp',
-                style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 14, color: const Color(0xFF15803D)),
-              ),
-              style: OutlinedButton.styleFrom(
-                side: const BorderSide(color: Color(0xFF22C55E), width: 1.5),
-                backgroundColor: const Color(0xFFF0FDF4),
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 17),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-              ),
+              icon: Icons.chat_rounded,
+              label: 'Chat on WhatsApp',
+              customAccent: const Color(0xFF15803D),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              fontSize: 14,
             ),
           ],
         ),
@@ -1380,27 +1367,20 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                   style: GoogleFonts.inter(color: const Color(0xFF475569), fontSize: 12.5),
                                 ),
                                 const SizedBox(height: 14),
-                                SizedBox(
+                                AmarSecondaryButton(
+                                  onPressed: () {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => ProductDetailPage(product: rel),
+                                      ),
+                                    );
+                                  },
+                                  label: 'View Details',
                                   width: double.infinity,
-                                  child: OutlinedButton(
-                                    onPressed: () {
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (_) => ProductDetailPage(product: rel),
-                                        ),
-                                      );
-                                    },
-                                    style: OutlinedButton.styleFrom(
-                                      side: const BorderSide(color: AppColors.secondary),
-                                      foregroundColor: AppColors.secondary,
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                                    ),
-                                    child: Text(
-                                      'View Details',
-                                      style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 13),
-                                    ),
-                                  ),
+                                  padding: const EdgeInsets.symmetric(vertical: 10),
+                                  fontSize: 13,
+                                  customAccent: AppColors.secondary,
                                 ),
                               ],
                             ),

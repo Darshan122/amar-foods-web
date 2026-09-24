@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../constants/app_colors.dart';
 import '../utils/liquid_ui.dart';
 import 'quote_dialog.dart';
+import 'app_buttons.dart';
 import '../pages/product_detail_page.dart';
 import '../services/language_service.dart';
 
@@ -332,24 +333,17 @@ class _ProductDetailDialogState extends State<ProductDetailDialog> {
                             Row(
                               children: [
                                 Expanded(
-                                  child: ElevatedButton.icon(
+                                  child: AmarPrimaryButton(
                                     onPressed: () => _showQuoteDialog(context),
-                                    icon: const Icon(Icons.chat_rounded, size: 18),
-                                    label: Text(
-                                      LanguageService.instance.tr('dialog_detail_whatsapp'),
-                                      style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 13),
-                                    ),
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color(0xFF25D366),
-                                      foregroundColor: Colors.white,
-                                      padding: const EdgeInsets.symmetric(vertical: 16),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                                    ),
+                                    icon: Icons.chat_rounded,
+                                    label: LanguageService.instance.tr('dialog_detail_whatsapp'),
+                                    padding: const EdgeInsets.symmetric(vertical: 14),
+                                    fontSize: 13,
                                   ),
                                 ),
                                 const SizedBox(width: 12),
                                 Expanded(
-                                  child: OutlinedButton.icon(
+                                  child: AmarSecondaryButton(
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                       Navigator.of(context).push(
@@ -358,17 +352,11 @@ class _ProductDetailDialogState extends State<ProductDetailDialog> {
                                         ),
                                       );
                                     },
-                                    icon: const Icon(Icons.open_in_new_rounded, size: 18),
-                                    label: Text(
-                                      'Full Specs Page',
-                                      style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 13),
-                                    ),
-                                    style: OutlinedButton.styleFrom(
-                                      side: const BorderSide(color: AppColors.secondary, width: 1.5),
-                                      foregroundColor: AppColors.secondary,
-                                      padding: const EdgeInsets.symmetric(vertical: 16),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                                    ),
+                                    icon: Icons.open_in_new_rounded,
+                                    label: 'Full Specs Page',
+                                    customAccent: AppColors.secondary,
+                                    padding: const EdgeInsets.symmetric(vertical: 14),
+                                    fontSize: 13,
                                   ),
                                 ),
                               ],

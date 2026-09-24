@@ -11,6 +11,7 @@ import '../widgets/quote_dialog.dart';
 import '../widgets/product_detail_dialog.dart';
 import 'product_detail_page.dart';
 import '../widgets/whatsapp_floating_button.dart';
+import '../widgets/app_buttons.dart';
 import '../services/language_service.dart';
 
 class ProductsPage extends StatefulWidget {
@@ -392,21 +393,11 @@ class _ProductsPageState extends State<ProductsPage> {
                         ),
                       ),
                       const SizedBox(height: 28),
-                      ElevatedButton(
+                      AmarPrimaryButton(
                         onPressed: () => _showQuoteDialog(context),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.secondary,
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 18),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                        ),
-                        child: Text(
-                          LanguageService.instance.tr('prod_custom_btn'),
-                          style: GoogleFonts.outfit(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
+                        label: LanguageService.instance.tr('prod_custom_btn'),
+                        padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 17),
+                        fontSize: 16,
                       ),
                     ],
                   ),
@@ -565,41 +556,14 @@ class _ProductsPageState extends State<ProductsPage> {
   Widget _buildFilterPill(String categoryKey, String label) {
     final bool isSelected = _selectedCategory == categoryKey;
 
-    return InkWell(
+    return AmarFilterChip(
+      isSelected: isSelected,
+      label: label,
+      activeColor: AppColors.secondary,
       onTap: () => setState(() {
         _selectedCategory = categoryKey;
         _currentPage = 1;
       }),
-      borderRadius: BorderRadius.circular(30),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        decoration: BoxDecoration(
-          color: isSelected ? AppColors.secondary : Colors.white.withValues(alpha: 0.12),
-          borderRadius: BorderRadius.circular(30),
-          border: Border.all(
-            color: isSelected ? AppColors.secondary : Colors.white.withValues(alpha: 0.25),
-            width: 1.5,
-          ),
-          boxShadow: isSelected
-              ? [
-                  BoxShadow(
-                    color: AppColors.secondary.withValues(alpha: 0.4),
-                    blurRadius: 10,
-                    offset: const Offset(0, 3),
-                  ),
-                ]
-              : null,
-        ),
-        child: Text(
-          label,
-          style: GoogleFonts.outfit(
-            color: Colors.white,
-            fontSize: 12.5,
-            fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-          ),
-        ),
-      ),
     );
   }
 
@@ -822,24 +786,13 @@ class _ProductCardWidget extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: ElevatedButton.icon(
+                      child: AmarSecondaryButton(
                         onPressed: onViewDetails,
-                        icon: const Icon(Icons.description_outlined, size: 16),
-                        label: Text(
-                          'View Specifications',
-                          style: GoogleFonts.outfit(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13,
-                          ),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.secondary,
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(vertical: 14),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                          elevation: 3,
-                          shadowColor: AppColors.secondaryGlow,
-                        ),
+                        icon: Icons.description_outlined,
+                        label: 'View Specifications',
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        fontSize: 13,
+                        customAccent: AppColors.primary,
                       ),
                     ),
                     const SizedBox(width: 10),

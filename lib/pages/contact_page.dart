@@ -8,6 +8,7 @@ import '../utils/liquid_ui.dart';
 import '../widgets/app_header.dart';
 import '../widgets/app_footer.dart';
 import '../widgets/whatsapp_floating_button.dart';
+import '../widgets/app_buttons.dart';
 import '../services/language_service.dart';
 
 class ContactPage extends StatefulWidget {
@@ -26,7 +27,6 @@ class _ContactPageState extends State<ContactPage> {
   final _messageController = TextEditingController();
   String _selectedProduct = 'Dehydrated Red Onion Flakes';
   bool _isSubmitting = false;
-  bool _isSubmitted = false;
 
   Future<void> _launchExternal(String urlString) async {
     final uri = Uri.parse(urlString);
@@ -46,7 +46,7 @@ class _ContactPageState extends State<ContactPage> {
       setState(() => _isSubmitting = true);
 
       // Save live data to Firebase Realtime Database
-      final success = await FirebaseService.submitContactInquiry(
+      await FirebaseService.submitContactInquiry(
         name: _nameController.text.trim(),
         email: _emailController.text.trim(),
         phone: _phoneController.text.trim(),
@@ -59,7 +59,6 @@ class _ContactPageState extends State<ContactPage> {
 
       setState(() {
         _isSubmitting = false;
-        _isSubmitted = true;
       });
 
       showDialog(
@@ -414,35 +413,12 @@ class _ContactPageState extends State<ContactPage> {
 
                               SizedBox(
                                 width: double.infinity,
-                                height: 50,
-                                child: ElevatedButton(
+                                child: AmarPrimaryButton(
                                   onPressed: _isSubmitting ? null : _submitForm,
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColors.secondary,
-                                    foregroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                                    elevation: 4,
-                                  ),
-                                  child: _isSubmitting
-                                      ? const SizedBox(
-                                          width: 22,
-                                          height: 22,
-                                          child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5),
-                                        )
-                                      : Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              LanguageService.instance.tr('contact_btn_submit'),
-                                              style: GoogleFonts.outfit(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            const SizedBox(width: 8),
-                                            const Icon(Icons.send_rounded, size: 18),
-                                          ],
-                                        ),
+                                  label: LanguageService.instance.tr('contact_btn_submit'),
+                                  icon: Icons.send_rounded,
+                                  padding: const EdgeInsets.symmetric(vertical: 16),
+                                  fontSize: 16,
                                 ),
                               ),
                             ],
@@ -848,51 +824,7 @@ class _ContactPageState extends State<ContactPage> {
     );
   }
 
-  Widget _buildContactCard(IconData icon, String title, String content) {
-    return LiquidUI.glassCard(
-      padding: const EdgeInsets.all(20),
-      backgroundColor: Colors.white,
-      borderRadius: 16,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: const BoxDecoration(
-              color: AppColors.primaryLight,
-              shape: BoxShape.circle,
-            ),
-            child: Icon(icon, color: AppColors.primary, size: 24),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: GoogleFonts.outfit(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  content,
-                  style: GoogleFonts.inter(
-                    fontSize: 13,
-                    color: AppColors.textSecondary,
-                    height: 1.5,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+
 
   Widget _buildTextField({
     required TextEditingController controller,

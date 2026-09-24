@@ -8,6 +8,7 @@ import '../utils/liquid_ui.dart';
 import '../widgets/app_header.dart';
 import '../widgets/app_footer.dart';
 import '../widgets/whatsapp_floating_button.dart';
+import '../widgets/app_buttons.dart';
 
 class EnquiryPage extends StatefulWidget {
   const EnquiryPage({super.key});
@@ -1604,135 +1605,30 @@ class _EnquiryPageState extends State<EnquiryPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           if (onBack != null)
-            OutlinedButton(
+            AmarSecondaryButton(
               onPressed: onBack,
-              style: OutlinedButton.styleFrom(
-                foregroundColor: const Color(0xFF4A5060),
-                side: const BorderSide(color: Color(0xFFD0D5DD), width: 1.5),
-                backgroundColor: Colors.white,
-                elevation: 0,
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(Icons.arrow_back_rounded, size: 18, color: Color(0xFF4A5060)),
-                  const SizedBox(width: 8),
-                  Text(
-                    'Back',
-                    style: GoogleFonts.outfit(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14,
-                      color: const Color(0xFF4A5060),
-                    ),
-                  ),
-                ],
-              ),
+              icon: Icons.arrow_back_rounded,
+              label: 'Back',
+              padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
+              fontSize: 14,
             )
           else
             const SizedBox(),
           if (onNext != null)
-            DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: AppColors.primaryGradient,
-                borderRadius: BorderRadius.circular(30),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.primary.withValues(alpha: 0.35),
-                    blurRadius: 14,
-                    offset: const Offset(0, 5),
-                  ),
-                ],
-              ),
-              child: ElevatedButton(
-                onPressed: onNext,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.transparent,
-                  shadowColor: Colors.transparent,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 14),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      'Next Step',
-                      style: GoogleFonts.outfit(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14.5,
-                        letterSpacing: 0.3,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.22),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(Icons.arrow_forward_rounded, size: 15, color: Colors.white),
-                    ),
-                  ],
-                ),
-              ),
+            AmarPrimaryButton(
+              onPressed: onNext,
+              label: 'Next Step',
+              trailing: const Icon(Icons.arrow_forward_rounded, size: 16, color: Colors.white),
+              padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 14),
+              fontSize: 14.5,
             )
           else if (onSubmit != null)
-            DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [Color(0xFF009846), Color(0xFF006B31)],
-                ),
-                borderRadius: BorderRadius.circular(30),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0xFF009846).withValues(alpha: 0.4),
-                    blurRadius: 16,
-                    offset: const Offset(0, 6),
-                  ),
-                ],
-              ),
-              child: ElevatedButton(
-                onPressed: isSubmitting ? null : onSubmit,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.transparent,
-                  shadowColor: Colors.transparent,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 15),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                ),
-                child: isSubmitting
-                    ? const SizedBox(
-                        width: 22,
-                        height: 22,
-                        child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5),
-                      )
-                    : Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            'Submit Enquiry',
-                            style: GoogleFonts.outfit(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                              letterSpacing: 0.4,
-                              color: Colors.white,
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          Container(
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              color: Colors.white.withValues(alpha: 0.25),
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(Icons.send_rounded, size: 15, color: Colors.white),
-                          ),
-                        ],
-                      ),
-              ),
+            AmarPrimaryButton(
+              onPressed: isSubmitting ? null : onSubmit,
+              label: isSubmitting ? 'Submitting...' : 'Submit Official RFP',
+              icon: Icons.verified_rounded,
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+              fontSize: 15,
             ),
         ],
       ),

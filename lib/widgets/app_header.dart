@@ -8,6 +8,7 @@ import '../utils/liquid_ui.dart';
 import 'language_selector.dart';
 import 'brochure_dialog.dart';
 import 'shining_gradient_button.dart';
+import 'app_buttons.dart';
 import '../services/language_service.dart';
 
 /// Product catalog shown in the header dropdown & mobile drawer.
@@ -202,31 +203,13 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Widget _buildBrochureButtonMobile(BuildContext context) {
-    return ShiningGradientButton(
+    return AmarSecondaryButton(
       onPressed: () => openBrochure(context),
-      borderRadius: BorderRadius.circular(8),
-      gradient: const LinearGradient(
-        colors: [Color(0xFFA64787), Color(0xFF7A1C56)],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-      enableShine: false,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(Icons.file_download_outlined, size: 14, color: Colors.white),
-          const SizedBox(width: 4),
-          Text(
-            LanguageService.instance.tr('btn_brochure'),
-            style: GoogleFonts.outfit(
-              fontSize: 11,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-        ],
-      ),
+      icon: Icons.file_download_outlined,
+      label: LanguageService.instance.tr('btn_brochure'),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7.5),
+      fontSize: 11,
+      customAccent: AppColors.primary,
     );
   }
 
@@ -298,38 +281,13 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Widget _buildBrochureButton(BuildContext context) {
-    return ShiningGradientButton(
+    return AmarSecondaryButton(
       onPressed: () => openBrochure(context),
-      borderRadius: BorderRadius.circular(8),
-      gradient: const LinearGradient(
-        colors: [Color(0xFFA64787), Color(0xFF7A1C56)],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
-      enableShine: false,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Icon(
-            Icons.file_download_outlined,
-            size: 16,
-            color: Colors.white,
-          ),
-          const SizedBox(width: 5),
-          Text(
-            LanguageService.instance.tr('btn_brochure'),
-            style: GoogleFonts.outfit(
-              fontWeight: FontWeight.bold,
-              fontSize: 13,
-              color: Colors.white,
-              letterSpacing: 0.3,
-            ),
-          ),
-        ],
-      ),
+      icon: Icons.file_download_outlined,
+      label: LanguageService.instance.tr('btn_brochure'),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8.5),
+      fontSize: 13,
+      customAccent: AppColors.primary,
     );
   }
 

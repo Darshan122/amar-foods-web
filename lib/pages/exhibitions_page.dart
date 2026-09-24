@@ -9,6 +9,7 @@ import '../widgets/app_footer.dart';
 import '../widgets/app_header.dart';
 import '../widgets/brochure_dialog.dart';
 import '../widgets/whatsapp_floating_button.dart';
+import '../widgets/app_buttons.dart';
 
 class ExhibitionsPage extends StatefulWidget {
   const ExhibitionsPage({super.key});
@@ -384,7 +385,11 @@ class _ExhibitionsPageState extends State<ExhibitionsPage> {
   Widget _buildFilterChip(String key, String label, IconData icon) {
     final bool isSelected = _selectedFilter == key;
 
-    return InkWell(
+    return AmarFilterChip(
+      isSelected: isSelected,
+      label: label,
+      icon: icon,
+      activeColor: AppColors.primary,
       onTap: () {
         setState(() {
           _selectedFilter = key;
@@ -396,43 +401,6 @@ class _ExhibitionsPageState extends State<ExhibitionsPage> {
           }
         });
       },
-      borderRadius: BorderRadius.circular(30),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 220),
-        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 9),
-        decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary : Colors.transparent,
-          borderRadius: BorderRadius.circular(30),
-          boxShadow: isSelected
-              ? [
-                  BoxShadow(
-                    color: AppColors.primary.withValues(alpha: 0.3),
-                    blurRadius: 10,
-                    offset: const Offset(0, 3),
-                  ),
-                ]
-              : null,
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
-              size: 15,
-              color: isSelected ? Colors.white : AppColors.textSecondary,
-            ),
-            const SizedBox(width: 8),
-            Text(
-              label,
-              style: GoogleFonts.outfit(
-                fontSize: 13,
-                fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
-                color: isSelected ? Colors.white : AppColors.textSecondary,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 
@@ -869,38 +837,20 @@ class _ExhibitionsPageState extends State<ExhibitionsPage> {
           spacing: 12,
           runSpacing: 10,
           children: [
-            ElevatedButton.icon(
+            AmarPrimaryButton(
               onPressed: () => _showQuoteDialog(context),
-              icon: const Icon(Icons.handshake_rounded, size: 16),
-              label: Text(
-                'Schedule B2B Meeting',
-                style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 13),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-                elevation: 3,
-                shadowColor: AppColors.primaryGlow,
-              ),
+              icon: Icons.handshake_rounded,
+              label: 'Schedule B2B Meeting',
+              padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
+              fontSize: 13.5,
             ),
-            OutlinedButton.icon(
+            AmarSecondaryButton(
               onPressed: _openWhatsApp,
-              icon: const Icon(Icons.chat_bubble_outline_rounded, size: 16, color: AppColors.secondary),
-              label: Text(
-                'Chat on WhatsApp',
-                style: GoogleFonts.outfit(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 13,
-                  color: AppColors.secondary,
-                ),
-              ),
-              style: OutlinedButton.styleFrom(
-                side: const BorderSide(color: AppColors.secondary, width: 1.5),
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-              ),
+              icon: Icons.chat_bubble_outline_rounded,
+              label: 'Chat on WhatsApp',
+              customAccent: AppColors.secondary,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+              fontSize: 13.5,
             ),
           ],
         ),
@@ -1250,34 +1200,21 @@ class _ExhibitionsPageState extends State<ExhibitionsPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        ElevatedButton.icon(
+        AmarPrimaryButton(
           onPressed: () => _showQuoteDialog(context),
-          icon: const Icon(Icons.event_seat_rounded, size: 16),
-          label: Text(
-            'Book B2B Appointment',
-            style: GoogleFonts.outfit(fontWeight: FontWeight.bold),
-          ),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.secondary,
-            foregroundColor: Colors.white,
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-            elevation: 2,
-          ),
+          icon: Icons.event_seat_rounded,
+          label: 'Book B2B Appointment',
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          fontSize: 14.5,
         ),
         const SizedBox(height: 12),
-        OutlinedButton.icon(
+        AmarSecondaryButton(
           onPressed: () => BrochureDialog.show(context),
-          icon: const Icon(Icons.download_rounded, size: 16, color: Colors.white),
-          label: Text(
-            'Download Product Brochure',
-            style: GoogleFonts.outfit(fontWeight: FontWeight.bold, color: Colors.white),
-          ),
-          style: OutlinedButton.styleFrom(
-            side: BorderSide(color: Colors.white.withValues(alpha: 0.35), width: 1.2),
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-          ),
+          icon: Icons.download_rounded,
+          label: 'Download Product Brochure',
+          isDarkSurface: true,
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          fontSize: 14,
         ),
       ],
     );
