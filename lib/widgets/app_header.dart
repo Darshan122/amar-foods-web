@@ -7,6 +7,7 @@ import '../theme/app_theme.dart';
 import '../utils/liquid_ui.dart';
 import 'language_selector.dart';
 import 'brochure_dialog.dart';
+import 'shining_gradient_button.dart';
 import '../services/language_service.dart';
 
 /// Product catalog shown in the header dropdown & mobile drawer.
@@ -17,7 +18,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
   const AppHeader({super.key});
 
   @override
-  Size get preferredSize => const Size.fromHeight(88.0);
+  Size get preferredSize => const Size.fromHeight(104.0);
 
   static Future<void> openBrochure(BuildContext context) async {
     await BrochureDialog.show(context);
@@ -49,14 +50,14 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
                 ? 10.0
                 : LiquidUI.fluid(context, minVal: 12, maxVal: 32);
             final double outerMarginV = isCompactMobile
-                ? 6.0
-                : LiquidUI.fluid(context, minVal: 8, maxVal: 16);
+                ? 8.0
+                : LiquidUI.fluid(context, minVal: 10, maxVal: 16);
             final double innerPaddingH = isCompactMobile
-                ? 10.0
-                : LiquidUI.fluid(context, minVal: 14, maxVal: 28);
+                ? 12.0
+                : LiquidUI.fluid(context, minVal: 16, maxVal: 32);
             final double logoHeight = isCompactMobile
-                ? 34.0
-                : LiquidUI.fluid(context, minVal: 36, maxVal: 46);
+                ? 38.0
+                : LiquidUI.fluid(context, minVal: 46, maxVal: 56);
 
             return Container(
               color: Colors.transparent, // outer breathing room around the floating pill
@@ -64,7 +65,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
               child: Container(
                 decoration: BoxDecoration(
                   color: AppColors.surfaceGlass,
-                  borderRadius: BorderRadius.circular(30), // 30px on both corners
+                  borderRadius: BorderRadius.circular(18), // elegant curved header bar
                   border: Border.all(color: AppColors.borderGlass, width: 1.5),
                   boxShadow: [
                     BoxShadow(
@@ -76,7 +77,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
                 ),
                 padding: EdgeInsets.symmetric(
                   horizontal: innerPaddingH,
-                  vertical: isCompactMobile ? 6 : 8,
+                  vertical: isCompactMobile ? 10 : 14,
                 ),
                 child: isMobileHeader
                     ? _buildMobileRow(context, logoHeight, constraints)
@@ -169,25 +170,25 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Widget _buildQuoteButtonMobile(BuildContext context, {required bool showFullText}) {
-    return ElevatedButton(
+    return ShiningGradientButton(
       onPressed: () => _showQuoteDialog(context),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.secondary,
-        foregroundColor: Colors.white,
-        padding: EdgeInsets.symmetric(
-          horizontal: showFullText ? 11 : 8,
-          vertical: 7,
-        ),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        elevation: 2,
-        shadowColor: AppColors.secondaryGlow,
+      borderRadius: BorderRadius.circular(5),
+      gradient: const LinearGradient(
+        colors: [Color(0xFFA64787), Color(0xFF009846)],
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
       ),
+      padding: EdgeInsets.symmetric(
+        horizontal: showFullText ? 10 : 8,
+        vertical: 8,
+      ),
+      enableShine: true,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           const Icon(Icons.bolt_rounded, size: 14, color: Colors.white),
           if (showFullText) ...[
-            const SizedBox(width: 3),
+            const SizedBox(width: 4),
             Text(
               LanguageService.instance.tr('btn_quote_short'),
               style: GoogleFonts.outfit(
@@ -203,15 +204,16 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Widget _buildBrochureButtonMobile(BuildContext context) {
-    return ElevatedButton(
+    return ShiningGradientButton(
       onPressed: () => openBrochure(context),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        elevation: 2,
+      borderRadius: BorderRadius.circular(5),
+      gradient: const LinearGradient(
+        colors: [Color(0xFFA64787), Color(0xFF7A1C56)],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
       ),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      enableShine: false,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -237,7 +239,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
           color: Colors.transparent,
           child: InkWell(
             onTap: () => Scaffold.of(context).openEndDrawer(),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(5),
             splashColor: AppColors.primary.withValues(alpha: 0.15),
             highlightColor: AppColors.primary.withValues(alpha: 0.08),
             child: Container(
@@ -245,7 +247,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
               height: 38,
               decoration: BoxDecoration(
                 color: AppColors.primary.withValues(alpha: 0.08),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(5),
                 border: Border.all(
                   color: AppColors.primary.withValues(alpha: 0.22),
                   width: 1.2,
@@ -298,24 +300,22 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Widget _buildBrochureButton(BuildContext context) {
-    return ElevatedButton(
+    return ShiningGradientButton(
       onPressed: () => openBrochure(context),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-        padding: LiquidUI.fluidPaddingSymmetric(
-          context,
-          minHorizontal: 12,
-          maxHorizontal: 18,
-          minVertical: 10,
-          maxVertical: 14,
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30), // 30px radius, matching header & quote button
-        ),
-        elevation: 4,
-        shadowColor: AppColors.primaryGlow,
+      borderRadius: BorderRadius.circular(5),
+      gradient: const LinearGradient(
+        colors: [Color(0xFFA64787), Color(0xFF7A1C56)],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
       ),
+      padding: LiquidUI.fluidPaddingSymmetric(
+        context,
+        minHorizontal: 12,
+        maxHorizontal: 18,
+        minVertical: 10,
+        maxVertical: 13,
+      ),
+      enableShine: false,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -342,34 +342,45 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  // Request Quote CTA — 30px radius, LiquidUI fluid padding/font, text ONLY (no icon)
+  // Request Quote CTA — Logo gradient (Amar Plum to Foods Green), radius 5, shining light sweep animation
   Widget _buildQuoteButton(BuildContext context) {
-    return ElevatedButton(
+    return ShiningGradientButton(
       onPressed: () => _showQuoteDialog(context),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.secondary,
-        foregroundColor: Colors.white,
-        padding: LiquidUI.fluidPaddingSymmetric(
-          context,
-          minHorizontal: 16,
-          maxHorizontal: 22,
-          minVertical: 10,
-          maxVertical: 14,
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30), // 30px radius, matches header
-        ),
-        elevation: 4,
-        shadowColor: AppColors.secondaryGlow,
+      borderRadius: BorderRadius.circular(5),
+      gradient: const LinearGradient(
+        colors: [Color(0xFFA64787), Color(0xFF009846)],
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
       ),
-      child: Text(
-        LanguageService.instance.tr('btn_quote'),
-        style: TextStyle(
-          fontFamily: AppTheme.outfitFont,
-          fontWeight: FontWeight.bold,
-          fontSize: LiquidUI.fluid(context, minVal: 12.5, maxVal: 14),
-          letterSpacing: 0.3,
-        ),
+      padding: LiquidUI.fluidPaddingSymmetric(
+        context,
+        minHorizontal: 16,
+        maxHorizontal: 22,
+        minVertical: 10,
+        maxVertical: 13,
+      ),
+      enableShine: true,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            LanguageService.instance.tr('btn_quote'),
+            style: TextStyle(
+              fontFamily: AppTheme.outfitFont,
+              fontWeight: FontWeight.bold,
+              fontSize: LiquidUI.fluid(context, minVal: 12.5, maxVal: 14),
+              color: Colors.white,
+              letterSpacing: 0.3,
+            ),
+          ),
+          const SizedBox(width: 6),
+          const Icon(
+            Icons.arrow_forward_rounded,
+            size: 15,
+            color: Colors.white,
+          ),
+        ],
       ),
     );
   }
@@ -498,7 +509,7 @@ class AppDrawer extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: const Color(0xFFFAF5FF),
                           borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: AppColors.primary.withOpacity(0.12)),
+                          border: Border.all(color: AppColors.primary.withValues(alpha: 0.12)),
                         ),
                         child: Image.asset(
                           AppImages.logo,
@@ -520,7 +531,7 @@ class AppDrawer extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: AppColors.primaryLight,
                           shape: BoxShape.circle,
-                          border: Border.all(color: AppColors.primary.withOpacity(0.15)),
+                          border: Border.all(color: AppColors.primary.withValues(alpha: 0.15)),
                         ),
                         child: IconButton(
                           icon: const Icon(Icons.close_rounded, color: AppColors.primary, size: 22),
@@ -534,9 +545,9 @@ class AppDrawer extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     decoration: BoxDecoration(
-                      color: AppColors.secondary.withOpacity(0.12),
+                      color: AppColors.secondary.withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: AppColors.secondary.withOpacity(0.3)),
+                      border: Border.all(color: AppColors.secondary.withValues(alpha: 0.3)),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -650,7 +661,7 @@ class AppDrawer extends StatelessWidget {
                         side: BorderSide(color: AppColors.primary.withValues(alpha: 0.35), width: 1.3),
                         backgroundColor: AppColors.primary.withValues(alpha: 0.05),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius: BorderRadius.circular(5),
                         ),
                       ),
                     ),
@@ -660,25 +671,30 @@ class AppDrawer extends StatelessWidget {
                   // Request Quote
                   SizedBox(
                     width: double.infinity,
-                    height: 46,
-                    child: ElevatedButton.icon(
+                    child: ShiningGradientButton(
                       onPressed: () => _showQuoteDialog(context),
-                      icon: const Icon(Icons.request_quote_rounded, size: 18),
-                      label: Text(
-                        LanguageService.instance.tr('btn_quote'),
-                        style: GoogleFonts.outfit(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13.5,
-                        ),
+                      borderRadius: BorderRadius.circular(5),
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFFA64787), Color(0xFF009846)],
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
                       ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.secondary,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        elevation: 3,
-                        shadowColor: AppColors.secondaryGlow,
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      enableShine: true,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.request_quote_rounded, size: 18, color: Colors.white),
+                          const SizedBox(width: 8),
+                          Text(
+                            LanguageService.instance.tr('btn_quote'),
+                            style: GoogleFonts.outfit(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13.5,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -703,7 +719,7 @@ class AppDrawer extends StatelessWidget {
                             backgroundColor: const Color(0xFFE8F8EE),
                             side: const BorderSide(color: Color(0xFF8CE3A7), width: 1),
                             padding: const EdgeInsets.symmetric(vertical: 8),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                           ),
                         ),
                       ),
@@ -724,7 +740,7 @@ class AppDrawer extends StatelessWidget {
                             backgroundColor: AppColors.primaryLight,
                             side: BorderSide(color: AppColors.primary.withValues(alpha: 0.25), width: 1),
                             padding: const EdgeInsets.symmetric(vertical: 8),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                           ),
                         ),
                       ),

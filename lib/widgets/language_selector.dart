@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../constants/app_colors.dart';
 import '../services/language_service.dart';
@@ -24,12 +24,12 @@ class LanguageSelectorButton extends StatelessWidget {
         if (isMobile) {
           return InkWell(
             onTap: () => _showLanguageDialog(context),
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(5),
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(5),
                 border: Border.all(color: AppColors.primary.withValues(alpha: 0.2)),
                 boxShadow: [
                   BoxShadow(
@@ -62,12 +62,12 @@ class LanguageSelectorButton extends StatelessWidget {
 
         return InkWell(
           onTap: () => _showLanguageDialog(context),
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(5),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(30),
+              borderRadius: BorderRadius.circular(5),
               border: Border.all(
                 color: AppColors.primary.withValues(alpha: 0.2),
                 width: 1.2,
