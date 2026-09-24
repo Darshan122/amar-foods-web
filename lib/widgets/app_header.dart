@@ -170,7 +170,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
   Widget _buildQuoteButtonMobile(BuildContext context, {required bool showFullText}) {
     return ShiningGradientButton(
       onPressed: () => _showQuoteDialog(context),
-      borderRadius: BorderRadius.circular(5),
+      borderRadius: BorderRadius.circular(8),
       gradient: const LinearGradient(
         colors: [Color(0xFFA64787), Color(0xFF009846)],
         begin: Alignment.centerLeft,
@@ -204,7 +204,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
   Widget _buildBrochureButtonMobile(BuildContext context) {
     return ShiningGradientButton(
       onPressed: () => openBrochure(context),
-      borderRadius: BorderRadius.circular(5),
+      borderRadius: BorderRadius.circular(8),
       gradient: const LinearGradient(
         colors: [Color(0xFFA64787), Color(0xFF7A1C56)],
         begin: Alignment.topLeft,
@@ -237,7 +237,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
           color: Colors.transparent,
           child: InkWell(
             onTap: () => Scaffold.of(context).openEndDrawer(),
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(8),
             splashColor: AppColors.primary.withValues(alpha: 0.15),
             highlightColor: AppColors.primary.withValues(alpha: 0.08),
             child: Container(
@@ -245,7 +245,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
               height: 38,
               decoration: BoxDecoration(
                 color: AppColors.primary.withValues(alpha: 0.08),
-                borderRadius: BorderRadius.circular(5),
+                borderRadius: BorderRadius.circular(8),
                 border: Border.all(
                   color: AppColors.primary.withValues(alpha: 0.22),
                   width: 1.2,
@@ -300,7 +300,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
   Widget _buildBrochureButton(BuildContext context) {
     return ShiningGradientButton(
       onPressed: () => openBrochure(context),
-      borderRadius: BorderRadius.circular(5),
+      borderRadius: BorderRadius.circular(8),
       gradient: const LinearGradient(
         colors: [Color(0xFFA64787), Color(0xFF7A1C56)],
         begin: Alignment.topLeft,
@@ -333,11 +333,11 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  // Request Quote CTA — Logo gradient (Amar Plum to Foods Green), radius 5, shining light sweep animation
+  // Request Quote CTA — Logo gradient (Amar Plum to Foods Green), radius 8, shining light sweep animation
   Widget _buildQuoteButton(BuildContext context) {
     return ShiningGradientButton(
       onPressed: () => _showQuoteDialog(context),
-      borderRadius: BorderRadius.circular(5),
+      borderRadius: BorderRadius.circular(8),
       gradient: const LinearGradient(
         colors: [Color(0xFFA64787), Color(0xFF009846)],
         begin: Alignment.centerLeft,
@@ -645,7 +645,7 @@ class AppDrawer extends StatelessWidget {
                         side: BorderSide(color: AppColors.primary.withValues(alpha: 0.35), width: 1.3),
                         backgroundColor: AppColors.primary.withValues(alpha: 0.05),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                       ),
                     ),
@@ -657,7 +657,7 @@ class AppDrawer extends StatelessWidget {
                     width: double.infinity,
                     child: ShiningGradientButton(
                       onPressed: () => _showQuoteDialog(context),
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(8),
                       gradient: const LinearGradient(
                         colors: [Color(0xFFA64787), Color(0xFF009846)],
                         begin: Alignment.centerLeft,
@@ -703,7 +703,7 @@ class AppDrawer extends StatelessWidget {
                             backgroundColor: const Color(0xFFE8F8EE),
                             side: const BorderSide(color: Color(0xFF8CE3A7), width: 1),
                             padding: const EdgeInsets.symmetric(vertical: 8),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                           ),
                         ),
                       ),
@@ -724,7 +724,7 @@ class AppDrawer extends StatelessWidget {
                             backgroundColor: AppColors.primaryLight,
                             side: BorderSide(color: AppColors.primary.withValues(alpha: 0.25), width: 1),
                             padding: const EdgeInsets.symmetric(vertical: 8),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                           ),
                         ),
                       ),

@@ -23,7 +23,7 @@ class ShiningGradientButton extends StatefulWidget {
       begin: Alignment.centerLeft,
       end: Alignment.centerRight,
     ),
-    this.borderRadius = const BorderRadius.all(Radius.circular(5)),
+    this.borderRadius = const BorderRadius.all(Radius.circular(8)),
     this.padding = const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
     this.enableShine = true,
     this.shineColor = Colors.white,

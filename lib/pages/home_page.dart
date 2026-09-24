@@ -258,7 +258,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             ShiningGradientButton(
               onPressed: () => Navigator.pushNamed(context, '/products'),
-              borderRadius: BorderRadius.circular(5),
+              borderRadius: BorderRadius.circular(8),
               gradient: const LinearGradient(
                 colors: [Color(0xFFA64787), Color(0xFF009846)],
                 begin: Alignment.centerLeft,
@@ -3186,7 +3186,7 @@ class _HeroContactButtonState extends State<_HeroContactButton> {
             color: _isHovered
                 ? Colors.white.withValues(alpha: 0.20)
                 : Colors.black.withValues(alpha: 0.35),
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(8),
             border: Border.all(
               color: _isHovered
                   ? Colors.white
@@ -3210,10 +3210,10 @@ class _HeroContactButtonState extends State<_HeroContactButton> {
           ),
           child: Material(
             color: Colors.transparent,
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(8),
             child: InkWell(
               onTap: widget.onPressed,
-              borderRadius: BorderRadius.circular(5),
+              borderRadius: BorderRadius.circular(8),
               splashColor: Colors.white.withValues(alpha: 0.25),
               highlightColor: Colors.white.withValues(alpha: 0.12),
               child: Padding(
