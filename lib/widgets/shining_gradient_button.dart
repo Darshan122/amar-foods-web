@@ -95,7 +95,7 @@ class _ShiningGradientButtonState extends State<ShiningGradientButton>
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
       child: AnimatedScale(
-        scale: _isHovered && widget.onPressed != null ? 1.025 : 1.0,
+        scale: _isHovered && widget.onPressed != null ? 1.035 : 1.0,
         duration: const Duration(milliseconds: 180),
         curve: Curves.easeOutCubic,
         child: DecoratedBox(

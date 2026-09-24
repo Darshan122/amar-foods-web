@@ -9,6 +9,7 @@ import '../widgets/app_footer.dart';
 import '../widgets/quote_dialog.dart';
 import '../widgets/video_background.dart';
 import '../widgets/whatsapp_floating_button.dart';
+import '../widgets/shining_gradient_button.dart';
 import '../services/language_service.dart';
 
 class HomePage extends StatefulWidget {
@@ -255,20 +256,22 @@ class _HomePageState extends State<HomePage> {
           runSpacing: 12,
           alignment: WrapAlignment.center,
           children: [
-            ElevatedButton(
-              onPressed: () => Navigator.pushNamed(context, '/about'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.secondary,
-                foregroundColor: Colors.white,
-                padding: LiquidUI.fluidPaddingSymmetric(
-                  context,
-                  minHorizontal: 22, maxHorizontal: 34,
-                  minVertical: 14, maxVertical: 20,
-                ),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                elevation: 8,
-                shadowColor: AppColors.secondaryGlow,
+            ShiningGradientButton(
+              onPressed: () => Navigator.pushNamed(context, '/products'),
+              borderRadius: BorderRadius.circular(5),
+              gradient: const LinearGradient(
+                colors: [Color(0xFFA64787), Color(0xFF009846)],
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
               ),
+              padding: LiquidUI.fluidPaddingSymmetric(
+                context,
+                minHorizontal: 22,
+                maxHorizontal: 32,
+                minVertical: 14,
+                maxVertical: 18,
+              ),
+              enableShine: true,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -277,39 +280,22 @@ class _HomePageState extends State<HomePage> {
                     style: GoogleFonts.outfit(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
+                      color: Colors.white,
+                      letterSpacing: 0.2,
                     ),
                   ),
                   const SizedBox(width: 8),
-                  const Icon(Icons.arrow_forward_rounded, size: 18),
+                  const Icon(
+                    Icons.arrow_forward_rounded,
+                    size: 18,
+                    color: Colors.white,
+                  ),
                 ],
               ),
             ),
-            OutlinedButton(
+            _HeroContactButton(
               onPressed: () => _showQuoteDialog(context),
-              style: OutlinedButton.styleFrom(
-                side: const BorderSide(color: Colors.white, width: 2),
-                padding: LiquidUI.fluidPaddingSymmetric(
-                  context,
-                  minHorizontal: 22, maxHorizontal: 32,
-                  minVertical: 14, maxVertical: 20,
-                ),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(Icons.mail_outline_rounded, size: 18, color: Colors.white),
-                  const SizedBox(width: 8),
-                  Text(
-                    LanguageService.instance.tr('hero_btn_contact'),
-                    style: GoogleFonts.outfit(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                    ),
-                  ),
-                ],
-              ),
+              label: LanguageService.instance.tr('hero_btn_contact'),
             ),
           ],
         ),
@@ -3158,6 +3144,111 @@ class _ApplicationCardWidgetState extends State<_ApplicationCardWidget> {
                         .toList(),
                   ),
                 ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _HeroContactButton extends StatefulWidget {
+  final VoidCallback onPressed;
+  final String label;
+
+  const _HeroContactButton({
+    required this.onPressed,
+    required this.label,
+  });
+
+  @override
+  State<_HeroContactButton> createState() => _HeroContactButtonState();
+}
+
+class _HeroContactButtonState extends State<_HeroContactButton> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: AnimatedScale(
+        scale: _isHovered ? 1.035 : 1.0,
+        duration: const Duration(milliseconds: 180),
+        curve: Curves.easeOutCubic,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          curve: Curves.easeOutCubic,
+          decoration: BoxDecoration(
+            color: _isHovered
+                ? Colors.white.withValues(alpha: 0.20)
+                : Colors.black.withValues(alpha: 0.35),
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(
+              color: _isHovered
+                  ? Colors.white
+                  : Colors.white.withValues(alpha: 0.85),
+              width: 1.8,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.35),
+                blurRadius: _isHovered ? 14 : 8,
+                offset: const Offset(0, 3),
+              ),
+              if (_isHovered)
+                BoxShadow(
+                  color: Colors.white.withValues(alpha: 0.35),
+                  blurRadius: 16,
+                  spreadRadius: 1,
+                  offset: const Offset(0, 1),
+                ),
+            ],
+          ),
+          child: Material(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(5),
+            child: InkWell(
+              onTap: widget.onPressed,
+              borderRadius: BorderRadius.circular(5),
+              splashColor: Colors.white.withValues(alpha: 0.25),
+              highlightColor: Colors.white.withValues(alpha: 0.12),
+              child: Padding(
+                padding: LiquidUI.fluidPaddingSymmetric(
+                  context,
+                  minHorizontal: 22,
+                  maxHorizontal: 32,
+                  minVertical: 14,
+                  maxVertical: 18,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    AnimatedScale(
+                      scale: _isHovered ? 1.15 : 1.0,
+                      duration: const Duration(milliseconds: 180),
+                      curve: Curves.easeOutCubic,
+                      child: const Icon(
+                        Icons.mail_outline_rounded,
+                        size: 18,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      widget.label,
+                      style: GoogleFonts.outfit(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                        letterSpacing: 0.2,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
