@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../constants/app_colors.dart';
@@ -2597,8 +2599,26 @@ class _HomePageState extends State<HomePage> {
 
   // 7. Global Footprint
   Widget _buildGlobalFootprintSection(BuildContext context, bool isMobile) {
-    final double paddingV = LiquidUI.fluid(context, minVal: 50, maxVal: 80);
-    final double headingSize = LiquidUI.fluid(context, minVal: 26, maxVal: 36);
+    final double paddingV = LiquidUI.fluid(context, minVal: 60, maxVal: 95);
+    final double headingSize = LiquidUI.fluid(context, minVal: 28, maxVal: 40);
+
+    const List<_ExportDestination> destinations = [
+      _ExportDestination(name: 'Germany', flag: '🇩🇪', region: 'European Union'),
+      _ExportDestination(name: 'United Kingdom', flag: '🇬🇧', region: 'Europe'),
+      _ExportDestination(name: 'United States', flag: '🇺🇸', region: 'North America'),
+      _ExportDestination(name: 'United Arab Emirates', flag: '🇦🇪', region: 'GCC / Middle East'),
+      _ExportDestination(name: 'Saudi Arabia', flag: '🇸🇦', region: 'GCC / Middle East'),
+      _ExportDestination(name: 'Netherlands', flag: '🇳🇱', region: 'European Union'),
+      _ExportDestination(name: 'Singapore', flag: '🇸🇬', region: 'Southeast Asia'),
+      _ExportDestination(name: 'Australia', flag: '🇦🇺', region: 'Oceania'),
+      _ExportDestination(name: 'Malaysia', flag: '🇲🇾', region: 'Southeast Asia'),
+      _ExportDestination(name: 'Indonesia', flag: '🇮🇩', region: 'Southeast Asia'),
+      _ExportDestination(name: 'Poland', flag: '🇵🇱', region: 'Central Europe'),
+      _ExportDestination(name: 'Canada', flag: '🇨🇦', region: 'North America'),
+      _ExportDestination(name: 'Japan', flag: '🇯🇵', region: 'East Asia'),
+      _ExportDestination(name: 'South Africa', flag: '🇿🇦', region: 'Africa'),
+      _ExportDestination(name: 'Brazil', flag: '🇧🇷', region: 'South America'),
+    ];
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: paddingV),
@@ -2609,8 +2629,17 @@ class _HomePageState extends State<HomePage> {
           constraints: LiquidUI.pageConstraints(),
           child: Column(
             children: [
+              LiquidUI.badgePill(
+                text: 'GLOBAL EXPORT FOOTPRINT',
+                icon: Icons.public_rounded,
+                backgroundColor: AppColors.primaryLight,
+                textColor: AppColors.primary,
+                fontSize: 11,
+              ),
+              const SizedBox(height: 16),
+
               LiquidUI.gradientText(
-                'Trusted Worldwide',
+                'Trusted Worldwide Across 15+ Nations',
                 gradient: AppColors.primaryGradient,
                 style: GoogleFonts.playfairDisplay(
                   fontSize: headingSize,
@@ -2619,62 +2648,228 @@ class _HomePageState extends State<HomePage> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 12),
-              Text(
-                'Delivering premium quality dehydrated foods and spices to global markets with unwavering reliability.',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.inter(
-                  fontSize: 15,
-                  color: AppColors.textSecondary,
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 740),
+                child: Text(
+                  'Delivering export-grade dehydrated onion and garlic to multinational food processors, spice blenders, and global distributors with unwavering consistency.',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.inter(
+                    fontSize: 15,
+                    color: AppColors.textSecondary,
+                    height: 1.55,
+                  ),
                 ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 44),
 
-              LiquidUI.glassCard(
-                borderRadius: 20,
-                padding: const EdgeInsets.all(32),
-                backgroundColor: AppColors.background,
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.public_rounded, color: AppColors.primary, size: 24),
-                        const SizedBox(width: 10),
-                        Text(
-                          'Export Network Across 15+ Nations',
-                          style: GoogleFonts.outfit(
-                            fontSize: LiquidUI.fluid(context, minVal: 16, maxVal: 20),
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.primary,
-                          ),
+              // Apple-style Glassmorphic Bubble Showcase Container
+              Stack(
+                alignment: Alignment.center,
+                clipBehavior: Clip.none,
+                children: [
+                  // Ambient Apple Background Glow Orb 1 (Emerald)
+                  Positioned(
+                    top: -20,
+                    left: 30,
+                    child: Container(
+                      width: 220,
+                      height: 220,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.primary.withValues(alpha: 0.12),
+                      ),
+                    ),
+                  ),
+
+                  // Ambient Apple Background Glow Orb 2 (Warm Gold)
+                  Positioned(
+                    bottom: -20,
+                    right: 30,
+                    child: Container(
+                      width: 240,
+                      height: 240,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.secondary.withValues(alpha: 0.12),
+                      ),
+                    ),
+                  ),
+
+                  // Main Frosted Glass Card
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(28),
+                    child: BackdropFilter(
+                      filter: ui.ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                      child: Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: isMobile ? 18 : 36,
+                          vertical: isMobile ? 26 : 38,
                         ),
-                      ],
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.78),
+                          borderRadius: BorderRadius.circular(28),
+                          border: Border.all(
+                            color: Colors.white.withValues(alpha: 0.9),
+                            width: 1.5,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.primary.withValues(alpha: 0.08),
+                              blurRadius: 30,
+                              offset: const Offset(0, 12),
+                            ),
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.04),
+                              blurRadius: 10,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            // Header Banner inside Glass
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                              decoration: BoxDecoration(
+                                color: AppColors.primary.withValues(alpha: 0.08),
+                                borderRadius: BorderRadius.circular(30),
+                                border: Border.all(
+                                  color: AppColors.primary.withValues(alpha: 0.16),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Icon(
+                                    Icons.flight_takeoff_rounded,
+                                    size: 16,
+                                    color: AppColors.primary,
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Flexible(
+                                    child: Text(
+                                      'ACTIVE MARITIME TRADE ROUTES & DESTINATIONS',
+                                      style: GoogleFonts.outfit(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w700,
+                                        color: AppColors.primary,
+                                        letterSpacing: 0.6,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 30),
+
+                            // Apple Glass Bubbles Grid / Cloud
+                            Wrap(
+                              spacing: 14,
+                              runSpacing: 16,
+                              alignment: WrapAlignment.center,
+                              children: [
+                                for (int i = 0; i < destinations.length; i++)
+                                  _AppleGlassBubble(
+                                    destination: destinations[i],
+                                    index: i,
+                                  ),
+                              ],
+                            ),
+                            const SizedBox(height: 36),
+
+                            // Global Shipping Specs Footer
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                              decoration: BoxDecoration(
+                                color: Colors.white.withValues(alpha: 0.65),
+                                borderRadius: BorderRadius.circular(18),
+                                border: Border.all(
+                                  color: Colors.black.withValues(alpha: 0.05),
+                                ),
+                              ),
+                              child: Wrap(
+                                spacing: 24,
+                                runSpacing: 12,
+                                alignment: WrapAlignment.spaceEvenly,
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                children: [
+                                  _buildFootprintMetric(
+                                    icon: Icons.anchor_rounded,
+                                    title: 'Maritime Gateways',
+                                    subtitle: 'Mundra & Pipavav Ports',
+                                  ),
+                                  _buildFootprintMetric(
+                                    icon: Icons.inventory_2_rounded,
+                                    title: 'Containerized Freight',
+                                    subtitle: 'Dry & Climate Controlled',
+                                  ),
+                                  _buildFootprintMetric(
+                                    icon: Icons.speed_rounded,
+                                    title: 'Statutory Clearance',
+                                    subtitle: 'DGFT / Pre-Inspected Lots',
+                                  ),
+                                  _buildFootprintMetric(
+                                    icon: Icons.verified_user_rounded,
+                                    title: 'Global Compliance',
+                                    subtitle: 'US FDA, ISO 22000 & Halal',
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                    const SizedBox(height: 24),
-                    const Wrap(
-                      spacing: 12,
-                      runSpacing: 12,
-                      alignment: WrapAlignment.center,
-                      children: [
-                        _CountryBadge('Germany'),
-                        _CountryBadge('United Kingdom'),
-                        _CountryBadge('United Arab Emirates'),
-                        _CountryBadge('Saudi Arabia'),
-                        _CountryBadge('Singapore'),
-                        _CountryBadge('Malaysia'),
-                        _CountryBadge('Indonesia'),
-                        _CountryBadge('Australia'),
-                        _CountryBadge('Poland'),
-                        _CountryBadge('Netherlands'),
-                      ],
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildFootprintMetric({
+    required IconData icon,
+    required String title,
+    required String subtitle,
+  }) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: AppColors.primary.withValues(alpha: 0.09),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Icon(icon, size: 16, color: AppColors.primary),
+        ),
+        const SizedBox(width: 10),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              title,
+              style: GoogleFonts.outfit(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: AppColors.textPrimary,
+              ),
+            ),
+            Text(
+              subtitle,
+              style: GoogleFonts.inter(
+                fontSize: 11,
+                color: AppColors.textSecondary,
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 
@@ -2967,41 +3162,182 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class _CountryBadge extends StatelessWidget {
+class _ExportDestination {
   final String name;
+  final String flag;
+  final String region;
 
-  const _CountryBadge(this.name);
+  const _ExportDestination({
+    required this.name,
+    required this.flag,
+    required this.region,
+  });
+}
+
+class _AppleGlassBubble extends StatefulWidget {
+  final _ExportDestination destination;
+  final int index;
+
+  const _AppleGlassBubble({
+    required this.destination,
+    required this.index,
+  });
+
+  @override
+  State<_AppleGlassBubble> createState() => _AppleGlassBubbleState();
+}
+
+class _AppleGlassBubbleState extends State<_AppleGlassBubble>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  bool _isHovered = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Unique duration per bubble (3.2s to 4.8s) for asynchronous organic breathing physics
+    final int durationMs = 3200 + ((widget.index * 390) % 1600);
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: durationMs),
+    )..repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.primary.withOpacity(0.2)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          )
-        ],
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(Icons.check_circle_outline_rounded, color: AppColors.secondary, size: 16),
-          const SizedBox(width: 6),
-          Text(
-            name,
-            style: GoogleFonts.inter(
-              fontWeight: FontWeight.bold,
-              fontSize: 13,
-              color: AppColors.textPrimary,
+    // Unique phase offset so each bubble bobs independently
+    final double phase = widget.index * 0.65;
+
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (context, child) {
+          final double floatOffset = _isHovered
+              ? 0.0
+              : math.sin((_controller.value * 2 * math.pi) + phase) * 4.5;
+
+          return Transform.translate(
+            offset: Offset(0, floatOffset),
+            child: AnimatedScale(
+              scale: _isHovered ? 1.08 : 1.0,
+              duration: const Duration(milliseconds: 260),
+              curve: Curves.easeOutBack,
+              child: child,
+            ),
+          );
+        },
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(30),
+          child: BackdropFilter(
+            filter: ui.ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 240),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: _isHovered
+                      ? [
+                          Colors.white,
+                          const Color(0xFFF7FDF9),
+                          AppColors.primaryLight.withValues(alpha: 0.6),
+                        ]
+                      : [
+                          Colors.white.withValues(alpha: 0.94),
+                          Colors.white.withValues(alpha: 0.72),
+                        ],
+                ),
+                border: Border.all(
+                  color: _isHovered
+                      ? AppColors.primary.withValues(alpha: 0.55)
+                      : Colors.white.withValues(alpha: 0.85),
+                  width: 1.5,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: _isHovered
+                        ? AppColors.primary.withValues(alpha: 0.22)
+                        : Colors.black.withValues(alpha: 0.04),
+                    blurRadius: _isHovered ? 20 : 10,
+                    offset: Offset(0, _isHovered ? 8 : 4),
+                  ),
+                  if (_isHovered)
+                    BoxShadow(
+                      color: AppColors.secondary.withValues(alpha: 0.16),
+                      blurRadius: 12,
+                      spreadRadius: 1,
+                    ),
+                ],
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Glass Flag Badge
+                  Container(
+                    width: 26,
+                    height: 26,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.9),
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.08),
+                          blurRadius: 4,
+                          offset: const Offset(0, 1),
+                        ),
+                      ],
+                    ),
+                    child: Text(
+                      widget.destination.flag,
+                      style: const TextStyle(fontSize: 15),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+
+                  // Country Name
+                  Text(
+                    widget.destination.name,
+                    style: GoogleFonts.outfit(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 13.5,
+                      color: _isHovered ? AppColors.primary : AppColors.textPrimary,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+
+                  // Live Pulse Status Dot
+                  Container(
+                    width: 7,
+                    height: 7,
+                    decoration: BoxDecoration(
+                      color: _isHovered ? const Color(0xFF00C853) : const Color(0xFF4CAF50),
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFF00C853).withValues(alpha: _isHovered ? 0.75 : 0.35),
+                          blurRadius: _isHovered ? 8 : 4,
+                          spreadRadius: _isHovered ? 1.5 : 0.5,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        ],
+        ),
       ),
     );
   }
