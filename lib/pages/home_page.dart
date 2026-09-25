@@ -22,8 +22,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String _selectedCategory = 'All';
-
   void _showQuoteDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -1889,49 +1887,81 @@ class _HomePageState extends State<HomePage> {
         title: 'US FDA Registered',
         tag: 'U.S. FOOD & DRUG ADMIN',
         image: AppImages.certFdaLogo,
-        desc: 'Official US FDA facility registration for exporting dehydrated products into North American markets.',
+        desc: 'Official US FDA facility registration for exporting premium dehydrated onion & garlic products into North American markets.',
+        authority: 'United States Food and Drug Administration (FDA)',
+        standard: 'US FDA Food Facility Registration',
+      ),
+      _CertItem(
+        title: 'ISO 22000:2018 Certified',
+        tag: 'FOOD SAFETY MANAGEMENT',
+        image: AppImages.certIso22000Logo,
+        desc: 'International Food Safety Management System standard validating stringent end-to-end hazard control across our processing facilities.',
+        authority: 'International Organization for Standardization (ISO)',
+        standard: 'ISO 22000:2018 FSMS Certified',
       ),
       _CertItem(
         title: 'FSSC 22000 Certified',
         tag: 'FOOD SAFETY SYSTEM',
         image: AppImages.certFssc22000Logo,
-        desc: 'FSSC 22000 (QVA) international food safety certification covering farm-to-fork hazard prevention.',
+        desc: 'Global Food Safety Initiative (GFSI) recognized certification ensuring world-class hygiene, processing, and packaging controls.',
+        authority: 'Foundation FSSC / GFSI Benchmark',
+        standard: 'FSSC 22000 Scheme Version 6.0',
+      ),
+      _CertItem(
+        title: 'Spices Board India',
+        tag: 'MINISTRY OF COMMERCE & INDUSTRY',
+        image: AppImages.certSpicesBoardLogo,
+        desc: 'Statutory registration with Spices Board India under Ministry of Commerce & Industry for premium spice export promotion and quality assurance.',
+        authority: 'Spices Board India, Govt. of India',
+        standard: 'RCMC Export Registration & Quality Certification',
       ),
       _CertItem(
         title: 'Kosher Certified',
         tag: 'KOSHER COMPLIANCE',
         image: AppImages.certKosherLogo,
-        desc: 'Kosher certified (QVA) processing line compliant with international Jewish dietary food requirements.',
-      ),
-      _CertItem(
-        title: 'APEDA Registered',
-        tag: 'EXPORT DEVELOPMENT',
-        image: AppImages.certApedaLogo,
-        desc: 'Government of India APEDA registration guaranteeing authentic agricultural commodity origin and quality.',
-      ),
-      _CertItem(
-        title: 'FSSAI License',
-        tag: 'FOOD SAFETY AUTHORITY',
-        image: AppImages.certFssaiLogo,
-        desc: 'Official licence from Food Safety and Standards Authority of India for hygienic processing & export.',
+        desc: 'Certified kosher processing line meeting stringent international Jewish dietary laws and audit standards for global distribution.',
+        authority: 'Global Kosher Certification Authority (QVA)',
+        standard: 'Kosher Dietary Law Compliance',
       ),
       _CertItem(
         title: 'HALAL Certified',
         tag: 'ISLAMIC DIETARY LAW',
         image: AppImages.certHalalLogo,
-        desc: '100% Halal certified (QVA) processing line compliant with Islamic dietary laws for global trade.',
+        desc: '100% Halal certified dehydration processing facility compliant with Islamic dietary regulations for GCC, Middle East, and worldwide trade.',
+        authority: 'Halal Certification Board (QVA)',
+        standard: 'Halal Assurance System & Export Cleared',
+      ),
+      _CertItem(
+        title: 'APEDA Registered',
+        tag: 'AGRICULTURAL EXPORT COUNCIL',
+        image: AppImages.certApedaLogo,
+        desc: 'Government of India APEDA registration guaranteeing authentic agricultural commodity origin, phytosanitary standards, and quality.',
+        authority: 'APEDA, Ministry of Commerce & Industry, Govt. of India',
+        standard: 'Agricultural & Processed Foods Export Registration',
+      ),
+      _CertItem(
+        title: 'FSSAI License',
+        tag: 'FOOD SAFETY AUTHORITY',
+        image: AppImages.certFssaiLogo,
+        desc: 'Central manufacturing & export license from Food Safety and Standards Authority of India upholding supreme sanitary hygiene.',
+        authority: 'FSSAI, Ministry of Health and Family Welfare',
+        standard: 'Food Safety and Standards Act Central Licence',
       ),
       _CertItem(
         title: 'IEC Export License',
         tag: 'IMPORT EXPORT CODE',
         image: AppImages.certIecLogo,
-        desc: 'Directorate General of Foreign Trade (DGFT) Import Export Code certification for international commerce.',
+        desc: 'Directorate General of Foreign Trade (DGFT) Import Export Code authorizing worldwide commercial trade across 30+ destinations.',
+        authority: 'Directorate General of Foreign Trade (DGFT), Govt. of India',
+        standard: 'Statutory Foreign Trade IEC Credential',
       ),
       _CertItem(
         title: 'MSME Registered',
         tag: 'MINISTRY OF MSME',
         image: AppImages.certMsmeLogo,
-        desc: 'Ministry of Micro, Small & Medium Enterprises (Udyam) government recognized enterprise.',
+        desc: 'Ministry of Micro, Small & Medium Enterprises (Udyam) recognized modern agricultural processing enterprise.',
+        authority: 'Ministry of MSME, Govt. of India',
+        standard: 'Udyam National Enterprise Recognition',
       ),
     ];
 
@@ -1964,34 +1994,39 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 12),
 
-              Text(
-                'Every batch of dehydrated onion and garlic exported by Amar Foods complies with international quality, hygiene, and sanitary regulations.',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.inter(
-                  fontSize: 15,
-                  color: AppColors.textSecondary,
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 780),
+                child: Text(
+                  'Every batch of dehydrated onion and garlic exported by Amar Foods complies with international food safety regulations, dietary laws, and statutory export standards.',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.inter(
+                    fontSize: 15,
+                    color: AppColors.textSecondary,
+                    height: 1.55,
+                  ),
                 ),
               ),
-              const SizedBox(height: 52),
+              const SizedBox(height: 48),
 
-              // 5 Certifications Grid
+              // 10 Certifications Grid
               LayoutBuilder(
                 builder: (context, constraints) {
                   if (isMobile) {
                     return Column(
                       children: certs.map((c) => Padding(
-                        padding: const EdgeInsets.only(bottom: 24.0),
+                        padding: const EdgeInsets.only(bottom: 20.0),
                         child: _buildCertCard(context, c),
                       )).toList(),
                     );
                   } else {
+                    // Symmetrical 2-column layout (5 rows of 2 executive cards)
+                    final double cardWidth = (constraints.maxWidth - 24) / 2;
                     return Wrap(
                       spacing: 24,
-                      runSpacing: 28,
+                      runSpacing: 24,
+                      alignment: WrapAlignment.center,
                       children: certs.map((c) => SizedBox(
-                        width: (constraints.maxWidth - 24) / 2 > 340
-                            ? (constraints.maxWidth - 48) / 3
-                            : (constraints.maxWidth - 24) / 2,
+                        width: cardWidth,
                         child: _buildCertCard(context, c),
                       )).toList(),
                     );
@@ -2009,89 +2044,88 @@ class _HomePageState extends State<HomePage> {
   Widget _buildCertCard(BuildContext context, _CertItem c) {
     return AmarHoverCard(
       onTap: () => _showCertDetailDialog(context, c),
-      padding: const EdgeInsets.all(24),
-      backgroundColor: AppColors.background,
-      borderRadius: 22,
+      padding: const EdgeInsets.all(22),
+      backgroundColor: Colors.white,
+      borderRadius: 20,
       showSheen: true,
       builder: (context, isHovered) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Top Verification Bar
           Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Real Emblem Image Header (Large & Zoomed on hover)
-              AmarCardImageZoom(
-                isHovered: isHovered,
-                scale: 1.05,
+              Flexible(
                 child: Container(
-                  width: 72,
-                  height: 72,
-                  padding: const EdgeInsets.all(4),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4.5),
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(18),
+                    color: isHovered
+                        ? AppColors.primary.withValues(alpha: 0.12)
+                        : AppColors.primary.withValues(alpha: 0.06),
+                    borderRadius: BorderRadius.circular(20),
                     border: Border.all(
                       color: isHovered
-                          ? AppColors.primary.withValues(alpha: 0.45)
-                          : AppColors.primary.withValues(alpha: 0.18),
-                      width: 1.5,
+                          ? AppColors.primary.withValues(alpha: 0.35)
+                          : AppColors.primary.withValues(alpha: 0.14),
                     ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: isHovered ? 0.16 : 0.08),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.verified_rounded,
+                        size: 13,
+                        color: AppColors.primary,
+                      ),
+                      const SizedBox(width: 5),
+                      Flexible(
+                        child: Text(
+                          c.tag,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.outfit(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.primary,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(14),
-                    child: Container(
-                      color: Colors.white,
-                      alignment: Alignment.center,
-                      child: Image.asset(
-                        c.image,
-                        fit: BoxFit.contain,
-                        errorBuilder: (context, error, stackTrace) {
-                          return const Icon(Icons.verified_rounded, color: AppColors.primary, size: 32);
-                        },
-                      ),
-                    ),
-                  ),
                 ),
               ),
-              const SizedBox(width: 14),
+              const SizedBox(width: 8),
 
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              // Active / Verified Status Dot
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3.5),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFE8F5E9),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: const Color(0xFF81C784).withValues(alpha: 0.45),
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: AppColors.primary.withValues(alpha: isHovered ? 0.14 : 0.08),
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color: AppColors.primary.withValues(alpha: isHovered ? 0.35 : 0.15),
-                        ),
-                      ),
-                      child: Text(
-                        c.tag,
-                        style: GoogleFonts.outfit(
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primary,
-                          letterSpacing: 0.5,
-                        ),
+                      width: 6,
+                      height: 6,
+                      decoration: const BoxDecoration(
+                        color: Color(0xFF2E7D32),
+                        shape: BoxShape.circle,
                       ),
                     ),
-                    const SizedBox(height: 6),
+                    const SizedBox(width: 5),
                     Text(
-                      c.title,
+                      'VERIFIED',
                       style: GoogleFonts.outfit(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.textPrimary,
+                        fontSize: 9.5,
+                        fontWeight: FontWeight.w800,
+                        color: const Color(0xFF2E7D32),
+                        letterSpacing: 0.5,
                       ),
                     ),
                   ],
@@ -2099,14 +2133,169 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 18),
 
+          // Emblem & Header Row
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Premium Emblem Showcase
+              AmarCardImageZoom(
+                isHovered: isHovered,
+                scale: 1.06,
+                child: Container(
+                  width: 76,
+                  height: 76,
+                  padding: const EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(18),
+                    border: Border.all(
+                      color: isHovered
+                          ? AppColors.secondary.withValues(alpha: 0.6)
+                          : AppColors.primary.withValues(alpha: 0.16),
+                      width: 1.5,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: isHovered ? 0.12 : 0.05),
+                        blurRadius: 10,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Container(
+                      color: Colors.white,
+                      alignment: Alignment.center,
+                      child: Image.asset(
+                        c.image,
+                        fit: BoxFit.contain,
+                        errorBuilder: (context, error, stackTrace) {
+                          return const Icon(
+                            Icons.verified_rounded,
+                            color: AppColors.primary,
+                            size: 36,
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 16),
+
+              // Title and Standard
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      c.title,
+                      style: GoogleFonts.playfairDisplay(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textPrimary,
+                        height: 1.25,
+                      ),
+                    ),
+                    if (c.authority != null) ...[
+                      const SizedBox(height: 5),
+                      Text(
+                        c.authority!,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.outfit(
+                          fontSize: 11.5,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.secondary,
+                          height: 1.3,
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 14),
+
+          // Description
           Text(
             c.desc,
             style: GoogleFonts.inter(
-              fontSize: 13,
+              fontSize: 12.5,
               color: AppColors.textSecondary,
               height: 1.5,
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          // Bottom Action Bar
+          Container(
+            padding: const EdgeInsets.only(top: 12),
+            decoration: BoxDecoration(
+              border: Border(
+                top: BorderSide(
+                  color: Colors.black.withValues(alpha: 0.06),
+                  width: 1,
+                ),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.shield_outlined,
+                        size: 13,
+                        color: isHovered ? AppColors.primary : AppColors.textSecondary,
+                      ),
+                      const SizedBox(width: 5),
+                      Flexible(
+                        child: Text(
+                          c.standard ?? 'Export Grade Standard',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.outfit(
+                            fontSize: 10.5,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.textSecondary,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 8),
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  transform: Matrix4.translationValues(isHovered ? 3 : 0, 0, 0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Details',
+                        style: GoogleFonts.outfit(
+                          fontSize: 11.5,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      const Icon(
+                        Icons.arrow_forward_rounded,
+                        size: 13,
+                        color: AppColors.primary,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -2698,8 +2887,14 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     children: [
                       _buildSpecRow('Origin & Facility:', 'Mahuva Dehydration Plant, Gujarat'),
-                      const SizedBox(height: 8),
-                      _buildSpecRow('Global Standard:', 'ISO / HACCP Export Quality Clearance'),
+                      if (cert.authority != null) ...[
+                        const SizedBox(height: 8),
+                        _buildSpecRow('Issuing Authority:', cert.authority!),
+                      ],
+                      if (cert.standard != null) ...[
+                        const SizedBox(height: 8),
+                        _buildSpecRow('Standard / Scope:', cert.standard!),
+                      ],
                       const SizedBox(height: 8),
                       _buildSpecRow('Audit Compliance:', '100% Traceability & Zero Additives'),
                     ],
@@ -2713,7 +2908,7 @@ class _HomePageState extends State<HomePage> {
                         onPressed: () => Navigator.pop(context),
                         style: OutlinedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 14),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                           side: const BorderSide(color: AppColors.primary),
                         ),
                         child: Text(
@@ -2733,10 +2928,10 @@ class _HomePageState extends State<HomePage> {
                           backgroundColor: AppColors.secondary,
                           foregroundColor: Colors.white,
                           padding: const EdgeInsets.symmetric(vertical: 14),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                         ),
                         child: Text(
-                          'Inquire Specs Copy',
+                          'Request Certificate Copy',
                           style: GoogleFonts.outfit(fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -2847,12 +3042,16 @@ class _CertItem {
   final String tag;
   final String image;
   final String desc;
+  final String? authority;
+  final String? standard;
 
   const _CertItem({
     required this.title,
     required this.tag,
     required this.image,
     required this.desc,
+    this.authority,
+    this.standard,
   });
 }
 

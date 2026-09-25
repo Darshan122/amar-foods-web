@@ -205,6 +205,7 @@ class AppImages {
   static const String certSpicesBoardLogo = '$_basePath/cert_spices_board_logo.png';
   static const String certHaccpLogo = '$_basePath/cert_haccp_logo.png';
   static const String certIsoLogo = '$_basePath/cert_iso_logo.png';
+  static const String certIso22000Logo = '$_basePath/cert_iso22000_2018_logo.jpg';
   static const String certIso22000 = '$_basePath/cert_iso22000.jpg';
   static const String certHaccp = '$_basePath/cert_haccp.jpg';
   static const String certFssai = '$_basePath/cert_fssai.jpg';
