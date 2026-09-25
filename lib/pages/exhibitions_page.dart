@@ -1,7 +1,9 @@
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../constants/app_colors.dart';
+import '../constants/app_images.dart';
 import '../data/exhibitions_data.dart';
 import '../services/language_service.dart';
 import '../utils/liquid_ui.dart';
@@ -210,120 +212,115 @@ class _ExhibitionsPageState extends State<ExhibitionsPage> {
 
   // 1. Hero Banner
   Widget _buildHeroSection(BuildContext context, bool isMobile) {
-    final double heroHeight = isMobile ? 260 : 340;
+    final double paddingV = LiquidUI.fluid(context, minVal: 48, maxVal: 72);
+    final double headingSize = LiquidUI.fluid(context, minVal: 28, maxVal: 46);
 
-    return Container(
-      width: double.infinity,
-      height: heroHeight,
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color(0xFF420D2C),
-            Color(0xFF6A1544),
-            Color(0xFFA64787),
-          ],
+    return Stack(
+      children: [
+        // Background Image
+        Positioned.fill(
+          child: Image.asset(
+            AppImages.heroBackground,
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) {
+              return Container(color: const Color(0xFF0F172A));
+            },
+          ),
         ),
-      ),
-      child: Stack(
-        children: [
-          // Background Glow Accents
-          Positioned(
-            top: -60,
-            right: -60,
-            child: Container(
-              width: 240,
-              height: 240,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.secondary.withValues(alpha: 0.15),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: -40,
-            left: 20,
-            child: Container(
-              width: 180,
-              height: 180,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.accentGold.withValues(alpha: 0.1),
-              ),
-            ),
-          ),
 
-          // Content
-          Center(
+        // Dark Vignette & Brand Gradient Overlay (Matching other pages)
+        Positioned.fill(
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  const Color(0xFF0F172A).withValues(alpha: 0.90),
+                  const Color(0xFF260B1E).withValues(alpha: 0.95),
+                ],
+              ),
+            ),
+          ),
+        ),
+
+        // Centered Frosted Glass Content Card
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: paddingV),
+          child: Center(
             child: Container(
               constraints: LiquidUI.pageConstraints(),
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  // Badge Pill
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.14),
-                      borderRadius: BorderRadius.circular(30),
-                      border: Border.all(color: Colors.white.withValues(alpha: 0.25)),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(28),
+                child: BackdropFilter(
+                  filter: ui.ImageFilter.blur(sigmaX: 16, sigmaY: 16),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: isMobile ? 20 : 36,
+                      vertical: isMobile ? 28 : 36,
                     ),
-                    child: Row(
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.06),
+                      borderRadius: BorderRadius.circular(28),
+                      border: Border.all(color: Colors.white.withValues(alpha: 0.18)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.35),
+                          blurRadius: 30,
+                          offset: const Offset(0, 12),
+                        ),
+                      ],
+                    ),
+                    child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Icons.public_rounded, size: 14, color: AppColors.accentGold),
-                        const SizedBox(width: 8),
-                        Text(
-                          'GLOBAL FOOTPRINT & TRADE NETWORKS',
-                          style: GoogleFonts.outfit(
-                            color: Colors.white,
-                            fontSize: 11,
-                            fontWeight: FontWeight.w700,
-                            letterSpacing: 1.1,
+                        // Badge Pill
+                        LiquidUI.badgePill(
+                          text: 'GLOBAL FOOTPRINT & TRADE NETWORKS',
+                          icon: Icons.public_rounded,
+                          backgroundColor: AppColors.secondary.withValues(alpha: 0.2),
+                          textColor: AppColors.secondary,
+                          fontSize: 11,
+                        ),
+                        const SizedBox(height: 20),
+
+                        // Title
+                        LiquidUI.gradientText(
+                          'Exhibitions & Trade Shows',
+                          gradient: const LinearGradient(
+                            colors: [Colors.white, Color(0xFFF5E6F0)],
+                          ),
+                          style: GoogleFonts.playfairDisplay(
+                            fontSize: headingSize,
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: -0.5,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 12),
+
+                        // Subtitle
+                        ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 720),
+                          child: Text(
+                            'Connecting with international buyers and trade partners at premier food forums worldwide to showcase India\'s agricultural superiority.',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.inter(
+                              color: Colors.white70,
+                              fontSize: 14,
+                              height: 1.6,
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
-
-                  const SizedBox(height: 16),
-
-                  // Title
-                  Text(
-                    'Exhibitions & Trade Shows',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.playfairDisplay(
-                      fontSize: LiquidUI.fluid(context, minVal: 28, maxVal: 48),
-                      fontWeight: FontWeight.w800,
-                      color: Colors.white,
-                      height: 1.15,
-                    ),
-                  ),
-
-                  const SizedBox(height: 12),
-
-                  // Subtitle
-                  ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 720),
-                    child: Text(
-                      'Connecting with international buyers and trade partners at premier food forums worldwide to showcase India\'s agricultural superiority.',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.inter(
-                        fontSize: LiquidUI.fluid(context, minVal: 13, maxVal: 15.5),
-                        color: Colors.white.withValues(alpha: 0.9),
-                        height: 1.5,
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
