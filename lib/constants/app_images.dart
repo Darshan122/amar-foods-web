@@ -231,6 +231,12 @@ class AppImages {
   static const String expoAaharBooth2 = '$_basePath/expo_aahar_booth_2.webp';
   static const String expoAaharHall = '$_basePath/expo_aahar_hall.jpg';
 
+  // Advanced Processing Infrastructure & Factory Facilities (Mahuva Facility)
+  static const String factoryWashingLine = '$_basePath/factory/factory_washing_line.webp';
+  static const String factoryDehydrationLine = '$_basePath/factory/factory_dehydration_line.webp';
+  static const String factoryProcessingPlant = '$_basePath/factory/factory_processing_plant.webp';
+  static const String factorySortingConveyor = '$_basePath/factory/factory_sorting_conveyor.webp';
+
   // Founders & Executive Leadership
   static const String founderLabheshPatel = '$_basePath/founder_labhesh_patel.jpg';
   static const String founderHirenPatel = '$_basePath/founder_hiren_patel.jpg';

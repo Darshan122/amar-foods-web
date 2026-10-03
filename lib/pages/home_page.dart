@@ -76,8 +76,8 @@ class _HomePageState extends State<HomePage> {
                   // 8. Farm-to-Shipment Journey Process Timeline
                   _buildProcessTimelineSection(context, isMobile),
 
-                  // 9. "Our Promise" Quality Control Sanctuary & Certifications
-                  // _buildQualityPromiseSection(context, isMobile),
+                  // 9. Advanced Manufacturing Infrastructure & Processing Facilities
+                  _buildFactoryInfrastructureSection(context, isMobile),
 
                   // 10. International Accreditation & Quality Certifications Section
                   _buildCertificationsSection(context, isMobile),
@@ -1879,7 +1879,658 @@ class _HomePageState extends State<HomePage> {
 
 
 
-  // 9. International Accreditation & Quality Certifications Section (Real Emblem Images & Details)
+  // 9. Advanced Manufacturing Infrastructure & Processing Facilities (Real Factory Machinery Showcase)
+  Widget _buildFactoryInfrastructureSection(BuildContext context, bool isMobile) {
+    final double paddingV = LiquidUI.fluid(context, minVal: 70, maxVal: 100);
+    final double headingSize = LiquidUI.fluid(context, minVal: 28, maxVal: 40);
+
+    const List<_FactoryItem> factoryItems = [
+      _FactoryItem(
+        title: 'Automated Hydro-Wash & Elevating Infeed Line',
+        tag: 'RAW MATERIAL PREPARATION',
+        image: AppImages.factoryWashingLine,
+        highlight: 'Continuous SS 304 High-Turbulence Wash',
+        desc: 'Automated stainless steel washing line utilizing high-velocity water jets and pneumatic aeration to eliminate field soil and skin debris prior to precision slicing.',
+        specs: ['SS 304 Food-Grade', 'Hydro-Immersion Jets', 'Continuous Infeed', '100% De-Soiled'],
+      ),
+      _FactoryItem(
+        title: 'Continuous Multi-Tier Hot-Air Dehydration Tunnel',
+        tag: 'CONVECTION DEHYDRATION',
+        image: AppImages.factoryDehydrationLine,
+        highlight: 'Precision Zoned Thermal Tunnel',
+        desc: 'Advanced multi-stage continuous convection dryer with automated temperature and humidity control preserving pungent volatile oils and reducing moisture < 5%.',
+        specs: ['Zoned Airflow Control', 'Moisture < 5.0%', 'Aroma Oil Retention', 'Zero Scorching'],
+      ),
+      _FactoryItem(
+        title: 'Heavy Industrial Dehydration & Clean-Air Thermal Plant',
+        tag: 'HEAVY INDUSTRIAL INFRASTRUCTURE',
+        image: AppImages.factoryProcessingPlant,
+        highlight: 'Indirect Heating & Cyclonic Recovery',
+        desc: 'Engineered heavy-duty processing installation featuring indirect clean-air heat exchangers, continuous pneumatic conveyors, and cyclonic environmental exhaust systems.',
+        specs: ['Clean-Air Heat Exchange', 'Cyclonic Dust Capture', 'High Daily Throughput', 'Mahuva Processing Facility'],
+      ),
+      _FactoryItem(
+        title: 'Precision Sizing, Grading & Vibro-Conveyor Line',
+        tag: 'GRADING & PACKAGING CLEANROOM',
+        image: AppImages.factorySortingConveyor,
+        highlight: 'Calibrated Multi-Mesh Vibro Decks',
+        desc: 'Vibratory sizing sieves and optical inspection conveyors grading dehydrated flakes, chopped, minced, and granules to exact customer mesh specifications.',
+        specs: ['Multi-Deck Vibro Screen', 'Uniform Particle Sizing', 'Optical & Manual Checkpoints', 'Bulk Export Sealed'],
+      ),
+    ];
+
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: paddingV),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: const Color(0xFFF8FAFC),
+        border: Border.symmetric(
+          horizontal: BorderSide(
+            color: Colors.black.withValues(alpha: 0.05),
+            width: 1,
+          ),
+        ),
+      ),
+      child: Center(
+        child: Container(
+          constraints: LiquidUI.pageConstraints(),
+          child: Column(
+            children: [
+              LiquidUI.badgePill(
+                text: 'MANUFACTURING INFRASTRUCTURE',
+                icon: Icons.precision_manufacturing_rounded,
+                backgroundColor: AppColors.primaryLight,
+                textColor: AppColors.primary,
+                fontSize: 11,
+              ),
+              const SizedBox(height: 16),
+
+              LiquidUI.gradientText(
+                'Advanced Processing Technology & Infrastructure',
+                gradient: AppColors.primaryGradient,
+                style: GoogleFonts.playfairDisplay(
+                  fontSize: headingSize,
+                  fontWeight: FontWeight.w800,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 12),
+
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 820),
+                child: Text(
+                  'Located in Mahuva, Gujarat — the epicenter of India’s onion agriculture — our manufacturing plant houses continuous automated washing, multi-tier thermal dehydration tunnels, and precision grading lines built to global sanitary standards.',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.inter(
+                    fontSize: 15,
+                    color: AppColors.textSecondary,
+                    height: 1.55,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 32),
+
+              // Infrastructure Highlights Banner
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(18),
+                  border: Border.all(color: const Color(0xFFE2E8F0)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.03),
+                      blurRadius: 16,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Wrap(
+                  spacing: 28,
+                  runSpacing: 14,
+                  alignment: WrapAlignment.spaceEvenly,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    _buildFacilitySpecChip(
+                      icon: Icons.speed_rounded,
+                      title: '50+ MT / Day',
+                      subtitle: 'Dehydration Capacity',
+                    ),
+                    _buildFacilitySpecChip(
+                      icon: Icons.shield_rounded,
+                      title: 'SS 304 Food Grade',
+                      subtitle: 'Contact Surfaces',
+                    ),
+                    _buildFacilitySpecChip(
+                      icon: Icons.clean_hands_rounded,
+                      title: 'Positive Pressure',
+                      subtitle: 'Hygienic Cleanroom',
+                    ),
+                    _buildFacilitySpecChip(
+                      icon: Icons.location_on_rounded,
+                      title: 'Mahuva, Gujarat',
+                      subtitle: 'Direct Farm Hub',
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 48),
+
+              // 2x2 Responsive Cards Grid
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  if (isMobile) {
+                    return Column(
+                      children: factoryItems
+                          .map((item) => Padding(
+                                padding: const EdgeInsets.only(bottom: 24.0),
+                                child: _buildFactoryCard(context, item, isMobile),
+                              ))
+                          .toList(),
+                    );
+                  } else {
+                    final double cardWidth = (constraints.maxWidth - 24) / 2;
+                    return Wrap(
+                      spacing: 24,
+                      runSpacing: 24,
+                      alignment: WrapAlignment.center,
+                      children: factoryItems
+                          .map((item) => SizedBox(
+                                width: cardWidth,
+                                child: _buildFactoryCard(context, item, isMobile),
+                              ))
+                          .toList(),
+                    );
+                  }
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFacilitySpecChip({
+    required IconData icon,
+    required String title,
+    required String subtitle,
+  }) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: AppColors.primary.withValues(alpha: 0.08),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Icon(icon, size: 16, color: AppColors.primary),
+        ),
+        const SizedBox(width: 10),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              title,
+              style: GoogleFonts.outfit(
+                fontSize: 12.5,
+                fontWeight: FontWeight.bold,
+                color: AppColors.textPrimary,
+              ),
+            ),
+            Text(
+              subtitle,
+              style: GoogleFonts.inter(
+                fontSize: 11,
+                color: AppColors.textSecondary,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFactoryCard(BuildContext context, _FactoryItem item, bool isMobile) {
+    return AmarHoverCard(
+      onTap: () => _showFactoryPhotoDialog(context, item),
+      borderRadius: 22,
+      padding: EdgeInsets.zero,
+      showSheen: true,
+      builder: (context, isHovered) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Top Image with Badges
+          Stack(
+            children: [
+              ClipRRect(
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(21)),
+                child: AmarCardImageZoom(
+                  isHovered: isHovered,
+                  scale: 1.06,
+                  child: Image.asset(
+                    item.image,
+                    height: isMobile ? 220 : 260,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        height: isMobile ? 220 : 260,
+                        color: AppColors.primaryLight,
+                        child: const Center(
+                          child: Icon(Icons.factory_rounded, size: 48, color: AppColors.primary),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+
+              // Category Tag Pill
+              Positioned(
+                top: 14,
+                left: 14,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                  decoration: BoxDecoration(
+                    color: AppColors.primaryDark.withValues(alpha: 0.90),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: const [
+                      BoxShadow(color: Colors.black26, blurRadius: 6, offset: Offset(0, 2)),
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.precision_manufacturing_rounded, size: 12, color: Colors.white),
+                      const SizedBox(width: 6),
+                      Text(
+                        item.tag,
+                        style: GoogleFonts.outfit(
+                          color: Colors.white,
+                          fontSize: 10.5,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              // Inspect prompt overlay
+              Positioned(
+                bottom: 12,
+                right: 12,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withValues(alpha: 0.70),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.zoom_in_rounded, size: 14, color: Colors.white),
+                      const SizedBox(width: 5),
+                      Text(
+                        'Inspect Photo',
+                        style: GoogleFonts.outfit(
+                          color: Colors.white,
+                          fontSize: 11,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          // Card Body
+          Padding(
+            padding: const EdgeInsets.all(22),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Highlight Pill
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withValues(alpha: 0.08),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: AppColors.primary.withValues(alpha: 0.18)),
+                  ),
+                  child: Text(
+                    item.highlight,
+                    style: GoogleFonts.outfit(
+                      fontSize: 11.5,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.primary,
+                      letterSpacing: 0.3,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+
+                // Title
+                Text(
+                  item.title,
+                  style: GoogleFonts.outfit(
+                    fontSize: 19,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.textPrimary,
+                    height: 1.25,
+                  ),
+                ),
+                const SizedBox(height: 10),
+
+                // Description
+                Text(
+                  item.desc,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.inter(
+                    fontSize: 13.5,
+                    color: AppColors.textSecondary,
+                    height: 1.5,
+                  ),
+                ),
+                const SizedBox(height: 16),
+
+                // Spec Chips Wrap
+                Wrap(
+                  spacing: 6,
+                  runSpacing: 6,
+                  children: item.specs.map((spec) => Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF1F5F9),
+                      borderRadius: BorderRadius.circular(6),
+                      border: Border.all(color: const Color(0xFFE2E8F0)),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.check_circle_rounded, size: 11, color: AppColors.primary),
+                        const SizedBox(width: 4),
+                        Text(
+                          spec,
+                          style: GoogleFonts.inter(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF334155),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )).toList(),
+                ),
+                const SizedBox(height: 18),
+
+                // CTA Link
+                Row(
+                  children: [
+                    Text(
+                      'View Detailed Specs',
+                      style: GoogleFonts.outfit(
+                        fontSize: 13.5,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primary,
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    AnimatedSlide(
+                      offset: Offset(isHovered ? 0.2 : 0, 0),
+                      duration: const Duration(milliseconds: 200),
+                      child: const Icon(Icons.arrow_forward_rounded, size: 15, color: AppColors.primary),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showFactoryPhotoDialog(BuildContext context, _FactoryItem item) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+          child: Container(
+            constraints: const BoxConstraints(maxWidth: 760),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(24),
+              boxShadow: const [
+                BoxShadow(color: Colors.black26, blurRadius: 28, offset: Offset(0, 10)),
+              ],
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Full Photo with Close Button
+                  Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+                        child: Image.asset(
+                          item.image,
+                          width: double.infinity,
+                          height: 380,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) => Container(
+                            height: 380,
+                            color: AppColors.primaryLight,
+                            child: const Center(
+                              child: Icon(Icons.factory_rounded, size: 64, color: AppColors.primary),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 14,
+                        right: 14,
+                        child: CircleAvatar(
+                          backgroundColor: Colors.black54,
+                          child: IconButton(
+                            onPressed: () => Navigator.pop(context),
+                            icon: const Icon(Icons.close_rounded, color: Colors.white),
+                            tooltip: 'Close',
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 14,
+                        left: 14,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withValues(alpha: 0.75),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(Icons.verified_rounded, size: 14, color: AppColors.secondary),
+                              const SizedBox(width: 6),
+                              Text(
+                                'Amar Foods Mahuva Facility',
+                                style: GoogleFonts.outfit(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  // Content Body
+                  Padding(
+                    padding: const EdgeInsets.all(26),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                              decoration: BoxDecoration(
+                                color: AppColors.primary.withValues(alpha: 0.1),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Text(
+                                item.tag,
+                                style: GoogleFonts.outfit(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.primary,
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                              decoration: BoxDecoration(
+                                color: AppColors.secondary.withValues(alpha: 0.12),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Text(
+                                item.highlight,
+                                style: GoogleFonts.outfit(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.primaryDark,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                        Text(
+                          item.title,
+                          style: GoogleFonts.playfairDisplay(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          item.desc,
+                          style: GoogleFonts.inter(
+                            fontSize: 14,
+                            color: AppColors.textSecondary,
+                            height: 1.6,
+                          ),
+                        ),
+                        const SizedBox(height: 18),
+                        Text(
+                          'KEY SPECIFICATIONS & STANDARDS',
+                          style: GoogleFonts.outfit(
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.primary,
+                            letterSpacing: 0.6,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 8,
+                          children: item.specs.map((spec) => Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFF8FAFC),
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: const Color(0xFFE2E8F0)),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Icon(Icons.check_circle_rounded, size: 13, color: AppColors.primary),
+                                const SizedBox(width: 6),
+                                Text(
+                                  spec,
+                                  style: GoogleFonts.inter(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.textPrimary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )).toList(),
+                        ),
+                        const SizedBox(height: 26),
+
+                        // Action Buttons (with 8px border radius)
+                        Row(
+                          children: [
+                            Expanded(
+                              child: OutlinedButton(
+                                onPressed: () => Navigator.pop(context),
+                                style: OutlinedButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(vertical: 14),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                  side: const BorderSide(color: AppColors.primary),
+                                ),
+                                child: Text(
+                                  'Close',
+                                  style: GoogleFonts.outfit(fontWeight: FontWeight.bold, color: AppColors.primary),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 14),
+                            Expanded(
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  _showQuoteDialog(context);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.secondary,
+                                  foregroundColor: Colors.white,
+                                  padding: const EdgeInsets.symmetric(vertical: 14),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                ),
+                                child: Text(
+                                  'Inquire Facility Specs',
+                                  style: GoogleFonts.outfit(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  // 10. International Accreditation & Quality Certifications Section (Real Emblem Images & Details)
   Widget _buildCertificationsSection(BuildContext context, bool isMobile) {
     final double paddingV = LiquidUI.fluid(context, minVal: 70, maxVal: 100);
     final double headingSize = LiquidUI.fluid(context, minVal: 28, maxVal: 40);
@@ -3370,6 +4021,24 @@ class _TimelineItem {
     required this.icon,
     required this.title,
     required this.desc,
+  });
+}
+
+class _FactoryItem {
+  final String title;
+  final String tag;
+  final String image;
+  final String highlight;
+  final String desc;
+  final List<String> specs;
+
+  const _FactoryItem({
+    required this.title,
+    required this.tag,
+    required this.image,
+    required this.highlight,
+    required this.desc,
+    required this.specs,
   });
 }
 
