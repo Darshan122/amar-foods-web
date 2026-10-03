@@ -1884,6 +1884,15 @@ class _HomePageState extends State<HomePage> {
     final double paddingV = LiquidUI.fluid(context, minVal: 70, maxVal: 100);
     final double headingSize = LiquidUI.fluid(context, minVal: 28, maxVal: 40);
 
+    const _FactoryItem campusGateItem = _FactoryItem(
+      title: 'Amar Foods Primary Dehydration Campus & Main Gate',
+      tag: 'FACILITY CAMPUS & LOGISTICS',
+      image: AppImages.factoryEntranceGate,
+      highlight: 'Mahuva, Bhavnagar, Gujarat • Strategic Export Hub',
+      desc: 'Official processing facility and global export dispatch complex located in Mahuva, Gujarat. Featuring dedicated raw material intake bays, authentic plant signage, and direct highway logistics to Mundra and Pipavav maritime ports.',
+      specs: ['Mahuva Gujarat Hub', 'Official "અમર ફુડ્સ" Plant', 'Direct Highway Access', 'Container Dispatch Bay'],
+    );
+
     const List<_FactoryItem> factoryItems = [
       _FactoryItem(
         title: 'Automated Hydro-Wash & Elevating Infeed Line',
@@ -2014,9 +2023,37 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              const SizedBox(height: 48),
+              const SizedBox(height: 36),
 
-              // 2x2 Responsive Cards Grid
+              // Flagship Campus & Main Entrance Gate Showcase Card
+              _buildCampusFeaturedCard(context, campusGateItem, isMobile),
+              const SizedBox(height: 36),
+
+              // Section Subtitle for Specialized Machinery Lines
+              Row(
+                children: [
+                  Container(
+                    height: 22,
+                    width: 4,
+                    decoration: BoxDecoration(
+                      color: AppColors.secondary,
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Text(
+                    'Continuous Infeed, Dehydration & Vibro-Grading Lines',
+                    style: GoogleFonts.outfit(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.textPrimary,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+
+              // 2x2 Responsive Machinery Cards Grid
               LayoutBuilder(
                 builder: (context, constraints) {
                   if (isMobile) {
@@ -2086,6 +2123,307 @@ class _HomePageState extends State<HomePage> {
                 fontSize: 11,
                 color: AppColors.textSecondary,
               ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCampusFeaturedCard(BuildContext context, _FactoryItem item, bool isMobile) {
+    return AmarHoverCard(
+      onTap: () => _showFactoryPhotoDialog(context, item),
+      borderRadius: 24,
+      padding: EdgeInsets.zero,
+      showSheen: true,
+      builder: (context, isHovered) {
+        if (isMobile) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.vertical(top: Radius.circular(23)),
+                    child: AmarCardImageZoom(
+                      isHovered: isHovered,
+                      scale: 1.05,
+                      child: Image.asset(
+                        item.image,
+                        height: 230,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) => Container(
+                          height: 230,
+                          color: AppColors.primaryLight,
+                          child: const Center(
+                            child: Icon(Icons.factory_rounded, size: 48, color: AppColors.primary),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 14,
+                    left: 14,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryDark.withValues(alpha: 0.90),
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: const [
+                          BoxShadow(color: Colors.black26, blurRadius: 6, offset: Offset(0, 2)),
+                        ],
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Icons.business_rounded, size: 12, color: Colors.white),
+                          const SizedBox(width: 6),
+                          Text(
+                            item.tag,
+                            style: GoogleFonts.outfit(
+                              color: Colors.white,
+                              fontSize: 10.5,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 0.5,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 12,
+                    right: 12,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withValues(alpha: 0.70),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Icons.zoom_in_rounded, size: 14, color: Colors.white),
+                          const SizedBox(width: 5),
+                          Text(
+                            'Inspect Photo',
+                            style: GoogleFonts.outfit(
+                              color: Colors.white,
+                              fontSize: 11,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(22),
+                child: _buildCampusContent(context, item, isHovered),
+              ),
+            ],
+          );
+        } else {
+          return SizedBox(
+            height: 340,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  flex: 54,
+                  child: Stack(
+                    children: [
+                      Positioned.fill(
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.horizontal(left: Radius.circular(23)),
+                          child: AmarCardImageZoom(
+                            isHovered: isHovered,
+                            scale: 1.05,
+                            child: Image.asset(
+                              item.image,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) => Container(
+                                color: AppColors.primaryLight,
+                                child: const Center(
+                                  child: Icon(Icons.factory_rounded, size: 48, color: AppColors.primary),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 16,
+                        left: 16,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                          decoration: BoxDecoration(
+                            color: AppColors.primaryDark.withValues(alpha: 0.90),
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: const [
+                              BoxShadow(color: Colors.black26, blurRadius: 6, offset: Offset(0, 2)),
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(Icons.business_rounded, size: 12, color: Colors.white),
+                              const SizedBox(width: 6),
+                              Text(
+                                item.tag,
+                                style: GoogleFonts.outfit(
+                                  color: Colors.white,
+                                  fontSize: 10.5,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 14,
+                        right: 14,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withValues(alpha: 0.70),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(Icons.zoom_in_rounded, size: 14, color: Colors.white),
+                              const SizedBox(width: 5),
+                              Text(
+                                'Inspect Photo',
+                                style: GoogleFonts.outfit(
+                                  color: Colors.white,
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  flex: 46,
+                  child: Padding(
+                    padding: const EdgeInsets.all(28),
+                    child: _buildCampusContent(context, item, isHovered),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+      },
+    );
+  }
+
+  Widget _buildCampusContent(BuildContext context, _FactoryItem item, bool isHovered) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+          decoration: BoxDecoration(
+            color: AppColors.secondary.withValues(alpha: 0.12),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: AppColors.secondary.withValues(alpha: 0.25)),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.pin_drop_rounded, size: 12, color: AppColors.secondary),
+              const SizedBox(width: 5),
+              Text(
+                item.highlight,
+                style: GoogleFonts.outfit(
+                  fontSize: 11.5,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.primaryDark,
+                  letterSpacing: 0.3,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 10),
+        Text(
+          item.title,
+          style: GoogleFonts.outfit(
+            fontSize: 21,
+            fontWeight: FontWeight.w800,
+            color: AppColors.textPrimary,
+            height: 1.25,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Text(
+          item.desc,
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis,
+          style: GoogleFonts.inter(
+            fontSize: 13.5,
+            color: AppColors.textSecondary,
+            height: 1.5,
+          ),
+        ),
+        const SizedBox(height: 16),
+        Wrap(
+          spacing: 6,
+          runSpacing: 6,
+          children: item.specs.map((spec) => Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              color: const Color(0xFFF1F5F9),
+              borderRadius: BorderRadius.circular(6),
+              border: Border.all(color: const Color(0xFFE2E8F0)),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.check_circle_rounded, size: 11, color: AppColors.primary),
+                const SizedBox(width: 4),
+                Text(
+                  spec,
+                  style: GoogleFonts.inter(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                    color: const Color(0xFF334155),
+                  ),
+                ),
+              ],
+            ),
+          )).toList(),
+        ),
+        const SizedBox(height: 18),
+        Row(
+          children: [
+            Text(
+              'Inspect Campus Gate & Location Details',
+              style: GoogleFonts.outfit(
+                fontSize: 13.5,
+                fontWeight: FontWeight.bold,
+                color: AppColors.primary,
+              ),
+            ),
+            const SizedBox(width: 6),
+            AnimatedSlide(
+              offset: Offset(isHovered ? 0.2 : 0, 0),
+              duration: const Duration(milliseconds: 200),
+              child: const Icon(Icons.arrow_forward_rounded, size: 15, color: AppColors.primary),
             ),
           ],
         ),

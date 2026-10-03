@@ -232,6 +232,7 @@ class AppImages {
   static const String expoAaharHall = '$_basePath/expo_aahar_hall.jpg';
 
   // Advanced Processing Infrastructure & Factory Facilities (Mahuva Facility)
+  static const String factoryEntranceGate = '$_basePath/factory/factory_entrance_gate.jpg';
   static const String factoryWashingLine = '$_basePath/factory/factory_washing_line.webp';
   static const String factoryDehydrationLine = '$_basePath/factory/factory_dehydration_line.webp';
   static const String factoryProcessingPlant = '$_basePath/factory/factory_processing_plant.webp';
