@@ -24,6 +24,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final GlobalKey _factorySectionKey = GlobalKey();
+
+  void _scrollToFactorySection() {
+    final targetContext = _factorySectionKey.currentContext;
+    if (targetContext != null) {
+      Scrollable.ensureVisible(
+        targetContext,
+        duration: const Duration(milliseconds: 700),
+        curve: Curves.easeInOutCubic,
+      );
+    }
+  }
+
   void _showQuoteDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -58,28 +71,28 @@ class _HomePageState extends State<HomePage> {
                   // 3. "About Amar Foods" Section (Product Photo on Left, Story on Right)
                   _buildAboutAmarSection(context, isMobile),
 
-                  // 4. "Our Vision" Quote Card Section (Inspired by Vision Reference)
-                  _buildVisionQuoteSection(context, isMobile),
-
-                  // 5. "Applications of Our Products" Section (Food Industry Applications)
-                  _buildProductApplicationsSection(context, isMobile),
-
-                  // 6. Interactive "Our Product Range" Showcase with Category Filter Tabs
-                  _buildProductRangeSection(context, isMobile),
-
-                  // 6. Global Expos & Industry Events (Trust Showcase)
-                  _buildExpoSection(context, isMobile),
-
-                  // 7. "Why Choose Amar Foods" Core Value Pillars Grid (UNMATCHED EXPORT ADVANTAGES)
-                  _buildWhyChooseUsSection(context, isMobile),
-
-                  // 8. Farm-to-Shipment Journey Process Timeline
-                  _buildProcessTimelineSection(context, isMobile),
-
-                  // 9. Advanced Manufacturing Infrastructure & Processing Facilities
+                  // 4. Advanced Manufacturing Infrastructure & Processing Facilities (Real Factory Photos)
                   _buildFactoryInfrastructureSection(context, isMobile),
 
-                  // 10. International Accreditation & Quality Certifications Section
+                  // 5. "Our Vision" Quote Card Section (Inspired by Vision Reference)
+                  _buildVisionQuoteSection(context, isMobile),
+
+                  // 6. "Applications of Our Products" Section (Food Industry Applications)
+                  _buildProductApplicationsSection(context, isMobile),
+
+                  // 7. Interactive "Our Product Range" Showcase with Category Filter Tabs
+                  _buildProductRangeSection(context, isMobile),
+
+                  // 8. Global Expos & Industry Events (Trust Showcase)
+                  _buildExpoSection(context, isMobile),
+
+                  // 9. "Why Choose Amar Foods" Core Value Pillars Grid (UNMATCHED EXPORT ADVANTAGES)
+                  _buildWhyChooseUsSection(context, isMobile),
+
+                  // 10. Farm-to-Shipment Journey Process Timeline
+                  _buildProcessTimelineSection(context, isMobile),
+
+                  // 11. International Accreditation & Quality Certifications Section
                   _buildCertificationsSection(context, isMobile),
 
                   // 11. Global Export Footprint & Network
@@ -294,6 +307,11 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
+            ),
+            _HeroContactButton(
+              onPressed: _scrollToFactorySection,
+              label: 'Real Factory Photos',
+              icon: Icons.precision_manufacturing_rounded,
             ),
             _HeroContactButton(
               onPressed: () => _showQuoteDialog(context),
@@ -594,16 +612,33 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const SizedBox(height: 32),
 
-                  AmarSecondaryButton(
-                    onPressed: () => Navigator.pushNamed(context, '/about'),
-                    label: 'Learn More About Us',
-                    trailing: const Icon(Icons.arrow_forward_rounded, size: 16, color: AppColors.primary),
-                    padding: LiquidUI.fluidPaddingSymmetric(
-                      context,
-                      minHorizontal: 24, maxHorizontal: 32,
-                      minVertical: 14, maxVertical: 18,
-                    ),
-                    fontSize: 15,
+                  Wrap(
+                    spacing: 14,
+                    runSpacing: 12,
+                    children: [
+                      AmarPrimaryButton(
+                        onPressed: _scrollToFactorySection,
+                        icon: Icons.precision_manufacturing_rounded,
+                        label: 'View Real Factory & Plant',
+                        padding: LiquidUI.fluidPaddingSymmetric(
+                          context,
+                          minHorizontal: 22, maxHorizontal: 28,
+                          minVertical: 14, maxVertical: 18,
+                        ),
+                        fontSize: 14,
+                      ),
+                      AmarSecondaryButton(
+                        onPressed: () => Navigator.pushNamed(context, '/about'),
+                        label: 'Learn More About Us',
+                        trailing: const Icon(Icons.arrow_forward_rounded, size: 16, color: AppColors.primary),
+                        padding: LiquidUI.fluidPaddingSymmetric(
+                          context,
+                          minHorizontal: 22, maxHorizontal: 28,
+                          minVertical: 14, maxVertical: 18,
+                        ),
+                        fontSize: 14,
+                      ),
+                    ],
                   ),
                 ],
               );
@@ -1929,6 +1964,7 @@ class _HomePageState extends State<HomePage> {
     ];
 
     return Container(
+      key: _factorySectionKey,
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: paddingV),
       width: double.infinity,
       decoration: BoxDecoration(
@@ -4657,10 +4693,12 @@ class _ApplicationCardWidgetState extends State<_ApplicationCardWidget>
 class _HeroContactButton extends StatefulWidget {
   final VoidCallback onPressed;
   final String label;
+  final IconData icon;
 
   const _HeroContactButton({
     required this.onPressed,
     required this.label,
+    this.icon = Icons.mail_outline_rounded,
   });
 
   @override
@@ -4732,8 +4770,8 @@ class _HeroContactButtonState extends State<_HeroContactButton> {
                       scale: _isHovered ? 1.15 : 1.0,
                       duration: const Duration(milliseconds: 180),
                       curve: Curves.easeOutCubic,
-                      child: const Icon(
-                        Icons.mail_outline_rounded,
+                      child: Icon(
+                        widget.icon,
                         size: 18,
                         color: Colors.white,
                       ),
