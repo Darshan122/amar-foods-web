@@ -250,16 +250,22 @@ class AboutPage extends StatelessWidget {
                     children: [
                       ClipRRect(
                         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-                        child: Image.asset(
-                          AppImages.aboutHeritageMission,
+                        child: Container(
+                          color: const Color(0xFF0F172A),
+                          constraints: const BoxConstraints(maxHeight: 680),
                           width: double.infinity,
-                          height: 480,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) => Container(
-                            height: 480,
-                            color: AppColors.primaryLight,
-                            child: const Center(
-                              child: Icon(Icons.factory_rounded, size: 64, color: AppColors.primary),
+                          child: InteractiveViewer(
+                            child: Image.asset(
+                              AppImages.aboutHeritageMission,
+                              width: double.infinity,
+                              fit: BoxFit.contain,
+                              errorBuilder: (context, error, stackTrace) => Container(
+                                height: 480,
+                                color: AppColors.primaryLight,
+                                child: const Center(
+                                  child: Icon(Icons.factory_rounded, size: 64, color: AppColors.primary),
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -433,21 +439,24 @@ class AboutPage extends StatelessWidget {
             Positioned.fill(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(22),
-                child: AmarCardImageZoom(
-                  isHovered: isHovered,
-                  scale: 1.05,
-                  child: Image.asset(
-                    AppImages.aboutHeritageMission,
-                    fit: BoxFit.cover,
-                    alignment: Alignment.center,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Container(
-                        color: AppColors.primaryLight,
-                        child: const Center(
-                          child: Icon(Icons.factory_rounded, size: 64, color: AppColors.primary),
-                        ),
-                      );
-                    },
+                child: Container(
+                  color: const Color(0xFFF1F5F9),
+                  child: AmarCardImageZoom(
+                    isHovered: isHovered,
+                    scale: 1.04,
+                    child: Image.asset(
+                      AppImages.aboutHeritageMission,
+                      fit: BoxFit.contain,
+                      alignment: Alignment.center,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          color: AppColors.primaryLight,
+                          child: const Center(
+                            child: Icon(Icons.factory_rounded, size: 64, color: AppColors.primary),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -617,7 +626,7 @@ class AboutPage extends StatelessWidget {
                 return Column(
                   children: [
                     AspectRatio(
-                      aspectRatio: 16 / 10,
+                      aspectRatio: 3 / 4,
                       child: buildImageCard(),
                     ),
                     const SizedBox(height: 36),
