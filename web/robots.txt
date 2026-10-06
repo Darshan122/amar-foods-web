@@ -3,8 +3,10 @@ User-agent: *
 Allow: /
 Allow: /about
 Allow: /products
+Allow: /exhibitions
 Allow: /gallery
 Allow: /contact
+Allow: /enquiry
 Allow: /amar_foods_brochure.pdf
 
 # XML Sitemap location
