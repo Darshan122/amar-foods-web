@@ -5,7 +5,7 @@ class AppImages {
   // Logo & Content images
   static const String logo = '$_basePath/logo.png';
   static const String aboutProducts = '$_basePath/about_amar_foods_products.jpg';
-  static const String aboutHeritageMission = '$_basePath/about_heritage_mission.jpg';
+  static const String aboutHeritageMission = '$_basePath/factory/factory_aerial_heritage.jpg';
   static const String heroBackground = '$_basePath/about_amar_foods_products.jpg';
 
   // Product Range images
@@ -232,6 +232,7 @@ class AppImages {
   static const String expoAaharHall = '$_basePath/expo_aahar_hall.jpg';
 
   // Advanced Processing Infrastructure & Factory Facilities (Mahuva Facility)
+  static const String factoryAerialHeritage = '$_basePath/factory/factory_aerial_heritage.jpg';
   static const String factoryEntranceGate = '$_basePath/factory/factory_entrance_gate.jpg';
   static const String factoryWashingLine = '$_basePath/factory/factory_washing_line.webp';
   static const String factoryDehydrationLine = '$_basePath/factory/factory_dehydration_line.webp';
