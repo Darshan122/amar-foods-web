@@ -446,7 +446,7 @@ class AboutPage extends StatelessWidget {
                     scale: 1.04,
                     child: Image.asset(
                       AppImages.aboutHeritageMission,
-                      fit: BoxFit.contain,
+                      fit: BoxFit.cover,
                       alignment: Alignment.center,
                       errorBuilder: (context, error, stackTrace) {
                         return Container(
@@ -626,7 +626,7 @@ class AboutPage extends StatelessWidget {
                 return Column(
                   children: [
                     AspectRatio(
-                      aspectRatio: 3 / 4,
+                      aspectRatio: 1 / 1,
                       child: buildImageCard(),
                     ),
                     const SizedBox(height: 36),
