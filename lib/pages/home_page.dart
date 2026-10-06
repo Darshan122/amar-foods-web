@@ -25,6 +25,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final GlobalKey _factorySectionKey = GlobalKey();
+  int _selectedCampusPhotoIndex = 0;
 
   void _scrollToFactorySection() {
     final targetContext = _factorySectionKey.currentContext;
@@ -445,93 +446,168 @@ class _HomePageState extends State<HomePage> {
     final double paddingV = LiquidUI.fluid(context, minVal: 60, maxVal: 100);
     final double headingSize = LiquidUI.fluid(context, minVal: 28, maxVal: 40);
 
-    Widget buildImageCard() {
-      return Stack(
-        clipBehavior: Clip.none,
-        fit: isMobile ? StackFit.loose : StackFit.expand,
-        children: [
-          Positioned.fill(
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(24),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.primary.withOpacity(0.12),
-                    blurRadius: 30,
-                    offset: const Offset(0, 12),
-                  ),
-                ],
-              ),
-              clipBehavior: Clip.antiAlias,
-              child: Image.asset(
-                AppImages.aboutProducts,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    color: AppColors.primaryLight,
-                    child: const Center(
-                      child: Icon(Icons.eco_rounded, size: 64, color: AppColors.primary),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ),
+    const _FactoryItem aboutAerialItem = _FactoryItem(
+      title: 'Amar Foods Primary Dehydration Campus (Aerial View)',
+      tag: 'AERIAL CAMPUS PERSPECTIVE',
+      image: AppImages.factoryAerialHeritage,
+      highlight: 'Mahuva, Bhavnagar, Gujarat • Strategic Export Hub',
+      desc: 'High-angle aerial perspective of the primary Amar Foods manufacturing campus situated in Mahuva, Bhavnagar, Gujarat. Showcasing continuous thermal dehydration sheds, raw material bays, cleanroom facilities, and surrounding agricultural farmlands.',
+      specs: ['Mahuva Gujarat Hub', 'Official "અમર ફુડ્સ" Plant', 'Continuous Dehydration Sheds', 'Export Dispatch Logistics'],
+    );
 
-          Positioned(
-            bottom: isMobile ? 12 : 20,
-            right: isMobile ? 12 : 20,
-            left: isMobile ? 12 : null,
-            child: LiquidUI.glassCard(
-              borderRadius: 16,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-              backgroundColor: Colors.white.withOpacity(0.95),
-              borderColor: AppColors.secondary.withOpacity(0.3),
-              shadows: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.12),
-                  blurRadius: 20,
-                  offset: const Offset(0, 8),
-                ),
-              ],
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: const BoxDecoration(
-                      color: AppColors.secondaryLight,
-                      shape: BoxShape.circle,
+    Widget buildImageCard() {
+      return AmarHoverCard(
+        onTap: () => _showFactoryPhotoDialog(context, aboutAerialItem),
+        padding: EdgeInsets.zero,
+        backgroundColor: Colors.white,
+        borderRadius: 24,
+        showSheen: true,
+        builder: (context, isHovered) => Stack(
+          clipBehavior: Clip.none,
+          fit: isMobile ? StackFit.loose : StackFit.expand,
+          children: [
+            Positioned.fill(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(24),
+                child: Container(
+                  color: const Color(0xFFF1F5F9),
+                  child: AmarCardImageZoom(
+                    isHovered: isHovered,
+                    scale: 1.04,
+                    child: Image.asset(
+                      AppImages.factoryAerialHeritage,
+                      fit: BoxFit.cover,
+                      alignment: Alignment.center,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          color: AppColors.primaryLight,
+                          child: const Center(
+                            child: Icon(Icons.factory_rounded, size: 64, color: AppColors.primary),
+                          ),
+                        );
+                      },
                     ),
-                    child: const Icon(Icons.verified_user_rounded, color: AppColors.secondary, size: 24),
                   ),
-                  const SizedBox(width: 12),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        LanguageService.instance.tr('about_card_badge').split('\n').first,
-                        style: GoogleFonts.outfit(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                          color: AppColors.textPrimary,
-                        ),
-                      ),
-                      Text(
-                        LanguageService.instance.tr('about_card_badge').split('\n').last,
-                        style: GoogleFonts.inter(
-                          fontSize: 12,
-                          color: AppColors.textSecondary,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                ),
               ),
             ),
-          ),
-        ],
+
+            // Top Campus Tag Badge
+            Positioned(
+              top: 16,
+              left: 16,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: AppColors.primaryDark.withValues(alpha: 0.90),
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: const [
+                    BoxShadow(color: Colors.black26, blurRadius: 6, offset: Offset(0, 2)),
+                  ],
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.verified_rounded, size: 14, color: AppColors.secondary),
+                    const SizedBox(width: 6),
+                    Text(
+                      'REAL MAHUVA FACILITY',
+                      style: GoogleFonts.outfit(
+                        color: Colors.white,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // Top Right Zoom Icon Indicator
+            Positioned(
+              top: 16,
+              right: 16,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                decoration: BoxDecoration(
+                  color: Colors.black.withValues(alpha: 0.65),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.zoom_in_rounded, size: 14, color: Colors.white),
+                    const SizedBox(width: 4),
+                    Text(
+                      'Inspect',
+                      style: GoogleFonts.outfit(
+                        color: Colors.white,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // Bottom Floating Glass Badge
+            Positioned(
+              bottom: isMobile ? 12 : 20,
+              right: isMobile ? 12 : 20,
+              left: isMobile ? 12 : null,
+              child: LiquidUI.glassCard(
+                borderRadius: 16,
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                backgroundColor: Colors.white.withValues(alpha: 0.95),
+                borderColor: AppColors.secondary.withValues(alpha: 0.3),
+                shadows: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.12),
+                    blurRadius: 20,
+                    offset: const Offset(0, 8),
+                  ),
+                ],
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: const BoxDecoration(
+                        color: AppColors.secondaryLight,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(Icons.verified_user_rounded, color: AppColors.secondary, size: 24),
+                    ),
+                    const SizedBox(width: 12),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          LanguageService.instance.tr('about_card_badge').split('\n').first,
+                          style: GoogleFonts.outfit(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                        Text(
+                          LanguageService.instance.tr('about_card_badge').split('\n').last,
+                          style: GoogleFonts.inter(
+                            fontSize: 12,
+                            color: AppColors.textSecondary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       );
     }
 
@@ -647,7 +723,7 @@ class _HomePageState extends State<HomePage> {
                 return Column(
                   children: [
                     AspectRatio(
-                      aspectRatio: 16 / 10,
+                      aspectRatio: 1 / 1,
                       child: buildImageCard(),
                     ),
                     const SizedBox(height: 52),
@@ -1919,6 +1995,15 @@ class _HomePageState extends State<HomePage> {
     final double paddingV = LiquidUI.fluid(context, minVal: 70, maxVal: 100);
     final double headingSize = LiquidUI.fluid(context, minVal: 28, maxVal: 40);
 
+    const _FactoryItem campusAerialItem = _FactoryItem(
+      title: 'Amar Foods Primary Dehydration Campus (Aerial View)',
+      tag: 'AERIAL CAMPUS PERSPECTIVE',
+      image: AppImages.factoryAerialHeritage,
+      highlight: 'Mahuva, Bhavnagar, Gujarat • Strategic Export Hub',
+      desc: 'High-angle aerial perspective of the primary Amar Foods manufacturing campus situated in Mahuva, Bhavnagar, Gujarat. Showcasing continuous thermal dehydration sheds, raw material infeed bays, cleanroom facilities, and surrounding agricultural farmlands.',
+      specs: ['Mahuva Gujarat Hub', 'Official "અમર ફુડ્સ" Plant', 'Continuous Dehydration Sheds', 'Export Dispatch Logistics'],
+    );
+
     const _FactoryItem campusGateItem = _FactoryItem(
       title: 'Amar Foods Primary Dehydration Campus & Main Gate',
       tag: 'FACILITY CAMPUS & LOGISTICS',
@@ -2061,8 +2146,78 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 36),
 
-              // Flagship Campus & Main Entrance Gate Showcase Card
-              _buildCampusFeaturedCard(context, campusGateItem, isMobile),
+              // Flagship Campus Perspective Toggle & Showcase Card
+              Wrap(
+                spacing: 12,
+                runSpacing: 10,
+                alignment: WrapAlignment.center,
+                children: [
+                  ChoiceChip(
+                    label: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.flight_takeoff_rounded, size: 15),
+                        const SizedBox(width: 7),
+                        Text(
+                          'Aerial Campus View (Mahuva Plant)',
+                          style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 13),
+                        ),
+                      ],
+                    ),
+                    selected: _selectedCampusPhotoIndex == 0,
+                    onSelected: (selected) {
+                      if (selected) setState(() => _selectedCampusPhotoIndex = 0);
+                    },
+                    selectedColor: AppColors.primary,
+                    labelStyle: TextStyle(
+                      color: _selectedCampusPhotoIndex == 0 ? Colors.white : AppColors.textPrimary,
+                    ),
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      side: BorderSide(
+                        color: _selectedCampusPhotoIndex == 0 ? AppColors.primary : const Color(0xFFCBD5E1),
+                      ),
+                    ),
+                  ),
+                  ChoiceChip(
+                    label: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.sensor_door_rounded, size: 15),
+                        const SizedBox(width: 7),
+                        Text(
+                          'Main Entrance Gate & Logistics',
+                          style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 13),
+                        ),
+                      ],
+                    ),
+                    selected: _selectedCampusPhotoIndex == 1,
+                    onSelected: (selected) {
+                      if (selected) setState(() => _selectedCampusPhotoIndex = 1);
+                    },
+                    selectedColor: AppColors.primary,
+                    labelStyle: TextStyle(
+                      color: _selectedCampusPhotoIndex == 1 ? Colors.white : AppColors.textPrimary,
+                    ),
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      side: BorderSide(
+                        color: _selectedCampusPhotoIndex == 1 ? AppColors.primary : const Color(0xFFCBD5E1),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 18),
+
+              // Flagship Campus Featured Showcase Card
+              _buildCampusFeaturedCard(
+                context,
+                _selectedCampusPhotoIndex == 0 ? campusAerialItem : campusGateItem,
+                isMobile,
+              ),
               const SizedBox(height: 36),
 
               // Section Subtitle for Specialized Machinery Lines
