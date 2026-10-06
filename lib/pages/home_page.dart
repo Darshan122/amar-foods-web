@@ -1645,12 +1645,12 @@ class _HomePageState extends State<HomePage> {
     final double headingSize = LiquidUI.fluid(context, minVal: 28, maxVal: 40);
 
     const _FactoryItem campusGateItem = _FactoryItem(
-      title: 'Amar Foods Primary Dehydration Campus & Main Gate',
-      tag: 'FACILITY CAMPUS & LOGISTICS',
-      image: AppImages.factoryEntranceGate,
+      title: 'Amar Foods Primary Dehydration Campus & Plant (Drone View)',
+      tag: 'AERIAL DRONE PERSPECTIVE',
+      image: AppImages.factoryAerialHeritage,
       highlight: 'Mahuva, Bhavnagar, Gujarat • Strategic Export Hub',
-      desc: 'Official processing facility and global export dispatch complex located in Mahuva, Gujarat. Featuring dedicated raw material intake bays, authentic plant signage, and direct highway logistics to Mundra and Pipavav maritime ports.',
-      specs: ['Mahuva Gujarat Hub', 'Official "અમર ફુડ્સ" Plant', 'Direct Highway Access', 'Container Dispatch Bay'],
+      desc: 'High-angle aerial drone perspective of the primary Amar Foods manufacturing campus situated in Mahuva, Bhavnagar, Gujarat. Showcasing continuous thermal dehydration sheds, raw material intake bays, cleanroom processing facilities, and surrounding agricultural farmlands.',
+      specs: ['Mahuva Gujarat Hub', 'Official "અમર ફુડ્સ" Facility', 'Continuous Dehydration Sheds', 'Container Dispatch Bay'],
     );
 
     const List<_FactoryItem> factoryItems = [
@@ -1911,9 +1911,10 @@ class _HomePageState extends State<HomePage> {
                       scale: 1.05,
                       child: Image.asset(
                         item.image,
-                        height: 230,
+                        height: 260,
                         width: double.infinity,
                         fit: BoxFit.cover,
+                        alignment: Alignment.center,
                         errorBuilder: (context, error, stackTrace) => Container(
                           height: 230,
                           color: AppColors.primaryLight,
@@ -1990,7 +1991,7 @@ class _HomePageState extends State<HomePage> {
           );
         } else {
           return SizedBox(
-            height: 340,
+            height: 360,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -2007,6 +2008,7 @@ class _HomePageState extends State<HomePage> {
                             child: Image.asset(
                               item.image,
                               fit: BoxFit.cover,
+                              alignment: Alignment.center,
                               errorBuilder: (context, error, stackTrace) => Container(
                                 color: AppColors.primaryLight,
                                 child: const Center(
@@ -2173,7 +2175,7 @@ class _HomePageState extends State<HomePage> {
         Row(
           children: [
             Text(
-              'Inspect Campus Gate & Location Details',
+              'Inspect Drone Campus & Facility Details',
               style: GoogleFonts.outfit(
                 fontSize: 13.5,
                 fontWeight: FontWeight.bold,
@@ -2424,16 +2426,22 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       ClipRRect(
                         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-                        child: Image.asset(
-                          item.image,
+                        child: Container(
+                          color: const Color(0xFF0F172A),
+                          constraints: const BoxConstraints(maxHeight: 520),
                           width: double.infinity,
-                          height: 380,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) => Container(
-                            height: 380,
-                            color: AppColors.primaryLight,
-                            child: const Center(
-                              child: Icon(Icons.factory_rounded, size: 64, color: AppColors.primary),
+                          child: InteractiveViewer(
+                            child: Image.asset(
+                              item.image,
+                              width: double.infinity,
+                              fit: BoxFit.contain,
+                              errorBuilder: (context, error, stackTrace) => Container(
+                                height: 380,
+                                color: AppColors.primaryLight,
+                                child: const Center(
+                                  child: Icon(Icons.factory_rounded, size: 64, color: AppColors.primary),
+                                ),
+                              ),
                             ),
                           ),
                         ),
