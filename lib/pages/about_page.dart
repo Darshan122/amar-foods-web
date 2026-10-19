@@ -888,9 +888,18 @@ class AboutPage extends StatelessWidget {
         'name': 'Bhavesh Patel',
         'role': LanguageService.instance.tr('about_f5_role'),
         'exp': LanguageService.instance.tr('about_f_exp'),
-        'expertise': 'Brand Strategy & Global Trade Marketing',
+        'expertise': 'Finance, Accounting & Trade Compliance',
         'bio': LanguageService.instance.tr('about_f5_bio'),
         'image': AppImages.founderBhaveshPatel,
+      },
+      {
+        'name': 'Darshan Zalavadiya',
+        'role': LanguageService.instance.tr('about_f6_role'),
+        'exp': LanguageService.instance.tr('about_f6_exp'),
+        'expertise': 'Global Export Operations & Trade Marketing',
+        'bio': LanguageService.instance.tr('about_f6_bio'),
+        'image': AppImages.founderDarshanZalavadiya,
+        'lightBg': 'true',
       },
     ];
 
@@ -969,11 +978,12 @@ class AboutPage extends StatelessWidget {
 
   Widget _buildFounderCard(BuildContext context, Map<String, String> f) {
     final String? imagePath = f['image'];
+    final bool isLightBg = f['lightBg'] == 'true';
 
     return AmarHoverCard(
       borderRadius: 24,
       padding: EdgeInsets.zero,
-      backgroundColor: AppColors.background,
+      backgroundColor: isLightBg ? Colors.white : AppColors.background,
       builder: (context, isHovered) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -984,12 +994,15 @@ class AboutPage extends StatelessWidget {
               child: Stack(
                 fit: StackFit.expand,
                 children: [
+                  // White background container for light-bg photos
+                  if (isLightBg)
+                    Container(color: Colors.white),
                   AmarCardImageZoom(
                     isHovered: isHovered,
                     scale: 1.05,
                     child: Image.asset(
                       imagePath,
-                      fit: BoxFit.cover,
+                      fit: isLightBg ? BoxFit.contain : BoxFit.cover,
                       alignment: Alignment.topCenter,
                       errorBuilder: (context, error, stackTrace) {
                         return Container(
@@ -1001,35 +1014,55 @@ class AboutPage extends StatelessWidget {
                       },
                     ),
                   ),
-                    // Dark gradient vignette overlay at the bottom of the photo
+                    // Gradient vignette overlay at the bottom of the photo
                     Positioned(
                       bottom: 0,
                       left: 0,
                       right: 0,
-                      height: 90,
+                      height: isLightBg ? 60 : 90,
                       child: Container(
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
-                            colors: [
-                              Colors.transparent,
-                              Colors.black.withValues(alpha: 0.7),
-                            ],
+                            colors: isLightBg
+                                ? [
+                                    Colors.transparent,
+                                    Colors.white.withValues(alpha: 0.95),
+                                  ]
+                                : [
+                                    Colors.transparent,
+                                    Colors.black.withValues(alpha: 0.7),
+                                  ],
                           ),
                         ),
                       ),
                     ),
-                    // 15+ Years Industry Experience Badge floating bottom-left of photo
+                    // Experience Badge floating bottom-left of photo
                     Positioned(
                       bottom: 14,
                       left: 14,
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         decoration: BoxDecoration(
-                          color: Colors.black.withValues(alpha: 0.78),
+                          color: isLightBg
+                              ? Colors.white.withValues(alpha: 0.95)
+                              : Colors.black.withValues(alpha: 0.78),
                           borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: AppColors.secondary.withValues(alpha: 0.4)),
+                          border: Border.all(
+                            color: isLightBg
+                                ? AppColors.secondary.withValues(alpha: 0.5)
+                                : AppColors.secondary.withValues(alpha: 0.4),
+                          ),
+                          boxShadow: isLightBg
+                              ? [
+                                  BoxShadow(
+                                    color: Colors.black.withValues(alpha: 0.1),
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 2),
+                                  )
+                                ]
+                              : [],
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -1041,7 +1074,7 @@ class AboutPage extends StatelessWidget {
                               style: GoogleFonts.outfit(
                                 fontSize: 11,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                                color: isLightBg ? AppColors.primary : Colors.white,
                                 letterSpacing: 0.3,
                               ),
                             ),
