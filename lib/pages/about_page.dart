@@ -899,7 +899,6 @@ class AboutPage extends StatelessWidget {
         'expertise': 'Global Export Operations & Trade Marketing',
         'bio': LanguageService.instance.tr('about_f6_bio'),
         'image': AppImages.founderDarshanZalavadiya,
-        'lightBg': 'true',
       },
     ];
 
