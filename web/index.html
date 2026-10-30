@@ -15,6 +15,20 @@
     the `--base-href` argument provided to `flutter build`.
   -->
   <base href="$FLUTTER_BASE_HREF">
+  <!-- Unregister legacy service workers to prevent reload loops & freezing -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for (var i = 0; i < registrations.length; i++) {
+          registrations[i].unregister();
+        }
+      }).catch(function() {});
+    }
+  </script>
+
+  <!-- Preload core Flutter engine & application bundles -->
+  <link rel="preload" href="flutter_bootstrap.js" as="script">
+  <link rel="preload" href="main.dart.js" as="script">
   <!-- Google tag (gtag.js) - Google Analytics 4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-5KWDMV2EC5"></script>
   <script>
@@ -346,26 +360,29 @@
   </noscript>
 
   <script>
-    function hideLoader() {
+    window.hideLoader = function() {
       const loader = document.getElementById('splash-loader');
       if (loader && !loader.classList.contains('fade-out')) {
         loader.classList.add('fade-out');
         setTimeout(function() {
-          loader.remove();
+          if (loader.parentNode) loader.remove();
           document.body.style.overflow = 'auto';
-        }, 700);
+        }, 500);
       }
-    }
+    };
 
-    const observer = new MutationObserver(function(mutations) {
+    const observer = new MutationObserver(function() {
       if (document.querySelector('flt-glass-pane') || document.querySelector('flutter-view') || document.querySelector('flt-scene-host')) {
-        setTimeout(hideLoader, 500);
+        window.hideLoader();
         observer.disconnect();
       }
     });
     observer.observe(document.body, { childList: true, subtree: true });
 
-    setTimeout(hideLoader, 5000);
+    // Fallback safety timeout (reduced from 5000ms to 2500ms)
+    setTimeout(function() {
+      if (window.hideLoader) window.hideLoader();
+    }, 2500);
   </script>
 
   <!-- Language Preference Persistence Bridge -->
