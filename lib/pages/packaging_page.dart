@@ -432,6 +432,7 @@ class PackagingPage extends StatelessWidget {
                     child: Image.asset(
                       image,
                       fit: BoxFit.cover,
+                      cacheWidth: 600,
                     ),
                   ),
                 ),
@@ -603,6 +604,7 @@ class PackagingPage extends StatelessWidget {
         child: Image.asset(
           AppImages.packagingSampleKit,
           fit: BoxFit.cover,
+          cacheWidth: 600,
         ),
       ),
     );
