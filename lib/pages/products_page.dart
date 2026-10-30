@@ -755,6 +755,46 @@ class _ProductCardWidget extends StatelessWidget {
                 const SizedBox(height: 10),
 
                 // Origin
+                
+                // Available Commercial Forms & Types Included
+                if (product.specs.containsKey('Available Forms') || product.specs.containsKey('Size / Mesh')) ...[
+                  Container(
+                    margin: const EdgeInsets.only(top: 8, bottom: 4),
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF1F5F9),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: const Color(0xFFCBD5E1)),
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(top: 2),
+                          child: Icon(Icons.grain_rounded, size: 14, color: AppColors.secondary),
+                        ),
+                        const SizedBox(width: 6),
+                        Expanded(
+                          child: RichText(
+                            text: TextSpan(
+                              style: GoogleFonts.outfit(fontSize: 11.5, color: const Color(0xFF1E293B)),
+                              children: [
+                                const TextSpan(
+                                  text: 'Forms & Types: ',
+                                  style: TextStyle(fontWeight: FontWeight.w800, color: AppColors.primary),
+                                ),
+                                TextSpan(
+                                  text: product.specs['Available Forms'] ?? product.specs['Size / Mesh'] ?? product.tag,
+                                  style: const TextStyle(fontWeight: FontWeight.w600, color: Color(0xFF0F172A)),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
                 Text(
                   'ORIGIN: ${product.origin}',
                   style: GoogleFonts.outfit(

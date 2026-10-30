@@ -292,6 +292,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       _buildHeroBadge(Icons.location_on_outlined, 'Origin: ${widget.product.origin}'),
                       _buildHeroBadge(Icons.science_outlined, 'Botanical: ${widget.product.botanicalName}'),
                       _buildHeroBadge(Icons.tag_rounded, 'HS Code: ${widget.product.hsCode}'),
+                      if (widget.product.specs.containsKey('Available Forms') || widget.product.specs.containsKey('Size / Mesh'))
+                        _buildHeroBadge(Icons.grain_rounded, 'Forms: ' + (widget.product.specs['Available Forms'] ?? widget.product.specs['Size / Mesh']!)),
                     ],
                   ),
                 ],
@@ -488,6 +490,79 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             fontWeight: FontWeight.w400,
           ),
         ),
+        
+        // Available Commercial Forms & Types Showcase
+        if (widget.product.specs.containsKey('Available Forms') || widget.product.specs.containsKey('Size / Mesh')) ...[
+          Container(
+            width: double.infinity,
+            margin: const EdgeInsets.only(bottom: 24),
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: const Color(0xFFCBD5E1), width: 1.2),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.04),
+                  blurRadius: 10,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const Icon(Icons.grain_rounded, color: AppColors.secondary, size: 20),
+                    const SizedBox(width: 8),
+                    Text(
+                      'AVAILABLE FORMS & COMMERCIAL CUTS',
+                      style: GoogleFonts.outfit(
+                        color: AppColors.primary,
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.8,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: (widget.product.specs['Available Forms'] ?? widget.product.specs['Size / Mesh'] ?? widget.product.tag)
+                      .split(RegExp(r'\s*[\/\|]\s*'))
+                      .map((cut) => Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+                            decoration: BoxDecoration(
+                              color: AppColors.primaryLight.withValues(alpha: 0.45),
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: AppColors.primary.withValues(alpha: 0.25)),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Icon(Icons.check_circle_rounded, size: 14, color: AppColors.secondary),
+                                const SizedBox(width: 6),
+                                Text(
+                                  cut.trim(),
+                                  style: GoogleFonts.outfit(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w700,
+                                    color: const Color(0xFF0F172A),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ))
+                      .toList(),
+                ),
+              ],
+            ),
+          ),
+        ],
+
         const SizedBox(height: 26),
 
         // Key Metric Grid Cards
@@ -628,6 +703,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   // ===========================================================================
   Widget _buildSpecsSection(BuildContext context, bool isMobile, double paddingH) {
     final Map<String, String> fullSpecs = {
+      'Available Forms & Commercial Cuts': widget.product.specs['Available Forms'] ?? widget.product.specs['Size / Mesh'] ?? widget.product.tag,
       'Product Name': widget.product.title,
       'Botanical Name': widget.product.botanicalName,
       'Harmonized System (HS Code)': widget.product.hsCode,

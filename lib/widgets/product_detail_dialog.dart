@@ -320,6 +320,48 @@ class _ProductDetailDialogState extends State<ProductDetailDialog> {
                         final detailsPanel = Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            
+                            // Available Forms & Commercial Types Banner
+                            if (widget.product.specs.containsKey('Available Forms') || widget.product.specs.containsKey('Size / Mesh')) ...[
+                              Container(
+                                width: double.infinity,
+                                margin: const EdgeInsets.only(bottom: 16),
+                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withValues(alpha: 0.08),
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(color: AppColors.secondary.withValues(alpha: 0.4)),
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Padding(
+                                      padding: EdgeInsets.only(top: 2),
+                                      child: Icon(Icons.grain_rounded, size: 16, color: AppColors.secondary),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: RichText(
+                                        text: TextSpan(
+                                          style: GoogleFonts.outfit(fontSize: 12, color: Colors.white),
+                                          children: [
+                                            const TextSpan(
+                                              text: 'Available Forms: ',
+                                              style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.secondary),
+                                            ),
+                                            TextSpan(
+                                              text: widget.product.specs['Available Forms'] ?? widget.product.specs['Size / Mesh'] ?? widget.product.tag,
+                                              style: const TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+
                             // Quality Metric Pills
                             Row(
                               children: [
