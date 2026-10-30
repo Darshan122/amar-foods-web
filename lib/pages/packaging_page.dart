@@ -184,7 +184,7 @@ class PackagingPage extends StatelessWidget {
       child: Center(
         child: Container(
           constraints: LiquidUI.pageConstraints(),
-          padding: const EdgeInsets.all(22),
+          padding: const EdgeInsets.all(18),
           decoration: BoxDecoration(
             color: const Color(0xFFF0FDF4),
             borderRadius: BorderRadius.circular(16),
@@ -425,7 +425,7 @@ class PackagingPage extends StatelessWidget {
               ClipRRect(
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(18)),
                 child: AspectRatio(
-                  aspectRatio: 1.45,
+                  aspectRatio: 1.9,
                   child: AmarCardImageZoom(
                     isHovered: isHovered,
                     scale: 1.06,
@@ -599,7 +599,7 @@ class PackagingPage extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(18),
       child: AspectRatio(
-        aspectRatio: 1.25,
+        aspectRatio: 1.6,
         child: Image.asset(
           AppImages.packagingSampleKit,
           fit: BoxFit.cover,

@@ -1112,7 +1112,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(12),
-                            child: Image.asset(AppImages.packagingSampleKit, height: 160, width: double.infinity, fit: BoxFit.cover),
+                            child: Image.asset(AppImages.packagingSampleKit, height: 140, width: double.infinity, fit: BoxFit.cover),
                           ),
                           const SizedBox(height: 16),
                           _buildProductSampleText(context),
@@ -1122,7 +1122,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(12),
-                            child: Image.asset(AppImages.packagingSampleKit, width: 220, height: 130, fit: BoxFit.cover),
+                            child: Image.asset(AppImages.packagingSampleKit, width: 180, height: 110, fit: BoxFit.cover),
                           ),
                           const SizedBox(width: 24),
                           Expanded(child: _buildProductSampleText(context)),
