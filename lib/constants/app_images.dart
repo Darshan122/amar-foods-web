@@ -153,6 +153,7 @@ class AppImages {
   static const String productCarrotPowder = '$_basePath/powders/carrot_powder.jpg';
   static const String productSweetPotatoPowder = '$_basePath/powders/sweet_potato_powder.jpg';
   static const String productMoringaPowder = '$_basePath/powders/moringa_powder.jpg';
+  static const String productNeemPowder = '$_basePath/powders/neem_powder.jpg';
   static const String productSpinachPowder = '$_basePath/powders/spinach_powder.jpg';
   static const String productMintPowder = '$_basePath/powders/mint_powder.jpg';
   static const String productCorianderLeafPowder = '$_basePath/powders/coriander_leaf_powder.jpg';

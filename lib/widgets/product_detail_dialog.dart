@@ -56,6 +56,8 @@ class ProductModel {
       return 'Daucus carota';
     } else if (lower.contains('sweet potato')) {
       return 'Ipomoea batatas';
+    } else if (lower.contains('neem')) {
+      return 'Azadirachta indica';
     } else if (lower.contains('moringa')) {
       return 'Moringa oleifera';
     } else if (lower.contains('spinach')) {
@@ -88,7 +90,8 @@ class ProductModel {
     if (lower.contains('garlic')) return '0712.90.20';
     if (lower.contains('ginger')) return '0910.11.20';
     if (lower.contains('chilli')) return '0904.22.11';
-    if (lower.contains('moringa') ||
+    if (lower.contains('neem') ||
+        lower.contains('moringa') ||
         lower.contains('spinach') ||
         lower.contains('mint') ||
         lower.contains('coriander') ||

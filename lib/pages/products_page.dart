@@ -258,7 +258,7 @@ class _ProductsPageState extends State<ProductsPage> {
                               _buildFilterPill('FRIED & TOASTED', 'Fried & Toasted Onion (2)'),
                               _buildFilterPill('OILSEEDS', 'Sesame Seeds (2)'),
                               _buildFilterPill('ROOT & GINGER', 'Root & Ginger (4)'),
-                              _buildFilterPill('LEAFY & HERBS', 'Leafy & Herbs (6)'),
+                              _buildFilterPill('LEAFY & HERBS', 'Leafy & Herbs (7)'),
                               _buildFilterPill('CHILLI & FRUIT', 'Chilli, Veg & Fruit (6)'),
                             ],
                           ),
