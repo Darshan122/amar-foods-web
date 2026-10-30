@@ -6,6 +6,7 @@ import 'pages/contact_page.dart';
 import 'pages/gallery_page.dart';
 import 'pages/exhibitions_page.dart';
 import 'pages/enquiry_page.dart';
+import 'pages/packaging_page.dart';
 import 'pages/product_detail_page.dart';
 import 'data/products_data.dart';
 import 'theme/app_theme.dart';
@@ -44,7 +45,8 @@ class MyApp extends StatelessWidget {
             '/gallery': (context) => const GalleryPage(),
             '/contact': (context) => const ContactPage(),
             '/quality': (context) => const QualityPage(),
-            '/shipments': (context) => const ShipmentsPage(),
+            '/packaging': (context) => const PackagingPage(),
+            '/shipments': (context) => const PackagingPage(),
             '/enquiry': (context) => const EnquiryPage(),
             '/quote': (context) => const EnquiryPage(),
           },

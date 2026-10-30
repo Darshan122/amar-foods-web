@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../constants/app_colors.dart';
+import '../constants/app_images.dart';
 import '../data/products_data.dart';
 import '../utils/liquid_ui.dart';
 import '../widgets/app_header.dart';
@@ -961,6 +962,33 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   // SECTION 5: PACKAGING & CONTAINER SHIPPING
   // ===========================================================================
   Widget _buildPackagingShippingSection(BuildContext context, bool isMobile, double paddingH) {
+    final bool isFlakes = widget.product.title.toLowerCase().contains('flakes') ||
+        widget.product.tag.toLowerCase().contains('flakes') ||
+        widget.product.id.toLowerCase().contains('flakes');
+    final bool isWholeSpices = widget.product.category.toUpperCase() == 'SPICES' ||
+        widget.product.id.contains('seeds') ||
+        widget.product.id.contains('anise');
+
+    final String bagTitle = isWholeSpices ? 'PP Woven Export Sacks' : 'Kraft Paper Export Bag';
+    final String bagSubtitle = isFlakes
+        ? '14 kg Net Weight (Flakes Special)'
+        : (isWholeSpices ? '25 kg / 50 kg Net Weight' : '20 kg / 25 kg Net Weight');
+    final String bagDetail = isFlakes
+        ? 'Multi-wall Kraft paper bag with heat-sealed food-grade inner PE liner. Standard 14 kg packing to safeguard whole flakes from transit crushing.'
+        : (isWholeSpices
+            ? 'High-tenacity polypropylene (PP) woven sacks with double chain stitching and moisture-protective inner liner.'
+            : 'Multi-wall Kraft paper outer bag with heat-sealed food grade inner polyethylene (PE) liner.');
+
+    final String boxSubtitle = isFlakes ? '14 kg Net Weight' : (isWholeSpices ? '10 kg / 20 kg Net' : '15 kg / 20 kg Net Weight');
+    final String boxDetail = isFlakes
+        ? 'Heavy-duty 5-ply export grade corrugated cartons with inner poly-liner. 14 kg net weight prevents volume settling during sea freight.'
+        : 'Heavy-duty 5-ply export grade corrugated cartons with double inner poly-liner for high moisture protection.';
+
+    final String cap20 = isFlakes ? '7.5 - 8.0 Metric Tons' : (isWholeSpices ? '13.0 - 14.0 Metric Tons' : '13.5 - 14.5 Metric Tons');
+    final String cap40 = isFlakes ? '16.5 - 17.5 Metric Tons' : (isWholeSpices ? '25.0 - 26.0 Metric Tons' : '24.5 - 25.5 Metric Tons');
+    final String cap20Sub = isFlakes ? 'Approx. 550 - 570 Bags / Boxes' : 'Approx. 550 - 600 Bags (Loose/Palletized)';
+    final String cap40Sub = isFlakes ? 'Approx. 1,180 - 1,250 Bags / Boxes' : 'Approx. 1,100 - 1,200 Bags (Loose/Palletized)';
+
     return Container(
       width: double.infinity,
       color: const Color(0xFFF1F5F9),
@@ -994,16 +1022,16 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 alignment: WrapAlignment.center,
                 children: [
                   _buildShippingCard(
-                    title: 'Kraft Paper Export Bag',
-                    subtitle: '20 kg / 25 kg Net Weight',
-                    detail: 'Multi-wall Kraft paper outer bag with heat-sealed food grade inner polyethylene (PE) liner.',
-                    icon: Icons.inventory_2_outlined,
+                    title: bagTitle,
+                    subtitle: bagSubtitle,
+                    detail: bagDetail,
+                    icon: isWholeSpices ? Icons.workspaces_outline : Icons.inventory_2_outlined,
                     isMobile: isMobile,
                   ),
                   _buildShippingCard(
                     title: 'Corrugated Master Box',
-                    subtitle: '15 kg / 20 kg Net Weight',
-                    detail: 'Heavy-duty 5-ply export grade corrugated cartons with double inner poly-liner for high moisture protection.',
+                    subtitle: boxSubtitle,
+                    detail: boxDetail,
                     icon: Icons.all_inbox_rounded,
                     isMobile: isMobile,
                   ),
@@ -1055,8 +1083,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       runSpacing: 16,
                       alignment: WrapAlignment.spaceAround,
                       children: [
-                        _buildContainerStat('20 FT FCL CONTAINER', '12 - 14 Metric Tons', 'Approx. 550 - 600 Bags (Loose/Palletized)'),
-                        _buildContainerStat('40 FT HC CONTAINER', '24 - 26 Metric Tons', 'Approx. 1,100 - 1,200 Bags (Loose/Palletized)'),
+                        _buildContainerStat('20 FT FCL CONTAINER', cap20, cap20Sub),
+                        _buildContainerStat('40 FT HC CONTAINER', cap40, cap40Sub),
                         _buildContainerStat('LOADING SEA PORTS', 'Mundra, Pipavav & JNPT', 'Direct proximity to factory (Mahuva, Gujarat)'),
                         _buildContainerStat('ACCEPTED INCOTERMS', 'FOB, CIF, CFR, EXW', 'Fast vessel connections to GCC, EU, USA, APAC'),
                       ],
@@ -1064,10 +1092,101 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   ],
                 ),
               ),
+
+              const SizedBox(height: 28),
+
+              // Free Sample Kit Request Banner
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: const Color(0xFFCBD5E1)),
+                  boxShadow: const [
+                    BoxShadow(color: Color(0x06000000), blurRadius: 12, offset: Offset(0, 4)),
+                  ],
+                ),
+                child: isMobile
+                    ? Column(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.asset(AppImages.packagingSampleKit, height: 160, width: double.infinity, fit: BoxFit.cover),
+                          ),
+                          const SizedBox(height: 16),
+                          _buildProductSampleText(context),
+                        ],
+                      )
+                    : Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.asset(AppImages.packagingSampleKit, width: 220, height: 130, fit: BoxFit.cover),
+                          ),
+                          const SizedBox(width: 24),
+                          Expanded(child: _buildProductSampleText(context)),
+                        ],
+                      ),
+              ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildProductSampleText(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+              decoration: BoxDecoration(color: const Color(0xFFF0FDF4), borderRadius: BorderRadius.circular(6), border: Border.all(color: const Color(0xFF86EFAC))),
+              child: Text('FREE LABORATORY SAMPLES', style: GoogleFonts.outfit(color: const Color(0xFF166534), fontSize: 10.5, fontWeight: FontWeight.bold)),
+            ),
+            const SizedBox(width: 8),
+            Text('DHL / FedEx Worldwide Dispatch', style: GoogleFonts.inter(color: const Color(0xFF64748B), fontSize: 11)),
+          ],
+        ),
+        const SizedBox(height: 6),
+        Text('Need a Free 250g Sample of ${widget.product.title}?', style: GoogleFonts.playfairDisplay(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.primary)),
+        const SizedBox(height: 4),
+        Text('We provide complimentary vacuum-sealed sample pouches accompanied by Certificate of Analysis (COA) test reports for genuine food processors and spice importers.', style: GoogleFonts.inter(fontSize: 12.5, color: const Color(0xFF475569))),
+        const SizedBox(height: 12),
+        Wrap(
+          spacing: 10,
+          runSpacing: 8,
+          children: [
+            ElevatedButton.icon(
+              onPressed: () => _openWhatsAppInquiry(),
+              icon: const Icon(Icons.chat_bubble_outline_rounded, size: 16),
+              label: const Text('Request Sample on WhatsApp'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF25D366),
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                textStyle: GoogleFonts.outfit(fontSize: 12.5, fontWeight: FontWeight.bold),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              ),
+            ),
+            OutlinedButton.icon(
+              onPressed: () => Navigator.pushNamed(context, '/packaging'),
+              icon: const Icon(Icons.inventory_2_outlined, size: 16),
+              label: const Text('View All Packaging Specs'),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: AppColors.primary,
+                side: const BorderSide(color: AppColors.primary),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                textStyle: GoogleFonts.outfit(fontSize: 12.5, fontWeight: FontWeight.bold),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 

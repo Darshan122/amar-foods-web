@@ -110,6 +110,8 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
                   SizedBox(width: LiquidUI.fluid(context, minVal: 10, maxVal: 18)),
                   _buildNavLink(context, LanguageService.instance.tr('nav_products'), '/products'),
                   SizedBox(width: LiquidUI.fluid(context, minVal: 10, maxVal: 18)),
+                  _buildNavLink(context, 'Packaging & Samples', '/packaging'),
+                  SizedBox(width: LiquidUI.fluid(context, minVal: 10, maxVal: 18)),
                   _buildNavLink(context, LanguageService.instance.tr('nav_exhibitions'), '/exhibitions'),
                   SizedBox(width: LiquidUI.fluid(context, minVal: 10, maxVal: 18)),
                   _buildNavLink(context, LanguageService.instance.tr('nav_gallery'), '/gallery'),
@@ -541,6 +543,14 @@ class AppDrawer extends StatelessWidget {
                     subtitle: 'Dehydrated Onion & Garlic',
                     icon: Icons.eco_rounded,
                     routeName: '/products',
+                    currentRoute: currentRoute,
+                  ),
+                  _buildDrawerItem(
+                    context,
+                    title: 'Packaging & Samples',
+                    subtitle: 'Export Packing & Free Samples',
+                    icon: Icons.inventory_2_rounded,
+                    routeName: '/packaging',
                     currentRoute: currentRoute,
                   ),
                   _buildDrawerItem(

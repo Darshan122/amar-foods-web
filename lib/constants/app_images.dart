@@ -243,6 +243,13 @@ class AppImages {
   static const String factoryProcessingPlant = '$_basePath/factory/factory_processing_plant.webp';
   static const String factorySortingConveyor = '$_basePath/factory/factory_sorting_conveyor.webp';
 
+  // Export Packaging & Sample Kits
+  static const String packagingKraftPaperBag = '$_basePath/packaging/kraft_paper_bag.jpg';
+  static const String packagingCorrugatedBox = '$_basePath/packaging/corrugated_box.jpg';
+  static const String packagingPpWovenBag = '$_basePath/packaging/pp_woven_bag.jpg';
+  static const String packagingRetailPouches = '$_basePath/packaging/retail_pouches.jpg';
+  static const String packagingSampleKit = '$_basePath/packaging/sample_kit.jpg';
+
   // Founders & Executive Leadership
   static const String founderLabheshPatel = '$_basePath/founder_labhesh_patel.jpg';
   static const String founderHirenPatel = '$_basePath/founder_hiren_patel.jpg';
