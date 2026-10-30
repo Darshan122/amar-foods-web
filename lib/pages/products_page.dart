@@ -725,140 +725,144 @@ class _ProductCardWidget extends StatelessWidget {
             ),
           ),
 
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(18),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Title in Playfair Display (Uniform 2 lines)
-                  SizedBox(
-                    height: 46,
-                    child: Text(
-                      product.title,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.playfairDisplay(
-                        fontSize: 17.5,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.primary,
-                        height: 1.25,
-                      ),
+          Padding(
+            padding: const EdgeInsets.all(18),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Title in Playfair Display (Uniform 2 lines)
+                SizedBox(
+                  height: 46,
+                  child: Text(
+                    product.title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.playfairDisplay(
+                      fontSize: 17.5,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primary,
+                      height: 1.25,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                ),
+                const SizedBox(height: 6),
 
-                  // Tagline (Uniform 2 lines)
-                  SizedBox(
-                    height: 34,
-                    child: Text(
-                      product.tagline,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.inter(
-                        fontSize: 12,
-                        color: AppColors.textSecondary,
-                        height: 1.4,
-                      ),
+                // Tagline (Uniform 2 lines)
+                SizedBox(
+                  height: 34,
+                  child: Text(
+                    product.tagline,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.inter(
+                      fontSize: 12,
+                      color: AppColors.textSecondary,
+                      height: 1.4,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                ),
+                const SizedBox(height: 12),
 
-                  // Available Commercial Forms & Types Included (Uniform 44px box)
-                  Container(
-                    height: 44,
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFF1F5F9),
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: const Color(0xFFCBD5E1)),
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.grain_rounded, size: 14, color: AppColors.secondary),
-                        const SizedBox(width: 6),
-                        Expanded(
-                          child: RichText(
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            text: TextSpan(
-                              style: GoogleFonts.outfit(fontSize: 11, color: const Color(0xFF1E293B)),
-                              children: [
-                                const TextSpan(
-                                  text: 'Forms: ',
-                                  style: TextStyle(fontWeight: FontWeight.w800, color: AppColors.primary),
-                                ),
-                                TextSpan(
-                                  text: product.specs['Available Forms'] ?? product.specs['Size / Mesh'] ?? product.tag,
-                                  style: const TextStyle(fontWeight: FontWeight.w600, color: Color(0xFF0F172A)),
-                                ),
-                              ],
-                            ),
+                // Available Commercial Forms & Types Included (Uniform 40px box)
+                Container(
+                  height: 40,
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF1F5F9),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: const Color(0xFFCBD5E1)),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.grain_rounded, size: 14, color: AppColors.secondary),
+                      const SizedBox(width: 7),
+                      Expanded(
+                        child: RichText(
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          text: TextSpan(
+                            style: GoogleFonts.outfit(fontSize: 11, height: 1.25, color: const Color(0xFF1E293B)),
+                            children: [
+                              const TextSpan(
+                                text: 'Forms: ',
+                                style: TextStyle(fontWeight: FontWeight.w800, color: AppColors.primary),
+                              ),
+                              TextSpan(
+                                text: product.specs['Available Forms'] ?? product.specs['Size / Mesh'] ?? product.tag,
+                                style: const TextStyle(fontWeight: FontWeight.w600, color: Color(0xFF0F172A)),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-
-                  // Origin
-                  Text(
-                    'ORIGIN: ${product.origin}',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.outfit(
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.secondary,
-                      letterSpacing: 0.5,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-
-                  // Quick Specs Pills Row
-                  Wrap(
-                    spacing: 6,
-                    runSpacing: 6,
-                    children: [
-                      _buildSpecChip('Purity: ${product.purity}'),
-                      _buildSpecChip('Moisture: ${product.moisture}'),
-                      _buildSpecChip('Shelf: ${product.shelfLife}'),
-                    ],
-                  ),
-
-                  const Spacer(),
-
-                  // Action Row: View Specs & WhatsApp Inquire Button (PINNED TO UNIFORM BOTTOM)
-                  Row(
-                    children: [
-                      Expanded(
-                        child: AmarSecondaryButton(
-                          onPressed: onViewDetails,
-                          icon: Icons.description_outlined,
-                          label: 'View Specifications',
-                          padding: const EdgeInsets.symmetric(vertical: 11),
-                          fontSize: 12.5,
-                          customAccent: AppColors.primary,
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-
-                      Container(
-                        decoration: const BoxDecoration(
-                          color: Color(0xFF25D366),
-                          shape: BoxShape.circle,
-                        ),
-                        child: IconButton(
-                          icon: const Icon(Icons.chat_bubble_outline_rounded, color: Colors.white, size: 20),
-                          onPressed: onQuoteRequest,
-                          tooltip: 'Inquire on WhatsApp',
-                        ),
                       ),
                     ],
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(height: 12),
+
+                // Origin
+                SizedBox(
+                  height: 16,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'ORIGIN: ${product.origin}',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.outfit(
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.secondary,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+
+                // Quick Specs Pills Row
+                Wrap(
+                  spacing: 6,
+                  runSpacing: 6,
+                  children: [
+                    _buildSpecChip('Purity: ${product.purity}'),
+                    _buildSpecChip('Moisture: ${product.moisture}'),
+                    _buildSpecChip('Shelf: ${product.shelfLife}'),
+                  ],
+                ),
+
+                const SizedBox(height: 20),
+
+                // Action Row: View Specs & WhatsApp Inquire Button
+                Row(
+                  children: [
+                    Expanded(
+                      child: AmarSecondaryButton(
+                        onPressed: onViewDetails,
+                        icon: Icons.description_outlined,
+                        label: 'View Specifications',
+                        padding: const EdgeInsets.symmetric(vertical: 11),
+                        fontSize: 12.5,
+                        customAccent: AppColors.primary,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+
+                    Container(
+                      decoration: const BoxDecoration(
+                        color: Color(0xFF25D366),
+                        shape: BoxShape.circle,
+                      ),
+                      child: IconButton(
+                        icon: const Icon(Icons.chat_bubble_outline_rounded, color: Colors.white, size: 20),
+                        onPressed: onQuoteRequest,
+                        tooltip: 'Inquire on WhatsApp',
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ],
