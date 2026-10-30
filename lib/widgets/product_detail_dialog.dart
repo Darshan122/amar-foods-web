@@ -70,6 +70,10 @@ class ProductModel {
       return 'Murraya koenigii';
     } else if (lower.contains('kasuri methi') || lower.contains('fenugreek')) {
       return 'Trigonella foenum-graecum';
+    } else if (lower.contains('fennel') || lower.contains('saunf')) {
+      return 'Foeniculum vulgare';
+    } else if (lower.contains('anise')) {
+      return 'Illicium verum';
     } else if (lower.contains('chilli')) {
       return 'Capsicum annuum';
     } else if (lower.contains('mango') || lower.contains('amchur')) {
@@ -90,6 +94,7 @@ class ProductModel {
     if (lower.contains('garlic')) return '0712.90.20';
     if (lower.contains('ginger')) return '0910.11.20';
     if (lower.contains('chilli')) return '0904.22.11';
+    if (lower.contains('fennel') || lower.contains('anise')) return '0909.61.19';
     if (lower.contains('neem') ||
         lower.contains('moringa') ||
         lower.contains('spinach') ||

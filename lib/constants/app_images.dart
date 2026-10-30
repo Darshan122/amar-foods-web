@@ -161,6 +161,7 @@ class AppImages {
   static const String productKasuriMethi = '$_basePath/powders/kasuri_methi.jpg';
   static const String productGreenChilliPowder = '$_basePath/powders/green_chilli_powder.jpg';
   static const String productRedChilliPowder = '$_basePath/powders/red_chilli_powder.jpg';
+  static const String productChilliFlakes = '$_basePath/powders/chilli_flakes.jpg';
   static const String productDryMangoPowder = '$_basePath/powders/dry_mango_powder.jpg';
   static const String productTomatoPowder = '$_basePath/powders/tomato_powder.jpg';
   static const String productLemonPowder = '$_basePath/powders/lemon_powder.jpg';
@@ -173,6 +174,8 @@ class AppImages {
   static const String productCorianderPowder = '$_basePath/spices/coriander_powder.jpg';
   static const String productTurmericFingers = '$_basePath/spices/turmeric_fingers.jpg';
   static const String productTurmericPowder = '$_basePath/spices/turmeric_powder.jpg';
+  static const String productFennelSeeds = '$_basePath/spices/fennel_seeds.jpg';
+  static const String productStarAnise = '$_basePath/spices/star_anise.jpg';
   static const String productCrispyFriedOnion = '$_basePath/spices/crispy_fried_onion.jpg';
   static const String productToastedOnion = '$_basePath/spices/toasted_onion.jpg';
   static const String productSesameSeedsNatural = '$_basePath/spices/sesame_seeds_natural.jpg';

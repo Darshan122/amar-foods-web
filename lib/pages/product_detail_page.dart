@@ -635,8 +635,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
   Widget _buildHighlightCard(String title, String value, IconData icon) {
     return Container(
-      width: 145,
-      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
+      width: 150,
+      height: 84,
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(14),
@@ -908,6 +909,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           children: widget.product.keyFeatures.map((feat) {
             return SizedBox(
               width: isMobile ? double.infinity : 360,
+              height: isMobile ? null : 88,
               child: Container(
                 padding: const EdgeInsets.all(18),
                 decoration: BoxDecoration(
@@ -1078,6 +1080,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   }) {
     return Container(
       width: isMobile ? double.infinity : 320,
+      height: isMobile ? null : 235,
       padding: const EdgeInsets.all(22),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -1123,7 +1126,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   }
 
   Widget _buildContainerStat(String label, String value, String sub) {
-    return Column(
+    return SizedBox(
+      width: 220,
+      height: 76,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
           label,
@@ -1140,6 +1147,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           style: GoogleFonts.inter(color: Colors.white60, fontSize: 11),
         ),
       ],
+    ),
     );
   }
 
