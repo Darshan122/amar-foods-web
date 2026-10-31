@@ -92,7 +92,7 @@ class PackagingPage extends StatelessWidget {
             children: [
               // Badge
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                padding: EdgeInsets.symmetric(horizontal: isMobile ? 10 : 14, vertical: 6),
                 decoration: BoxDecoration(
                   color: AppColors.secondary.withValues(alpha: 0.18),
                   borderRadius: BorderRadius.circular(24),
@@ -101,15 +101,19 @@ class PackagingPage extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.verified_rounded, color: AppColors.secondary, size: 14),
+                    Icon(Icons.verified_rounded, color: AppColors.secondary, size: isMobile ? 13 : 14),
                     const SizedBox(width: 6),
-                    Text(
-                      'GLOBAL EXPORT PACKAGING & SAMPLE DESK',
-                      style: GoogleFonts.outfit(
-                        color: AppColors.secondary,
-                        fontSize: 11.5,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 0.8,
+                    Flexible(
+                      child: Text(
+                        'GLOBAL EXPORT PACKAGING & SAMPLE DESK',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.outfit(
+                          color: AppColors.secondary,
+                          fontSize: isMobile ? 10 : 11.5,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: isMobile ? 0.4 : 0.8,
+                        ),
                       ),
                     ),
                   ],
@@ -122,7 +126,7 @@ class PackagingPage extends StatelessWidget {
                 'Export Packaging & Free Sample Kits',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.playfairDisplay(
-                  fontSize: isMobile ? 28 : 46,
+                  fontSize: isMobile ? 26 : 46,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                   height: 1.2,
@@ -180,11 +184,11 @@ class PackagingPage extends StatelessWidget {
     return Container(
       width: double.infinity,
       color: Colors.white,
-      padding: EdgeInsets.symmetric(horizontal: paddingH, vertical: 32),
+      padding: EdgeInsets.symmetric(horizontal: paddingH, vertical: isMobile ? 18 : 32),
       child: Center(
         child: Container(
           constraints: LiquidUI.pageConstraints(),
-          padding: const EdgeInsets.all(18),
+          padding: EdgeInsets.all(isMobile ? 14 : 18),
           decoration: BoxDecoration(
             color: const Color(0xFFF0FDF4),
             borderRadius: BorderRadius.circular(16),
@@ -201,29 +205,31 @@ class PackagingPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: const EdgeInsets.all(12),
+                padding: EdgeInsets.all(isMobile ? 8 : 12),
                 decoration: BoxDecoration(
                   color: AppColors.secondary.withValues(alpha: 0.15),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.info_outline_rounded, color: AppColors.secondary, size: 28),
+                child: Icon(Icons.info_outline_rounded, color: AppColors.secondary, size: isMobile ? 22 : 28),
               ),
-              const SizedBox(width: 18),
+              SizedBox(width: isMobile ? 12 : 18),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
+                    Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: 8,
+                      runSpacing: 6,
                       children: [
                         Text(
-                          '14 kg Net Weight Standard for All Flakes Range',
+                          '14 kg Net Weight Standard for All Flakes',
                           style: GoogleFonts.outfit(
-                            fontSize: isMobile ? 16 : 18.5,
+                            fontSize: isMobile ? 15 : 18.5,
                             fontWeight: FontWeight.bold,
                             color: const Color(0xFF14532D),
                           ),
                         ),
-                        const SizedBox(width: 8),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                           decoration: BoxDecoration(
@@ -234,7 +240,7 @@ class PackagingPage extends StatelessWidget {
                             'INDUSTRY STANDARD',
                             style: GoogleFonts.outfit(
                               color: Colors.white,
-                              fontSize: 10,
+                              fontSize: 9.5,
                               fontWeight: FontWeight.bold,
                               letterSpacing: 0.5,
                             ),
@@ -246,7 +252,7 @@ class PackagingPage extends StatelessWidget {
                     Text(
                       'Due to natural high volume and lower bulk density, all Dehydrated Onion Flakes (White, Red, Pink Kibbled) and Chilli Flakes are standardly packed in 14 kg Net Weight Multi-wall Kraft Paper Bags or 14 kg Corrugated Master Cartons. This preserves whole flake structure, eliminates breakage during transit, and provides optimal container cube filling.',
                       style: GoogleFonts.inter(
-                        fontSize: 13.5,
+                        fontSize: isMobile ? 12.5 : 13.5,
                         color: const Color(0xFF166534),
                         height: 1.5,
                       ),
@@ -318,6 +324,7 @@ class PackagingPage extends StatelessWidget {
                       SizedBox(
                         width: cardWidth,
                         child: _buildPackagingCard(
+                          isMobile: isMobile,
                           image: AppImages.packagingKraftPaperBag,
                           badge: 'PRIMARY EXPORT BULK',
                           badgeColor: AppColors.primary,
@@ -338,6 +345,7 @@ class PackagingPage extends StatelessWidget {
                       SizedBox(
                         width: cardWidth,
                         child: _buildPackagingCard(
+                          isMobile: isMobile,
                           image: AppImages.packagingCorrugatedBox,
                           badge: 'HIGH STACKING STRENGTH',
                           badgeColor: const Color(0xFFB45309),
@@ -358,6 +366,7 @@ class PackagingPage extends StatelessWidget {
                       SizedBox(
                         width: cardWidth,
                         child: _buildPackagingCard(
+                          isMobile: isMobile,
                           image: AppImages.packagingPpWovenBag,
                           badge: 'WHOLE SEEDS & SPICES',
                           badgeColor: const Color(0xFF047857),
@@ -378,6 +387,7 @@ class PackagingPage extends StatelessWidget {
                       SizedBox(
                         width: cardWidth,
                         child: _buildPackagingCard(
+                          isMobile: isMobile,
                           image: AppImages.packagingRetailPouches,
                           badge: 'RETAIL PRIVATE LABEL (OEM)',
                           badgeColor: const Color(0xFF7C3AED),
@@ -405,6 +415,7 @@ class PackagingPage extends StatelessWidget {
   }
 
   Widget _buildPackagingCard({
+    required bool isMobile,
     required String image,
     required String badge,
     required Color badgeColor,
@@ -425,7 +436,7 @@ class PackagingPage extends StatelessWidget {
               ClipRRect(
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(18)),
                 child: AspectRatio(
-                  aspectRatio: 1.9,
+                  aspectRatio: isMobile ? 1.7 : 1.9,
                   child: AmarCardImageZoom(
                     isHovered: isHovered,
                     scale: 1.06,
@@ -464,14 +475,14 @@ class PackagingPage extends StatelessWidget {
           ),
 
           Padding(
-            padding: const EdgeInsets.all(22),
+            padding: EdgeInsets.all(isMobile ? 16 : 22),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
                   style: GoogleFonts.playfairDisplay(
-                    fontSize: 20,
+                    fontSize: isMobile ? 18.5 : 20,
                     fontWeight: FontWeight.bold,
                     color: AppColors.primary,
                   ),
@@ -495,7 +506,7 @@ class PackagingPage extends StatelessWidget {
                         child: Text(
                           netWeights,
                           style: GoogleFonts.outfit(
-                            fontSize: 12,
+                            fontSize: isMobile ? 11 : 12,
                             fontWeight: FontWeight.w700,
                             color: const Color(0xFF0F172A),
                           ),
@@ -553,12 +564,12 @@ class PackagingPage extends StatelessWidget {
     return Container(
       width: double.infinity,
       color: Colors.white,
-      padding: EdgeInsets.symmetric(horizontal: paddingH, vertical: 64),
+      padding: EdgeInsets.symmetric(horizontal: paddingH, vertical: isMobile ? 36 : 64),
       child: Center(
         child: Container(
           constraints: LiquidUI.pageConstraints(),
           child: Container(
-            padding: EdgeInsets.all(isMobile ? 22 : 36),
+            padding: EdgeInsets.all(isMobile ? 18 : 36),
             decoration: BoxDecoration(
               gradient: const LinearGradient(
                 colors: [Color(0xFF260B1E), Color(0xFF3D0E2B)],
@@ -578,7 +589,7 @@ class PackagingPage extends StatelessWidget {
                 ? Column(
                     children: [
                       _buildSampleKitImage(),
-                      const SizedBox(height: 28),
+                      const SizedBox(height: 24),
                       _buildSampleKitContent(context, isMobile),
                     ],
                   )
@@ -615,7 +626,7 @@ class PackagingPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+          padding: EdgeInsets.symmetric(horizontal: isMobile ? 10 : 12, vertical: 5),
           decoration: BoxDecoration(
             color: AppColors.secondary.withValues(alpha: 0.2),
             borderRadius: BorderRadius.circular(20),
@@ -625,9 +636,9 @@ class PackagingPage extends StatelessWidget {
             'FREE FOR REGISTERED COMMERCIAL BUYERS',
             style: GoogleFonts.outfit(
               color: AppColors.secondary,
-              fontSize: 11,
+              fontSize: isMobile ? 9.5 : 11,
               fontWeight: FontWeight.bold,
-              letterSpacing: 0.6,
+              letterSpacing: isMobile ? 0.3 : 0.6,
             ),
           ),
         ),
@@ -646,7 +657,7 @@ class PackagingPage extends StatelessWidget {
         Text(
           'Evaluate sensory quality, microbial purity, mesh cut, and aroma before placing a container order. We ship presentation sample boxes with vacuum-sealed clear pouches directly to your office or facility.',
           style: GoogleFonts.inter(
-            fontSize: 14,
+            fontSize: isMobile ? 13 : 14,
             color: Colors.white.withValues(alpha: 0.88),
             height: 1.6,
           ),
@@ -669,16 +680,22 @@ class PackagingPage extends StatelessWidget {
               onPressed: () => _showSampleQuoteDialog(context),
               label: 'Order Free Sample Kit',
               icon: Icons.mark_email_read_outlined,
-              padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 14),
-              fontSize: 13.5,
+              padding: EdgeInsets.symmetric(
+                horizontal: isMobile ? 20 : 26,
+                vertical: isMobile ? 12 : 14,
+              ),
+              fontSize: isMobile ? 12.5 : 13.5,
             ),
             AmarSecondaryButton(
               onPressed: () => _openWhatsAppSampleRequest(context),
               label: 'WhatsApp Sample Desk',
               icon: Icons.chat_bubble_outline_rounded,
               customAccent: const Color(0xFF25D366),
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-              fontSize: 13.5,
+              padding: EdgeInsets.symmetric(
+                horizontal: isMobile ? 18 : 20,
+                vertical: isMobile ? 12 : 14,
+              ),
+              fontSize: isMobile ? 12.5 : 13.5,
             ),
           ],
         ),
@@ -736,7 +753,7 @@ class PackagingPage extends StatelessWidget {
                 'Container Loadability & Pallet Matrix',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.playfairDisplay(
-                  fontSize: isMobile ? 24 : 34,
+                  fontSize: isMobile ? 22 : 34,
                   fontWeight: FontWeight.bold,
                   color: const Color(0xFF0F172A),
                 ),
@@ -747,10 +764,39 @@ class PackagingPage extends StatelessWidget {
                 child: Text(
                   'Standard ocean container capacities for full container load (FCL) shipments originating from Mahuva / Mundra Port / Pipavav Port, Gujarat, India.',
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.inter(color: const Color(0xFF64748B), fontSize: 14.5),
+                  style: GoogleFonts.inter(color: const Color(0xFF64748B), fontSize: isMobile ? 13.5 : 14.5),
                 ),
               ),
-              const SizedBox(height: 36),
+              const SizedBox(height: 24),
+
+              if (isMobile) ...[
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF1F5F9),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: const Color(0xFFCBD5E1)),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.swipe_rounded, size: 14, color: AppColors.secondary),
+                      const SizedBox(width: 6),
+                      Flexible(
+                        child: Text(
+                          'Swipe table horizontally to view all container metrics',
+                          style: GoogleFonts.inter(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF475569),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 14),
+              ],
 
               // Table Card
               Container(
@@ -770,15 +816,15 @@ class PackagingPage extends StatelessWidget {
                       headingRowColor: WidgetStateProperty.all(const Color(0xFFF1F5F9)),
                       dataRowColor: WidgetStateProperty.resolveWith(
                           (states) => states.contains(WidgetState.hovered) ? const Color(0xFFF8FAFC) : Colors.white),
-                      horizontalMargin: 20,
-                      columnSpacing: 24,
+                      horizontalMargin: isMobile ? 14 : 20,
+                      columnSpacing: isMobile ? 16 : 24,
                       headingTextStyle: GoogleFonts.outfit(
                         fontWeight: FontWeight.w800,
-                        fontSize: 13,
+                        fontSize: isMobile ? 12 : 13,
                         color: AppColors.primary,
                       ),
                       dataTextStyle: GoogleFonts.inter(
-                        fontSize: 13,
+                        fontSize: isMobile ? 12 : 13,
                         color: const Color(0xFF1E293B),
                       ),
                       columns: const [
@@ -897,7 +943,7 @@ class PackagingPage extends StatelessWidget {
       decoration: const BoxDecoration(
         gradient: AppColors.primaryGradient,
       ),
-      padding: EdgeInsets.symmetric(horizontal: paddingH, vertical: 56),
+      padding: EdgeInsets.symmetric(horizontal: paddingH, vertical: isMobile ? 36 : 56),
       child: Center(
         child: Container(
           constraints: LiquidUI.pageConstraints(),
@@ -907,7 +953,7 @@ class PackagingPage extends StatelessWidget {
                 'Need Custom Packaging or Private Label OEM?',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.playfairDisplay(
-                  fontSize: isMobile ? 24 : 32,
+                  fontSize: isMobile ? 22 : 32,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
@@ -919,7 +965,7 @@ class PackagingPage extends StatelessWidget {
                   'Our export packaging division offers tailored bag dimensions, nitrogen flushing, customized buyer artwork printing, barcode integration, and multi-language nutrition labeling.',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.inter(
-                    fontSize: 14.5,
+                    fontSize: isMobile ? 13.5 : 14.5,
                     color: Colors.white.withValues(alpha: 0.9),
                     height: 1.55,
                   ),
@@ -927,23 +973,23 @@ class PackagingPage extends StatelessWidget {
               ),
               const SizedBox(height: 28),
               Wrap(
-                spacing: 14,
-                runSpacing: 14,
+                spacing: 12,
+                runSpacing: 12,
                 alignment: WrapAlignment.center,
                 children: [
                   AmarPrimaryButton(
                     onPressed: () => _showSampleQuoteDialog(context),
                     label: 'Inquire Custom Packaging',
-                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                    fontSize: 14.5,
+                    padding: EdgeInsets.symmetric(horizontal: isMobile ? 20 : 32, vertical: isMobile ? 13 : 16),
+                    fontSize: isMobile ? 13 : 14.5,
                   ),
                   AmarSecondaryButton(
                     onPressed: () => _openWhatsAppSampleRequest(context),
                     label: 'Chat With Packaging Desk',
                     icon: Icons.chat_bubble_outline_rounded,
                     customAccent: const Color(0xFF25D366),
-                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                    fontSize: 14.5,
+                    padding: EdgeInsets.symmetric(horizontal: isMobile ? 18 : 24, vertical: isMobile ? 13 : 16),
+                    fontSize: isMobile ? 13 : 14.5,
                   ),
                 ],
               ),

@@ -14,6 +14,7 @@ import '../widgets/whatsapp_floating_button.dart';
 import '../widgets/app_buttons.dart';
 import '../widgets/amar_card.dart';
 import '../services/language_service.dart';
+import '../widgets/brochure_dialog.dart';
 
 class ProductsPage extends StatefulWidget {
   const ProductsPage({super.key});
@@ -71,6 +72,17 @@ class _ProductsPageState extends State<ProductsPage> {
         builder: (context) => ProductDetailPage(product: product),
       ),
     );
+  }
+
+  
+  Future<void> _openWhatsAppCatalogRequest() async {
+    final message = Uri.encodeComponent(
+      'Hello Amar Foods, please share the official product specification PDF catalog and live container FOB/CIF prices for your products.',
+    );
+    final url = Uri.parse('https://wa.me/917284088737?text=$message');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+    }
   }
 
   Future<void> _openWhatsAppInquiry(ProductModel product) async {
@@ -206,6 +218,70 @@ class _ProductsPageState extends State<ProductsPage> {
                           ),
                           const SizedBox(height: 28),
 
+                          // Catalog PDF & Quick RFQ Action Buttons
+                          Wrap(
+                            spacing: 12,
+                            runSpacing: 10,
+                            alignment: WrapAlignment.center,
+                            children: [
+                              ElevatedButton.icon(
+                                onPressed: () => BrochureDialog.show(context),
+                                icon: const Icon(Icons.picture_as_pdf_rounded, size: 17, color: Colors.white),
+                                label: Text(
+                                  'Download Product Catalogue (PDF)',
+                                  style: GoogleFonts.outfit(
+                                    fontSize: isMobile ? 12.5 : 13.5,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.primary,
+                                  foregroundColor: Colors.white,
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: isMobile ? 16 : 22,
+                                    vertical: isMobile ? 12 : 14,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(24),
+                                  ),
+                                  elevation: 4,
+                                  shadowColor: AppColors.primary.withValues(alpha: 0.4),
+                                ),
+                              ),
+                              OutlinedButton.icon(
+                                onPressed: _openWhatsAppCatalogRequest,
+                                icon: Image.asset(
+                                  AppImages.socialWhatsapp,
+                                  width: 18,
+                                  height: 18,
+                                  errorBuilder: (context, error, stackTrace) => const Icon(Icons.chat_bubble_outline_rounded, size: 16, color: Colors.white),
+                                ),
+                                label: Text(
+                                  'Get PDF on WhatsApp',
+                                  style: GoogleFonts.outfit(
+                                    fontSize: isMobile ? 12.5 : 13.5,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                style: OutlinedButton.styleFrom(
+                                  foregroundColor: Colors.white,
+                                  side: const BorderSide(color: Color(0xFF25D366), width: 1.5),
+                                  backgroundColor: const Color(0xFF25D366).withValues(alpha: 0.16),
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: isMobile ? 16 : 20,
+                                    vertical: isMobile ? 12 : 14,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(24),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 24),
+
                           // Search Box
                           Container(
                             constraints: const BoxConstraints(maxWidth: 520),
@@ -294,23 +370,57 @@ class _ProductsPageState extends State<ProductsPage> {
                                       color: const Color(0xFF475569),
                                     ),
                                   ),
-                                  if (totalPages > 1)
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-                                      decoration: BoxDecoration(
-                                        color: const Color(0xFFF1F5F9),
+                                  Wrap(
+                                    spacing: 8,
+                                    runSpacing: 8,
+                                    crossAxisAlignment: WrapCrossAlignment.center,
+                                    children: [
+                                      InkWell(
+                                        onTap: () => BrochureDialog.show(context),
                                         borderRadius: BorderRadius.circular(20),
-                                        border: Border.all(color: const Color(0xFFE2E8F0)),
-                                      ),
-                                      child: Text(
-                                        'Page $validPage of $totalPages',
-                                        style: GoogleFonts.outfit(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w700,
-                                          color: AppColors.primary,
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                                          decoration: BoxDecoration(
+                                            color: AppColors.primary.withValues(alpha: 0.1),
+                                            borderRadius: BorderRadius.circular(20),
+                                            border: Border.all(color: AppColors.primary.withValues(alpha: 0.25)),
+                                          ),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              const Icon(Icons.picture_as_pdf_rounded, color: AppColors.primary, size: 14),
+                                              const SizedBox(width: 5),
+                                              Text(
+                                                'Catalog PDF',
+                                                style: GoogleFonts.outfit(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: AppColors.primary,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
+                                      if (totalPages > 1)
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFF1F5F9),
+                                            borderRadius: BorderRadius.circular(20),
+                                            border: Border.all(color: const Color(0xFFE2E8F0)),
+                                          ),
+                                          child: Text(
+                                            'Page $validPage of $totalPages',
+                                            style: GoogleFonts.outfit(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w700,
+                                              color: AppColors.primary,
+                                            ),
+                                          ),
+                                        ),
+                                    ],
+                                  ),
                                 ],
                               ),
                             ),

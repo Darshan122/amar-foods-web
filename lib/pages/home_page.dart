@@ -1742,7 +1742,8 @@ class _HomePageState extends State<HomePage> {
 
               // Infrastructure Highlights Banner
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(horizontal: isMobile ? 14 : 20, vertical: isMobile ? 14 : 16),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(18),
@@ -1755,34 +1756,87 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
-                child: Wrap(
-                  spacing: 28,
-                  runSpacing: 14,
-                  alignment: WrapAlignment.spaceEvenly,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
-                    _buildFacilitySpecChip(
-                      icon: Icons.speed_rounded,
-                      title: '50+ MT / Day',
-                      subtitle: 'Dehydration Capacity',
-                    ),
-                    _buildFacilitySpecChip(
-                      icon: Icons.shield_rounded,
-                      title: 'SS 304 Food Grade',
-                      subtitle: 'Contact Surfaces',
-                    ),
-                    _buildFacilitySpecChip(
-                      icon: Icons.clean_hands_rounded,
-                      title: 'Positive Pressure',
-                      subtitle: 'Hygienic Cleanroom',
-                    ),
-                    _buildFacilitySpecChip(
-                      icon: Icons.location_on_rounded,
-                      title: 'Mahuva, Gujarat',
-                      subtitle: 'Direct Farm Hub',
-                    ),
-                  ],
-                ),
+                child: isMobile
+                    ? Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: _buildFacilitySpecChip(
+                                  icon: Icons.speed_rounded,
+                                  title: '50+ MT / Day',
+                                  subtitle: 'Dehydration Capacity',
+                                ),
+                              ),
+                              Container(height: 36, width: 1, color: const Color(0xFFE2E8F0)),
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: _buildFacilitySpecChip(
+                                    icon: Icons.shield_rounded,
+                                    title: 'SS 304 Food Grade',
+                                    subtitle: 'Contact Surfaces',
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 12),
+                            child: Divider(color: Color(0xFFE2E8F0), height: 1),
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: _buildFacilitySpecChip(
+                                  icon: Icons.clean_hands_rounded,
+                                  title: 'Positive Pressure',
+                                  subtitle: 'Hygienic Cleanroom',
+                                ),
+                              ),
+                              Container(height: 36, width: 1, color: const Color(0xFFE2E8F0)),
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: _buildFacilitySpecChip(
+                                    icon: Icons.location_on_rounded,
+                                    title: 'Mahuva, Gujarat',
+                                    subtitle: 'Direct Farm Hub',
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      )
+                    : Wrap(
+                        spacing: 28,
+                        runSpacing: 14,
+                        alignment: WrapAlignment.spaceEvenly,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          _buildFacilitySpecChip(
+                            icon: Icons.speed_rounded,
+                            title: '50+ MT / Day',
+                            subtitle: 'Dehydration Capacity',
+                          ),
+                          _buildFacilitySpecChip(
+                            icon: Icons.shield_rounded,
+                            title: 'SS 304 Food Grade',
+                            subtitle: 'Contact Surfaces',
+                          ),
+                          _buildFacilitySpecChip(
+                            icon: Icons.clean_hands_rounded,
+                            title: 'Positive Pressure',
+                            subtitle: 'Hygienic Cleanroom',
+                          ),
+                          _buildFacilitySpecChip(
+                            icon: Icons.location_on_rounded,
+                            title: 'Mahuva, Gujarat',
+                            subtitle: 'Direct Farm Hub',
+                          ),
+                        ],
+                      ),
               ),
               const SizedBox(height: 36),
 
@@ -1802,12 +1856,14 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  Text(
-                    'Continuous Infeed, Dehydration & Vibro-Grading Lines',
-                    style: GoogleFonts.outfit(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textPrimary,
+                  Expanded(
+                    child: Text(
+                      'Continuous Infeed, Dehydration & Vibro-Grading Lines',
+                      style: GoogleFonts.outfit(
+                        fontSize: isMobile ? 16 : 18,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textPrimary,
+                      ),
                     ),
                   ),
                 ],
@@ -1865,27 +1921,33 @@ class _HomePageState extends State<HomePage> {
           ),
           child: Icon(icon, size: 16, color: AppColors.primary),
         ),
-        const SizedBox(width: 10),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              title,
-              style: GoogleFonts.outfit(
-                fontSize: 12.5,
-                fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
+        const SizedBox(width: 8),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.outfit(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
+                ),
               ),
-            ),
-            Text(
-              subtitle,
-              style: GoogleFonts.inter(
-                fontSize: 11,
-                color: AppColors.textSecondary,
+              Text(
+                subtitle,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.inter(
+                  fontSize: 10.5,
+                  color: AppColors.textSecondary,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );
@@ -2110,13 +2172,17 @@ class _HomePageState extends State<HomePage> {
             children: [
               const Icon(Icons.pin_drop_rounded, size: 12, color: AppColors.secondary),
               const SizedBox(width: 5),
-              Text(
-                item.highlight,
-                style: GoogleFonts.outfit(
-                  fontSize: 11.5,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.primaryDark,
-                  letterSpacing: 0.3,
+              Flexible(
+                child: Text(
+                  item.highlight,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.outfit(
+                    fontSize: 11.5,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.primaryDark,
+                    letterSpacing: 0.3,
+                  ),
                 ),
               ),
             ],
@@ -2174,12 +2240,14 @@ class _HomePageState extends State<HomePage> {
         const SizedBox(height: 18),
         Row(
           children: [
-            Text(
-              'Inspect Drone Campus & Facility Details',
-              style: GoogleFonts.outfit(
-                fontSize: 13.5,
-                fontWeight: FontWeight.bold,
-                color: AppColors.primary,
+            Expanded(
+              child: Text(
+                'Inspect Drone Campus & Facility Details',
+                style: GoogleFonts.outfit(
+                  fontSize: 13.5,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.primary,
+                ),
               ),
             ),
             const SizedBox(width: 6),
@@ -2375,12 +2443,14 @@ class _HomePageState extends State<HomePage> {
                 // CTA Link
                 Row(
                   children: [
-                    Text(
-                      'View Detailed Specs',
-                      style: GoogleFonts.outfit(
-                        fontSize: 13.5,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.primary,
+                    Expanded(
+                      child: Text(
+                        'View Detailed Specs',
+                        style: GoogleFonts.outfit(
+                          fontSize: 13.5,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primary,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 6),
@@ -3311,12 +3381,14 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       const Icon(Icons.calendar_today_rounded, size: 14, color: AppColors.secondary),
                       const SizedBox(width: 6),
-                      Text(
-                        expo.dates,
-                        style: GoogleFonts.inter(
-                          fontSize: 13,
-                          color: AppColors.textSecondary,
-                          fontWeight: FontWeight.w500,
+                      Expanded(
+                        child: Text(
+                          expo.dates,
+                          style: GoogleFonts.inter(
+                            fontSize: 13,
+                            color: AppColors.textSecondary,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ],
@@ -3335,12 +3407,14 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(height: 18),
                   Row(
                     children: [
-                      Text(
-                        'Learn More & View Photos',
-                        style: GoogleFonts.outfit(
-                          fontSize: 13.5,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primary,
+                      Expanded(
+                        child: Text(
+                          'Learn More & View Photos',
+                          style: GoogleFonts.outfit(
+                            fontSize: 13.5,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.primary,
+                          ),
                         ),
                       ),
                       const SizedBox(width: 6),
@@ -3538,7 +3612,8 @@ class _HomePageState extends State<HomePage> {
 
                             // Global Shipping Specs Footer
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                              width: double.infinity,
+                              padding: EdgeInsets.symmetric(horizontal: isMobile ? 12 : 20, vertical: 16),
                               decoration: BoxDecoration(
                                 color: Colors.white.withValues(alpha: 0.65),
                                 borderRadius: BorderRadius.circular(18),
@@ -3546,34 +3621,87 @@ class _HomePageState extends State<HomePage> {
                                   color: Colors.black.withValues(alpha: 0.05),
                                 ),
                               ),
-                              child: Wrap(
-                                spacing: 24,
-                                runSpacing: 12,
-                                alignment: WrapAlignment.spaceEvenly,
-                                crossAxisAlignment: WrapCrossAlignment.center,
-                                children: [
-                                  _buildFootprintMetric(
-                                    icon: Icons.anchor_rounded,
-                                    title: 'Maritime Gateways',
-                                    subtitle: 'Mundra & Pipavav Ports',
-                                  ),
-                                  _buildFootprintMetric(
-                                    icon: Icons.inventory_2_rounded,
-                                    title: 'Containerized Freight',
-                                    subtitle: 'Dry & Climate Controlled',
-                                  ),
-                                  _buildFootprintMetric(
-                                    icon: Icons.speed_rounded,
-                                    title: 'Statutory Clearance',
-                                    subtitle: 'DGFT / Pre-Inspected Lots',
-                                  ),
-                                  _buildFootprintMetric(
-                                    icon: Icons.verified_user_rounded,
-                                    title: 'Global Compliance',
-                                    subtitle: 'US FDA, ISO 22000 & Halal',
-                                  ),
-                                ],
-                              ),
+                              child: isMobile
+                                  ? Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: _buildFootprintMetric(
+                                                icon: Icons.anchor_rounded,
+                                                title: 'Maritime Gateways',
+                                                subtitle: 'Mundra & Pipavav',
+                                              ),
+                                            ),
+                                            Container(height: 36, width: 1, color: const Color(0xFFE2E8F0)),
+                                            Expanded(
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(left: 10),
+                                                child: _buildFootprintMetric(
+                                                  icon: Icons.inventory_2_rounded,
+                                                  title: 'Container Freight',
+                                                  subtitle: 'Dry & Climate Safe',
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const Padding(
+                                          padding: EdgeInsets.symmetric(vertical: 12),
+                                          child: Divider(color: Color(0xFFE2E8F0), height: 1),
+                                        ),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: _buildFootprintMetric(
+                                                icon: Icons.speed_rounded,
+                                                title: 'Statutory Clearance',
+                                                subtitle: 'DGFT Pre-Inspected',
+                                              ),
+                                            ),
+                                            Container(height: 36, width: 1, color: const Color(0xFFE2E8F0)),
+                                            Expanded(
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(left: 10),
+                                                child: _buildFootprintMetric(
+                                                  icon: Icons.verified_user_rounded,
+                                                  title: 'Global Compliance',
+                                                  subtitle: 'FDA, ISO, Halal',
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    )
+                                  : Wrap(
+                                      spacing: 24,
+                                      runSpacing: 12,
+                                      alignment: WrapAlignment.spaceEvenly,
+                                      crossAxisAlignment: WrapCrossAlignment.center,
+                                      children: [
+                                        _buildFootprintMetric(
+                                          icon: Icons.anchor_rounded,
+                                          title: 'Maritime Gateways',
+                                          subtitle: 'Mundra & Pipavav Ports',
+                                        ),
+                                        _buildFootprintMetric(
+                                          icon: Icons.inventory_2_rounded,
+                                          title: 'Containerized Freight',
+                                          subtitle: 'Dry & Climate Controlled',
+                                        ),
+                                        _buildFootprintMetric(
+                                          icon: Icons.speed_rounded,
+                                          title: 'Statutory Clearance',
+                                          subtitle: 'DGFT / Pre-Inspected Lots',
+                                        ),
+                                        _buildFootprintMetric(
+                                          icon: Icons.verified_user_rounded,
+                                          title: 'Global Compliance',
+                                          subtitle: 'US FDA, ISO 22000 & Halal',
+                                        ),
+                                      ],
+                                    ),
                             ),
                           ],
                         ),
@@ -3605,27 +3733,33 @@ class _HomePageState extends State<HomePage> {
           ),
           child: Icon(icon, size: 16, color: AppColors.primary),
         ),
-        const SizedBox(width: 10),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              title,
-              style: GoogleFonts.outfit(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
+        const SizedBox(width: 8),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.outfit(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
+                ),
               ),
-            ),
-            Text(
-              subtitle,
-              style: GoogleFonts.inter(
-                fontSize: 11,
-                color: AppColors.textSecondary,
+              Text(
+                subtitle,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.inter(
+                  fontSize: 10.5,
+                  color: AppColors.textSecondary,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );
