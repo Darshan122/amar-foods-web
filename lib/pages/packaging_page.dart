@@ -1243,41 +1243,46 @@ class PackagingPage extends StatelessWidget {
     final List<Map<String, dynamic>> corridors = [
       {
         'region': 'Middle East & GCC',
-        'flags': 'ðŸ‡¦ðŸ‡ª ðŸ‡¸ðŸ‡¦ ðŸ‡´ðŸ‡²',
+        'icon': Icons.near_me_rounded,
+        'countries': ['UAE', 'Saudi Arabia', 'Oman'],
         'ports': 'Jebel Ali, Dammam, Sohar',
-        'days': '4 â€“ 6 Days',
+        'days': '4 - 6 Days',
         'freq': 'Daily / Weekly Sailings',
         'accent': const Color(0xFF0284C7),
       },
       {
         'region': 'Europe & UK',
-        'flags': 'ðŸ‡³ðŸ‡± ðŸ‡©ðŸ‡ª ðŸ‡¬ðŸ‡§',
+        'icon': Icons.euro_symbol_rounded,
+        'countries': ['Netherlands', 'Germany', 'UK'],
         'ports': 'Rotterdam, Hamburg, Felixstowe',
-        'days': '22 â€“ 26 Days',
+        'days': '22 - 26 Days',
         'freq': 'Direct Mainline Weekly',
         'accent': const Color(0xFF16A34A),
       },
       {
         'region': 'North America',
-        'flags': 'ðŸ‡ºðŸ‡¸ ðŸ‡¨ðŸ‡¦',
+        'icon': Icons.flight_takeoff_rounded,
+        'countries': ['USA', 'Canada', 'Mexico'],
         'ports': 'New York, Savannah, Long Beach',
-        'days': '28 â€“ 34 Days',
+        'days': '28 - 34 Days',
         'freq': 'Fast Trans-Atlantic / Pacific',
         'accent': const Color(0xFF9333EA),
       },
       {
         'region': 'Southeast Asia',
-        'flags': 'ðŸ‡¸ðŸ‡¬ ðŸ‡²ðŸ‡¾ ðŸ‡®ðŸ‡©',
+        'icon': Icons.hub_rounded,
+        'countries': ['Singapore', 'Malaysia', 'Indonesia'],
         'ports': 'Singapore, Port Klang, Jakarta',
-        'days': '12 â€“ 16 Days',
+        'days': '12 - 16 Days',
         'freq': 'Regular Direct Feeders',
         'accent': const Color(0xFFD97706),
       },
       {
         'region': 'Far East & Oceania',
-        'flags': 'ðŸ‡¯ðŸ‡µ ðŸ‡°ðŸ‡· ðŸ‡¦ðŸ‡º',
+        'icon': Icons.public_rounded,
+        'countries': ['Japan', 'South Korea', 'Australia'],
         'ports': 'Tokyo, Busan, Melbourne',
-        'days': '18 â€“ 24 Days',
+        'days': '18 - 24 Days',
         'freq': 'Scheduled Weekly Calls',
         'accent': const Color(0xFFE11D48),
       },
@@ -1310,92 +1315,169 @@ class PackagingPage extends StatelessWidget {
             color: AppColors.textSecondary,
           ),
         ),
-        const SizedBox(height: 16),
-        Wrap(
-          spacing: 14,
-          runSpacing: 14,
-          children: corridors.map((c) {
-            final double cardWidth = isMobile
-                ? double.infinity
-                : (MediaQuery.of(context).size.width > 1200 ? 218 : 200);
-            return Container(
-              width: cardWidth,
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: const Color(0xFFF8FAFC),
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(
-                  color: (c['accent'] as Color).withValues(alpha: 0.28),
-                  width: 1.2,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.03),
-                    blurRadius: 10,
-                    offset: const Offset(0, 3),
+        const SizedBox(height: 18),
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final double maxW = constraints.maxWidth;
+            final double cardWidth;
+            if (maxW < 650) {
+              cardWidth = maxW;
+            } else if (maxW < 1050) {
+              cardWidth = (maxW - 14) / 2;
+            } else {
+              cardWidth = (maxW - (14 * 4)) / 5;
+            }
+
+            return Wrap(
+              spacing: 14,
+              runSpacing: 14,
+              children: corridors.map((c) {
+                final Color accentColor = c['accent'] as Color;
+                final List<String> countries = c['countries'] as List<String>;
+
+                return Container(
+                  width: cardWidth,
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF8FAFC),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: accentColor.withValues(alpha: 0.28),
+                      width: 1.2,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.03),
+                        blurRadius: 10,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(c['flags'] as String, style: const TextStyle(fontSize: 18)),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                        decoration: BoxDecoration(
-                          color: (c['accent'] as Color).withValues(alpha: 0.12),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          c['days'] as String,
-                          style: GoogleFonts.outfit(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: c['accent'] as Color,
+                      // Header Row: Icon Left, Days Badge Right
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(6),
+                            decoration: BoxDecoration(
+                              color: accentColor.withValues(alpha: 0.12),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Icon(
+                              c['icon'] as IconData,
+                              size: 16,
+                              color: accentColor,
+                            ),
                           ),
-                        ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: accentColor.withValues(alpha: 0.12),
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                color: accentColor.withValues(alpha: 0.3),
+                                width: 1,
+                              ),
+                            ),
+                            child: Text(
+                              c['days'] as String,
+                              style: GoogleFonts.outfit(
+                                fontSize: 11.5,
+                                fontWeight: FontWeight.bold,
+                                color: accentColor,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    c['region'] as String,
-                    style: GoogleFonts.outfit(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textPrimary,
-                    ),
-                  ),
-                  const SizedBox(height: 3),
-                  Text(
-                    c['ports'] as String,
-                    style: GoogleFonts.inter(
-                      fontSize: 11.5,
-                      color: AppColors.textSecondary,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      Icon(Icons.schedule_rounded, size: 12, color: (c['accent'] as Color)),
-                      const SizedBox(width: 4),
+                      const SizedBox(height: 12),
+
+                      // Region Title
                       Text(
-                        c['freq'] as String,
-                        style: GoogleFonts.inter(
-                          fontSize: 10.5,
-                          color: AppColors.textSecondary,
+                        c['region'] as String,
+                        style: GoogleFonts.outfit(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.textPrimary,
                         ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 8),
+
+                      // Country Tag Chips
+                      Wrap(
+                        spacing: 4,
+                        runSpacing: 4,
+                        children: countries.map((country) {
+                          return Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFEEF2F6),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Text(
+                              country,
+                              style: GoogleFonts.inter(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF475569),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                      const SizedBox(height: 10),
+
+                      // Ports
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(Icons.anchor_rounded, size: 13, color: AppColors.textSecondary.withValues(alpha: 0.8)),
+                          const SizedBox(width: 5),
+                          Expanded(
+                            child: Text(
+                              c['ports'] as String,
+                              style: GoogleFonts.inter(
+                                fontSize: 11.5,
+                                color: AppColors.textSecondary,
+                                fontWeight: FontWeight.w500,
+                                height: 1.35,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+
+                      // Frequency
+                      Row(
+                        children: [
+                          Icon(Icons.schedule_rounded, size: 12, color: accentColor),
+                          const SizedBox(width: 4),
+                          Expanded(
+                            child: Text(
+                              c['freq'] as String,
+                              style: GoogleFonts.inter(
+                                fontSize: 10.5,
+                                color: AppColors.textSecondary,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
-              ),
+                );
+              }).toList(),
             );
-          }).toList(),
+          },
         ),
       ],
     );
