@@ -224,37 +224,65 @@ class PackagingPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      spacing: 8,
-                      runSpacing: 6,
-                      children: [
-                        Text(
-                          '14 kg Net Weight Standard for All Flakes',
+                    if (isMobile) ...[
+                      Text(
+                        '14 kg Net Weight Standard for All Flakes',
+                        style: GoogleFonts.outfit(
+                          fontSize: 15.5,
+                          fontWeight: FontWeight.bold,
+                          color: const Color(0xFF14532D),
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                        decoration: BoxDecoration(
+                          color: AppColors.secondary,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Text(
+                          'INDUSTRY STANDARD',
                           style: GoogleFonts.outfit(
-                            fontSize: isMobile ? 15 : 18.5,
+                            color: Colors.white,
+                            fontSize: 9.5,
                             fontWeight: FontWeight.bold,
-                            color: const Color(0xFF14532D),
+                            letterSpacing: 0.5,
                           ),
                         ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                          decoration: BoxDecoration(
-                            color: AppColors.secondary,
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          child: Text(
-                            'INDUSTRY STANDARD',
-                            style: GoogleFonts.outfit(
-                              color: Colors.white,
-                              fontSize: 9.5,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 0.5,
+                      ),
+                    ] else ...[
+                      Row(
+                        children: [
+                          Flexible(
+                            child: Text(
+                              '14 kg Net Weight Standard for All Flakes',
+                              style: GoogleFonts.outfit(
+                                fontSize: 18.5,
+                                fontWeight: FontWeight.bold,
+                                color: const Color(0xFF14532D),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
+                          const SizedBox(width: 10),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                            decoration: BoxDecoration(
+                              color: AppColors.secondary,
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: Text(
+                              'INDUSTRY STANDARD',
+                              style: GoogleFonts.outfit(
+                                color: Colors.white,
+                                fontSize: 9.5,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 0.5,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                     const SizedBox(height: 6),
                     Text(
                       'Due to natural high volume and lower bulk density, all Dehydrated Onion Flakes (White, Red, Pink Kibbled) and Chilli Flakes are standardly packed in 14 kg Net Weight Multi-wall Kraft Paper Bags or 14 kg Corrugated Master Cartons. This preserves whole flake structure, eliminates breakage during transit, and provides optimal container cube filling.',

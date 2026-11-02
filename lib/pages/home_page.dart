@@ -1809,31 +1809,47 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ],
                       )
-                    : Wrap(
-                        spacing: 28,
-                        runSpacing: 14,
-                        alignment: WrapAlignment.spaceEvenly,
-                        crossAxisAlignment: WrapCrossAlignment.center,
+                    : Row(
                         children: [
-                          _buildFacilitySpecChip(
-                            icon: Icons.speed_rounded,
-                            title: '50+ MT / Day',
-                            subtitle: 'Dehydration Capacity',
+                          Expanded(
+                            child: _buildFacilitySpecChip(
+                              icon: Icons.speed_rounded,
+                              title: '50+ MT / Day',
+                              subtitle: 'Dehydration Capacity',
+                            ),
                           ),
-                          _buildFacilitySpecChip(
-                            icon: Icons.shield_rounded,
-                            title: 'SS 304 Food Grade',
-                            subtitle: 'Contact Surfaces',
+                          Container(height: 36, width: 1, color: const Color(0xFFE2E8F0)),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 14),
+                              child: _buildFacilitySpecChip(
+                                icon: Icons.shield_rounded,
+                                title: 'SS 304 Food Grade',
+                                subtitle: 'Contact Surfaces',
+                              ),
+                            ),
                           ),
-                          _buildFacilitySpecChip(
-                            icon: Icons.clean_hands_rounded,
-                            title: 'Positive Pressure',
-                            subtitle: 'Hygienic Cleanroom',
+                          Container(height: 36, width: 1, color: const Color(0xFFE2E8F0)),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 14),
+                              child: _buildFacilitySpecChip(
+                                icon: Icons.clean_hands_rounded,
+                                title: 'Positive Pressure',
+                                subtitle: 'Hygienic Cleanroom',
+                              ),
+                            ),
                           ),
-                          _buildFacilitySpecChip(
-                            icon: Icons.location_on_rounded,
-                            title: 'Mahuva, Gujarat',
-                            subtitle: 'Direct Farm Hub',
+                          Container(height: 36, width: 1, color: const Color(0xFFE2E8F0)),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 14),
+                              child: _buildFacilitySpecChip(
+                                icon: Icons.location_on_rounded,
+                                title: 'Mahuva, Gujarat',
+                                subtitle: 'Direct Farm Hub',
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -1919,9 +1935,9 @@ class _HomePageState extends State<HomePage> {
             color: AppColors.primary.withValues(alpha: 0.08),
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Icon(icon, size: 16, color: AppColors.primary),
+          child: Icon(icon, size: 18, color: AppColors.primary),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: 10),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -1932,18 +1948,20 @@ class _HomePageState extends State<HomePage> {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.outfit(
-                  fontSize: 12,
+                  fontSize: 13,
                   fontWeight: FontWeight.bold,
                   color: AppColors.textPrimary,
                 ),
               ),
+              const SizedBox(height: 1),
               Text(
                 subtitle,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.inter(
-                  fontSize: 10.5,
+                  fontSize: 11,
                   color: AppColors.textSecondary,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ],
@@ -3674,31 +3692,47 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                       ],
                                     )
-                                  : Wrap(
-                                      spacing: 24,
-                                      runSpacing: 12,
-                                      alignment: WrapAlignment.spaceEvenly,
-                                      crossAxisAlignment: WrapCrossAlignment.center,
+                                  : Row(
                                       children: [
-                                        _buildFootprintMetric(
-                                          icon: Icons.anchor_rounded,
-                                          title: 'Maritime Gateways',
-                                          subtitle: 'Mundra & Pipavav Ports',
+                                        Expanded(
+                                          child: _buildFootprintMetric(
+                                            icon: Icons.anchor_rounded,
+                                            title: 'Maritime Gateways',
+                                            subtitle: 'Mundra & Pipavav Ports',
+                                          ),
                                         ),
-                                        _buildFootprintMetric(
-                                          icon: Icons.inventory_2_rounded,
-                                          title: 'Containerized Freight',
-                                          subtitle: 'Dry & Climate Controlled',
+                                        Container(height: 36, width: 1, color: const Color(0xFFE2E8F0)),
+                                        Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(left: 14),
+                                            child: _buildFootprintMetric(
+                                              icon: Icons.inventory_2_rounded,
+                                              title: 'Containerized Freight',
+                                              subtitle: 'Dry & Climate Controlled',
+                                            ),
+                                          ),
                                         ),
-                                        _buildFootprintMetric(
-                                          icon: Icons.speed_rounded,
-                                          title: 'Statutory Clearance',
-                                          subtitle: 'DGFT / Pre-Inspected Lots',
+                                        Container(height: 36, width: 1, color: const Color(0xFFE2E8F0)),
+                                        Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(left: 14),
+                                            child: _buildFootprintMetric(
+                                              icon: Icons.speed_rounded,
+                                              title: 'Statutory Clearance',
+                                              subtitle: 'DGFT / Pre-Inspected Lots',
+                                            ),
+                                          ),
                                         ),
-                                        _buildFootprintMetric(
-                                          icon: Icons.verified_user_rounded,
-                                          title: 'Global Compliance',
-                                          subtitle: 'US FDA, ISO 22000 & Halal',
+                                        Container(height: 36, width: 1, color: const Color(0xFFE2E8F0)),
+                                        Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(left: 14),
+                                            child: _buildFootprintMetric(
+                                              icon: Icons.verified_user_rounded,
+                                              title: 'Global Compliance',
+                                              subtitle: 'US FDA, ISO 22000 & Halal',
+                                            ),
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -3752,9 +3786,9 @@ class _HomePageState extends State<HomePage> {
             color: AppColors.primary.withValues(alpha: 0.09),
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Icon(icon, size: 16, color: AppColors.primary),
+          child: Icon(icon, size: 18, color: AppColors.primary),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: 10),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -3765,18 +3799,20 @@ class _HomePageState extends State<HomePage> {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.outfit(
-                  fontSize: 12,
+                  fontSize: 13,
                   fontWeight: FontWeight.bold,
                   color: AppColors.textPrimary,
                 ),
               ),
+              const SizedBox(height: 1),
               Text(
                 subtitle,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.inter(
-                  fontSize: 10.5,
+                  fontSize: 11,
                   color: AppColors.textSecondary,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ],
