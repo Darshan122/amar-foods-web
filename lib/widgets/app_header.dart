@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../constants/app_colors.dart';
@@ -215,39 +215,82 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
+  /// Opens the navigation drawer safely across any page or embedded route
+  static void openDrawerMenu(BuildContext context) {
+    final scaffold = Scaffold.maybeOf(context);
+    if (scaffold != null && scaffold.hasEndDrawer) {
+      scaffold.openEndDrawer();
+      return;
+    }
+
+    // Fail-safe fallback: If a page doesn't have an endDrawer declared on its Scaffold,
+    // open the AppDrawer cleanly using showGeneralDialog with slide-in animation.
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: true,
+      barrierLabel: 'Close Menu',
+      barrierColor: Colors.black.withValues(alpha: 0.54),
+      transitionDuration: const Duration(milliseconds: 250),
+      pageBuilder: (dialogContext, anim1, anim2) {
+        return const Align(
+          alignment: Alignment.centerRight,
+          child: Material(
+            color: Colors.transparent,
+            child: AppDrawer(),
+          ),
+        );
+      },
+      transitionBuilder: (dialogContext, anim, secondaryAnim, child) {
+        return SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(1, 0),
+            end: Offset.zero,
+          ).animate(CurvedAnimation(parent: anim, curve: Curves.easeOutCubic)),
+          child: child,
+        );
+      },
+    );
+  }
+
   Widget _buildMobileMenuButton(BuildContext context) {
     return Builder(
-      builder: (context) {
-        return Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: () => Scaffold.of(context).openEndDrawer(),
-            borderRadius: BorderRadius.circular(8),
-            splashColor: AppColors.primary.withValues(alpha: 0.15),
-            highlightColor: AppColors.primary.withValues(alpha: 0.08),
-            child: Container(
-              width: 38,
-              height: 38,
-              decoration: BoxDecoration(
-                color: AppColors.primary.withValues(alpha: 0.08),
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(
-                  color: AppColors.primary.withValues(alpha: 0.22),
-                  width: 1.2,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.primary.withValues(alpha: 0.05),
-                    blurRadius: 6,
-                    offset: const Offset(0, 2),
+      builder: (btnContext) {
+        return Tooltip(
+          message: 'Navigation Menu',
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () => openDrawerMenu(btnContext),
+              borderRadius: BorderRadius.circular(10),
+              splashColor: AppColors.primary.withValues(alpha: 0.18),
+              highlightColor: AppColors.secondary.withValues(alpha: 0.12),
+              child: Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.white,
+                      Color(0xFFFBF6FA),
+                    ],
                   ),
-                ],
-              ),
-              child: const Center(
-                child: Icon(
-                  Icons.menu_rounded,
-                  color: AppColors.primary,
-                  size: 22,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                    color: AppColors.primary.withValues(alpha: 0.28),
+                    width: 1.4,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.primary.withValues(alpha: 0.08),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: const Center(
+                  child: _ModernMenuIcon(),
                 ),
               ),
             ),
@@ -406,17 +449,23 @@ class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
 
   void _navigateTo(BuildContext context, String routeName) {
-    Navigator.of(context).pop();
+    // Read route before popping context
     final String? currentRoute = ModalRoute.of(context)?.settings.name;
-    if (currentRoute == routeName) return;
+    Navigator.of(context).pop();
+
+    if (currentRoute != null) {
+      if (currentRoute == routeName) return;
+      if (routeName != '/' && currentRoute.contains(routeName)) return;
+      if (routeName == '/' && (currentRoute == '/' || currentRoute.isEmpty)) return;
+    }
 
     Navigator.pushNamed(context, routeName);
   }
 
   void _showQuoteDialog(BuildContext context) {
-    Navigator.of(context).pop();
     final String? currentRoute = ModalRoute.of(context)?.settings.name;
-    if (currentRoute == '/enquiry' || currentRoute == '/quote') return;
+    Navigator.of(context).pop();
+    if (currentRoute != null && (currentRoute == '/enquiry' || currentRoute == '/quote' || currentRoute.contains('/enquiry'))) return;
     Navigator.pushNamed(context, '/enquiry');
   }
 
@@ -552,6 +601,7 @@ class AppDrawer extends StatelessWidget {
                     icon: Icons.inventory_2_rounded,
                     routeName: '/packaging',
                     currentRoute: currentRoute,
+                    badgeText: 'FREE KIT',
                   ),
                   _buildDrawerItem(
                     context,
@@ -744,59 +794,215 @@ class AppDrawer extends StatelessWidget {
     required IconData icon,
     required String routeName,
     required String? currentRoute,
+    String? badgeText,
   }) {
-    final bool isSelected = currentRoute == routeName;
+    final bool isSelected;
+    if (currentRoute == null) {
+      isSelected = false;
+    } else if (routeName == '/') {
+      isSelected = currentRoute == '/' || currentRoute.isEmpty;
+    } else {
+      isSelected = currentRoute == routeName || currentRoute.contains(routeName);
+    }
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 6.0),
       child: Material(
         color: Colors.transparent,
-        child: ListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-          tileColor: isSelected ? AppColors.primaryLight : Colors.transparent,
-          leading: Container(
-            width: 38,
-            height: 38,
-            decoration: BoxDecoration(
-              color: isSelected ? AppColors.primary : AppColors.primary.withValues(alpha: 0.08),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Icon(
-              icon,
-              color: isSelected ? Colors.white : AppColors.primary,
-              size: 20,
-            ),
-          ),
-          title: Text(
-            title,
-            style: GoogleFonts.outfit(
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
-              color: isSelected ? AppColors.primary : AppColors.textPrimary,
-              fontSize: 14.5,
-            ),
-          ),
-          subtitle: Text(
-            subtitle,
-            style: GoogleFonts.inter(
-              fontSize: 11,
-              color: isSelected ? AppColors.primary.withValues(alpha: 0.8) : AppColors.textSecondary,
-            ),
-          ),
-          trailing: isSelected
-              ? Container(
-                  width: 8,
-                  height: 8,
-                  decoration: const BoxDecoration(
-                    color: AppColors.secondary,
-                    shape: BoxShape.circle,
-                  ),
-                )
-              : const Icon(Icons.chevron_right_rounded, size: 18, color: AppColors.textSecondary),
+        child: InkWell(
           onTap: () => _navigateTo(context, routeName),
+          borderRadius: BorderRadius.circular(14),
+          splashColor: AppColors.primary.withValues(alpha: 0.12),
+          highlightColor: AppColors.secondary.withValues(alpha: 0.08),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            decoration: BoxDecoration(
+              color: isSelected ? AppColors.primaryLight : Colors.transparent,
+              borderRadius: BorderRadius.circular(14),
+              border: isSelected
+                  ? Border.all(color: AppColors.primary.withValues(alpha: 0.28), width: 1.2)
+                  : Border.all(color: Colors.transparent, width: 1.2),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    gradient: isSelected
+                        ? const LinearGradient(
+                            colors: [Color(0xFFA64787), Color(0xFF7A1F5E)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          )
+                        : null,
+                    color: isSelected ? null : AppColors.primary.withValues(alpha: 0.08),
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: isSelected
+                        ? [
+                            BoxShadow(
+                              color: AppColors.primary.withValues(alpha: 0.25),
+                              blurRadius: 6,
+                              offset: const Offset(0, 2),
+                            ),
+                          ]
+                        : null,
+                  ),
+                  child: Icon(
+                    icon,
+                    color: isSelected ? Colors.white : AppColors.primary,
+                    size: 20,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Flexible(
+                            child: Text(
+                              title,
+                              style: GoogleFonts.outfit(
+                                fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
+                                color: isSelected ? AppColors.primary : AppColors.textPrimary,
+                                fontSize: 14.5,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          if (badgeText != null) ...[
+                            const SizedBox(width: 6),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                              decoration: BoxDecoration(
+                                color: AppColors.secondary.withValues(alpha: 0.14),
+                                borderRadius: BorderRadius.circular(6),
+                                border: Border.all(color: AppColors.secondary.withValues(alpha: 0.35)),
+                              ),
+                              child: Text(
+                                badgeText,
+                                style: GoogleFonts.outfit(
+                                  fontSize: 9.5,
+                                  fontWeight: FontWeight.w800,
+                                  color: AppColors.secondary,
+                                  letterSpacing: 0.3,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        subtitle,
+                        style: GoogleFonts.inter(
+                          fontSize: 11,
+                          color: isSelected
+                              ? AppColors.primary.withValues(alpha: 0.8)
+                              : AppColors.textSecondary,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                ),
+                if (isSelected)
+                  Container(
+                    width: 7,
+                    height: 7,
+                    decoration: const BoxDecoration(
+                      color: AppColors.secondary,
+                      shape: BoxShape.circle,
+                    ),
+                  )
+                else
+                  const Icon(
+                    Icons.chevron_right_rounded,
+                    size: 18,
+                    color: AppColors.textSecondary,
+                  ),
+              ],
+            ),
+          ),
         ),
       ),
     );
   }
 
+}
+
+/// Bespoke modern menu icon with asymmetric gradient bars and emerald accent dot
+class _ModernMenuIcon extends StatelessWidget {
+  const _ModernMenuIcon();
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 20,
+      height: 16,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Top Bar (20px wide, primary brand purple gradient)
+          Container(
+            width: 20,
+            height: 2.4,
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xFFA64787), Color(0xFF8B2B6D)],
+              ),
+              borderRadius: BorderRadius.circular(3),
+            ),
+          ),
+
+          // Middle Bar (Modern asymmetric design: 12px purple bar + 4.5px emerald green dot)
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 12,
+                height: 2.4,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFA64787),
+                  borderRadius: BorderRadius.circular(3),
+                ),
+              ),
+              const SizedBox(width: 3.5),
+              Container(
+                width: 4.5,
+                height: 2.4,
+                decoration: BoxDecoration(
+                  color: AppColors.secondary,
+                  borderRadius: BorderRadius.circular(3),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.secondary.withValues(alpha: 0.6),
+                      blurRadius: 3,
+                      spreadRadius: 0.5,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+
+          // Bottom Bar (16px wide, tapered modern look)
+          Container(
+            width: 16,
+            height: 2.4,
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xFFA64787), Color(0xFF7A1F5E)],
+              ),
+              borderRadius: BorderRadius.circular(3),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

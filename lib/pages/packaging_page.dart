@@ -8,6 +8,7 @@ import '../widgets/amar_card.dart';
 import '../widgets/app_buttons.dart';
 import '../widgets/app_header.dart';
 import '../widgets/app_footer.dart';
+import '../widgets/whatsapp_floating_button.dart';
 import '../widgets/quote_dialog.dart';
 
 class PackagingPage extends StatelessWidget {
@@ -38,10 +39,13 @@ class PackagingPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
+      appBar: const AppHeader(),
+      endDrawer: const AppDrawer(),
+      floatingActionButton: const WhatsAppFloatingButton(),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const AppHeader(),
+
 
             // 1. HERO BANNER
             _buildHeroBanner(context, isMobile, paddingH),

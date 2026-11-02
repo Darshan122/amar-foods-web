@@ -321,11 +321,13 @@ class _EnquiryPageState extends State<EnquiryPage> {
 
     return Scaffold(
       backgroundColor: AppColors.background,
+      appBar: const AppHeader(),
+      endDrawer: const AppDrawer(),
       floatingActionButton: const WhatsAppFloatingButton(),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const AppHeader(),
+
             _buildHeroSection(isMobile),
             _isSubmitted
                 ? _buildSuccessView(isMobile)
