@@ -981,7 +981,7 @@ class PackagingPage extends StatelessWidget {
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 820),
                 child: Text(
-                  'Situated just ~90 km from APM Terminals Pipavav and directly linked to Mundra Port, Amar Foods delivers moisture-barrier container shipments worldwide with ultra-low inland haulage, guaranteed weekly vessel sailings, and transparent Incoterms.',
+                  'Situated just ~40 km from APM Terminals Pipavav and directly linked to Mundra Port, Amar Foods delivers moisture-barrier container shipments worldwide with ultra-low inland haulage, guaranteed weekly vessel sailings, and transparent Incoterms.',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.inter(
                     fontSize: isMobile ? 13.5 : 15,
@@ -1124,7 +1124,7 @@ class PackagingPage extends StatelessWidget {
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
-                    'Mahuva Plant to APM Terminals Pipavav: ~90 km (Under 2.5 hrs transit)',
+                    'Mahuva Plant to APM Terminals Pipavav: ~40 km (Under 1 hour transit)',
                     style: GoogleFonts.outfit(
                       color: Colors.white,
                       fontSize: 11.5,
@@ -1172,7 +1172,7 @@ class PackagingPage extends StatelessWidget {
 
         _buildPortPoint(
           icon: Icons.hub_rounded,
-          title: 'APM Terminals Pipavav (~90 km distance)',
+          title: 'APM Terminals Pipavav (~40 km distance)',
           desc: 'Primary export gateway with zero highway bottlenecks, lowest inland haulage expenses, and direct container rail connectivity.',
         ),
         const SizedBox(height: 10),
@@ -1528,11 +1528,11 @@ class PackagingPage extends StatelessWidget {
               _buildIncotermBadge('EXW Mahuva Plant'),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: 16),
           Text(
-            'Currencies Accepted: USD (\$), EUR (â‚¬), GBP (Â£), AED (Ø¯.Ø¥), INR (â‚¹). Guaranteed container freight quotation response within 12â€“24 business hours.',
+            'Currencies Accepted: USD, EUR, GBP, AED, INR. Guaranteed container freight quotation response within 12 - 24 business hours.',
             style: GoogleFonts.inter(
-              fontSize: 12,
+              fontSize: 12.5,
               color: AppColors.textSecondary,
               height: 1.5,
             ),
@@ -1559,12 +1559,12 @@ class PackagingPage extends StatelessWidget {
                   color: AppColors.secondary.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Icon(Icons.account_balance_rounded, color: AppColors.secondary, size: 20),
+                child: const Icon(Icons.shield_rounded, color: AppColors.secondary, size: 20),
               ),
               const SizedBox(width: 10),
               Expanded(
                 child: Text(
-                  'International Payment Security',
+                  'Payment Terms (Strictly No Credit)',
                   style: GoogleFonts.outfit(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
@@ -1575,11 +1575,42 @@ class PackagingPage extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 14),
-          _buildPaymentPoint('100% Irrevocable Letter of Credit (L/C at Sight)', 'Confirmed by prime international first-class banks.'),
-          const SizedBox(height: 8),
-          _buildPaymentPoint('T/T Telegraphic Wire Transfer', 'Standard 30% advance deposit with 70% balance upon scanned Bill of Lading (B/L).'),
-          const SizedBox(height: 8),
-          _buildPaymentPoint('CAD / DP (Cash Against Documents)', 'Available for qualified long-term contracted international distributors.'),
+          _buildPaymentPoint(
+            'T/T (Telegraphic Wire Transfer)',
+            '50% advance deposit with order confirmation + 50% balance upon scanned copy of original Bill of Lading (B/L).',
+          ),
+          const SizedBox(height: 10),
+          _buildPaymentPoint(
+            '100% Irrevocable Letter of Credit (L/C at Sight)',
+            'Confirmed Letter of Credit payable 100% at sight through prime international banks (No usance credit).',
+          ),
+          const SizedBox(height: 14),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            decoration: BoxDecoration(
+              color: const Color(0xFFFEF2F2),
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: const Color(0xFFFCA5A5)),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Icon(Icons.info_outline_rounded, color: Color(0xFFDC2626), size: 16),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    'Strict Policy: We operate strictly on upfront secured terms. We do not provide open credit, usance credit, or post-dispatch credit under any circumstances.',
+                    style: GoogleFonts.outfit(
+                      fontSize: 11.5,
+                      fontWeight: FontWeight.w600,
+                      color: const Color(0xFF991B1B),
+                      height: 1.35,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
