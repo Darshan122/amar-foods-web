@@ -249,6 +249,7 @@ class AppImages {
   static const String packagingPpWovenBag = '$_basePath/packaging/pp_woven_bag.jpg';
   static const String packagingRetailPouches = '$_basePath/packaging/retail_pouches.jpg';
   static const String packagingSampleKit = '$_basePath/packaging/sample_kit.jpg';
+  static const String seaportLogistics = '$_basePath/packaging/seaport_logistics.jpg';
 
   // Founders & Executive Leadership
   static const String founderLabheshPatel = '$_basePath/founder_labhesh_patel.jpg';

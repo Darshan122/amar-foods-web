@@ -7,7 +7,7 @@
   <!-- 1. Home Page -->
   <url>
     <loc>https://amarfoods.in/</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -15,55 +15,71 @@
   <!-- 2. Products Portfolio Page -->
   <url>
     <loc>https://amarfoods.in/products</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.95</priority>
   </url>
 
-  <!-- 3. About Amar Foods Page -->
+  <!-- 3. Export Packaging & Sample Kits Page -->
+  <url>
+    <loc>https://amarfoods.in/packaging</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <!-- 4. About Amar Foods Page -->
   <url>
     <loc>https://amarfoods.in/about</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
 
-  <!-- 4. Global Food Exhibitions & Trade Fairs -->
+  <!-- 5. Global Food Exhibitions & Trade Fairs -->
   <url>
     <loc>https://amarfoods.in/exhibitions</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
 
-  <!-- 5. Facility & Event Photo Gallery -->
+  <!-- 6. Facility & Event Photo Gallery -->
   <url>
     <loc>https://amarfoods.in/gallery</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
 
-  <!-- 6. Contact & Export Inquiry Page -->
+  <!-- 7. Contact & Export Inquiry Page -->
   <url>
     <loc>https://amarfoods.in/contact</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
 
-  <!-- 7. B2B Product Enquiry & Bulk Quotation Page -->
+  <!-- 8. B2B Product Enquiry & Bulk Quotation Page -->
   <url>
     <loc>https://amarfoods.in/enquiry</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
 
-  <!-- 8. Official Product Export Brochure PDF -->
+  <!-- 9. Official Product Specification Export Catalogue PDF -->
+  <url>
+    <loc>https://amarfoods.in/amar_foods_product_catalog.pdf</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- 10. Official Product Export Brochure PDF -->
   <url>
     <loc>https://amarfoods.in/amar_foods_brochure.pdf</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>

@@ -1,4 +1,4 @@
-import 'dart:math' as math;
+﻿import 'dart:math' as math;
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -3702,6 +3702,27 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                       ],
                                     ),
+                            ),
+                            const SizedBox(height: 18),
+                            Center(
+                              child: OutlinedButton.icon(
+                                onPressed: () => Navigator.pushNamed(context, '/packaging'),
+                                icon: const Icon(Icons.directions_boat_rounded, size: 16, color: AppColors.primary),
+                                label: Text(
+                                  'Explore Seaport Logistics & Ocean Transit Times',
+                                  style: GoogleFonts.outfit(
+                                    fontSize: isMobile ? 12 : 13.5,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.primary,
+                                  ),
+                                ),
+                                style: OutlinedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  side: BorderSide(color: AppColors.primary.withValues(alpha: 0.35), width: 1.2),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                                ),
+                              ),
                             ),
                           ],
                         ),

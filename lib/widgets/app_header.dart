@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../constants/app_colors.dart';
@@ -110,7 +110,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
                   SizedBox(width: LiquidUI.fluid(context, minVal: 10, maxVal: 18)),
                   _buildNavLink(context, LanguageService.instance.tr('nav_products'), '/products'),
                   SizedBox(width: LiquidUI.fluid(context, minVal: 10, maxVal: 18)),
-                  _buildNavLink(context, 'Packaging & Samples', '/packaging'),
+                  _buildNavLink(context, 'Packaging & Logistics', '/packaging'),
                   SizedBox(width: LiquidUI.fluid(context, minVal: 10, maxVal: 18)),
                   _buildNavLink(context, LanguageService.instance.tr('nav_exhibitions'), '/exhibitions'),
                   SizedBox(width: LiquidUI.fluid(context, minVal: 10, maxVal: 18)),
@@ -596,8 +596,8 @@ class AppDrawer extends StatelessWidget {
                   ),
                   _buildDrawerItem(
                     context,
-                    title: 'Packaging & Samples',
-                    subtitle: 'Export Packing & Free Samples',
+                    title: 'Packaging & Logistics',
+                    subtitle: 'Export Packing, Seaports & Samples',
                     icon: Icons.inventory_2_rounded,
                     routeName: '/packaging',
                     currentRoute: currentRoute,

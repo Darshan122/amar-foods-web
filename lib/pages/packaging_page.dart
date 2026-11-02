@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../constants/app_colors.dart';
@@ -62,7 +62,10 @@ class PackagingPage extends StatelessWidget {
             // 5. CONTAINER LOADABILITY & PALLETIZATION TABLE
             _buildLoadabilityTable(context, isMobile, paddingH),
 
-            // 6. BOTTOM CTA
+            // 6. GLOBAL EXPORT & SEAPORT LOGISTICS HUB
+            _buildExportLogisticsSection(context, isMobile, paddingH),
+
+            // 7. BOTTOM CTA
             _buildBottomCta(context, isMobile, paddingH),
 
             const AppFooter(),
@@ -127,7 +130,7 @@ class PackagingPage extends StatelessWidget {
 
               // Title
               Text(
-                'Export Packaging & Free Sample Kits',
+                'Export Packaging, Seaport Logistics & Free Sample Kits',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.playfairDisplay(
                   fontSize: isMobile ? 26 : 46,
@@ -940,7 +943,736 @@ class PackagingPage extends StatelessWidget {
     );
   }
 
-  // ==================== 6. BOTTOM CTA ====================
+  // ==================== 6. GLOBAL EXPORT & SEAPORT LOGISTICS HUB ====================
+  Widget _buildExportLogisticsSection(BuildContext context, bool isMobile, double paddingH) {
+    return Container(
+      width: double.infinity,
+      color: Colors.white,
+      padding: EdgeInsets.symmetric(horizontal: paddingH, vertical: isMobile ? 48 : 80),
+      child: Center(
+        child: Container(
+          constraints: LiquidUI.pageConstraints(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Badge
+              LiquidUI.badgePill(
+                text: 'GLOBAL SEAPORT LOGISTICS & TRADE CORRIDORS',
+                icon: Icons.directions_boat_rounded,
+                backgroundColor: AppColors.primaryLight,
+                textColor: AppColors.primary,
+                fontSize: isMobile ? 10.5 : 11.5,
+              ),
+              const SizedBox(height: 14),
+
+              // Title
+              Text(
+                'Connecting Mahuva Directly to 50+ Global Seaports',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.playfairDisplay(
+                  fontSize: isMobile ? 24 : 38,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
+                  height: 1.25,
+                ),
+              ),
+              const SizedBox(height: 12),
+
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 820),
+                child: Text(
+                  'Situated just ~90 km from APM Terminals Pipavav and directly linked to Mundra Port, Amar Foods delivers moisture-barrier container shipments worldwide with ultra-low inland haulage, guaranteed weekly vessel sailings, and transparent Incoterms.',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.inter(
+                    fontSize: isMobile ? 13.5 : 15,
+                    color: AppColors.textSecondary,
+                    height: 1.55,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 38),
+
+              // 1. Strategic Seaport Gateways Feature Card (Pipavav & Mundra)
+              _buildSeaportGatewaysCard(context, isMobile),
+
+              const SizedBox(height: 36),
+
+              // 2. Ocean Transit Times Matrix (5 Corridors)
+              _buildTransitTimesGrid(context, isMobile),
+
+              const SizedBox(height: 36),
+
+              // 3. Incoterms & International Payment Security (2 Columns)
+              _buildTradeTermsSection(context, isMobile),
+
+              const SizedBox(height: 36),
+
+              // 4. Statutory Export Documentation & Fumigation Protocol
+              _buildExportDocumentationGrid(context, isMobile),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSeaportGatewaysCard(BuildContext context, bool isMobile) {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: const Color(0xFFF8FAFC),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: const Color(0xFFE2E8F0), width: 1.2),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.04),
+            blurRadius: 16,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: isMobile
+          ? Column(
+              children: [
+                _buildSeaportImage(height: 220),
+                Padding(
+                  padding: const EdgeInsets.all(18),
+                  child: _buildSeaportDetails(isMobile: true),
+                ),
+              ],
+            )
+          : Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  flex: 5,
+                  child: _buildSeaportImage(height: 330),
+                ),
+                Expanded(
+                  flex: 6,
+                  child: Padding(
+                    padding: const EdgeInsets.all(28),
+                    child: _buildSeaportDetails(isMobile: false),
+                  ),
+                ),
+              ],
+            ),
+    );
+  }
+
+  Widget _buildSeaportImage({required double height}) {
+    return Stack(
+      children: [
+        SizedBox(
+          height: height,
+          width: double.infinity,
+          child: Image.asset(
+            AppImages.seaportLogistics,
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) {
+              return Container(
+                color: const Color(0xFF1E293B),
+                child: const Center(
+                  child: Icon(Icons.directions_boat_rounded, color: Colors.white54, size: 48),
+                ),
+              );
+            },
+          ),
+        ),
+        Positioned(
+          top: 14,
+          left: 14,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            decoration: BoxDecoration(
+              color: Colors.black.withValues(alpha: 0.72),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.anchor_rounded, color: AppColors.secondary, size: 14),
+                const SizedBox(width: 6),
+                Text(
+                  'DEEPWATER EXPORT TERMINAL',
+                  style: GoogleFonts.outfit(
+                    color: Colors.white,
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 0.6,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Positioned(
+          bottom: 14,
+          left: 14,
+          right: 14,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            decoration: BoxDecoration(
+              color: Colors.black.withValues(alpha: 0.80),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Row(
+              children: [
+                const Icon(Icons.near_me_rounded, color: AppColors.secondary, size: 16),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    'Mahuva Plant to APM Terminals Pipavav: ~90 km (Under 2.5 hrs transit)',
+                    style: GoogleFonts.outfit(
+                      color: Colors.white,
+                      fontSize: 11.5,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSeaportDetails({required bool isMobile}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(7),
+              decoration: BoxDecoration(
+                color: AppColors.secondary.withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Icon(Icons.verified_rounded, color: AppColors.secondary, size: 18),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                'Dual Gateway Seaport Strategy',
+                style: GoogleFonts.outfit(
+                  fontSize: isMobile ? 18 : 21,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 14),
+
+        _buildPortPoint(
+          icon: Icons.hub_rounded,
+          title: 'APM Terminals Pipavav (~90 km distance)',
+          desc: 'Primary export gateway with zero highway bottlenecks, lowest inland haulage expenses, and direct container rail connectivity.',
+        ),
+        const SizedBox(height: 10),
+
+        _buildPortPoint(
+          icon: Icons.directions_boat_filled_rounded,
+          title: 'Adani Ports Mundra & Nhava Sheva (JNPT)',
+          desc: 'Direct mainline high-speed weekly sailings connecting directly to European, North American, Mediterranean, and East Asian deepwater berths.',
+        ),
+        const SizedBox(height: 10),
+
+        _buildPortPoint(
+          icon: Icons.shield_rounded,
+          title: 'Export Container Lining & Desiccants',
+          desc: 'Every container is lined with food-grade multi-layer moisture barriers and 20+ silica/clay desiccant Dry-Bags to prevent condensation during ocean transit.',
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPortPoint({
+    required IconData icon,
+    required String title,
+    required String desc,
+  }) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          margin: const EdgeInsets.only(top: 2),
+          padding: const EdgeInsets.all(6),
+          decoration: BoxDecoration(
+            color: AppColors.primary.withValues(alpha: 0.08),
+            borderRadius: BorderRadius.circular(6),
+          ),
+          child: Icon(icon, color: AppColors.primary, size: 16),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: GoogleFonts.outfit(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+              const SizedBox(height: 2),
+              Text(
+                desc,
+                style: GoogleFonts.inter(
+                  fontSize: 12.5,
+                  color: AppColors.textSecondary,
+                  height: 1.45,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTransitTimesGrid(BuildContext context, bool isMobile) {
+    final List<Map<String, dynamic>> corridors = [
+      {
+        'region': 'Middle East & GCC',
+        'flags': 'ðŸ‡¦ðŸ‡ª ðŸ‡¸ðŸ‡¦ ðŸ‡´ðŸ‡²',
+        'ports': 'Jebel Ali, Dammam, Sohar',
+        'days': '4 â€“ 6 Days',
+        'freq': 'Daily / Weekly Sailings',
+        'accent': const Color(0xFF0284C7),
+      },
+      {
+        'region': 'Europe & UK',
+        'flags': 'ðŸ‡³ðŸ‡± ðŸ‡©ðŸ‡ª ðŸ‡¬ðŸ‡§',
+        'ports': 'Rotterdam, Hamburg, Felixstowe',
+        'days': '22 â€“ 26 Days',
+        'freq': 'Direct Mainline Weekly',
+        'accent': const Color(0xFF16A34A),
+      },
+      {
+        'region': 'North America',
+        'flags': 'ðŸ‡ºðŸ‡¸ ðŸ‡¨ðŸ‡¦',
+        'ports': 'New York, Savannah, Long Beach',
+        'days': '28 â€“ 34 Days',
+        'freq': 'Fast Trans-Atlantic / Pacific',
+        'accent': const Color(0xFF9333EA),
+      },
+      {
+        'region': 'Southeast Asia',
+        'flags': 'ðŸ‡¸ðŸ‡¬ ðŸ‡²ðŸ‡¾ ðŸ‡®ðŸ‡©',
+        'ports': 'Singapore, Port Klang, Jakarta',
+        'days': '12 â€“ 16 Days',
+        'freq': 'Regular Direct Feeders',
+        'accent': const Color(0xFFD97706),
+      },
+      {
+        'region': 'Far East & Oceania',
+        'flags': 'ðŸ‡¯ðŸ‡µ ðŸ‡°ðŸ‡· ðŸ‡¦ðŸ‡º',
+        'ports': 'Tokyo, Busan, Melbourne',
+        'days': '18 â€“ 24 Days',
+        'freq': 'Scheduled Weekly Calls',
+        'accent': const Color(0xFFE11D48),
+      },
+    ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            const Icon(Icons.public_rounded, color: AppColors.secondary, size: 20),
+            const SizedBox(width: 8),
+            Flexible(
+              child: Text(
+                'Major Maritime Trade Corridors & Port-to-Port Transit',
+                style: GoogleFonts.outfit(
+                  fontSize: isMobile ? 18 : 22,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 6),
+        Text(
+          'Average container voyage timelines departing from Pipavav / Mundra deepwater ports to major international container terminals:',
+          style: GoogleFonts.inter(
+            fontSize: 13,
+            color: AppColors.textSecondary,
+          ),
+        ),
+        const SizedBox(height: 16),
+        Wrap(
+          spacing: 14,
+          runSpacing: 14,
+          children: corridors.map((c) {
+            final double cardWidth = isMobile
+                ? double.infinity
+                : (MediaQuery.of(context).size.width > 1200 ? 218 : 200);
+            return Container(
+              width: cardWidth,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: const Color(0xFFF8FAFC),
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: (c['accent'] as Color).withValues(alpha: 0.28),
+                  width: 1.2,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.03),
+                    blurRadius: 10,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(c['flags'] as String, style: const TextStyle(fontSize: 18)),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                        decoration: BoxDecoration(
+                          color: (c['accent'] as Color).withValues(alpha: 0.12),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          c['days'] as String,
+                          style: GoogleFonts.outfit(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: c['accent'] as Color,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    c['region'] as String,
+                    style: GoogleFonts.outfit(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.textPrimary,
+                    ),
+                  ),
+                  const SizedBox(height: 3),
+                  Text(
+                    c['ports'] as String,
+                    style: GoogleFonts.inter(
+                      fontSize: 11.5,
+                      color: AppColors.textSecondary,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Icon(Icons.schedule_rounded, size: 12, color: (c['accent'] as Color)),
+                      const SizedBox(width: 4),
+                      Text(
+                        c['freq'] as String,
+                        style: GoogleFonts.inter(
+                          fontSize: 10.5,
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          }).toList(),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTradeTermsSection(BuildContext context, bool isMobile) {
+    final card1 = Container(
+      padding: const EdgeInsets.all(22),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFAF5FF),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.22), width: 1.2),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: const Icon(Icons.handshake_rounded, color: AppColors.primary, size: 20),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  'Supported Incoterms 2020',
+                  style: GoogleFonts.outfit(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primary,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 14),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              _buildIncotermBadge('FOB Pipavav / Mundra', isPrimary: true),
+              _buildIncotermBadge('CIF Destination Port', isPrimary: true),
+              _buildIncotermBadge('CFR (Cost & Freight)'),
+              _buildIncotermBadge('EXW Mahuva Plant'),
+            ],
+          ),
+          const SizedBox(height: 14),
+          Text(
+            'Currencies Accepted: USD (\$), EUR (â‚¬), GBP (Â£), AED (Ø¯.Ø¥), INR (â‚¹). Guaranteed container freight quotation response within 12â€“24 business hours.',
+            style: GoogleFonts.inter(
+              fontSize: 12,
+              color: AppColors.textSecondary,
+              height: 1.5,
+            ),
+          ),
+        ],
+      ),
+    );
+
+    final card2 = Container(
+      padding: const EdgeInsets.all(22),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF0FDF4),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: AppColors.secondary.withValues(alpha: 0.25), width: 1.2),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  color: AppColors.secondary.withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: const Icon(Icons.account_balance_rounded, color: AppColors.secondary, size: 20),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  'International Payment Security',
+                  style: GoogleFonts.outfit(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: const Color(0xFF166534),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 14),
+          _buildPaymentPoint('100% Irrevocable Letter of Credit (L/C at Sight)', 'Confirmed by prime international first-class banks.'),
+          const SizedBox(height: 8),
+          _buildPaymentPoint('T/T Telegraphic Wire Transfer', 'Standard 30% advance deposit with 70% balance upon scanned Bill of Lading (B/L).'),
+          const SizedBox(height: 8),
+          _buildPaymentPoint('CAD / DP (Cash Against Documents)', 'Available for qualified long-term contracted international distributors.'),
+        ],
+      ),
+    );
+
+    return isMobile
+        ? Column(
+            children: [
+              card1,
+              const SizedBox(height: 16),
+              card2,
+            ],
+          )
+        : Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(child: card1),
+              const SizedBox(width: 20),
+              Expanded(child: card2),
+            ],
+          );
+  }
+
+  Widget _buildExportDocumentationGrid(BuildContext context, bool isMobile) {
+    final docs = [
+      {'title': 'Bill of Lading (B/L)', 'desc': 'Clean on-board marine bill of lading with container seal numbers.', 'icon': Icons.description_rounded},
+      {'title': 'Commercial Invoice & Packing List', 'desc': 'Certified itemized packing list with gross/net weights and batch lots.', 'icon': Icons.receipt_long_rounded},
+      {'title': 'Certificate of Origin (COO)', 'desc': 'Issued by Chamber of Commerce / Indian Trade Authority for tariff clearance.', 'icon': Icons.workspace_premium_rounded},
+      {'title': 'Phytosanitary Certificate', 'desc': 'Statutory plant health clearance issued by Govt. of India Plant Quarantine.', 'icon': Icons.spa_rounded},
+      {'title': 'Certified Fumigation', 'desc': 'Aluminium Phosphide or Methyl Bromide container treatment with certificate.', 'icon': Icons.sanitizer_rounded},
+      {'title': 'Certificate of Analysis (COA)', 'desc': 'Independent third-party lab testing (SGS / Eurofins / Geo-Chem) on request.', 'icon': Icons.science_rounded},
+    ];
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF8FAFC),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: const Color(0xFFE2E8F0), width: 1.2),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.fact_check_rounded, color: AppColors.primary, size: 20),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  'Standard Export Documentation Package (Provided with Every FCL Dispatch)',
+                  style: GoogleFonts.outfit(
+                    fontSize: isMobile ? 16 : 19,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Wrap(
+            spacing: 14,
+            runSpacing: 14,
+            children: docs.map((d) {
+              final double itemWidth = isMobile
+                  ? double.infinity
+                  : 320;
+              return Container(
+                width: itemWidth,
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: const Color(0xFFE2E8F0)),
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                        color: AppColors.primary.withValues(alpha: 0.08),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Icon(d['icon'] as IconData, color: AppColors.primary, size: 16),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            d['title'] as String,
+                            style: GoogleFonts.outfit(
+                              fontSize: 13.5,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.textPrimary,
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            d['desc'] as String,
+                            style: GoogleFonts.inter(
+                              fontSize: 11.5,
+                              color: AppColors.textSecondary,
+                              height: 1.4,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }).toList(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildIncotermBadge(String text, {bool isPrimary = false}) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      decoration: BoxDecoration(
+        color: isPrimary ? AppColors.primary.withValues(alpha: 0.12) : Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: isPrimary ? AppColors.primary.withValues(alpha: 0.35) : const Color(0xFFCBD5E1),
+        ),
+      ),
+      child: Text(
+        text,
+        style: GoogleFonts.outfit(
+          fontSize: 12,
+          fontWeight: isPrimary ? FontWeight.bold : FontWeight.w600,
+          color: isPrimary ? AppColors.primary : AppColors.textPrimary,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPaymentPoint(String title, String desc) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Icon(Icons.check_circle_rounded, color: AppColors.secondary, size: 16),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: GoogleFonts.outfit(
+                  fontSize: 13.5,
+                  fontWeight: FontWeight.bold,
+                  color: const Color(0xFF166534),
+                ),
+              ),
+              Text(
+                desc,
+                style: GoogleFonts.inter(
+                  fontSize: 11.5,
+                  color: AppColors.textSecondary,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  // ==================== 7. BOTTOM CTA ====================
   Widget _buildBottomCta(BuildContext context, bool isMobile, double paddingH) {
     return Container(
       width: double.infinity,
