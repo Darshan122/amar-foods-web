@@ -358,71 +358,135 @@ class _ProductsPageState extends State<ProductsPage> {
                           children: [
                             // Result stats info bar
                             Padding(
-                              padding: const EdgeInsets.only(bottom: 24.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Showing ${startIndex + 1}–$endIndex of $totalProducts Products',
-                                    style: GoogleFonts.outfit(
-                                      fontSize: isMobile ? 13 : 15,
-                                      fontWeight: FontWeight.w600,
-                                      color: const Color(0xFF475569),
-                                    ),
-                                  ),
-                                  Wrap(
-                                    spacing: 8,
-                                    runSpacing: 8,
-                                    crossAxisAlignment: WrapCrossAlignment.center,
-                                    children: [
-                                      InkWell(
-                                        onTap: () => BrochureDialog.show(context),
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: Container(
-                                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-                                          decoration: BoxDecoration(
-                                            color: AppColors.primary.withValues(alpha: 0.1),
-                                            borderRadius: BorderRadius.circular(20),
-                                            border: Border.all(color: AppColors.primary.withValues(alpha: 0.25)),
-                                          ),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              const Icon(Icons.picture_as_pdf_rounded, color: AppColors.primary, size: 14),
-                                              const SizedBox(width: 5),
-                                              Text(
-                                                'Catalog PDF',
-                                                style: GoogleFonts.outfit(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: AppColors.primary,
+                              padding: EdgeInsets.only(bottom: isMobile ? 18.0 : 24.0),
+                              child: isMobile
+                                  ? Column(
+                                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              'Showing ${startIndex + 1}–$endIndex of $totalProducts Products',
+                                              style: GoogleFonts.outfit(
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w600,
+                                                color: const Color(0xFF475569),
+                                              ),
+                                            ),
+                                            if (totalPages > 1)
+                                              Container(
+                                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                                decoration: BoxDecoration(
+                                                  color: const Color(0xFFF1F5F9),
+                                                  borderRadius: BorderRadius.circular(16),
+                                                  border: Border.all(color: const Color(0xFFE2E8F0)),
+                                                ),
+                                                child: Text(
+                                                  'Page $validPage of $totalPages',
+                                                  style: GoogleFonts.outfit(
+                                                    fontSize: 11.5,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: AppColors.primary,
+                                                  ),
                                                 ),
                                               ),
-                                            ],
-                                          ),
+                                          ],
                                         ),
-                                      ),
-                                      if (totalPages > 1)
-                                        Container(
-                                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-                                          decoration: BoxDecoration(
-                                            color: const Color(0xFFF1F5F9),
-                                            borderRadius: BorderRadius.circular(20),
-                                            border: Border.all(color: const Color(0xFFE2E8F0)),
-                                          ),
-                                          child: Text(
-                                            'Page $validPage of $totalPages',
-                                            style: GoogleFonts.outfit(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w700,
-                                              color: AppColors.primary,
+                                        const SizedBox(height: 10),
+                                        InkWell(
+                                          onTap: () => BrochureDialog.show(context),
+                                          borderRadius: BorderRadius.circular(12),
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.primary.withValues(alpha: 0.08),
+                                              borderRadius: BorderRadius.circular(12),
+                                              border: Border.all(color: AppColors.primary.withValues(alpha: 0.2)),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                const Icon(Icons.picture_as_pdf_rounded, color: AppColors.primary, size: 15),
+                                                const SizedBox(width: 7),
+                                                Text(
+                                                  'Download Full Product Catalog (PDF)',
+                                                  style: GoogleFonts.outfit(
+                                                    fontSize: 12.5,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: AppColors.primary,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                      ],
+                                    )
+                                  : Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'Showing ${startIndex + 1}–$endIndex of $totalProducts Products',
+                                          style: GoogleFonts.outfit(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w600,
+                                            color: const Color(0xFF475569),
+                                          ),
+                                        ),
+                                        Wrap(
+                                          spacing: 8,
+                                          runSpacing: 8,
+                                          crossAxisAlignment: WrapCrossAlignment.center,
+                                          children: [
+                                            InkWell(
+                                              onTap: () => BrochureDialog.show(context),
+                                              borderRadius: BorderRadius.circular(20),
+                                              child: Container(
+                                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                                                decoration: BoxDecoration(
+                                                  color: AppColors.primary.withValues(alpha: 0.1),
+                                                  borderRadius: BorderRadius.circular(20),
+                                                  border: Border.all(color: AppColors.primary.withValues(alpha: 0.25)),
+                                                ),
+                                                child: Row(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    const Icon(Icons.picture_as_pdf_rounded, color: AppColors.primary, size: 14),
+                                                    const SizedBox(width: 5),
+                                                    Text(
+                                                      'Catalog PDF',
+                                                      style: GoogleFonts.outfit(
+                                                        fontSize: 12,
+                                                        fontWeight: FontWeight.w700,
+                                                        color: AppColors.primary,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            if (totalPages > 1)
+                                              Container(
+                                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                                                decoration: BoxDecoration(
+                                                  color: const Color(0xFFF1F5F9),
+                                                  borderRadius: BorderRadius.circular(20),
+                                                  border: Border.all(color: const Color(0xFFE2E8F0)),
+                                                ),
+                                                child: Text(
+                                                  'Page $validPage of $totalPages',
+                                                  style: GoogleFonts.outfit(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: AppColors.primary,
+                                                  ),
+                                                ),
+                                              ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                             ),
 
                             // Cards Grid (renders only 12 items for fast load)
@@ -525,7 +589,7 @@ class _ProductsPageState extends State<ProductsPage> {
 
   Widget _buildPaginationControls(bool isMobile, int totalPages, int currentPage) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 18),
+      padding: EdgeInsets.symmetric(vertical: isMobile ? 10 : 14, horizontal: isMobile ? 10 : 18),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(24),
@@ -538,74 +602,82 @@ class _ProductsPageState extends State<ProductsPage> {
           ),
         ],
       ),
-      child: Wrap(
-        alignment: WrapAlignment.center,
-        crossAxisAlignment: WrapCrossAlignment.center,
-        spacing: 8,
-        runSpacing: 10,
-        children: [
-          // Previous Button
-          _buildPageNavButton(
-            icon: Icons.chevron_left_rounded,
-            label: isMobile ? null : 'Previous',
-            isEnabled: currentPage > 1,
-            onTap: () => _goToPage(currentPage - 1, isMobile),
-          ),
-          const SizedBox(width: 4),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        physics: const BouncingScrollPhysics(),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Previous Button
+            _buildPageNavButton(
+              icon: Icons.chevron_left_rounded,
+              label: isMobile ? null : 'Previous',
+              isEnabled: currentPage > 1,
+              isMobile: isMobile,
+              onTap: () => _goToPage(currentPage - 1, isMobile),
+            ),
+            SizedBox(width: isMobile ? 4 : 6),
 
-          // Page Numbers
-          ...List.generate(totalPages, (index) {
-            final pageNum = index + 1;
-            final bool isSelected = pageNum == currentPage;
+            // Page Numbers (all on one unbroken line)
+            ...List.generate(totalPages, (index) {
+              final pageNum = index + 1;
+              final bool isSelected = pageNum == currentPage;
+              final double btnSize = isMobile ? 32 : 38;
 
-            return InkWell(
-              onTap: () => _goToPage(pageNum, isMobile),
-              borderRadius: BorderRadius.circular(12),
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                width: 38,
-                height: 38,
-                decoration: BoxDecoration(
-                  gradient: isSelected ? AppColors.primaryGradient : null,
-                  color: isSelected ? null : const Color(0xFFF8FAFC),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: isSelected ? AppColors.primary : const Color(0xFFE2E8F0),
-                    width: 1.2,
-                  ),
-                  boxShadow: isSelected
-                      ? [
-                          BoxShadow(
-                            color: AppColors.primary.withValues(alpha: 0.28),
-                            blurRadius: 8,
-                            offset: const Offset(0, 3),
-                          ),
-                        ]
-                      : null,
-                ),
-                child: Center(
-                  child: Text(
-                    '$pageNum',
-                    style: GoogleFonts.outfit(
-                      fontSize: 14,
-                      fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
-                      color: isSelected ? Colors.white : const Color(0xFF1E293B),
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: isMobile ? 2.5 : 4),
+                child: InkWell(
+                  onTap: () => _goToPage(pageNum, isMobile),
+                  borderRadius: BorderRadius.circular(10),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    width: btnSize,
+                    height: btnSize,
+                    decoration: BoxDecoration(
+                      gradient: isSelected ? AppColors.primaryGradient : null,
+                      color: isSelected ? null : const Color(0xFFF8FAFC),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: isSelected ? AppColors.primary : const Color(0xFFE2E8F0),
+                        width: 1.2,
+                      ),
+                      boxShadow: isSelected
+                          ? [
+                              BoxShadow(
+                                color: AppColors.primary.withValues(alpha: 0.28),
+                                blurRadius: 8,
+                                offset: const Offset(0, 3),
+                              ),
+                            ]
+                          : null,
+                    ),
+                    child: Center(
+                      child: Text(
+                        '$pageNum',
+                        style: GoogleFonts.outfit(
+                          fontSize: isMobile ? 13 : 14,
+                          fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
+                          color: isSelected ? Colors.white : const Color(0xFF1E293B),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            );
-          }),
+              );
+            }),
 
-          const SizedBox(width: 4),
-          // Next Button
-          _buildPageNavButton(
-            icon: Icons.chevron_right_rounded,
-            label: isMobile ? null : 'Next',
-            isEnabled: currentPage < totalPages,
-            onTap: () => _goToPage(currentPage + 1, isMobile),
-          ),
-        ],
+            SizedBox(width: isMobile ? 4 : 6),
+            // Next Button
+            _buildPageNavButton(
+              icon: Icons.chevron_right_rounded,
+              label: isMobile ? null : 'Next',
+              isEnabled: currentPage < totalPages,
+              isMobile: isMobile,
+              onTap: () => _goToPage(currentPage + 1, isMobile),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -615,17 +687,19 @@ class _ProductsPageState extends State<ProductsPage> {
     String? label,
     required bool isEnabled,
     required VoidCallback onTap,
+    bool isMobile = false,
   }) {
+    final double btnHeight = isMobile ? 32 : 38;
     return InkWell(
       onTap: isEnabled ? onTap : null,
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(10),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        height: 38,
-        padding: EdgeInsets.symmetric(horizontal: label != null ? 14 : 10),
+        height: btnHeight,
+        padding: EdgeInsets.symmetric(horizontal: label != null ? 14 : (isMobile ? 6 : 10)),
         decoration: BoxDecoration(
           color: isEnabled ? Colors.white : const Color(0xFFF1F5F9),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(10),
           border: Border.all(
             color: isEnabled ? const Color(0xFFCBD5E1) : const Color(0xFFE2E8F0),
             width: 1.2,
@@ -637,7 +711,7 @@ class _ProductsPageState extends State<ProductsPage> {
             if (icon == Icons.chevron_left_rounded)
               Icon(
                 icon,
-                size: 20,
+                size: isMobile ? 18 : 20,
                 color: isEnabled ? const Color(0xFF1E293B) : const Color(0xFF94A3B8),
               ),
             if (label != null) ...[
@@ -655,7 +729,7 @@ class _ProductsPageState extends State<ProductsPage> {
             if (icon == Icons.chevron_right_rounded)
               Icon(
                 icon,
-                size: 20,
+                size: isMobile ? 18 : 20,
                 color: isEnabled ? const Color(0xFF1E293B) : const Color(0xFF94A3B8),
               ),
           ],

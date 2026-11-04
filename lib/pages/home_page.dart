@@ -1,4 +1,4 @@
-﻿import 'dart:math' as math;
+import 'dart:math' as math;
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -401,31 +401,35 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildStatBarItem(BuildContext context, String value, String label) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        LiquidUI.gradientText(
-          value,
-          gradient: AppColors.secondaryGradient,
-          style: GoogleFonts.outfit(
-            fontSize: LiquidUI.fluid(context, minVal: 22, maxVal: 30),
-            fontWeight: FontWeight.w900,
-            height: 1.1,
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          LiquidUI.gradientText(
+            value,
+            gradient: AppColors.secondaryGradient,
+            textAlign: TextAlign.center,
+            style: GoogleFonts.outfit(
+              fontSize: LiquidUI.fluid(context, minVal: 19, maxVal: 28),
+              fontWeight: FontWeight.w900,
+              height: 1.15,
+            ),
           ),
-        ),
-        const SizedBox(height: 6),
-        Text(
-          label.toUpperCase(),
-          textAlign: TextAlign.center,
-          style: GoogleFonts.outfit(
-            fontSize: 11,
-            fontWeight: FontWeight.bold,
-            color: AppColors.textSecondary,
-            letterSpacing: 0.6,
+          const SizedBox(height: 6),
+          Text(
+            label.toUpperCase(),
+            textAlign: TextAlign.center,
+            style: GoogleFonts.outfit(
+              fontSize: 10.5,
+              fontWeight: FontWeight.bold,
+              color: AppColors.textSecondary,
+              letterSpacing: 0.6,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
