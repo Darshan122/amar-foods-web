@@ -31,6 +31,17 @@ class _QuoteDialogState extends State<QuoteDialog> {
     'Dehydrated Garlic Flakes',
     'Dehydrated Garlic Powder',
     'Dehydrated Garlic Minced',
+    'Whole Cumin Seeds (Jeera)',
+    'Pure Cumin Powder',
+    'Whole Coriander Seeds (Dhania)',
+    'Pure Coriander Powder',
+    'Turmeric Fingers & Curcumin Powder',
+    'Crushed Red Chilli Flakes (Pizza Cut)',
+    'Stemless Red Chilli Powder',
+    'Whole Fennel Seeds (Saunf)',
+    'Whole Star Anise',
+    'White & Hulled Sesame Seeds',
+    'Crispy Fried Onion (Birista)',
     'Custom Private Label Packaging',
   ];
 

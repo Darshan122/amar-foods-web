@@ -634,7 +634,7 @@ class _HomePageState extends State<HomePage> {
               Container(
                 constraints: const BoxConstraints(maxWidth: 820),
                 child: Text(
-                  'Amar Foods dehydrated onions, garlic, and specialty vegetable powders are foundational ingredients for multinational food processors, spice blenders, and consumer brands worldwide.',
+                  'Amar Foods dehydrated onions, garlic, whole & ground spices, and specialty vegetable powders are foundational ingredients for multinational food processors, spice blenders, and consumer brands worldwide.',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.inter(
                     fontSize: 15,
@@ -874,7 +874,7 @@ class _HomePageState extends State<HomePage> {
     final double paddingV = LiquidUI.fluid(context, minVal: 60, maxVal: 90);
     final double headingSize = LiquidUI.fluid(context, minVal: 28, maxVal: 38);
 
-    // Main 4 Flagship Products matching amarfoods.in product range
+    // Main 6 Flagship Products matching amarfoods.in product range
     final featuredProductsData = [
       {
         'image': AppImages.productRedOnion,
@@ -899,6 +899,18 @@ class _HomePageState extends State<HomePage> {
         'category': 'GARLIC',
         'title': 'Dehydrated Garlic',
         'desc': 'Dehydrated Garlic range including Sliced Flakes (10-15mm), Chopped (3-5mm), Minced (1-3mm), Granules (0.5-1mm), and Powder (80-100 mesh).',
+      },
+      {
+        'image': AppImages.productCuminSeeds,
+        'category': 'WHOLE & GROUND SPICES',
+        'title': 'Whole & Ground Spices',
+        'desc': 'Sortex-cleaned whole seeds and micro-milled powders: Cumin (Jeera), Coriander (Dhania), Curcumin-rich Turmeric (Haldi), Fennel (Saunf), and Star Anise.',
+      },
+      {
+        'image': AppImages.productChilliFlakes,
+        'category': 'CHILLI & SPECIALTIES',
+        'title': 'Chilli Flakes & Powders',
+        'desc': 'Crushed Red Chilli Flakes (Pizza Cut), stemless high-ASTA Red Chilli Powder, and fiery Green Chilli Flakes & Powder for global seasoning blenders.',
       },
     ];
 
@@ -990,7 +1002,7 @@ class _HomePageState extends State<HomePage> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'Explore All 15+ Dehydrated Products',
+                        'Explore All 25+ Dehydrated Crops & Spices',
                         textAlign: isNarrow ? TextAlign.center : TextAlign.left,
                         style: GoogleFonts.outfit(
                           fontSize: isNarrow ? 18 : 20,
@@ -1417,7 +1429,7 @@ class _HomePageState extends State<HomePage> {
         step: '01',
         icon: Icons.grass_rounded,
         title: 'Farm Harvest & Selection',
-        desc: 'Direct procurement of fresh, high-pungency onion and garlic bulbs from Mahuva farms.',
+        desc: 'Direct procurement of fresh, high-pungency onion, garlic bulbs, and raw spices from prime agricultural farms.',
       ),
       _TimelineItem(
         step: '02',
@@ -1729,7 +1741,7 @@ class _HomePageState extends State<HomePage> {
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 820),
                 child: Text(
-                  'Located in Mahuva, Gujarat — the epicenter of India’s onion agriculture — our manufacturing plant houses continuous automated washing, multi-tier thermal dehydration tunnels, and precision grading lines built to global sanitary standards.',
+                  'Located in Mahuva, Gujarat — the epicenter of India’s onion and spice agriculture — our manufacturing plant houses continuous automated washing, multi-tier thermal dehydration tunnels, precision sortex spice cleaners, and cryogenic pulverizers built to global sanitary standards.',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.inter(
                     fontSize: 15,
@@ -2735,7 +2747,7 @@ class _HomePageState extends State<HomePage> {
         title: 'US FDA Registered',
         tag: 'U.S. FOOD & DRUG ADMIN',
         image: AppImages.certFdaLogo,
-        desc: 'Official US FDA facility registration for exporting premium dehydrated onion & garlic products into North American markets.',
+        desc: 'Official US FDA facility registration for exporting premium dehydrated onion, garlic & spice products into North American markets.',
         authority: 'United States Food and Drug Administration (FDA)',
         standard: 'US FDA Food Facility Registration',
       ),
@@ -2845,7 +2857,7 @@ class _HomePageState extends State<HomePage> {
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 780),
                 child: Text(
-                  'Every batch of dehydrated onion and garlic exported by Amar Foods complies with international food safety regulations, dietary laws, and statutory export standards.',
+                  'Every batch of dehydrated onion, garlic, and pure spices exported by Amar Foods complies with international food safety regulations, dietary laws, and statutory export standards.',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.inter(
                     fontSize: 15,
@@ -3501,7 +3513,7 @@ class _HomePageState extends State<HomePage> {
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 740),
                 child: Text(
-                  'Delivering export-grade dehydrated onion and garlic to multinational food processors, spice blenders, and global distributors with unwavering consistency.',
+                  'Delivering export-grade dehydrated onion, garlic, and pure whole & ground spices to multinational food processors, spice blenders, and global distributors with unwavering consistency.',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.inter(
                     fontSize: 15,

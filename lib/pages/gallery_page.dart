@@ -197,6 +197,62 @@ class _GalleryPageState extends State<GalleryPage> {
         'image': AppImages.productGarlicPowder1,
         'desc': '80-100 mesh fine garlic powder without anti-caking additives.',
       },
+
+      // --- SPICES & SPECIALTIES RANGE (8 PRODUCTS) ---
+      {
+        'title': 'Whole Cumin Seeds (Jeera Sortex 99.5%)',
+        'category': 'SPICES & SPECIALTIES',
+        'image': AppImages.productCuminSeeds,
+        'desc': 'Gujarat crop whole cumin seeds available in Singapore 99.5% and Europe 99.5% Sortex clean grades.',
+      },
+      {
+        'title': 'Pure Cold-Milled Cumin Powder',
+        'category': 'SPICES & SPECIALTIES',
+        'image': AppImages.productCuminPowder,
+        'desc': 'Temperature-controlled micro-milled aromatic cumin powder preserving essential aroma and natural oils.',
+      },
+      {
+        'title': 'Whole Coriander Seeds (Eagle & Scooter Grade)',
+        'category': 'SPICES & SPECIALTIES',
+        'image': AppImages.productCorianderSeeds,
+        'desc': 'Sun-dried golden-green coriander seeds with crisp citrus-floral fragrance and high linalool content.',
+      },
+      {
+        'title': 'Pure Coriander Powder (Dhania Powder)',
+        'category': 'SPICES & SPECIALTIES',
+        'image': AppImages.productCorianderPowder,
+        'desc': 'Finely pulverized coriander seed powder, foundational spice base for global curries and gravies.',
+      },
+      {
+        'title': 'Double Polished Turmeric Fingers',
+        'category': 'SPICES & SPECIALTIES',
+        'image': AppImages.productTurmericFingers,
+        'desc': 'Sun-cured, double-polished turmeric fingers with deep golden-yellow core and high natural curcumin.',
+      },
+      {
+        'title': 'Curcumin-Rich Turmeric Powder',
+        'category': 'SPICES & SPECIALTIES',
+        'image': AppImages.productTurmericPowder,
+        'desc': 'Micro-pulverized golden turmeric powder available in 1.0% to 3.5% verifiable curcumin grades.',
+      },
+      {
+        'title': 'Crushed Red Chilli Flakes (Pizza Cut)',
+        'category': 'SPICES & SPECIALTIES',
+        'image': AppImages.productChilliFlakes,
+        'desc': 'Coarsely crushed red chilli flakes with natural yellow seeds available in Regular and Deluxe export grades.',
+      },
+      {
+        'title': 'Whole Fennel Seeds (Saunf)',
+        'category': 'SPICES & SPECIALTIES',
+        'image': AppImages.productFennelSeeds,
+        'desc': 'Sweet, aromatic green-tinged whole fennel seeds available in Singapore 99% and Europe 99% Sortex grades.',
+      },
+      {
+        'title': 'Crispy Fried Onion (Birista)',
+        'category': 'SPICES & SPECIALTIES',
+        'image': AppImages.productCrispyFriedOnion,
+        'desc': 'Golden-brown, crunchy fried onion slices cooked in pure refined vegetable oil for biryanis and burgers.',
+      },
     ];
 
     return Scaffold(
@@ -319,6 +375,8 @@ class _GalleryPageState extends State<GalleryPage> {
                             _buildFilterTab('PINK ONION', LanguageService.instance.tr('gallery_tab_pink'), galleryItems.where((i) => i['category'] == 'PINK ONION').length),
                             const SizedBox(width: 10),
                             _buildFilterTab('GARLIC', LanguageService.instance.tr('gallery_tab_garlic'), galleryItems.where((i) => i['category'] == 'GARLIC').length),
+                            const SizedBox(width: 10),
+                            _buildFilterTab('SPICES & SPECIALTIES', 'Spices & Specialties', galleryItems.where((i) => i['category'] == 'SPICES & SPECIALTIES').length),
                           ],
                         ),
                       ),
